@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.comcel.com.co/insertarAuditoriaPromoCine"
+	xmlns:tns="http://www.comcel.com.co/insertarAuditoriaPromoCine">
+	<xs:element name="Input_Parameters" type="tns:Input_Paramaters" />
+	<xs:element name="WS_Result" type="tns:WS_Result" />
+	
+	<xs:complexType name="Input_Paramaters">
+		<xs:sequence>
+			<xs:element name="MSISDN" type="xs:string" />
+			<xs:element name="PIN" type="xs:string" />
+			<xs:element name="CODIGO_NOTICACION" type="xs:string" />
+			<xs:element name="DESCRIPCION_NOTIFICACION" type="xs:string" />
+			<xs:element name="FECHA_ASIGNACION" type="xs:dateTime" nillable="true" />
+			<xs:element name="FECHA_RECARGA" type="xs:dateTime" nillable="true" />
+			<xs:element name="VALOR_RECARGA" type="xs:decimal" nillable="true" />
+			<xs:element name="CONSECUTIVO" type="xs:string" />
+			<xs:element name="HOSTID" type="xs:decimal" nillable="true"  />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="WS_Result">
+		<xs:sequence>
+			<xs:element name="CODIGO" type="xs:decimal" />
+			<xs:element name="MENSAJE" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+
+	
+</xs:schema>

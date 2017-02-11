@@ -1,0 +1,13 @@
+<adapter-config name="bd_getException" adapter="Database Adapter" wsdlLocation="../WSDLs/getException_BD.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+
+	<connection-factory location="eis/DB/Rules_Engine" UIConnectionName="desarrollo" adapterRef=""/>
+	<endpoint-interaction portType="bd_getException_ptt" operation="bd_getException">
+		<interaction-spec className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
+			<property name="PackageName" value="PKG_FRAMEWORK"/>
+			<property name="ProcedureName" value="PRC_GET_EXCEPTION"/>
+			<property name="GetActiveUnitOfWork" value="false"/>
+		</interaction-spec>
+		<output/>
+	</endpoint-interaction>
+
+</adapter-config>

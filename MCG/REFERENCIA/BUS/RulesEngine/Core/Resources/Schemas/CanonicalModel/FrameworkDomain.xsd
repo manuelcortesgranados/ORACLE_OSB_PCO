@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.claro.com.co/rulesEngine/canonicalModel/FrameworkDomain"
+	xmlns:tns="http://www.claro.com.co/rulesEngine/canonicalModel/FrameworkDomain">
+
+	<complexType name="EntityCollection">
+		<sequence>
+			<element name="entity" type="tns:Entity" minOccurs="0" maxOccurs="unbounded" />
+		</sequence>
+	</complexType>
+	
+	<complexType name="Entity">
+		<sequence>
+			<element name="id" type="integer" />
+			<element name="name" type="string" />
+			<element name="mapping" type="string" />
+			<element name="list" type="boolean" />
+			<element name="value" type="anyType" />
+			<element name="entities" type="tns:EntityCollection" minOccurs="0" />
+		</sequence>
+	</complexType>
+	
+	<complexType name="Plan">
+		<sequence>
+			<element name="service" type="tns:PlanService" minOccurs="0" maxOccurs="unbounded" />
+		</sequence>
+	</complexType>
+	
+	<complexType name="PlanService">
+		<sequence>
+			<element name="endpoint" type="string" />
+			<element name="ignoreError" type="boolean" />
+		</sequence>
+	</complexType>
+
+	<complexType name="Service">
+		<sequence>
+			<element name="id" type="integer" />
+			<element name="endpoint" type="string" />
+			<element name="namespace" type="string" />
+			<element name="type" type="string" />
+			<element name="ignoreError" type="boolean" />
+			<element name="parameter" type="tns:ServiceParameter" minOccurs="0" maxOccurs="unbounded" />
+		</sequence>
+	</complexType>
+
+	<complexType name="ServiceParameter">
+		<sequence>
+			<element name="id" type="integer" />
+			<element name="name" type="string" />
+			<element name="required" type="boolean" />
+			<element name="entity" type="string" />
+		</sequence>
+	</complexType>
+	
+	<complexType name="AuditExecution">
+		<sequence>
+			<element name="process" type="string" />
+			<element name="operation" type="string" />
+			<element name="startExecution" type="dateTime" />
+			<element name="endExecution" type="dateTime" />
+			<element name="duration" type="integer" />
+			<element name="input" type="anyType" minOccurs="0" />
+			<element name="resultCode" type="string" />
+			<element name="execution" type="tns:StepAuditExecution" minOccurs="0" maxOccurs="unbounded" />
+		</sequence>
+	</complexType>
+	
+	<complexType name="StepAuditExecution">
+		<sequence>
+			<element name="startExecution" type="dateTime" />
+			<element name="endExecution" type="dateTime" />
+			<element name="duration" type="integer" />
+			<element name="input" type="anyType" minOccurs="0" />
+			<element name="output" type="anyType" minOccurs="0" />
+			<element name="resultCode" type="string" minOccurs="0" />
+			<element name="service" type="tns:Service" />
+			<element name="execution" type="tns:StepAuditExecution" minOccurs="0" maxOccurs="unbounded" />
+		</sequence>
+	</complexType>
+
+</schema>

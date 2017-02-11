@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/stages/logging/config">
+  <ser:coreEntry isProxy="true" isEnabled="true">
+    <ser:binding type="Mixed" xsi:type="con:MixedBindingType" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config">
+      <con:request type="Text"/>
+      <con:response type="Text"/>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>http</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:URI>
+      <env:value>/OSB_Project_PCO_005/OSB/Proxies/verificarPermisoUsuario_PS</env:value>
+    </tran:URI>
+    <tran:inbound-properties/>
+    <tran:all-headers>false</tran:all-headers>
+    <tran:provider-specific>
+      <http:inbound-properties/>
+    </tran:provider-specific>
+  </ser:endpointConfig>
+  <ser:router>
+    <con:pipeline type="request" name="PipelinePairNode1_request">
+      <con:stage name="STG_JavaCallOutToXML">
+        <con:context/>
+        <con:actions>
+          <con3:log>
+            <con2:id>_ActionId-5539756764240179818--40579788.158462f41a3.-7c89</con2:id>
+            <con3:logLevel>error</con3:logLevel>
+            <con3:expr>
+              <con2:xqueryText>concat('MANOLITO NO LLEGA EL BODY =>',$body)</con2:xqueryText>
+            </con3:expr>
+          </con3:log>
+          <con1:javaCallout varName="v_resultadoJSONToXML">
+            <con2:id>_ActionId-5539756764240179818--40579788.158462f41a3.-7e66</con2:id>
+            <con1:archive ref="ITEL/Core/Resources/JARs/Conversor"/>
+            <con1:className>co.com.claro.procesadorjson.conversion.Conversor</con1:className>
+            <con1:method>public static java.lang.String toXML(java.lang.String)</con1:method>
+            <con1:expr>
+              <con2:xqueryText>data($body)</con2:xqueryText>
+            </con1:expr>
+          </con1:javaCallout>
+          <con1:assign varName="respuestaXML">
+            <con2:id>_ActionId-5539756764240179818--40579788.158462f41a3.-7e65</con2:id>
+            <con1:expr>
+              <con2:xqueryText>fn-bea:inlinedXML($v_resultadoJSONToXML)</con2:xqueryText>
+            </con1:expr>
+          </con1:assign>
+        </con:actions>
+      </con:stage>
+      <con:stage name="STG_SP_VerificarPermisosUsuario">
+        <con:context/>
+        <con:actions>
+          <con1:wsCallout>
+            <con2:id>_ActionId-5539756764240179818--40579788.158462f41a3.-7e63</con2:id>
+            <con1:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/verificarPermisoUsuarioLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con1:operation>db_VerificarPermisoUsuario</con1:operation>
+            <con1:request>
+              <con1:body>$variableRequestPermisosUsuario</con1:body>
+            </con1:request>
+            <con1:response>
+              <con1:body>variableResponsePermisosUsuario</con1:body>
+            </con1:response>
+            <con1:requestTransform>
+              <con1:assign varName="variableRequestPermisosUsuario">
+                <con2:id>_ActionId-5539756764240179818--40579788.158462f41a3.-7e64</con2:id>
+                <con1:expr>
+                  <con2:xqueryTransform>
+                    <con2:resource ref="ITEL/Core/Resources/XQueries/verificarPermisosUsuarioRq"/>
+                    <con2:param name="METHOD">
+                      <con2:path>'AddSubscriptionRequest'</con2:path>
+                    </con2:param>
+                    <con2:param name="SOURCE_APPLICATION_ID">
+                      <con2:path>data($respuestaXML/authentication/sourceApplicationId)</con2:path>
+                    </con2:param>
+                    <con2:param name="ITEL_USER">
+                      <con2:path>data($respuestaXML/authentication/user)</con2:path>
+                    </con2:param>
+                  </con2:xqueryTransform>
+                </con1:expr>
+              </con1:assign>
+            </con1:requestTransform>
+            <con1:responseTransform/>
+          </con1:wsCallout>
+          <con1:ifThenElse>
+            <con2:comment>Que pasa por aqui</con2:comment>
+            <con2:id>_ActionId-5539756764240179818--40579788.158462f41a3.-7e62</con2:id>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText>$variableResponsePermisosUsuario/*:P_OUT_CODIGO='1'</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con1:assign varName="miVariableSalida">
+                  <con2:id>_ActionId-5539756764240179818--40579788.158462f41a3.-7e61</con2:id>
+                  <con1:expr>
+                    <con2:xqueryText>'PENDIENTE LLAMADO TRAMA415'</con2:xqueryText>
+                  </con1:expr>
+                </con1:assign>
+              </con1:actions>
+            </con1:case>
+            <con1:default>
+              <con1:assign varName="miVariableSalida">
+                <con2:id>_ActionId-5539756764240179818--40579788.158462f41a3.-7e60</con2:id>
+                <con1:expr>
+                  <con2:xqueryText>'PENDIENTE LLAMADO TRAMA415'</con2:xqueryText>
+                </con1:expr>
+              </con1:assign>
+            </con1:default>
+          </con1:ifThenElse>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="PipelinePairNode1_response">
+      <con:stage name="STG_Respuesta">
+        <con:context/>
+        <con:actions>
+          <con1:replace varName="body" contents-only="true">
+            <con2:id>_ActionId-5539756764240179818--40579788.158462f41a3.-7e5f</con2:id>
+            <con1:expr>
+              <con2:xqueryTransform>
+                <con2:resource ref="ITEL/Core/Resources/XQueries/verificarPermisosUsuarioRs"/>
+                <con2:param name="variableEntrada">
+                  <con2:path>$miVariableSalida</con2:path>
+                </con2:param>
+              </con2:xqueryTransform>
+            </con1:expr>
+          </con1:replace>
+          <con1:transport-headers>
+            <con2:id>_ActionId-5539756764240179818--40579788.158462f41a3.-7cc6</con2:id>
+            <con1:header-set>inbound-response</con1:header-set>
+            <con1:header name="Content-Type" value="expression">
+              <con2:xqueryText>'text/xml; charset=utf-8'</con2:xqueryText>
+            </con1:header>
+            <con1:header name="Content-Length" value="expression">
+              <con2:xqueryText>string-length($body)</con2:xqueryText>
+            </con1:header>
+            <con1:header value="expression" name="Date">
+              <con2:xqueryText>fn-bea:dateTime-to-string-with-format("E, dd MMM yyyy hh:mm:ss",fn:current-dateTime())</con2:xqueryText>
+            </con1:header>
+            <con1:header name="Content-Encoding" value="expression">
+              <con2:xqueryText>'UTF-8'</con2:xqueryText>
+            </con1:header>
+            <con1:header name="Allow" value="expression">
+              <con2:xqueryText>'GET, POST, PUT, DELETE'</con2:xqueryText>
+            </con1:header>
+          </con1:transport-headers>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:flow>
+      <con:branch-node type="condition" name="BranchNode1">
+        <con:context/>
+        <con:branch-table variable="inbound">
+          <con:xpath>
+            <con2:xpathText>./ctx:transport/ctx:request/http:http-method/text()</con2:xpathText>
+          </con:xpath>
+          <con:branch name="POST">
+            <con:operator>equals</con:operator>
+            <con:value>'POST'</con:value>
+            <con:flow>
+              <con:pipeline-node name="PipelinePairNode1">
+                <con:request>PipelinePairNode1_request</con:request>
+                <con:response>PipelinePairNode1_response</con:response>
+              </con:pipeline-node>
+            </con:flow>
+          </con:branch>
+          <con:default-branch>
+            <con:flow/>
+          </con:default-branch>
+        </con:branch-table>
+      </con:branch-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

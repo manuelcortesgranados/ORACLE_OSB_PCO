@@ -1,0 +1,37 @@
+<schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/SOA_TEST/PKG_SOA_ITEL/PRC_CONSULTAR_PARAMETROS/" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/SOA_TEST/PKG_SOA_ITEL/PRC_CONSULTAR_PARAMETROS/" elementFormDefault="qualified">
+   <element name="InputParameters">
+      <!--Empty Parameter List-->
+      <complexType/>
+   </element>
+   <element name="OutputParameters">
+      <complexType>
+         <sequence>
+            <element name="P_PARAMETROS" type="db:P_PARAMETROS_RowSet" db:index="1" db:type="RowSet" minOccurs="0" nillable="true"/>
+         </sequence>
+      </complexType>
+   </element>
+   <complexType name="P_PARAMETROS_RowSet">
+      <sequence>
+         <element name="P_PARAMETROS_Row" minOccurs="0" maxOccurs="unbounded">
+            <complexType>
+               <sequence>
+                  <element name="PARNOMBRE" db:type="VARCHAR2" minOccurs="0" nillable="true">
+                     <simpleType>
+                        <restriction base="string">
+                           <maxLength value="60"/>
+                        </restriction>
+                     </simpleType>
+                  </element>
+                  <element name="PARVALOR" db:type="VARCHAR2" minOccurs="0" nillable="true">
+                     <simpleType>
+                        <restriction base="string">
+                           <maxLength value="500"/>
+                        </restriction>
+                     </simpleType>
+                  </element>
+               </sequence>
+            </complexType>
+         </element>
+      </sequence>
+   </complexType>
+</schema>

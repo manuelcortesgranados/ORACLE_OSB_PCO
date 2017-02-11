@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config">
+  <ser:coreEntry isProxy="true" isEnabled="true">
+    <ser:binding type="SOAP" isSoap12="false" xsi:type="con4:SoapBindingType" xmlns:con4="http://www.bea.com/wli/sb/services/bindings/config">
+      <con4:wsdl ref="RulesEngine/Activa/Resources/WSDLs/getImeiStatus_PS"/>
+      <con4:binding>
+        <con4:name>GetImeiStatusActivaSOAP</con4:name>
+        <con4:namespace>http://www.claro.com.co/rulesEngine/getImeiStatusActiva</con4:namespace>
+      </con4:binding>
+      <con4:selector type="SOAP body"/>
+      <con4:WSI-compliant>false</con4:WSI-compliant>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+    <ser:ws-policy>
+      <ser:binding-mode>wsdl-policy-attachments</ser:binding-mode>
+    </ser:ws-policy>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>local</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:inbound-properties/>
+    <tran:all-headers>true</tran:all-headers>
+  </ser:endpointConfig>
+  <ser:router>
+    <con:pipeline type="request" name="PipelinePairNode1_request">
+      <con:stage name="validate" errorHandler="_onErrorHandler-5319724770972895043-53257315.13e374d6b35.-7e89">
+        <con:context>
+          <con2:varNsDecl namespace="http://www.claro.com.co/rulesEngine/getImeiStatusActiva" prefix="get"/>
+        </con:context>
+        <con:actions>
+          <con1:assign varName="namespace">
+            <con2:id>_ActionId-19937711684209005-38ddb681.13feeb5eb0e.-7a45</con2:id>
+            <con1:expr>
+              <con2:xqueryText>fn:namespace-uri($body/*:Input_Parameters)</con2:xqueryText>
+            </con1:expr>
+          </con1:assign>
+          <con1:assign varName="businessRequest">
+            <con2:id>_ActionId-2431741806081816384--7e25ce5c.13fc4f2ca26.-7f41</con2:id>
+            <con1:expr>
+              <con2:xqueryTransform>
+                <con2:resource ref="RulesEngine/Activa/Resources/XQueries/getImeiStatus_Req"/>
+                <con2:param name="input_Parameters1">
+                  <con2:path>$body/get:Input_Parameters</con2:path>
+                </con2:param>
+              </con2:xqueryTransform>
+            </con1:expr>
+          </con1:assign>
+          <con1:assign varName="inputParameters">
+            <con2:id>_ActionId-19937711684209005-38ddb681.13feeb5eb0e.-7b25</con2:id>
+            <con1:expr>
+              <con2:xqueryText>$body/get:Input_Parameters</con2:xqueryText>
+            </con1:expr>
+          </con1:assign>
+          <con1:validate>
+            <con2:id>_ActionId-2431741806081816384--7e25ce5c.13fc4f2ca26.-7eb4</con2:id>
+            <con1:schema ref="RulesEngine/Activa/Resources/Schemas/BD_GET_IMEISTATUSACTIVA"/>
+            <con1:schemaElement xmlns:prc="http://xmlns.oracle.com/pcbpel/adapter/db/RULESENGINE/PKG_RULESENGINE_BSCS/PRC_GET_IMEI_BSCS/" xmlns:prc1="http://xmlns.oracle.com/pcbpel/adapter/db/INH_MOTORREGLAS/PKG_RULESENGINE_ACTIVA/PRC_GET_IMEI_ACTIVA/">prc1:InputParameters</con1:schemaElement>
+            <con1:varName>businessRequest</con1:varName>
+          </con1:validate>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="PipelinePairNode1_response"/>
+    <con:pipeline type="error" name="_onErrorHandler-5319724770972895043-53257315.13e374d6b35.-7e89">
+      <con:stage name="validateError">
+        <con:context/>
+        <con:actions>
+          <con1:replace contents-only="true" varName="body">
+            <con2:id>_ActionId-4418238531623877493-36448814.13e846b398f.-7e71</con2:id>
+            <con1:expr>
+              <con2:xqueryTransform>
+                <con2:resource ref="RulesEngine/Util/Resources/XQueries/genericError"/>
+                <con2:param name="targetNamespace">
+                  <con2:path>$namespace</con2:path>
+                </con2:param>
+                <con2:param name="fault">
+                  <con2:path>$fault</con2:path>
+                </con2:param>
+                <con2:param name="code">
+                  <con2:path>"23"</con2:path>
+                </con2:param>
+              </con2:xqueryTransform>
+            </con1:expr>
+          </con1:replace>
+          <con2:reply>
+            <con2:id>_ActionId-4418238531623877493-36448814.13e846b398f.-7e54</con2:id>
+          </con2:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="error" name="_onErrorHandler-4418238531623877493-36448814.13e846b398f.-7ee0">
+      <con:stage name="routingError">
+        <con:context/>
+        <con:actions>
+          <con1:replace varName="body" contents-only="true">
+            <con2:id>_ActionId-4418238531623877493-36448814.13e846b398f.-7de6</con2:id>
+            <con1:expr>
+              <con2:xqueryTransform>
+                <con2:resource ref="RulesEngine/Util/Resources/XQueries/genericError"/>
+                <con2:param name="targetNamespace">
+                  <con2:path>$namespace</con2:path>
+                </con2:param>
+                <con2:param name="fault">
+                  <con2:path>$fault</con2:path>
+                </con2:param>
+                <con2:param name="code">
+                  <con2:path>"20"</con2:path>
+                </con2:param>
+              </con2:xqueryTransform>
+            </con1:expr>
+          </con1:replace>
+          <con2:reply>
+            <con2:id>_ActionId-4418238531623877493-36448814.13e846b398f.-7dc9</con2:id>
+          </con2:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:flow>
+      <con:pipeline-node name="PipelinePairNode1">
+        <con:request>PipelinePairNode1_request</con:request>
+        <con:response>PipelinePairNode1_response</con:response>
+      </con:pipeline-node>
+      <con:route-node name="getImeiStatus" error-handler="_onErrorHandler-4418238531623877493-36448814.13e846b398f.-7ee0">
+        <con:context>
+          <con2:varNsDecl namespace="http://www.claro.com.co/rulesEngine/getImeiStatusActiva" prefix="get"/>
+        </con:context>
+        <con:actions>
+          <con3:route>
+            <con2:id>_ActionId-4418238531623877493-36448814.13e846b398f.-7f87</con2:id>
+            <con3:service ref="RulesEngine/Activa/Business services/getImeiStatus_bs" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con3:operation>getImeiStatus</con3:operation>
+            <con3:outboundTransform>
+              <con1:replace varName="body" contents-only="true">
+                <con2:id>_ActionId-6749263457969996536-2af0ee6e.13fbeec2034.-7f80</con2:id>
+                <con1:expr>
+                  <con2:xqueryText>$businessRequest</con2:xqueryText>
+                </con1:expr>
+              </con1:replace>
+            </con3:outboundTransform>
+            <con3:responseTransform>
+              <con1:replace varName="body" contents-only="true">
+                <con2:id>_ActionId-6749263457969996536-2af0ee6e.13fbeec2034.-7fb8</con2:id>
+                <con1:expr>
+                  <con2:xqueryTransform>
+                    <con2:resource ref="RulesEngine/Activa/Resources/XQueries/getImeiStatus_Res"/>
+                    <con2:param name="input_Parameters1">
+                      <con2:path>$inputParameters</con2:path>
+                    </con2:param>
+                    <con2:param name="outputParameters1">
+                      <con2:path>$body/*:OutputParameters</con2:path>
+                    </con2:param>
+                  </con2:xqueryTransform>
+                </con1:expr>
+              </con1:replace>
+            </con3:responseTransform>
+          </con3:route>
+        </con:actions>
+      </con:route-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

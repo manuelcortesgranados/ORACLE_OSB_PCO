@@ -1,0 +1,20 @@
+<definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/ITEL/Adaptadores/bd_consultarNRN" name="bd_consultarNRN-concrete" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/ITEL/Adaptadores/bd_consultarNRN" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/ITEL/Adaptadores/bd_consultarNRN" location="../Resources/WSDLs/consultarNRN_BD.wsdl"/>
+  <binding name="bd_consultarNRN_ptt-binding" type="tns:bd_consultarNRN_ptt">
+    <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+    <operation name="bd_consultarNRN">
+      <soap:operation soapAction="bd_consultarNRN"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="bd_consultarNRN-service">
+    <port name="bd_consultarNRN-port" binding="tns:bd_consultarNRN_ptt-binding">
+      <soap:address location="jca://eis/DB/COMCORP"/>
+    </port>
+  </service>
+</definitions>

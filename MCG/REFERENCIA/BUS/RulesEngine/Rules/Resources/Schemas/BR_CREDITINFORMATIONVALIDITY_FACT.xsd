@@ -1,0 +1,33 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:cd="http://www.claro.com.co/rulesEngine/canonicalModel/CustomerDomain"
+	xmlns:fd="http://www.claro.com.co/rulesEngine/canonicalModel/FrameworkDomain"
+	xmlns:cbe="http://www.claro.com.co/rulesEngine/canonicalModel/CommonBusinessEntities"
+	xmlns:tns="http://www.claro.com.co/rulesEngine/CreditInformationValidity2Fact/"
+	targetNamespace="http://www.claro.com.co/rulesEngine/CreditInformationValidity2Fact/">
+	<xs:import
+		namespace="http://www.claro.com.co/rulesEngine/canonicalModel/CustomerDomain" 
+		schemaLocation="../../../Core/Resources/Schemas/CanonicalModel/CustomerDomain.xsd" />
+	
+	<xs:import
+		namespace="http://www.claro.com.co/rulesEngine/canonicalModel/FrameworkDomain"
+		schemaLocation="../../../Core/Resources/Schemas/CanonicalModel/FrameworkDomain.xsd" />
+		
+	<xs:import
+	    schemaLocation="../../../Core/Resources/Schemas/CanonicalModel/CommonBusinessEntities.xsd"		
+		namespace="http://www.claro.com.co/rulesEngine/canonicalModel/CommonBusinessEntities" />
+	
+	<xs:element name="CreditInformationValidityFactRequest"
+		type="tns:CreditInformationValidityFactRequestType" />
+	<xs:element name="CreditInformationValidityFactResponse"
+		type="tns:CreditInformationValidityFactResponseType" />
+	<xs:complexType name="CreditInformationValidityFactRequestType">
+		<xs:sequence>
+			<xs:element name="CustomerBillingBehavior" type="cd:CustomerBillingBehavior" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CreditInformationValidityFactResponseType">
+		<xs:sequence>
+			<xs:element name="Plan" type="fd:Plan" />
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

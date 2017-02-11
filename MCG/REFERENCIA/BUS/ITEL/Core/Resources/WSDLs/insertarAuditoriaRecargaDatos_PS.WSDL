@@ -1,0 +1,37 @@
+<wsdl:definitions name="insertarAuditoriaRecargaDatos" targetNamespace="http://www.comcel.com.co/insertarAuditoriaRecargaDatos/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.comcel.com.co/insertarAuditoriaRecargaDatos/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsd1="http://www.comcel.com.co/InsertarAuditoriaRecargaDatos">
+	<wsdl:types>
+		<xsd:schema>
+			<xsd:import namespace="http://www.comcel.com.co/InsertarAuditoriaRecargaDatos" schemaLocation="../Schemas/PS_ITEL_INSERTAR_AUDITORIARECARGADATOS.xsd">
+			</xsd:import>
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="insertarElegidoRequest">
+		<wsdl:part element="xsd1:Input_Parameters" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="insertarElegidoResponse">
+		<wsdl:part element="xsd1:WS_Result" name="parameters"/>
+	</wsdl:message>
+	<wsdl:portType name="insertarAuditoriaRecargaDatos">
+		<wsdl:operation name="insertarElegido">
+			<wsdl:input message="tns:insertarElegidoRequest"/>
+			<wsdl:output message="tns:insertarElegidoResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="insertarAuditoriaRecargaDatosSOAP" type="tns:insertarAuditoriaRecargaDatos">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="insertarElegido">
+			<soap:operation soapAction="http://www.comcel.com.co/insertarAuditoriaRecargaDatos/insertarElegido"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="insertarAuditoriaRecargaDatos">
+		<wsdl:port binding="tns:insertarAuditoriaRecargaDatosSOAP" name="insertarAuditoriaRecargaDatosSOAP">
+			<soap:address location="http://www.comcel.com.co"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

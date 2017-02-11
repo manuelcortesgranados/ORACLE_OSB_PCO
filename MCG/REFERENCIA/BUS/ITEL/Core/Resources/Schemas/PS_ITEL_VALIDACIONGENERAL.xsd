@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.comcel.com.co/ValidacionGeneral/"
+	xmlns:tns="http://www.comcel.com.co/ValidacionGeneral/">
+	<xs:element name="Input_Parameters" type="tns:Input_Paramaters" />
+	<xs:element name="WS_Result" type="tns:WS_Result" />
+
+	<xs:complexType name="Input_Paramaters">
+		<xs:sequence>
+			<xs:element name="MIN" type="xs:decimal" />
+			<xs:element name="USUARIO" type="xs:string" />
+			<xs:element name="PASSWORD" type="xs:string" />
+			<xs:element name="METODO" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="WS_Result">
+		<xs:sequence>
+			<xs:element name="CODIGO" type="xs:string" />
+			<xs:element name="MENSAJE" type="tns:MensajeType" />
+			<xs:element name="DESCRIPCION" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="MensajeType">
+		<xs:sequence>
+			<xs:element name="CMDESCRIPCION" type="xs:string" />
+			<xs:element name="CMTIMEOUTVALIDACION" type="xs:string" />
+			<xs:element name="CMTIMEOUTCONSULTA" type="xs:string" />
+			<xs:element name="CMTIMEOUTPROVISION" type="xs:string" />
+			<xs:element name="CMTIMEOUTFINAL" type="xs:string" />
+			<xs:element name="RMCCODIGOIN" type="xs:string" />
+			<xs:element name="RMCMININICAL" type="xs:decimal" />
+			<xs:element name="RMCMINFINAL" type="xs:decimal" />
+			<xs:element name="RMCESTADO" type="xs:decimal" />
+			<xs:element name="PLATAFORMA" type="xs:string" />
+			<xs:element name="CODERROR" type="xs:string" />
+			<xs:element name="SDP" type="xs:decimal" />
+		</xs:sequence>
+	</xs:complexType>
+
+</xs:schema>

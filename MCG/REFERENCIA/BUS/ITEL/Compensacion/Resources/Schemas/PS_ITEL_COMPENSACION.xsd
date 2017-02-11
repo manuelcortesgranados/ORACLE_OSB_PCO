@@ -1,0 +1,68 @@
+<xs:schema targetNamespace="http://www.comcel.com.co/CompensacionITEL/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.comcel.com.co/CompensacionITEL/" xmlns:oper="http://www.comcel.com.co/IN/OperacionCorba">
+	
+	<xs:import namespace="http://www.comcel.com.co/IN/OperacionCorba" schemaLocation="../../../IN/Resources/Schemas/DA_ITEL_OPERACION_CORBA.xsd"/>
+	
+	<xs:element name="Input_Parameters" type="tns:Input_Parameters"/>
+	
+	<xs:complexType name="Input_Parameters">
+		<xs:sequence>
+			<xs:element name="METODO" type="xs:string"/>
+			<xs:element name="SUSCRIPTOR_DESTINO" type="oper:Subscriber"/>
+			<xs:element name="SUSCRIPTOR_ORIGEN" type="oper:Subscriber" minOccurs="0"/>
+			<xs:element name="SERVICIOS_EJECUTADOS" type="tns:serviciosType"/>
+			<xs:element name="BALANCES" type="tns:balancesType" minOccurs="0"/>
+			<xs:element name="BALANCES_ANTERIOR" type="tns:balancesType" minOccurs="0"/>
+			<xs:element name="SUSCRIPTOR_OCS" type="tns:suscriptorOCS" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="serviciosType">
+		<xs:sequence>
+			<xs:element name="SERVICIO" type="tns:servicioType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="servicioType">
+		<xs:sequence>
+			<xs:element name="NOMBRE" type="xs:string"/>
+			<xs:element name="PARAMETROS" type="tns:parametrosType"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="parametrosType">
+		<xs:sequence>
+			<xs:element name="PARAMETRO" type="tns:parametroType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="parametroType">
+		<xs:sequence>
+			<xs:element name="NOMBRE" type="xs:string"/>
+			<xs:element name="TIPO" type="xs:string"/>
+			<xs:element name="VALOR" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="balancesType">
+		<xs:sequence>
+			<xs:element name="BALANCE" type="tns:balanceType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="balanceType">
+		<xs:sequence>
+			<xs:element name="CUENTA" type="xs:string"/>
+			<xs:element name="VALOR" type="xs:decimal"/>
+			<xs:element name="DIASVIGENCIA" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="suscriptorOCS">
+		<xs:sequence>
+			<xs:element name="MIN" type="xs:string"/>
+			<xs:element name="SERVICE_CLASS" type="xs:string" minOccurs="0"/>
+			<xs:element name="ACC_GRP_ID" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+</xs:schema>

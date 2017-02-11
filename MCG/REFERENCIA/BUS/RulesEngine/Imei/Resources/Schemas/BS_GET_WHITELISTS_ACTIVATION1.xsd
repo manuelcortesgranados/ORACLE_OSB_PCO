@@ -1,0 +1,35 @@
+<!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is 
+	Oracle JAX-WS 2.1.5. --><xs:schema version="1.0" targetNamespace="http://consultaActivacion.ws.imei.iecisa.co/" xmlns:tns="http://consultaActivacion.ws.imei.iecisa.co/" xmlns:tb="http://ws.imei.iecisa.co/tiposBasicos" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:import schemaLocation="BS_GET_WHITELISTS_ACTIVATION2.xsd" namespace="http://ws.imei.iecisa.co/tiposBasicos"/>
+	<xs:element name="ConsultaActivacionException" type="tns:ConsultaActivacionException"/>
+	<xs:element name="consulta" type="tns:consulta"/>
+	<xs:element name="consultaResponse" type="tns:consultaResponse"/>
+	<xs:complexType name="consulta">
+		<xs:sequence>
+			<xs:element name="tipoIdentificacion" type="tb:tipoIdentificacion"/>
+			<xs:element name="numeroIdentificacion" type="tb:tipoNumeroIdentificacion"/>
+			<xs:element name="imei" type="tb:tipoIMEI"/>
+			<xs:element name="equipoTraido" type="tb:tipoEquipoTraido"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="consultaResponse">
+		<xs:sequence>
+			<xs:element name="consultaActivacionResponse" type="tns:consultaActivacionResponse" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="consultaActivacionResponse">
+		<xs:sequence>
+			<xs:element name="activa" type="xs:boolean"/>
+			<xs:element name="codResp" type="xs:string" minOccurs="0"/>
+			<xs:element name="descripcion" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ConsultaActivacionException">
+		<xs:sequence>
+			<xs:element name="codigo" type="xs:string" minOccurs="0"/>
+			<xs:element name="descripcion" type="xs:string" minOccurs="0"/>
+			<xs:element name="message" type="xs:string" minOccurs="0"/>
+			<xs:element name="tipo" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

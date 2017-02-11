@@ -1,0 +1,20 @@
+<definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/SOA/Adapters/bd_getEntities" name="bd_getEntities-concrete" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/SOA/Adapters/bd_getEntities" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/SOA/Adapters/bd_getEntities" location="../Resources/WSDLs/getEntities_BD.wsdl"/>
+  <binding name="bd_getEntities_ptt-binding" type="tns:bd_getEntities_ptt">
+    <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+    <operation name="bd_getEntities">
+      <soap:operation soapAction="bd_getEntities"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="bd_getEntities-service">
+    <port name="bd_getEntities-port" binding="tns:bd_getEntities_ptt-binding">
+      <soap:address location="jca://eis/DB/Rules_Engine"/>
+    </port>
+  </service>
+</definitions>

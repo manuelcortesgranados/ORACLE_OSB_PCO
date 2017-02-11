@@ -1,0 +1,52 @@
+<wsdl:definitions name="insertarModificacionElegidos_PS" targetNamespace="http:/www.comcel.com.co/insertarModificacionElegidos_PS/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http:/www.comcel.com.co/insertarModificacionElegidos_PS/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsd1="http://www.comcel.com.co/ActualizarCantidadConsultasGratisDia/" xmlns:xsd2="http://www.comcel.com.co/ActualizarCambiosDePlan/" xmlns:xsd3="http://www.comcel.com.co/InsertarModificacionElegidos/">
+	<wsdl:types>
+		<xsd:schema targetNamespace="http:/www.comcel.com.co/insertarModificacionElegidos_PS/">
+			<xsd:element name="insertarModificacionElegidos">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="in" type="xsd:string"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="insertarModificacionElegidosResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="out" type="xsd:string"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:schema>
+		<xsd:schema>
+			<xsd:import namespace="http://www.comcel.com.co/InsertarModificacionElegidos/" schemaLocation="../Schemas/PS_ITEL_INSERTAR_MODIFICACION_ELEGIDOS.xsd">
+			</xsd:import></xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="insertarModificacionElegidosRequest">
+		<wsdl:part element="xsd3:Input_Parameters" name="Input_Parameters"/>
+	</wsdl:message>
+	<wsdl:message name="insertarModificacionElegidosResponse">
+		<wsdl:part element="xsd3:WS_Result" name="WS_Result"/>
+	</wsdl:message>
+	<wsdl:portType name="insertarModificacionElegidos_PS">
+		<wsdl:operation name="insertarModificacionElegidos">
+			<wsdl:input message="tns:insertarModificacionElegidosRequest"/>
+			<wsdl:output message="tns:insertarModificacionElegidosResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="insertarModificacionElegidos_PSSOAP" type="tns:insertarModificacionElegidos_PS">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="insertarModificacionElegidos">
+			<soap:operation soapAction="http:/www.comcel.com.co/insertarModificacionElegidos_PS/insertarModificacionElegidos"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="insertarModificacionElegidos_PS">
+		<wsdl:port binding="tns:insertarModificacionElegidos_PSSOAP" name="insertarModificacionElegidos_PSSOAP">
+			<soap:address location="http://www.comcel.com.co/"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

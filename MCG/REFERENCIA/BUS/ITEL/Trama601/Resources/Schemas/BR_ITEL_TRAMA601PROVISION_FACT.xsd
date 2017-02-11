@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://www.comcel.com.co"
+            targetNamespace="http://www.comcel.com.co/Ejecutador/"
+            elementFormDefault="qualified"
+            xmlns:tns="http://www.comcel.com.co/Ejecutador/">
+   <xs:element name="TRAMA_EJECUCION" type="tns:tramaEjeType"/>
+   <xs:complexType name="tramaEjeType">
+      <xs:sequence>
+         <xs:element name="MIN" type="xs:decimal"/>
+         <xs:element name="PARAMETROSTRAMA" type="tns:tramaType"/>
+         <xs:element name="PARAMETROSNEGOCIO" type="tns:negocioType"/>
+         <xs:element name="SUSCRIPTOR" type="tns:suscriptorType"/>
+         <xs:element name="CODIGOPLATAFORMA" type="xs:string"/>
+         <xs:element name="SERVICIOSEJECUCION" type="tns:serviciosType"/>
+         <xs:element name="HOSTID" type="xs:string"/>
+         <xs:element name="ERROR" type="xs:string"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="negocioType">
+      <xs:sequence>
+         <xs:element name="ACREDITACUENTA" type="xs:boolean"/>
+         <xs:element name="MONTOCUENTA" type="xs:decimal"/>
+         <xs:element name="CONTRACT" type="xs:string"/>
+         <xs:element name="ESPOSTPAGO" type="xs:string"/>
+         <xs:element name="ESUPDOWN" type="xs:string"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="tramaType">
+      <xs:sequence>
+         <xs:element name="COMENTARIO" type="xs:string" minOccurs="1" maxOccurs="1"/>
+         <xs:element name="CONSECUTIVO" type="xs:decimal" minOccurs="1" maxOccurs="1"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="serviciosType">
+      <xs:sequence>
+         <xs:element name="SERVICIO" type="tns:servicioType" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="suscriptorType">
+      <xs:sequence>
+         <xs:element name="ISEXPIREDONPEAK" type="xs:boolean"/>
+         <xs:element name="ONPEAKBALANCE" type="xs:decimal"/>
+         <xs:element name="PLAN" type="xs:string"/>
+         <xs:element name="FAFLISTS" type="tns:faflistsType" minOccurs="0" />
+         <xs:element name="FAFLISTSREMOVE" type="tns:faflistsType" minOccurs="0" />
+         <xs:element name="CHOSENSIZE" type="xs:decimal" minOccurs="0" />
+      </xs:sequence>
+   </xs:complexType>
+    <xs:complexType name="parametroType">
+      <xs:sequence>
+         <xs:element name="NOMBRE" type="xs:string"/>
+         <xs:element name="TIPO" type="xs:string"/>
+         <xs:element name="VALOR" type="xs:string"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="servicioType">
+      <xs:sequence>
+         <xs:element name="NOMBRE" type="xs:string"/>
+         <xs:element name="PARAMETROS" type="tns:parametrosType"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="parametrosType">
+      <xs:sequence>
+         <xs:element name="PARAMETRO" type="tns:parametroType" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="faflistsType">
+      <xs:sequence>
+         <xs:element name="SIZE" type="xs:decimal"/>
+         <xs:element name="FAFLIST" type="tns:faflistType" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="faflistType">
+      <xs:sequence>
+         <xs:element name="FAFID" type="xs:string"/>
+         <xs:element name="ELEGIDOS" type="tns:DataArray" />
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="DataArray">
+      <xs:sequence>
+         <xs:element name="Detail" type="xs:string" minOccurs="0"
+                     maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+</xs:schema>

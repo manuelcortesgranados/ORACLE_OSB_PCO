@@ -1,0 +1,2804 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con4="http://www.bea.com/wli/sb/stages/publish/config">
+  <ser:coreEntry isProxy="true" isEnabled="true" isAutoPublish="false" isTracingEnabled="false">
+    <ser:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config">
+      <con:wsdl ref="ITEL/Core/Resources/WSDLs/ejecutador_PS"/>
+      <con:binding>
+        <con:name>EjecutadorSOAP</con:name>
+        <con:namespace>http://www.comcel.com.co/Ejecutador/</con:namespace>
+      </con:binding>
+      <con:selector type="SOAP body"/>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+    <ser:ws-policy>
+      <ser:binding-mode>wsdl-policy-attachments</ser:binding-mode>
+    </ser:ws-policy>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>local</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:inbound-properties/>
+    <tran:all-headers>true</tran:all-headers>
+  </ser:endpointConfig>
+  <ser:router>
+    <con:pipeline type="request" name="PipelinePairNode1_request">
+      <con:stage name="inicializacion" errorHandler="_onErrorHandler-4677080153069974397--794393f4.13027a7ee5c.-7ea4">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/Ejecutador/" prefix="ejec"/>
+        </con:context>
+        <con:actions>
+          <con2:assign varName="tiempoInicioEtapa">
+            <con1:id>_ActionId-3591429329051188953-693c621d.13022a7a597.-7fee</con1:id>
+            <con2:expr>
+              <con1:xqueryText>fn:current-dateTime()</con1:xqueryText>
+            </con2:expr>
+          </con2:assign>
+          <con2:assign varName="codError">
+            <con1:id>_ActionId-1641293207969743559--28a4b30a.12fb0e9a486.-7aef</con1:id>
+            <con2:expr>
+              <con1:xqueryText>"1"</con1:xqueryText>
+            </con2:expr>
+          </con2:assign>
+          <con6:assign varName="tiempoInicio" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/typesystem/config" xmlns:con5="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con4="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con6="http://www.bea.com/wli/sb/stages/transform/config">
+            <con1:id>_ActionId-3712703115507925614-5d7c170d.1336eb77365.-7a5c</con1:id>
+            <con6:expr>
+              <con1:xqueryText>data($body/ejec:Input_Parameters/TIEMPO_INICIO)</con1:xqueryText>
+            </con6:expr>
+          </con6:assign>
+          <con6:assign varName="timeout" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/typesystem/config" xmlns:con5="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con4="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con6="http://www.bea.com/wli/sb/stages/transform/config">
+            <con1:id>_ActionId-3712703115507925614-5d7c170d.1336eb77365.-7a59</con1:id>
+            <con6:expr>
+              <con1:xqueryText>data($body/ejec:Input_Parameters/TIMEOUT)</con1:xqueryText>
+            </con6:expr>
+          </con6:assign>
+          <con2:assign varName="balances">
+            <con1:id>_ActionId-440002342435620209--3fe474f1.133d60c8086.-7551</con1:id>
+            <con2:expr>
+              <con1:xqueryText>&lt;BALANCES /></con1:xqueryText>
+            </con2:expr>
+          </con2:assign>
+          <con2:assign varName="balancesAnterior">
+            <con1:id>_ActionId-6920248578600958155--18afbc0b.13ae74df1bd.-7fef</con1:id>
+            <con2:expr>
+              <con1:xqueryText>&lt;BALANCES /></con1:xqueryText>
+            </con2:expr>
+          </con2:assign>
+          <con2:assign varName="metodo">
+            <con1:id>_ActionId-3660644965496362379-67f3b33e.1372e85ec19.-7fd0</con1:id>
+            <con2:expr>
+              <con1:xqueryText>data($body/ejec:Input_Parameters/METODO)</con1:xqueryText>
+            </con2:expr>
+          </con2:assign>
+          <con6:assign varName="esOCS" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/typesystem/config" xmlns:con5="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con4="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con6="http://www.bea.com/wli/sb/stages/transform/config">
+            <con1:id>_ActionId-7619517632386627082-190dd107.139f9f9a39c.-7e4f</con1:id>
+            <con6:expr>
+              <con1:xqueryText>number($body/ejec:Input_Parameters/IN_DESTINO) >= 50</con1:xqueryText>
+            </con6:expr>
+          </con6:assign>
+        </con:actions>
+      </con:stage>
+      <con:stage name="calcular" errorHandler="_onErrorHandler-1096434085378710523-1a87ec0a.12fa1638b8e.-7f56">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/Ejecutador/" prefix="ejec"/>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/ConsultarReglasProvision/" prefix="con"/>
+          <con3:variable name="respReglas" path="$respReglas" asChild="false">
+            <con3:schema ref="ITEL/Core/Resources/Schemas/PS_ITEL_CONSULTARREGLASPROVISION" element="WS_Result"/>
+          </con3:variable>
+        </con:context>
+        <con:actions>
+          <con2:ifThenElse>
+            <con1:id>_ActionId-440002342435620209--3fe474f1.133d60c8086.-7155</con1:id>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>($body/ejec:Input_Parameters/METODO != "200" and $body/ejec:Input_Parameters/METODO != "205") or $body/ejec:Input_Parameters/PARAMETROS_NEGOCIO/PARAMETRO[NOMBRE='ACREDITACUENTA']/VALOR = "TRUE"</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:wsCallout>
+                  <con1:id>_ActionId-440002342435620209--3fe474f1.133d60c8086.-714d</con1:id>
+                  <con2:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/consultarReglasProvisionLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con2:operation>consultarReglasProvision</con2:operation>
+                  <con2:request>
+                    <con2:body>$reglasProvisionRequest</con2:body>
+                  </con2:request>
+                  <con2:response>
+                    <con2:body>reglasProvisionResponse</con2:body>
+                  </con2:response>
+                  <con2:requestTransform>
+                    <con2:assign varName="reglasProvisionRequest">
+                      <con1:id>_ActionId-440002342435620209--3fe474f1.133d60c8086.-7150</con1:id>
+                      <con2:expr>
+                        <con1:xqueryTransform>
+                          <con1:resource ref="ITEL/Core/Resources/XQueries/ejecutador_Req_ConsultarReglasProvision"/>
+                          <con1:param name="input_Parameters1">
+                            <con1:path>$body/ejec:Input_Parameters</con1:path>
+                          </con1:param>
+                        </con1:xqueryTransform>
+                      </con2:expr>
+                    </con2:assign>
+                  </con2:requestTransform>
+                  <con2:responseTransform>
+                    <con2:ifThenElse>
+                      <con1:id>_ActionId-440002342435620209--3fe474f1.133d60c8086.-714f</con1:id>
+                      <con2:case>
+                        <con2:condition>
+                          <con1:xqueryText>$reglasProvisionResponse/CODIGO/text() != "1"</con1:xqueryText>
+                        </con2:condition>
+                        <con2:actions>
+                          <con2:assign varName="codError">
+                            <con1:id>_ActionId-440002342435620209--3fe474f1.133d60c8086.-714e</con1:id>
+                            <con2:expr>
+                              <con1:xqueryText>$reglasProvisionResponse/CODIGO/text()</con1:xqueryText>
+                            </con2:expr>
+                          </con2:assign>
+                        </con2:actions>
+                      </con2:case>
+                      <con2:default/>
+                    </con2:ifThenElse>
+                  </con2:responseTransform>
+                </con2:wsCallout>
+              </con2:actions>
+            </con2:case>
+            <con2:default>
+              <con2:assign varName="reglasProvisionResponse">
+                <con1:id>_ActionId-440002342435620209--3fe474f1.133d60c8086.-711e</con1:id>
+                <con2:expr>
+                  <con1:xqueryText><![CDATA[<con:WS_Result  	xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:con="http://www.comcel.com.co/ConsultarReglasProvision/">
+	<CODIGO>1</CODIGO>
+	<MENSAJE/>
+	<DESCRIPCION>0 servicios calculados</DESCRIPCION>
+	</con:WS_Result>]]></con1:xqueryText>
+                </con2:expr>
+              </con2:assign>
+            </con2:default>
+          </con2:ifThenElse>
+          <con6:assign varName="tiempoReglas" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/typesystem/config" xmlns:con5="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con4="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con6="http://www.bea.com/wli/sb/stages/transform/config">
+            <con1:id>_ActionId-3712703115507925614-5d7c170d.1336eb77365.-7a51</con1:id>
+            <con6:expr>
+              <con1:xqueryText>fn:current-dateTime()</con1:xqueryText>
+            </con6:expr>
+          </con6:assign>
+          <con6:assign varName="duracionReglas" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/typesystem/config" xmlns:con5="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con4="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con6="http://www.bea.com/wli/sb/stages/transform/config">
+            <con1:id>_ActionId-3712703115507925614-5d7c170d.1336eb77365.-7a4e</con1:id>
+            <con6:expr>
+              <con1:xqueryText>fn:seconds-from-duration(xs:dateTime($tiempoReglas) - xs:dateTime($tiempoInicioEtapa)) * 1000</con1:xqueryText>
+            </con6:expr>
+          </con6:assign>
+        </con:actions>
+      </con:stage>
+      <con:stage name="ejecutar" errorHandler="_onErrorHandler-1641293207969743559--28a4b30a.12fb0e9a486.-7e31">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/ConsultarReglasProvision/" prefix="con"/>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/Ejecutador/" prefix="ejec"/>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/DynamicDispatcher/" prefix="dyn"/>
+          <con3:variable name="respReglas" path="$respReglas" asChild="false">
+            <con3:schema ref="ITEL/Core/Resources/Schemas/PS_ITEL_CONSULTARREGLASPROVISION" element="WS_Result"/>
+          </con3:variable>
+          <con3:variable name="respServicio" path="$respServicio" asChild="false">
+            <con3:schema ref="ITEL/Core/Resources/Schemas/PS_ITEL_DYNAMICDISPATCHER" element="WS_Result"/>
+          </con3:variable>
+        </con:context>
+        <con:actions>
+          <con2:assign varName="duracionServicios">
+            <con1:id>_ActionId-5174370892286694528-6956db40.133a81e5a33.-7e7c</con1:id>
+            <con2:expr>
+              <con1:xqueryText>"0"</con1:xqueryText>
+            </con2:expr>
+          </con2:assign>
+          <con2:assign varName="serviciosEjecutados">
+            <con1:id>_ActionId-5174370892286694528-6956db40.133a81e5a33.-7e80</con1:id>
+            <con2:expr>
+              <con1:xqueryText>&lt;SERVICIOS_EJECUTADOS xmlns="http://www.comcel.com.co/Ejecutador/" /></con1:xqueryText>
+            </con2:expr>
+          </con2:assign>
+          <con2:ifThenElse>
+            <con1:id>_ActionId-1641293207969743559--28a4b30a.12fb0e9a486.-7b0a</con1:id>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>$codError = "1"</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:ifThenElse>
+                  <con1:id>_ActionId-1132387382947419590-1fc650de.12fdf640f10.-7f7e</con1:id>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>fn:seconds-from-duration(xs:dateTime($tiempoReglas) - xs:dateTime($tiempoInicio)) * 1000 &lt;= xs:decimal($timeout)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:foreach>
+                        <con1:id>_ActionId-1132387382947419590-1fc650de.12fdf640f10.-7f50</con1:id>
+                        <con2:variable>reglasProvisionResponse</con2:variable>
+                        <con2:expression>
+                          <con1:xpathText>./MENSAJE/SERVICIO</con1:xpathText>
+                        </con2:expression>
+                        <con2:value-variable>v_servicio</con2:value-variable>
+                        <con2:index-variable>v_indice</con2:index-variable>
+                        <con2:total-variable>v_total</con2:total-variable>
+                        <con2:actions>
+                          <con2:assign varName="tiempoInicioServicio">
+                            <con1:id>_ActionId-4677080153069974397--794393f4.13027a7ee5c.-7b07</con1:id>
+                            <con2:expr>
+                              <con1:xqueryText>fn:current-dateTime()</con1:xqueryText>
+                            </con2:expr>
+                          </con2:assign>
+                          <con2:wsCallout>
+                            <con1:id>_ActionId-1132387382947419590-1fc650de.12fdf640f10.-7f57</con1:id>
+                            <con2:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/dymanicDispatcherLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                            <con2:operation>dynamicDispatcher</con2:operation>
+                            <con2:request>
+                              <con2:body>$servicio</con2:body>
+                            </con2:request>
+                            <con2:response>
+                              <con2:body>respServicio</con2:body>
+                            </con2:response>
+                            <con2:requestTransform>
+                              <con2:assign varName="servicio">
+                                <con1:id>_ActionId-3712703115507925614-5d7c170d.1336eb77365.-7a49</con1:id>
+                                <con2:expr>
+                                  <con1:xqueryTransform>
+                                    <con1:resource ref="ITEL/Core/Resources/XQueries/ejecutador_Req_DynamiDispatcher"/>
+                                    <con1:param name="indice">
+                                      <con1:path>$v_indice</con1:path>
+                                    </con1:param>
+                                    <con1:param name="wS_Result1">
+                                      <con1:path>$reglasProvisionResponse</con1:path>
+                                    </con1:param>
+                                  </con1:xqueryTransform>
+                                </con2:expr>
+                              </con2:assign>
+                            </con2:requestTransform>
+                            <con2:responseTransform/>
+                          </con2:wsCallout>
+                          <con2:assign varName="duracionServicios">
+                            <con1:id>_ActionId-3224849615183281059--5cf52978.1328381f319.-7db8</con1:id>
+                            <con2:expr>
+                              <con1:xqueryText>xs:integer($duracionServicios) + fn:seconds-from-duration(fn:current-dateTime() - xs:dateTime($tiempoInicioServicio)) * 1000</con1:xqueryText>
+                            </con2:expr>
+                          </con2:assign>
+                          <con2:ifThenElse>
+                            <con1:id>_ActionId-1132387382947419590-1fc650de.12fdf640f10.-7f56</con1:id>
+                            <con2:case>
+                              <con2:condition>
+                                <con1:xqueryText>$respServicio/Codigo/text() = "OK"
+and $respServicio/Mensaje/*/*/CODIGO/text() = "1"
+or (($respServicio/Mensaje/*/*/CODIGO/text() = "900" 
+or contains($respServicio/Mensaje/*/*/DESCRIPCION/text(), "21126")
+or contains($respServicio/Mensaje/*/*/DESCRIPCION/text(), "21047"))
+and fn:contains($servicio/servicio/nombre_servicio, "eliminarSuscripcionOCSLocal_PS")
+and $body/ejec:Input_Parameters/METODO = ("501","600"))
+or (
+ $respServicio/Mensaje/*/*/CODIGO/text() = "923"
+ and $body/ejec:Input_Parameters/METODO = ("301","309","701")
+)</con1:xqueryText>
+                              </con2:condition>
+                              <con2:actions>
+                                <con2:replace contents-only="false" varName="v_servicio">
+                                  <con1:id>_ActionId-3588103665024962332-3531ad2e.1355ef6a64c.-7f3d</con1:id>
+                                  <con2:expr>
+                                    <con1:xqueryText>&lt;SERVICIO>{$respServicio/Mensaje/*/*/MENSAJE/*/@cluster , $v_servicio/node()}&lt;/SERVICIO></con1:xqueryText>
+                                  </con2:expr>
+                                </con2:replace>
+                                <con2:ifThenElse>
+                                  <con1:id>_ActionId-4181878994193062054--7070ea4f.146b6477785.-7fe4</con1:id>
+                                  <con2:case>
+                                    <con2:condition>
+                                      <con1:xqueryText>$respServicio/Mensaje/*/*/CODIGO/text() = "1"</con1:xqueryText>
+                                    </con2:condition>
+                                    <con2:actions>
+                                      <con2:insert varName="serviciosEjecutados">
+                                        <con1:id>_ActionId-4181878994193062054--7070ea4f.146b6477785.-7fe2</con1:id>
+                                        <con2:location/>
+                                        <con2:where>last-child</con2:where>
+                                        <con2:expr>
+                                          <con1:xqueryText>$v_servicio</con1:xqueryText>
+                                        </con2:expr>
+                                      </con2:insert>
+                                    </con2:actions>
+                                  </con2:case>
+                                  <con2:default/>
+                                </con2:ifThenElse>
+                                <con2:ifThenElse>
+                                  <con1:id>_ActionId-440002342435620209--3fe474f1.133d60c8086.-7534</con1:id>
+                                  <con2:case>
+                                    <con2:condition>
+                                      <con1:xqueryText>$body/ejec:Input_Parameters/METODO = "200"</con1:xqueryText>
+                                    </con2:condition>
+                                    <con2:actions>
+                                      <con2:insert varName="balances">
+                                        <con1:id>_ActionId-440002342435620209--3fe474f1.133d60c8086.-750d</con1:id>
+                                        <con2:location/>
+                                        <con2:where>last-child</con2:where>
+                                        <con2:expr>
+                                          <con1:xqueryText><![CDATA[<BALANCE>
+	<CUENTA>{$respServicio/Mensaje/*:Body/*:WS_Result/MENSAJE/Carga/*:respuesta/*:account/text()}</CUENTA>
+	<VALOR>{ data($respServicio/Mensaje/*:Body/*:WS_Result/MENSAJE/Carga/*:respuesta/*:resultingBalance)  }</VALOR>
+</BALANCE>]]></con1:xqueryText>
+                                        </con2:expr>
+                                      </con2:insert>
+                                    </con2:actions>
+                                  </con2:case>
+                                  <con2:case>
+                                    <con2:condition>
+                                      <con1:xqueryText>($body/ejec:Input_Parameters/METODO = ('400','401','402','403','406')) and contains($servicio, "OCS")</con1:xqueryText>
+                                    </con2:condition>
+                                    <con2:actions>
+                                      <con2:insert varName="balances">
+                                        <con1:id>_ActionId-4335493786000560624--5ca78c50.138b4661397.-7e9e</con1:id>
+                                        <con2:location/>
+                                        <con2:where>last-child</con2:where>
+                                        <con2:expr>
+                                          <con1:xqueryText><![CDATA[let $valor := data($respServicio/Mensaje/*:Body/*:WS_Result/MENSAJE/RECARGA/MethodResponse/accountValue)
+let $serviceClass := data($respServicio/Mensaje/*:Body/*:WS_Result/MENSAJE/RECARGA/MethodResponse/serviceClass)
+let $balance1 := if( exists($valor) and $valor!= "") then
+<BALANCE>
+	<CUENTA>{ "0" }</CUENTA>
+	<VALOR>{ $valor  }</VALOR>
+	<DIASVIGENCIA>{ data($respServicio/Mensaje/*:Body/*:WS_Result/MENSAJE/RECARGA/MethodResponse/expiryDate)  }</DIASVIGENCIA>
+	<SERVICECLASS>{ $serviceClass  }</SERVICECLASS>
+</BALANCE>
+else (),
+$balance2 :=
+<BALANCE>
+	<CUENTA>{ data($respServicio/Mensaje/*:Body/*:WS_Result/MENSAJE/RECARGA/MethodResponse/DedicatedAccounts/Detail/Name) }</CUENTA>
+	<VALOR>{ data($respServicio/Mensaje/*:Body/*:WS_Result/MENSAJE/RECARGA/MethodResponse/DedicatedAccounts/Detail/Balance)  }</VALOR>
+	<DIASVIGENCIA>{ data($respServicio/Mensaje/*:Body/*:WS_Result/MENSAJE/RECARGA/MethodResponse/DedicatedAccounts/Detail/ExpiryDate)  }</DIASVIGENCIA>
+	<SERVICECLASS>{ $serviceClass  }</SERVICECLASS>
+</BALANCE>
+return ($balance1, $balance2)]]></con1:xqueryText>
+                                        </con2:expr>
+                                      </con2:insert>
+                                      <con2:insert varName="balancesAnterior">
+                                        <con1:id>_ActionId-6920248578600958155--18afbc0b.13ae74df1bd.-7fb2</con1:id>
+                                        <con2:location/>
+                                        <con2:where>last-child</con2:where>
+                                        <con2:expr>
+                                          <con1:xqueryText><![CDATA[let $valor := data($respServicio/Mensaje/*:Body/*:WS_Result/MENSAJE/ANTES_RECARGA/MethodResponse/accountValue)
+let $balance1 := if( exists($valor) and $valor!= "") then
+<BALANCE>
+	<CUENTA>{ "0" }</CUENTA>
+	<VALOR>{ $valor  }</VALOR>
+	<DIASVIGENCIA>{ data($respServicio/Mensaje/*:Body/*:WS_Result/MENSAJE/ANTES_RECARGA/MethodResponse/expiryDate)  }</DIASVIGENCIA>
+</BALANCE>
+else (),
+$balance2 :=
+<BALANCE>
+	<CUENTA>{ data($respServicio/Mensaje/*:Body/*:WS_Result/MENSAJE/ANTES_RECARGA/MethodResponse/DedicatedAccounts/Detail/Name) }</CUENTA>
+	<VALOR>{ data($respServicio/Mensaje/*:Body/*:WS_Result/MENSAJE/ANTES_RECARGA/MethodResponse/DedicatedAccounts/Detail/Balance)  }</VALOR>
+	<DIASVIGENCIA>{ data($respServicio/Mensaje/*:Body/*:WS_Result/MENSAJE/ANTES_RECARGA/MethodResponse/DedicatedAccounts/Detail/ExpiryDate)  }</DIASVIGENCIA>
+</BALANCE>
+return ($balance1, $balance2)]]></con1:xqueryText>
+                                        </con2:expr>
+                                      </con2:insert>
+                                    </con2:actions>
+                                  </con2:case>
+                                  <con2:case>
+                                    <con2:condition>
+                                      <con1:xqueryText>data($body/ejec:Input_Parameters/METODO) = '407'</con1:xqueryText>
+                                    </con2:condition>
+                                    <con2:actions>
+                                      <con2:insert varName="balances">
+                                        <con1:id>_ActionId-4987849194217987704--2d16fc26.13a8927eb99.-7f2b</con1:id>
+                                        <con2:location/>
+                                        <con2:where>last-child</con2:where>
+                                        <con2:expr>
+                                          <con1:xqueryText><![CDATA[let $valor := data($respServicio/Mensaje/*:Body/*:WS_Result/MENSAJE/RECARGA/MethodResponse/accountValue)
+let $balance1 := if( exists($valor) and $valor!= "") then
+<BALANCE>
+	<CUENTA>{ "0" }</CUENTA>
+	<VALOR>{ $valor  }</VALOR>
+	<DIASVIGENCIA>{ data($respServicio/Mensaje/*:Body/*:WS_Result/MENSAJE/RECARGA/MethodResponse/expiryDate)  }</DIASVIGENCIA>
+</BALANCE>
+else (),
+$bonos := data($respServicio/Mensaje/*:Body/*:WS_Result/MENSAJE/RECARGA/MethodResponse/DedicatedAccounts/Detail[Name='7000'])
+let
+$balance2 := if( exists($bonos)) then
+<BALANCE>
+	<CUENTA>7000</CUENTA>
+	<VALOR>{ data($respServicio/Mensaje/*:Body/*:WS_Result/MENSAJE/RECARGA/MethodResponse/DedicatedAccounts/Detail[Name='7000']/Balance)  }</VALOR>
+	<DIASVIGENCIA>{ data($respServicio/Mensaje/*:Body/*:WS_Result/MENSAJE/RECARGA/MethodResponse/DedicatedAccounts/Detail[Name='7000']/ExpiryDate)  }</DIASVIGENCIA>
+</BALANCE>
+else ()
+return ($balance1, $balance2)]]></con1:xqueryText>
+                                        </con2:expr>
+                                      </con2:insert>
+                                    </con2:actions>
+                                  </con2:case>
+                                  <con2:default/>
+                                </con2:ifThenElse>
+                                <con2:ifThenElse>
+                                  <con1:id>_ActionId-1171445299687889014--2751aaca.13d12fca42d.-7d37</con1:id>
+                                  <con2:case>
+                                    <con2:condition>
+                                      <con1:xqueryText>xs:decimal($duracionServicios) &lt;= xs:decimal($timeout)</con1:xqueryText>
+                                    </con2:condition>
+                                    <con2:actions/>
+                                  </con2:case>
+                                  <con2:default>
+                                    <con2:assign varName="codError">
+                                      <con1:id>_ActionId-1171445299687889014--2751aaca.13d12fca42d.-7d31</con1:id>
+                                      <con2:expr>
+                                        <con1:xqueryText>"3"</con1:xqueryText>
+                                      </con2:expr>
+                                    </con2:assign>
+                                    <con6:assign varName="duracionEjecucion" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/typesystem/config" xmlns:con5="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con4="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con6="http://www.bea.com/wli/sb/stages/transform/config">
+                                      <con1:id>_ActionId-1171445299687889014--2751aaca.13d12fca42d.-7d2c</con1:id>
+                                      <con6:expr>
+                                        <con1:xqueryText>fn:seconds-from-duration(fn:current-dateTime() - xs:dateTime($tiempoReglas)) * 1000</con1:xqueryText>
+                                      </con6:expr>
+                                    </con6:assign>
+                                    <con1:skip>
+                                      <con1:id>_ActionId-1171445299687889014--2751aaca.13d12fca42d.-7cee</con1:id>
+                                    </con1:skip>
+                                  </con2:default>
+                                </con2:ifThenElse>
+                              </con2:actions>
+                            </con2:case>
+                            <con2:default>
+                              <con2:assign varName="codError">
+                                <con1:id>_ActionId-5174370892286694528-6956db40.133a81e5a33.-7a5c</con1:id>
+                                <con2:expr>
+                                  <con1:xqueryText>data($respServicio/Mensaje/*/*/CODIGO)</con1:xqueryText>
+                                </con2:expr>
+                              </con2:assign>
+                              <con6:assign varName="duracionEjecucion" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/typesystem/config" xmlns:con5="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con4="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con6="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con1:id>_ActionId-5174370892286694528-6956db40.133a81e5a33.-7f0d</con1:id>
+                                <con6:expr>
+                                  <con1:xqueryText>fn:seconds-from-duration(fn:current-dateTime() - xs:dateTime($tiempoReglas)) * 1000</con1:xqueryText>
+                                </con6:expr>
+                              </con6:assign>
+                              <con1:skip>
+                                <con1:id>_ActionId-5174370892286694528-6956db40.133a81e5a33.-7ec5</con1:id>
+                              </con1:skip>
+                            </con2:default>
+                          </con2:ifThenElse>
+                        </con2:actions>
+                      </con2:foreach>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:default>
+                    <con2:assign varName="codError">
+                      <con1:id>_ActionId-1132387382947419590-1fc650de.12fdf640f10.-7f21</con1:id>
+                      <con2:expr>
+                        <con1:xqueryText>"3"</con1:xqueryText>
+                      </con2:expr>
+                    </con2:assign>
+                  </con2:default>
+                </con2:ifThenElse>
+              </con2:actions>
+            </con2:case>
+            <con2:default/>
+          </con2:ifThenElse>
+          <con6:assign varName="duracionEjecucion" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/typesystem/config" xmlns:con5="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con4="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con6="http://www.bea.com/wli/sb/stages/transform/config">
+            <con1:id>_ActionId-3712703115507925614-5d7c170d.1336eb77365.-7a4b</con1:id>
+            <con6:expr>
+              <con1:xqueryText>fn:seconds-from-duration(fn:current-dateTime() - xs:dateTime($tiempoReglas)) * 1000</con1:xqueryText>
+            </con6:expr>
+          </con6:assign>
+        </con:actions>
+      </con:stage>
+      <con:stage name="operacionAdicional" errorHandler="_onErrorHandler-5985043086313793460-3dcd6be3.1374b9d51ec.-789b">
+        <con:context>
+          <con1:userNsDecl namespace="http://www.comcel.com.co/InsertarAuditoriaBloqueo" prefix="ins"/>
+          <con1:userNsDecl namespace="http://www.comcel.com.co/InsertarBloqueoHotkit" prefix="ins2"/>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/Ejecutador/" prefix="ejec"/>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/IN/OperacionCorba" prefix="oper"/>
+        </con:context>
+        <con:actions>
+          <con2:ifThenElse>
+            <con1:id>_ActionId-5671802006698221921-7dba416a.149c03ee681.-7315</con1:id>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>$codError = "1" and $metodo = ("302","308","314")
+and data($body/ejec:Input_Parameters/PARAMETROS_NEGOCIO/PARAMETRO[NOMBRE="ESPOSTPAGO"]/VALOR) = 'FALSE'
+and (($metodo != "314" and number($body/ejec:Input_Parameters/PARAMETROS_TRAMA/PARAMETRO[NOMBRE='MONTORECARGA']/VALOR) > 0)
+or ($metodo = "314" and number($body/ejec:Input_Parameters/PARAMETROS_TRAMA/PARAMETRO[NOMBRE='CONSECUTIVO']/VALOR) > 0))</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:wsCallout>
+                  <con1:id>_ActionId-5671802006698221921-7dba416a.149c03ee681.-72dd</con1:id>
+                  <con2:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/insertarModificacionElegidosLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con2:operation>insertarModificacionElegidos</con2:operation>
+                  <con2:request>
+                    <con2:body>$insertarModificacionElegidosRequest</con2:body>
+                  </con2:request>
+                  <con2:response>
+                    <con2:body>insertarModificacionElegidosResponse</con2:body>
+                  </con2:response>
+                  <con2:requestTransform>
+                    <con2:assign varName="insertarModificacionElegidosRequest">
+                      <con1:id>_ActionId-5671802006698221921-7dba416a.149c03ee681.-726e</con1:id>
+                      <con2:expr>
+                        <con1:xqueryTransform>
+                          <con1:resource ref="ITEL/Core/Resources/XQueries/ejecutador_Req_InsertarModificacionElegidos"/>
+                          <con1:param name="elegidosModificados">
+                            <con1:path>string-join(data($reglasProvisionResponse/MENSAJE/SERVICIO/PARAMETROS/PARAMETRO[NOMBRE="MSISDNELEGIDOTOREGISTER"]/VALOR/Detail),';')</con1:path>
+                          </con1:param>
+                          <con1:param name="min">
+                            <con1:path>data($body/ejec:Input_Parameters/MIN_DESTINO)</con1:path>
+                          </con1:param>
+                        </con1:xqueryTransform>
+                      </con2:expr>
+                    </con2:assign>
+                  </con2:requestTransform>
+                  <con2:responseTransform/>
+                </con2:wsCallout>
+              </con2:actions>
+            </con2:case>
+            <con2:default/>
+          </con2:ifThenElse>
+          <con2:ifThenElse>
+            <con1:id>_ActionId-440002342435620209--3fe474f1.133d60c8086.-7236</con1:id>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>$codError != "1"</con1:xqueryText>
+              </con2:condition>
+              <con2:actions/>
+            </con2:case>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>$metodo = "200" and data($body/ejec:Input_Parameters/PARAMETROS_NEGOCIO/PARAMETRO[NOMBRE='TIPOCONSULTA']/VALOR) = "1"</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:ifThenElse>
+                  <con1:id>_ActionId-6976846291545377664--436f7b08.13552cbec74.-7fc9</con1:id>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>data($body/ejec:Input_Parameters/PARAMETROS_NEGOCIO/PARAMETRO[NOMBRE='ACREDITACUENTA']/VALOR) = "TRUE"</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:wsCallout>
+                        <con1:id>_ActionId-6976846291545377664--436f7b08.13552cbec74.-7fc5</con1:id>
+                        <con2:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/actualizarConsultasRealizadasLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>bd_actualizarConsultasRealizadas</con2:operation>
+                        <con2:request>
+                          <con2:body>$actualizarRequest</con2:body>
+                        </con2:request>
+                        <con2:response>
+                          <con2:body>actulizarResponse</con2:body>
+                        </con2:response>
+                        <con2:requestTransform>
+                          <con2:assign varName="actualizarRequest">
+                            <con1:id>_ActionId-6976846291545377664--436f7b08.13552cbec74.-7fc6</con1:id>
+                            <con2:expr>
+                              <con1:xqueryTransform>
+                                <con1:resource ref="ITEL/Core/Resources/XQueries/ejecutador_Req_actualizarConsultasRealizadas"/>
+                                <con1:param name="min">
+                                  <con1:path>$body/ejec:Input_Parameters/MIN_DESTINO/text()</con1:path>
+                                </con1:param>
+                              </con1:xqueryTransform>
+                            </con2:expr>
+                          </con2:assign>
+                        </con2:requestTransform>
+                        <con2:responseTransform/>
+                      </con2:wsCallout>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-6976846291545377664--436f7b08.13552cbec74.-7fc2</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>$actulizarResponse/CODIGO != "1"</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con2:assign varName="codError">
+                              <con1:id>_ActionId-6976846291545377664--436f7b08.13552cbec74.-7fc1</con1:id>
+                              <con2:expr>
+                                <con1:xqueryText>"909"</con1:xqueryText>
+                              </con2:expr>
+                            </con2:assign>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default/>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>data($body/ejec:Input_Parameters/PARAMETROS_NEGOCIO/PARAMETRO[NOMBRE='ACREDITACUENTA']/VALOR) = "FALSE"</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:wsCallout>
+                        <con1:id>_ActionId-6976846291545377664--436f7b08.13552cbec74.-7f1d</con1:id>
+                        <con2:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/actualizarConsultasGratisLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>actualizarConsultasGratis</con2:operation>
+                        <con2:request>
+                          <con2:body>$actualizarRequest</con2:body>
+                        </con2:request>
+                        <con2:response>
+                          <con2:body>actualizarResponse</con2:body>
+                        </con2:response>
+                        <con2:requestTransform>
+                          <con2:assign varName="actualizarRequest">
+                            <con1:id>_ActionId-6976846291545377664--436f7b08.13552cbec74.-7ee4</con1:id>
+                            <con2:expr>
+                              <con1:xqueryTransform>
+                                <con1:resource ref="ITEL/Core/Resources/XQueries/ejecutador_Req_actualizarConsultasGratis"/>
+                                <con1:param name="min">
+                                  <con1:path>$body/ejec:Input_Parameters/MIN_DESTINO/text()</con1:path>
+                                </con1:param>
+                              </con1:xqueryTransform>
+                            </con2:expr>
+                          </con2:assign>
+                        </con2:requestTransform>
+                        <con2:responseTransform/>
+                      </con2:wsCallout>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-6976846291545377664--436f7b08.13552cbec74.-7e6f</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>$actulizarResponse/CODIGO != "1"</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con2:assign varName="codError">
+                              <con1:id>_ActionId-6976846291545377664--436f7b08.13552cbec74.-7e6e</con1:id>
+                              <con2:expr>
+                                <con1:xqueryText>"909"</con1:xqueryText>
+                              </con2:expr>
+                            </con2:assign>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default/>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:default/>
+                </con2:ifThenElse>
+              </con2:actions>
+            </con2:case>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>$metodo = "301" or $metodo = "309"</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:ifThenElse>
+                  <con1:id>_ActionId-7619517632386627082-190dd107.139f9f9a39c.-7c58</con1:id>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>$esOCS="false"</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:wsCallout>
+                        <con1:id>_ActionId-7619517632386627082-190dd107.139f9f9a39c.-7c50</con1:id>
+                        <con2:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/insertarElegidoIlimitadoLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>insertarElegido</con2:operation>
+                        <con2:request>
+                          <con2:body>$elegidoRequest</con2:body>
+                        </con2:request>
+                        <con2:response>
+                          <con2:body>elegidoResponse</con2:body>
+                        </con2:response>
+                        <con2:requestTransform>
+                          <con2:ifThenElse>
+                            <con1:id>_ActionId-7619517632386627082-190dd107.139f9f9a39c.-7c53</con1:id>
+                            <con2:case>
+                              <con2:condition>
+                                <con1:xqueryText>number($body/ejec:Input_Parameters/IN_DESTINO) >= 50</con1:xqueryText>
+                              </con2:condition>
+                              <con2:actions>
+                                <con2:assign varName="elegidoRequest">
+                                  <con1:id>_ActionId-7619517632386627082-190dd107.139f9f9a39c.-7c52</con1:id>
+                                  <con2:expr>
+                                    <con1:xqueryTransform>
+                                      <con1:resource ref="ITEL/Core/Resources/XQueries/ejecutador_Req_insertarElegidoIlimitado"/>
+                                      <con1:param name="elegido">
+                                        <con1:path>data($body/ejec:Input_Parameters/PARAMETROS_TRAMA/PARAMETRO[NOMBRE='HOSTID']/VALOR)</con1:path>
+                                      </con1:param>
+                                      <con1:param name="min">
+                                        <con1:path>data($body/ejec:Input_Parameters/MIN_DESTINO)</con1:path>
+                                      </con1:param>
+                                      <con1:param name="elegidoAntiguo">
+                                        <con1:path>""</con1:path>
+                                      </con1:param>
+                                      <con1:param name="fechaCreacion">
+                                        <con1:path>data($body/ejec:Input_Parameters/PARAMETROS_NEGOCIO/PARAMETRO[NOMBRE='FECHA_REGISTRO_ILIMITADO']/VALOR)</con1:path>
+                                      </con1:param>
+                                      <con1:param name="vigencia">
+                                        <con1:path>data($body/ejec:Input_Parameters/PARAMETROS_NEGOCIO/PARAMETRO[NOMBRE='VIGENCIA_ILIMITADO_MESES']/VALOR)</con1:path>
+                                      </con1:param>
+                                      <con1:param name="proceso">
+                                        <con1:path>""</con1:path>
+                                      </con1:param>
+                                    </con1:xqueryTransform>
+                                  </con2:expr>
+                                </con2:assign>
+                              </con2:actions>
+                            </con2:case>
+                            <con2:default>
+                              <con2:assign varName="elegidoRequest">
+                                <con1:id>_ActionId-7619517632386627082-190dd107.139f9f9a39c.-7c51</con1:id>
+                                <con2:expr>
+                                  <con1:xqueryTransform>
+                                    <con1:resource ref="ITEL/Core/Resources/XQueries/ejecutador_Req_insertarElegidoIlimitado"/>
+                                    <con1:param name="elegido">
+                                      <con1:path>data($body/ejec:Input_Parameters/PARAMETROS_TRAMA/PARAMETRO[NOMBRE='HOSTID']/VALOR)</con1:path>
+                                    </con1:param>
+                                    <con1:param name="min">
+                                      <con1:path>data($body/ejec:Input_Parameters/MIN_DESTINO)</con1:path>
+                                    </con1:param>
+                                    <con1:param name="elegidoAntiguo">
+                                      <con1:path>""</con1:path>
+                                    </con1:param>
+                                    <con1:param name="fechaCreacion">
+                                      <con1:path>data($body/ejec:Input_Parameters/PARAMETROS_NEGOCIO/PARAMETRO[NOMBRE='FECHA_REGISTRO_ILIMITADO']/VALOR)</con1:path>
+                                    </con1:param>
+                                    <con1:param name="vigencia">
+                                      <con1:path>data($body/ejec:Input_Parameters/PARAMETROS_NEGOCIO/PARAMETRO[NOMBRE='VIGENCIA_ILIMITADO_MESES']/VALOR)</con1:path>
+                                    </con1:param>
+                                    <con1:param name="proceso">
+                                      <con1:path>""</con1:path>
+                                    </con1:param>
+                                  </con1:xqueryTransform>
+                                </con2:expr>
+                              </con2:assign>
+                            </con2:default>
+                          </con2:ifThenElse>
+                        </con2:requestTransform>
+                        <con2:responseTransform/>
+                      </con2:wsCallout>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:default>
+                    <con2:wsCallout>
+                      <con1:id>_ActionId-7619517632386627082-190dd107.139f9f9a39c.-7c42</con1:id>
+                      <con2:service xsi:type="ref:ProxyRef" ref="ITEL/OCS/OLM/Proxies/consultarSuscripcionOCSLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                      <con2:operation>consultarSuscripcionOCS</con2:operation>
+                      <con2:request>
+                        <con2:body>$suscripcionRequest</con2:body>
+                      </con2:request>
+                      <con2:response>
+                        <con2:body>suscripcionResponse</con2:body>
+                      </con2:response>
+                      <con2:requestTransform>
+                        <con2:assign varName="suscripcionRequest">
+                          <con1:id>_ActionId-7619517632386627082-190dd107.139f9f9a39c.-7c43</con1:id>
+                          <con2:expr>
+                            <con1:xqueryTransform>
+                              <con1:resource ref="ITEL/Core/Resources/XQueries/consultarSuscripcionOCSPS_Req"/>
+                              <con1:param name="min">
+                                <con1:path>data($body/ejec:Input_Parameters/MIN_DESTINO)</con1:path>
+                              </con1:param>
+                            </con1:xqueryTransform>
+                          </con2:expr>
+                        </con2:assign>
+                      </con2:requestTransform>
+                      <con2:responseTransform/>
+                    </con2:wsCallout>
+                    <con2:wsCallout>
+                      <con1:id>_ActionId-7619517632386627082-190dd107.139f9f9a39c.-7c38</con1:id>
+                      <con2:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/insertarElegidoOCSLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                      <con2:operation>insertarElegidoOCS</con2:operation>
+                      <con2:request>
+                        <con2:body>$elegidoRequest</con2:body>
+                      </con2:request>
+                      <con2:response>
+                        <con2:body>elegidoResponse</con2:body>
+                      </con2:response>
+                      <con2:requestTransform>
+                        <con2:assign varName="elegidoRequest">
+                          <con1:id>_ActionId-7619517632386627082-190dd107.139f9f9a39c.-7c39</con1:id>
+                          <con2:expr>
+                            <con1:xqueryTransform>
+                              <con1:resource ref="ITEL/Core/Resources/XQueries/ejecutador_Req_insertarElegidoIlimitadoOCS"/>
+                              <con1:param name="elegido">
+                                <con1:path>data($body/ejec:Input_Parameters/PARAMETROS_TRAMA/PARAMETRO[NOMBRE='HOSTID']/VALOR)</con1:path>
+                              </con1:param>
+                              <con1:param name="elegidoAntiguo">
+                                <con1:path>""</con1:path>
+                              </con1:param>
+                              <con1:param name="min">
+                                <con1:path>data($body/ejec:Input_Parameters/MIN_DESTINO)</con1:path>
+                              </con1:param>
+                              <con1:param name="fechaExpiracion">
+                                <con1:path>data($suscripcionResponse/MENSAJE/CONSULTAR_SUSCRIPCION/result[fafID=data($body/ejec:Input_Parameters/PARAMETROS_NEGOCIO/PARAMETRO[NOMBRE='FAFID']/VALOR)]/expiryDate)</con1:path>
+                              </con1:param>
+                              <con1:param name="fechaCreacion">
+                                <con1:path>data($suscripcionResponse/MENSAJE/CONSULTAR_SUSCRIPCION/result[fafID=data($body/ejec:Input_Parameters/PARAMETROS_NEGOCIO/PARAMETRO[NOMBRE='FAFID']/VALOR)]/startDate)</con1:path>
+                              </con1:param>
+                            </con1:xqueryTransform>
+                          </con2:expr>
+                        </con2:assign>
+                      </con2:requestTransform>
+                      <con2:responseTransform/>
+                    </con2:wsCallout>
+                  </con2:default>
+                </con2:ifThenElse>
+                <con2:ifThenElse>
+                  <con1:id>_ActionId-6192344801191879309--1c39c62e.1351fb33868.-7e75</con1:id>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>data($elegidoResponse/MENSAJE/EXITO) != "TRUE"</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:assign varName="codError">
+                        <con1:id>_ActionId-6192344801191879309--1c39c62e.1351fb33868.-7e0c</con1:id>
+                        <con2:expr>
+                          <con1:xqueryText>"909"</con1:xqueryText>
+                        </con2:expr>
+                      </con2:assign>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:default/>
+                </con2:ifThenElse>
+              </con2:actions>
+            </con2:case>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>$metodo = "302"</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:ifThenElse>
+                  <con1:id>_ActionId-7619517632386627082-190dd107.139f9f9a39c.-7ca1</con1:id>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>$esOCS="false"</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:wsCallout>
+                        <con1:id>_ActionId-7619517632386627082-190dd107.139f9f9a39c.-7c99</con1:id>
+                        <con2:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/insertarElegidoIlimitadoLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>insertarElegido</con2:operation>
+                        <con2:request>
+                          <con2:body>$elegidoRequest</con2:body>
+                        </con2:request>
+                        <con2:response>
+                          <con2:body>elegidoResponse</con2:body>
+                        </con2:response>
+                        <con2:requestTransform>
+                          <con2:assign varName="elegidoRequest">
+                            <con1:id>_ActionId-7619517632386627082-190dd107.139f9f9a39c.-7c9a</con1:id>
+                            <con2:expr>
+                              <con1:xqueryTransform>
+                                <con1:resource ref="ITEL/Core/Resources/XQueries/ejecutador_Req_insertarElegidoIlimitado"/>
+                                <con1:param name="elegido">
+                                  <con1:path>data($body/ejec:Input_Parameters/PARAMETROS_TRAMA/PARAMETRO[NOMBRE='HOSTID']/VALOR)</con1:path>
+                                </con1:param>
+                                <con1:param name="min">
+                                  <con1:path>data($body/ejec:Input_Parameters/MIN_DESTINO)</con1:path>
+                                </con1:param>
+                                <con1:param name="elegidoAntiguo">
+                                  <con1:path>data($body/ejec:Input_Parameters/SUSCRIPTOR_DESTINO/oper:BestFnF_Numbers/oper:Detail[1])</con1:path>
+                                </con1:param>
+                                <con1:param name="fechaCreacion">
+                                  <con1:path>data($body/ejec:Input_Parameters/PARAMETROS_NEGOCIO/PARAMETRO[NOMBRE='FECHA_REGISTRO_ILIMITADO']/VALOR)</con1:path>
+                                </con1:param>
+                                <con1:param name="vigencia">
+                                  <con1:path>data($body/ejec:Input_Parameters/SUSCRIPTOR_DESTINO/VIGENCIA_ELEGIDO)</con1:path>
+                                </con1:param>
+                                <con1:param name="proceso">
+                                  <con1:path>""</con1:path>
+                                </con1:param>
+                              </con1:xqueryTransform>
+                            </con2:expr>
+                          </con2:assign>
+                        </con2:requestTransform>
+                        <con2:responseTransform/>
+                      </con2:wsCallout>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:default>
+                    <con2:wsCallout>
+                      <con1:id>_ActionId-7619517632386627082-190dd107.139f9f9a39c.-7c4a</con1:id>
+                      <con2:service xsi:type="ref:ProxyRef" ref="ITEL/OCS/OLM/Proxies/consultarSuscripcionOCSLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                      <con2:operation>consultarSuscripcionOCS</con2:operation>
+                      <con2:request>
+                        <con2:body>$suscripcionRequest</con2:body>
+                      </con2:request>
+                      <con2:response>
+                        <con2:body>suscripcionResponse</con2:body>
+                      </con2:response>
+                      <con2:requestTransform>
+                        <con2:assign varName="suscripcionRequest">
+                          <con1:id>_ActionId-7619517632386627082-190dd107.139f9f9a39c.-7c4b</con1:id>
+                          <con2:expr>
+                            <con1:xqueryTransform>
+                              <con1:resource ref="ITEL/Core/Resources/XQueries/consultarSuscripcionOCSPS_Req"/>
+                              <con1:param name="min">
+                                <con1:path>data($body/ejec:Input_Parameters/MIN_DESTINO)</con1:path>
+                              </con1:param>
+                            </con1:xqueryTransform>
+                          </con2:expr>
+                        </con2:assign>
+                      </con2:requestTransform>
+                      <con2:responseTransform/>
+                    </con2:wsCallout>
+                    <con2:wsCallout>
+                      <con1:id>_ActionId-7619517632386627082-190dd107.139f9f9a39c.-7c8b</con1:id>
+                      <con2:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/insertarElegidoOCSLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                      <con2:operation>insertarElegidoOCS</con2:operation>
+                      <con2:request>
+                        <con2:body>$elegidoRequest</con2:body>
+                      </con2:request>
+                      <con2:response>
+                        <con2:body>elegidoResponse</con2:body>
+                      </con2:response>
+                      <con2:requestTransform>
+                        <con2:assign varName="elegidoRequest">
+                          <con1:id>_ActionId-7619517632386627082-190dd107.139f9f9a39c.-7c8c</con1:id>
+                          <con2:expr>
+                            <con1:xqueryTransform>
+                              <con1:resource ref="ITEL/Core/Resources/XQueries/ejecutador_Req_insertarElegidoIlimitadoOCS"/>
+                              <con1:param name="elegido">
+                                <con1:path>data($body/ejec:Input_Parameters/PARAMETROS_TRAMA/PARAMETRO[NOMBRE='HOSTID']/VALOR)</con1:path>
+                              </con1:param>
+                              <con1:param name="elegidoAntiguo">
+                                <con1:path>data($body/ejec:Input_Parameters/SUSCRIPTOR_OCS/FAF_LIST/fafInformationList/Detail/DetailNumber/fafNumber[1])</con1:path>
+                              </con1:param>
+                              <con1:param name="min">
+                                <con1:path>data($body/ejec:Input_Parameters/MIN_DESTINO)</con1:path>
+                              </con1:param>
+                              <con1:param name="fechaExpiracion">
+                                <con1:path>data($suscripcionResponse/MENSAJE/CONSULTAR_SUSCRIPCION/result[fafID=data($body/*:Input_Parameters/PARAMETROS_NEGOCIO/PARAMETRO[NOMBRE='FAFID']/VALOR)]/expiryDate)</con1:path>
+                              </con1:param>
+                              <con1:param name="fechaCreacion">
+                                <con1:path>data($suscripcionResponse/MENSAJE/CONSULTAR_SUSCRIPCION/result[fafID=data($body/*:Input_Parameters/PARAMETROS_NEGOCIO/PARAMETRO[NOMBRE='FAFID']/VALOR)]/startDate)</con1:path>
+                              </con1:param>
+                            </con1:xqueryTransform>
+                          </con2:expr>
+                        </con2:assign>
+                      </con2:requestTransform>
+                      <con2:responseTransform/>
+                    </con2:wsCallout>
+                  </con2:default>
+                </con2:ifThenElse>
+                <con2:ifThenElse>
+                  <con1:id>_ActionId-4424720064642856453-4d673fa8.13697606751.-7fd5</con1:id>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>data($elegidoResponse/MENSAJE/EXITO) != "TRUE"</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:assign varName="codError">
+                        <con1:id>_ActionId-4424720064642856453-4d673fa8.13697606751.-7fd4</con1:id>
+                        <con2:expr>
+                          <con1:xqueryText>"909"</con1:xqueryText>
+                        </con2:expr>
+                      </con2:assign>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:default/>
+                </con2:ifThenElse>
+              </con2:actions>
+            </con2:case>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>$metodo = "303"</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:ifThenElse>
+                  <con1:id>_ActionId-7619517632386627082-190dd107.139f9f9a39c.-7c15</con1:id>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>$esOCS="false"</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:wsCallout>
+                        <con1:id>_ActionId-7619517632386627082-190dd107.139f9f9a39c.-7c11</con1:id>
+                        <con2:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/insertarElegidoIlimitadoLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>insertarElegido</con2:operation>
+                        <con2:request>
+                          <con2:body>$elegidoRequest</con2:body>
+                        </con2:request>
+                        <con2:response>
+                          <con2:body>elegidoResponse</con2:body>
+                        </con2:response>
+                        <con2:requestTransform>
+                          <con2:assign varName="elegidoRequest">
+                            <con1:id>_ActionId-7619517632386627082-190dd107.139f9f9a39c.-7c12</con1:id>
+                            <con2:expr>
+                              <con1:xqueryTransform>
+                                <con1:resource ref="ITEL/Core/Resources/XQueries/ejecutador_Req_insertarElegidoIlimitado"/>
+                                <con1:param name="elegido">
+                                  <con1:path>""</con1:path>
+                                </con1:param>
+                                <con1:param name="min">
+                                  <con1:path>data($body/ejec:Input_Parameters/MIN_DESTINO)</con1:path>
+                                </con1:param>
+                                <con1:param name="elegidoAntiguo">
+                                  <con1:path>""</con1:path>
+                                </con1:param>
+                                <con1:param name="fechaCreacion">
+                                  <con1:path>data($body/ejec:Input_Parameters/PARAMETROS_NEGOCIO/PARAMETRO[NOMBRE='FECHA_RENOVACION_ILIMITADO']/VALOR)</con1:path>
+                                </con1:param>
+                                <con1:param name="vigencia">
+                                  <con1:path>data($body/ejec:Input_Parameters/SUSCRIPTOR_DESTINO/VIGENCIA_ELEGIDO)</con1:path>
+                                </con1:param>
+                                <con1:param name="proceso">
+                                  <con1:path>""</con1:path>
+                                </con1:param>
+                              </con1:xqueryTransform>
+                            </con2:expr>
+                          </con2:assign>
+                        </con2:requestTransform>
+                        <con2:responseTransform/>
+                      </con2:wsCallout>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:default>
+                    <con2:wsCallout>
+                      <con1:id>_ActionId-7619517632386627082-190dd107.139f9f9a39c.-7c0b</con1:id>
+                      <con2:service xsi:type="ref:ProxyRef" ref="ITEL/OCS/OLM/Proxies/consultarSuscripcionOCSLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                      <con2:operation>consultarSuscripcionOCS</con2:operation>
+                      <con2:request>
+                        <con2:body>$suscripcionRequest</con2:body>
+                      </con2:request>
+                      <con2:response>
+                        <con2:body>suscripcionResponse</con2:body>
+                      </con2:response>
+                      <con2:requestTransform>
+                        <con2:assign varName="suscripcionRequest">
+                          <con1:id>_ActionId-7619517632386627082-190dd107.139f9f9a39c.-7c0c</con1:id>
+                          <con2:expr>
+                            <con1:xqueryTransform>
+                              <con1:resource ref="ITEL/Core/Resources/XQueries/consultarSuscripcionOCSPS_Req"/>
+                              <con1:param name="min">
+                                <con1:path>data($body/ejec:Input_Parameters/MIN_DESTINO)</con1:path>
+                              </con1:param>
+                            </con1:xqueryTransform>
+                          </con2:expr>
+                        </con2:assign>
+                      </con2:requestTransform>
+                      <con2:responseTransform/>
+                    </con2:wsCallout>
+                    <con2:wsCallout>
+                      <con1:id>_ActionId-7619517632386627082-190dd107.139f9f9a39c.-7c01</con1:id>
+                      <con2:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/insertarElegidoOCSLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                      <con2:operation>insertarElegidoOCS</con2:operation>
+                      <con2:request>
+                        <con2:body>$elegidoRequest</con2:body>
+                      </con2:request>
+                      <con2:response>
+                        <con2:body>elegidoResponse</con2:body>
+                      </con2:response>
+                      <con2:requestTransform>
+                        <con2:assign varName="elegidoRequest">
+                          <con1:id>_ActionId-7619517632386627082-190dd107.139f9f9a39c.-7c02</con1:id>
+                          <con2:expr>
+                            <con1:xqueryTransform>
+                              <con1:resource ref="ITEL/Core/Resources/XQueries/ejecutador_Req_insertarElegidoIlimitadoOCS"/>
+                              <con1:param name="elegido">
+                                <con1:path>""</con1:path>
+                              </con1:param>
+                              <con1:param name="elegidoAntiguo">
+                                <con1:path>""</con1:path>
+                              </con1:param>
+                              <con1:param name="min">
+                                <con1:path>data($body/ejec:Input_Parameters/MIN_DESTINO)</con1:path>
+                              </con1:param>
+                              <con1:param name="fechaExpiracion">
+                                <con1:path>data($suscripcionResponse/MENSAJE/CONSULTAR_SUSCRIPCION/result[fafID=data($body/*:Input_Parameters/PARAMETROS_NEGOCIO/PARAMETRO[NOMBRE='FAFID']/VALOR)]/expiryDate)</con1:path>
+                              </con1:param>
+                              <con1:param name="fechaCreacion">
+                                <con1:path>data($suscripcionResponse/MENSAJE/CONSULTAR_SUSCRIPCION/result[fafID=data($body/*:Input_Parameters/PARAMETROS_NEGOCIO/PARAMETRO[NOMBRE='FAFID']/VALOR)]/startDate)</con1:path>
+                              </con1:param>
+                            </con1:xqueryTransform>
+                          </con2:expr>
+                        </con2:assign>
+                      </con2:requestTransform>
+                      <con2:responseTransform/>
+                    </con2:wsCallout>
+                  </con2:default>
+                </con2:ifThenElse>
+                <con2:ifThenElse>
+                  <con1:id>_ActionId-4731883582742012540--1ed7f88d.136a1a1646b.-7923</con1:id>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>data($elegidoResponse/MENSAJE/EXITO) != "TRUE"</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:assign varName="codError">
+                        <con1:id>_ActionId-4731883582742012540--1ed7f88d.136a1a1646b.-7922</con1:id>
+                        <con2:expr>
+                          <con1:xqueryText>"909"</con1:xqueryText>
+                        </con2:expr>
+                      </con2:assign>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:default/>
+                </con2:ifThenElse>
+              </con2:actions>
+            </con2:case>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>$metodo = "304"</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:wsCallout>
+                  <con1:id>_ActionId-4731883582742012540--1ed7f88d.136a1a1646b.-798f</con1:id>
+                  <con2:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/eliminarElegidoIlimitadoLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con2:operation>eliminarElegidoIlimitado</con2:operation>
+                  <con2:request>
+                    <con2:body>$eliminarRequest</con2:body>
+                  </con2:request>
+                  <con2:response>
+                    <con2:body>eliminarResponse</con2:body>
+                  </con2:response>
+                  <con2:requestTransform>
+                    <con2:assign varName="eliminarRequest">
+                      <con1:id>_ActionId-4731883582742012540--1ed7f88d.136a1a1646b.-7990</con1:id>
+                      <con2:expr>
+                        <con1:xqueryTransform>
+                          <con1:resource ref="ITEL/Core/Resources/XQueries/eliminarElegidoIlimitadoPS_Req"/>
+                          <con1:param name="elegido">
+                            <con1:path>if(data($body/ejec:Input_Parameters/PARAMETROS_TRAMA/PARAMETRO[NOMBRE='BONIFICAR']/VALOR) = "0") then
+	data($body/ejec:Input_Parameters/PARAMETROS_TRAMA/PARAMETRO[NOMBRE='HOSTID']/VALOR)
+else
+	""</con1:path>
+                          </con1:param>
+                          <con1:param name="min">
+                            <con1:path>data($body/ejec:Input_Parameters/MIN_DESTINO)</con1:path>
+                          </con1:param>
+                        </con1:xqueryTransform>
+                      </con2:expr>
+                    </con2:assign>
+                  </con2:requestTransform>
+                  <con2:responseTransform/>
+                </con2:wsCallout>
+                <con2:ifThenElse>
+                  <con1:id>_ActionId-4731883582742012540--1ed7f88d.136a1a1646b.-798e</con1:id>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>data($eliminarResponse/MENSAJE/EXITO) != "TRUE"</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:assign varName="codError">
+                        <con1:id>_ActionId-4731883582742012540--1ed7f88d.136a1a1646b.-798d</con1:id>
+                        <con2:expr>
+                          <con1:xqueryText>"909"</con1:xqueryText>
+                        </con2:expr>
+                      </con2:assign>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:default/>
+                </con2:ifThenElse>
+              </con2:actions>
+            </con2:case>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>$metodo = "305"</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:ifThenElse>
+                  <con1:id>_ActionId-7619517632386627082-190dd107.139f9f9a39c.-7bdc</con1:id>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>$esOCS="false"</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:wsCallout>
+                        <con1:id>_ActionId-7619517632386627082-190dd107.139f9f9a39c.-7bd8</con1:id>
+                        <con2:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/insertarElegidoIlimitadoLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>insertarElegido</con2:operation>
+                        <con2:request>
+                          <con2:body>$elegidoRequest</con2:body>
+                        </con2:request>
+                        <con2:response>
+                          <con2:body>elegidoResponse</con2:body>
+                        </con2:response>
+                        <con2:requestTransform>
+                          <con2:assign varName="elegidoRequest">
+                            <con1:id>_ActionId-7619517632386627082-190dd107.139f9f9a39c.-7bd9</con1:id>
+                            <con2:expr>
+                              <con1:xqueryTransform>
+                                <con1:resource ref="ITEL/Core/Resources/XQueries/ejecutador_Req_insertarElegidoIlimitado"/>
+                                <con1:param name="elegido">
+                                  <con1:path>data($body/ejec:Input_Parameters/PARAMETROS_TRAMA/PARAMETRO[NOMBRE='MONTORECARGA']/VALOR)</con1:path>
+                                </con1:param>
+                                <con1:param name="min">
+                                  <con1:path>data($body/ejec:Input_Parameters/MIN_DESTINO)</con1:path>
+                                </con1:param>
+                                <con1:param name="elegidoAntiguo">
+                                  <con1:path>""</con1:path>
+                                </con1:param>
+                                <con1:param name="fechaCreacion">
+                                  <con1:path>data($body/ejec:Input_Parameters/PARAMETROS_NEGOCIO/PARAMETRO[NOMBRE='FECHA_REGISTRO_ILIMITADO']/VALOR)</con1:path>
+                                </con1:param>
+                                <con1:param name="vigencia">
+                                  <con1:path>data($body/ejec:Input_Parameters/PARAMETROS_NEGOCIO/PARAMETRO[NOMBRE='VIGENCIA_ILIMITADO_MESES']/VALOR)</con1:path>
+                                </con1:param>
+                                <con1:param name="proceso">
+                                  <con1:path>$metodo</con1:path>
+                                </con1:param>
+                              </con1:xqueryTransform>
+                            </con2:expr>
+                          </con2:assign>
+                        </con2:requestTransform>
+                        <con2:responseTransform/>
+                      </con2:wsCallout>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:default>
+                    <con2:wsCallout>
+                      <con1:id>_ActionId-7619517632386627082-190dd107.139f9f9a39c.-7bd0</con1:id>
+                      <con2:service xsi:type="ref:ProxyRef" ref="ITEL/OCS/OLM/Proxies/consultarSuscripcionOCSLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                      <con2:operation>consultarSuscripcionOCS</con2:operation>
+                      <con2:request>
+                        <con2:body>$suscripcionRequest</con2:body>
+                      </con2:request>
+                      <con2:response>
+                        <con2:body>suscripcionResponse</con2:body>
+                      </con2:response>
+                      <con2:requestTransform>
+                        <con2:assign varName="suscripcionRequest">
+                          <con1:id>_ActionId-7619517632386627082-190dd107.139f9f9a39c.-7bd1</con1:id>
+                          <con2:expr>
+                            <con1:xqueryTransform>
+                              <con1:resource ref="ITEL/Core/Resources/XQueries/consultarSuscripcionOCSPS_Req"/>
+                              <con1:param name="min">
+                                <con1:path>data($body/ejec:Input_Parameters/MIN_DESTINO)</con1:path>
+                              </con1:param>
+                            </con1:xqueryTransform>
+                          </con2:expr>
+                        </con2:assign>
+                      </con2:requestTransform>
+                      <con2:responseTransform/>
+                    </con2:wsCallout>
+                    <con2:wsCallout>
+                      <con1:id>_ActionId-7619517632386627082-190dd107.139f9f9a39c.-7bc0</con1:id>
+                      <con2:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/insertarElegidoOCSLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                      <con2:operation>insertarElegidoOCS</con2:operation>
+                      <con2:request>
+                        <con2:body>$elegidoRequest</con2:body>
+                      </con2:request>
+                      <con2:response>
+                        <con2:body>elegidoResponse</con2:body>
+                      </con2:response>
+                      <con2:requestTransform>
+                        <con2:assign varName="elegidoRequest">
+                          <con1:id>_ActionId-7619517632386627082-190dd107.139f9f9a39c.-7bc1</con1:id>
+                          <con2:expr>
+                            <con1:xqueryTransform>
+                              <con1:resource ref="ITEL/Core/Resources/XQueries/ejecutador_Req_insertarElegidoIlimitadoOCS"/>
+                              <con1:param name="elegido">
+                                <con1:path>data($body/ejec:Input_Parameters/PARAMETROS_TRAMA/PARAMETRO[NOMBRE='MONTORECARGA']/VALOR)</con1:path>
+                              </con1:param>
+                              <con1:param name="elegidoAntiguo">
+                                <con1:path>""</con1:path>
+                              </con1:param>
+                              <con1:param name="min">
+                                <con1:path>data($body/ejec:Input_Parameters/MIN_DESTINO)</con1:path>
+                              </con1:param>
+                              <con1:param name="fechaExpiracion">
+                                <con1:path>data($suscripcionResponse/MENSAJE/CONSULTAR_SUSCRIPCION/result[fafID=data($body/*:Input_Parameters/PARAMETROS_NEGOCIO/PARAMETRO[NOMBRE='FAFID']/VALOR)]/expiryDate)</con1:path>
+                              </con1:param>
+                              <con1:param name="fechaCreacion">
+                                <con1:path>data($suscripcionResponse/MENSAJE/CONSULTAR_SUSCRIPCION/result[fafID=data($body/*:Input_Parameters/PARAMETROS_NEGOCIO/PARAMETRO[NOMBRE='FAFID']/VALOR)]/startDate)</con1:path>
+                              </con1:param>
+                            </con1:xqueryTransform>
+                          </con2:expr>
+                        </con2:assign>
+                      </con2:requestTransform>
+                      <con2:responseTransform/>
+                    </con2:wsCallout>
+                  </con2:default>
+                </con2:ifThenElse>
+                <con2:ifThenElse>
+                  <con1:id>_ActionId-3660644965496362379-67f3b33e.1372e85ec19.-7fee</con1:id>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>data($elegidoResponse/MENSAJE/EXITO) != "TRUE"</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:assign varName="codError">
+                        <con1:id>_ActionId-3660644965496362379-67f3b33e.1372e85ec19.-7fed</con1:id>
+                        <con2:expr>
+                          <con1:xqueryText>"909"</con1:xqueryText>
+                        </con2:expr>
+                      </con2:assign>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:default/>
+                </con2:ifThenElse>
+              </con2:actions>
+            </con2:case>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>$metodo = "307"</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:ifThenElse>
+                  <con1:id>_ActionId-7619517632386627082-190dd107.139f9f9a39c.-7b0f</con1:id>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>$esOCS="false"</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:wsCallout>
+                        <con1:id>_ActionId-7619517632386627082-190dd107.139f9f9a39c.-7b0b</con1:id>
+                        <con2:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/insertarElegidoIlimitadoLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>insertarElegido</con2:operation>
+                        <con2:request>
+                          <con2:body>$elegidoRequest</con2:body>
+                        </con2:request>
+                        <con2:response>
+                          <con2:body>elegidoResponse</con2:body>
+                        </con2:response>
+                        <con2:requestTransform>
+                          <con2:assign varName="elegidoRequest">
+                            <con1:id>_ActionId-7619517632386627082-190dd107.139f9f9a39c.-7b0c</con1:id>
+                            <con2:expr>
+                              <con1:xqueryTransform>
+                                <con1:resource ref="ITEL/Core/Resources/XQueries/ejecutador_Req_insertarElegidoIlimitado"/>
+                                <con1:param name="elegido">
+                                  <con1:path>data($body/ejec:Input_Parameters/PARAMETROS_TRAMA/PARAMETRO[NOMBRE='MONTORECARGA']/VALOR)</con1:path>
+                                </con1:param>
+                                <con1:param name="min">
+                                  <con1:path>data($body/ejec:Input_Parameters/MIN_DESTINO)</con1:path>
+                                </con1:param>
+                                <con1:param name="elegidoAntiguo">
+                                  <con1:path>""</con1:path>
+                                </con1:param>
+                                <con1:param name="fechaCreacion">
+                                  <con1:path>data($body/ejec:Input_Parameters/PARAMETROS_NEGOCIO/PARAMETRO[NOMBRE='FECHA_REGISTRO_ILIMITADO']/VALOR)</con1:path>
+                                </con1:param>
+                                <con1:param name="vigencia">
+                                  <con1:path>data($body/ejec:Input_Parameters/PARAMETROS_NEGOCIO/PARAMETRO[NOMBRE='VIGENCIA_ILIMITADO_MESES']/VALOR)</con1:path>
+                                </con1:param>
+                                <con1:param name="proceso">
+                                  <con1:path>""</con1:path>
+                                </con1:param>
+                              </con1:xqueryTransform>
+                            </con2:expr>
+                          </con2:assign>
+                        </con2:requestTransform>
+                        <con2:responseTransform/>
+                      </con2:wsCallout>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:default>
+                    <con2:wsCallout>
+                      <con1:id>_ActionId-7619517632386627082-190dd107.139f9f9a39c.-7b01</con1:id>
+                      <con2:service xsi:type="ref:ProxyRef" ref="ITEL/OCS/OLM/Proxies/consultarSuscripcionOCSLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                      <con2:operation>consultarSuscripcionOCS</con2:operation>
+                      <con2:request>
+                        <con2:body>$suscripcionRequest</con2:body>
+                      </con2:request>
+                      <con2:response>
+                        <con2:body>suscripcionResponse</con2:body>
+                      </con2:response>
+                      <con2:requestTransform>
+                        <con2:assign varName="suscripcionRequest">
+                          <con1:id>_ActionId-7619517632386627082-190dd107.139f9f9a39c.-7b02</con1:id>
+                          <con2:expr>
+                            <con1:xqueryTransform>
+                              <con1:resource ref="ITEL/Core/Resources/XQueries/consultarSuscripcionOCSPS_Req"/>
+                              <con1:param name="min">
+                                <con1:path>data($body/ejec:Input_Parameters/MIN_DESTINO)</con1:path>
+                              </con1:param>
+                            </con1:xqueryTransform>
+                          </con2:expr>
+                        </con2:assign>
+                      </con2:requestTransform>
+                      <con2:responseTransform/>
+                    </con2:wsCallout>
+                    <con2:wsCallout>
+                      <con1:id>_ActionId-7619517632386627082-190dd107.139f9f9a39c.-7af7</con1:id>
+                      <con2:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/insertarElegidoOCSLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                      <con2:operation>insertarElegidoOCS</con2:operation>
+                      <con2:request>
+                        <con2:body>$elegidoRequest</con2:body>
+                      </con2:request>
+                      <con2:response>
+                        <con2:body>elegidoResponse</con2:body>
+                      </con2:response>
+                      <con2:requestTransform>
+                        <con2:assign varName="elegidoRequest">
+                          <con1:id>_ActionId-7619517632386627082-190dd107.139f9f9a39c.-7af8</con1:id>
+                          <con2:expr>
+                            <con1:xqueryTransform>
+                              <con1:resource ref="ITEL/Core/Resources/XQueries/ejecutador_Req_insertarElegidoIlimitadoOCS"/>
+                              <con1:param name="elegido">
+                                <con1:path>data($body/ejec:Input_Parameters/PARAMETROS_TRAMA/PARAMETRO[NOMBRE='MONTORECARGA']/VALOR)</con1:path>
+                              </con1:param>
+                              <con1:param name="elegidoAntiguo">
+                                <con1:path>""</con1:path>
+                              </con1:param>
+                              <con1:param name="min">
+                                <con1:path>data($body/ejec:Input_Parameters/MIN_DESTINO)</con1:path>
+                              </con1:param>
+                              <con1:param name="fechaExpiracion">
+                                <con1:path>data($suscripcionResponse/MENSAJE/CONSULTAR_SUSCRIPCION/result[fafID=data($body/*:Input_Parameters/PARAMETROS_NEGOCIO/PARAMETRO[NOMBRE='FAFID']/VALOR)]/expiryDate)</con1:path>
+                              </con1:param>
+                              <con1:param name="fechaCreacion">
+                                <con1:path>data($suscripcionResponse/MENSAJE/CONSULTAR_SUSCRIPCION/result[fafID=data($body/*:Input_Parameters/PARAMETROS_NEGOCIO/PARAMETRO[NOMBRE='FAFID']/VALOR)]/startDate)</con1:path>
+                              </con1:param>
+                            </con1:xqueryTransform>
+                          </con2:expr>
+                        </con2:assign>
+                      </con2:requestTransform>
+                      <con2:responseTransform/>
+                    </con2:wsCallout>
+                  </con2:default>
+                </con2:ifThenElse>
+                <con2:ifThenElse>
+                  <con1:id>_ActionId-4731883582742012540--1ed7f88d.136a1a1646b.-79f0</con1:id>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>data($elegidoResponse/MENSAJE/EXITO) != "TRUE"</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:assign varName="codError">
+                        <con1:id>_ActionId-4731883582742012540--1ed7f88d.136a1a1646b.-79ef</con1:id>
+                        <con2:expr>
+                          <con1:xqueryText>"909"</con1:xqueryText>
+                        </con2:expr>
+                      </con2:assign>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:default/>
+                </con2:ifThenElse>
+              </con2:actions>
+            </con2:case>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>$metodo = "308"</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:ifThenElse>
+                  <con1:id>_ActionId-7619517632386627082-190dd107.139f9f9a39c.-7adf</con1:id>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>$esOCS="false"</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:wsCallout>
+                        <con1:id>_ActionId-7619517632386627082-190dd107.139f9f9a39c.-7adb</con1:id>
+                        <con2:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/insertarElegidoIlimitadoLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>insertarElegido</con2:operation>
+                        <con2:request>
+                          <con2:body>$elegidoRequest</con2:body>
+                        </con2:request>
+                        <con2:response>
+                          <con2:body>elegidoResponse</con2:body>
+                        </con2:response>
+                        <con2:requestTransform>
+                          <con2:assign varName="elegidoRequest">
+                            <con1:id>_ActionId-7619517632386627082-190dd107.139f9f9a39c.-7adc</con1:id>
+                            <con2:expr>
+                              <con1:xqueryTransform>
+                                <con1:resource ref="ITEL/Core/Resources/XQueries/ejecutador_Req_insertarElegidoIlimitado"/>
+                                <con1:param name="elegido">
+                                  <con1:path>data($body/ejec:Input_Parameters/PARAMETROS_TRAMA/PARAMETRO[NOMBRE='HOSTID']/VALOR)</con1:path>
+                                </con1:param>
+                                <con1:param name="min">
+                                  <con1:path>data($body/ejec:Input_Parameters/MIN_DESTINO)</con1:path>
+                                </con1:param>
+                                <con1:param name="elegidoAntiguo">
+                                  <con1:path>data($body/ejec:Input_Parameters/PARAMETROS_TRAMA/PARAMETRO[NOMBRE='COMENTARIO']/VALOR)</con1:path>
+                                </con1:param>
+                                <con1:param name="fechaCreacion">
+                                  <con1:path>data($body/ejec:Input_Parameters/PARAMETROS_NEGOCIO/PARAMETRO[NOMBRE='FECHA_REGISTRO_ILIMITADO']/VALOR)</con1:path>
+                                </con1:param>
+                                <con1:param name="vigencia">
+                                  <con1:path>""</con1:path>
+                                </con1:param>
+                                <con1:param name="proceso">
+                                  <con1:path>""</con1:path>
+                                </con1:param>
+                              </con1:xqueryTransform>
+                            </con2:expr>
+                          </con2:assign>
+                        </con2:requestTransform>
+                        <con2:responseTransform/>
+                      </con2:wsCallout>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:default>
+                    <con2:wsCallout>
+                      <con1:id>_ActionId-7619517632386627082-190dd107.139f9f9a39c.-7ad5</con1:id>
+                      <con2:service xsi:type="ref:ProxyRef" ref="ITEL/OCS/OLM/Proxies/consultarSuscripcionOCSLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                      <con2:operation>consultarSuscripcionOCS</con2:operation>
+                      <con2:request>
+                        <con2:body>$suscripcionRequest</con2:body>
+                      </con2:request>
+                      <con2:response>
+                        <con2:body>suscripcionResponse</con2:body>
+                      </con2:response>
+                      <con2:requestTransform>
+                        <con2:assign varName="suscripcionRequest">
+                          <con1:id>_ActionId-7619517632386627082-190dd107.139f9f9a39c.-7ad6</con1:id>
+                          <con2:expr>
+                            <con1:xqueryTransform>
+                              <con1:resource ref="ITEL/Core/Resources/XQueries/consultarSuscripcionOCSPS_Req"/>
+                              <con1:param name="min">
+                                <con1:path>data($body/ejec:Input_Parameters/MIN_DESTINO)</con1:path>
+                              </con1:param>
+                            </con1:xqueryTransform>
+                          </con2:expr>
+                        </con2:assign>
+                      </con2:requestTransform>
+                      <con2:responseTransform/>
+                    </con2:wsCallout>
+                    <con2:wsCallout>
+                      <con1:id>_ActionId-7619517632386627082-190dd107.139f9f9a39c.-7acf</con1:id>
+                      <con2:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/insertarElegidoOCSLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                      <con2:operation>insertarElegidoOCS</con2:operation>
+                      <con2:request>
+                        <con2:body>$elegidoRequest</con2:body>
+                      </con2:request>
+                      <con2:response>
+                        <con2:body>elegidoResponse</con2:body>
+                      </con2:response>
+                      <con2:requestTransform>
+                        <con2:assign varName="elegidoRequest">
+                          <con1:id>_ActionId-7619517632386627082-190dd107.139f9f9a39c.-7ad0</con1:id>
+                          <con2:expr>
+                            <con1:xqueryTransform>
+                              <con1:resource ref="ITEL/Core/Resources/XQueries/ejecutador_Req_insertarElegidoIlimitadoOCS"/>
+                              <con1:param name="elegido">
+                                <con1:path>data($body/ejec:Input_Parameters/PARAMETROS_TRAMA/PARAMETRO[NOMBRE='HOSTID']/VALOR)</con1:path>
+                              </con1:param>
+                              <con1:param name="elegidoAntiguo">
+                                <con1:path>data($body/ejec:Input_Parameters/PARAMETROS_TRAMA/PARAMETRO[NOMBRE='COMENTARIO']/VALOR)</con1:path>
+                              </con1:param>
+                              <con1:param name="min">
+                                <con1:path>data($body/ejec:Input_Parameters/MIN_DESTINO)</con1:path>
+                              </con1:param>
+                              <con1:param name="fechaExpiracion">
+                                <con1:path>data($suscripcionResponse/MENSAJE/CONSULTAR_SUSCRIPCION/result[fafID=data($body/*:Input_Parameters/PARAMETROS_NEGOCIO/PARAMETRO[NOMBRE='FAFID']/VALOR)]/expiryDate)</con1:path>
+                              </con1:param>
+                              <con1:param name="fechaCreacion">
+                                <con1:path>data($suscripcionResponse/MENSAJE/CONSULTAR_SUSCRIPCION/result[fafID=data($body/*:Input_Parameters/PARAMETROS_NEGOCIO/PARAMETRO[NOMBRE='FAFID']/VALOR)]/startDate)</con1:path>
+                              </con1:param>
+                            </con1:xqueryTransform>
+                          </con2:expr>
+                        </con2:assign>
+                      </con2:requestTransform>
+                      <con2:responseTransform/>
+                    </con2:wsCallout>
+                  </con2:default>
+                </con2:ifThenElse>
+                <con2:ifThenElse>
+                  <con1:id>_ActionId-4731883582742012540--1ed7f88d.136a1a1646b.-7982</con1:id>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>data($elegidoResponse/MENSAJE/EXITO) != "TRUE"</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:assign varName="codError">
+                        <con1:id>_ActionId-4731883582742012540--1ed7f88d.136a1a1646b.-7981</con1:id>
+                        <con2:expr>
+                          <con1:xqueryText>"909"</con1:xqueryText>
+                        </con2:expr>
+                      </con2:assign>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:default/>
+                </con2:ifThenElse>
+              </con2:actions>
+            </con2:case>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>$metodo = "501"</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:wsCallout>
+                  <con1:id>_ActionId-8834681232170300452-19a06721.156dd1d2b01.-7f96</con1:id>
+                  <con2:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/eliminarMSISDNTblCtrlLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con2:operation>eliminarMSISDNTblCtrl</con2:operation>
+                  <con2:request>
+                    <con2:body>$eliminarMSISDNTblCtrlRequest</con2:body>
+                  </con2:request>
+                  <con2:response>
+                    <con2:body>eliminarMSISDNTblCtrlResponse</con2:body>
+                  </con2:response>
+                  <con2:requestTransform>
+                    <con2:assign varName="eliminarMSISDNTblCtrlRequest">
+                      <con1:id>_ActionId-8834681232170300452-19a06721.156dd1d2b01.-7f97</con1:id>
+                      <con2:expr>
+                        <con1:xqueryTransform>
+                          <con1:resource ref="ITEL/Core/Resources/XQueries/eliminarMSISDNTblCtrlPS_Req"/>
+                          <con1:param name="MIN">
+                            <con1:path>data($body/ejec:Input_Parameters/MIN_DESTINO)</con1:path>
+                          </con1:param>
+                        </con1:xqueryTransform>
+                      </con2:expr>
+                    </con2:assign>
+                  </con2:requestTransform>
+                  <con2:responseTransform/>
+                </con2:wsCallout>
+                <con2:ifThenElse>
+                  <con1:id>_ActionId-3543043403252145435--467faf36.14a5dd87443.-77f9</con1:id>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>data($eliminarMSISDNTblCtrlResponse/MENSAJE/EXITO) != "TRUE"</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:assign varName="codError">
+                        <con1:id>_ActionId-3543043403252145435--467faf36.14a5dd87443.-77a3</con1:id>
+                        <con2:expr>
+                          <con1:xqueryText>"909"</con1:xqueryText>
+                        </con2:expr>
+                      </con2:assign>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:default/>
+                </con2:ifThenElse>
+              </con2:actions>
+            </con2:case>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>$metodo = "600"</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:ifThenElse>
+                  <con1:id>_ActionId-1158617767404687255--5c13eac3.14a34bce876.-7bea</con1:id>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>$codError='1'</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:wsCallout>
+                        <con1:id>_ActionId-1158617767404687255--5c13eac3.14a34bce876.-7be2</con1:id>
+                        <con2:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/actualizarMinElegidosLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>actualizarMinElegidos</con2:operation>
+                        <con2:request>
+                          <con2:body>$actualizarMinRequest</con2:body>
+                        </con2:request>
+                        <con2:response>
+                          <con2:body>actualizarMinResponse</con2:body>
+                        </con2:response>
+                        <con2:requestTransform>
+                          <con2:assign varName="actualizarMinRequest">
+                            <con1:id>_ActionId-1158617767404687255--5c13eac3.14a34bce876.-7be5</con1:id>
+                            <con2:expr>
+                              <con1:xqueryTransform>
+                                <con1:resource ref="ITEL/Core/Resources/XQueries/actualizarMinElegidos_Req"/>
+                                <con1:param name="min">
+                                  <con1:path>data($body/ejec:Input_Parameters/MIN_ORIGEN)</con1:path>
+                                </con1:param>
+                                <con1:param name="nuevoMin">
+                                  <con1:path>data($body/ejec:Input_Parameters/MIN_DESTINO)</con1:path>
+                                </con1:param>
+                              </con1:xqueryTransform>
+                            </con2:expr>
+                          </con2:assign>
+                        </con2:requestTransform>
+                        <con2:responseTransform>
+                          <con2:ifThenElse>
+                            <con1:id>_ActionId-1158617767404687255--5c13eac3.14a34bce876.-7be4</con1:id>
+                            <con2:case>
+                              <con2:condition>
+                                <con1:xqueryText>data($actualizarMinResponse/CODIGO) != "1"</con1:xqueryText>
+                              </con2:condition>
+                              <con2:actions>
+                                <con2:assign varName="codError">
+                                  <con1:id>_ActionId-1158617767404687255--5c13eac3.14a34bce876.-7be3</con1:id>
+                                  <con2:expr>
+                                    <con1:xqueryText>"909"</con1:xqueryText>
+                                  </con2:expr>
+                                </con2:assign>
+                              </con2:actions>
+                            </con2:case>
+                            <con2:default/>
+                          </con2:ifThenElse>
+                        </con2:responseTransform>
+                      </con2:wsCallout>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:default/>
+                </con2:ifThenElse>
+              </con2:actions>
+            </con2:case>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>$metodo = "701"</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:ifThenElse>
+                  <con1:id>_ActionId-5938258762724550598--5615c36b.13a0e950e4b.-6a64</con1:id>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>$esOCS="false"</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:wsCallout>
+                        <con1:id>_ActionId-5938258762724550598--5615c36b.13a0e950e4b.-691e</con1:id>
+                        <con2:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/insertarElegidoSMSLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>insertarElegidoSMS</con2:operation>
+                        <con2:request>
+                          <con2:body>$insertarSMSRequest</con2:body>
+                        </con2:request>
+                        <con2:response>
+                          <con2:body>insertarSMSResponse</con2:body>
+                        </con2:response>
+                        <con2:requestTransform>
+                          <con2:assign varName="insertarSMSRequest">
+                            <con1:id>_ActionId-5938258762724550598--5615c36b.13a0e950e4b.-691f</con1:id>
+                            <con2:expr>
+                              <con1:xqueryTransform>
+                                <con1:resource ref="ITEL/Core/Resources/XQueries/insertarElegidoSMSPS_Res"/>
+                                <con1:param name="suscripcion">
+                                  <con1:path>data($serviciosEjecutados/SERVICIO[NOMBRE='ITEL/IN/Proxies/registrarSMSElegidosINLocal_PS']/PARAMETROS/PARAMETRO[NOMBRE='CUENTA']/VALOR)</con1:path>
+                                </con1:param>
+                                <con1:param name="elegido">
+                                  <con1:path>data($body/ejec:Input_Parameters/PARAMETROS_TRAMA/PARAMETRO[NOMBRE='HOSTID']/VALOR)</con1:path>
+                                </con1:param>
+                                <con1:param name="elegidoAntiguo">
+                                  <con1:path>""</con1:path>
+                                </con1:param>
+                                <con1:param name="min">
+                                  <con1:path>data($body/ejec:Input_Parameters/MIN_DESTINO)</con1:path>
+                                </con1:param>
+                                <con1:param name="fechaCreacion">
+                                  <con1:path>data($body/ejec:Input_Parameters/PARAMETROS_NEGOCIO/PARAMETRO[NOMBRE='FECHA_REGISTRO_ILIMITADO']/VALOR)</con1:path>
+                                </con1:param>
+                                <con1:param name="vigencia">
+                                  <con1:path>data($body/ejec:Input_Parameters/PARAMETROS_NEGOCIO/PARAMETRO[NOMBRE='VIGENCIA_ILIMITADO']/VALOR)</con1:path>
+                                </con1:param>
+                              </con1:xqueryTransform>
+                            </con2:expr>
+                          </con2:assign>
+                        </con2:requestTransform>
+                        <con2:responseTransform/>
+                      </con2:wsCallout>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:default>
+                    <con2:wsCallout>
+                      <con1:id>_ActionId-5938258762724550598--5615c36b.13a0e950e4b.-6844</con1:id>
+                      <con2:service xsi:type="ref:ProxyRef" ref="ITEL/OCS/OLM/Proxies/consultarSuscripcionOCSLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                      <con2:operation>consultarSuscripcionOCS</con2:operation>
+                      <con2:request>
+                        <con2:body>$suscripcionRequest</con2:body>
+                      </con2:request>
+                      <con2:response>
+                        <con2:body>suscripcionResponse</con2:body>
+                      </con2:response>
+                      <con2:requestTransform>
+                        <con2:assign varName="suscripcionRequest">
+                          <con1:id>_ActionId-5938258762724550598--5615c36b.13a0e950e4b.-6845</con1:id>
+                          <con2:expr>
+                            <con1:xqueryTransform>
+                              <con1:resource ref="ITEL/Core/Resources/XQueries/consultarSuscripcionOCSPS_Req"/>
+                              <con1:param name="min">
+                                <con1:path>data($body/ejec:Input_Parameters/MIN_DESTINO)</con1:path>
+                              </con1:param>
+                            </con1:xqueryTransform>
+                          </con2:expr>
+                        </con2:assign>
+                      </con2:requestTransform>
+                      <con2:responseTransform/>
+                    </con2:wsCallout>
+                    <con2:wsCallout>
+                      <con1:id>_ActionId-5938258762724550598--5615c36b.13a0e950e4b.-6922</con1:id>
+                      <con2:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/insertarElegidoSMSOCSLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                      <con2:operation>insertarElegidoSMSOCS</con2:operation>
+                      <con2:request>
+                        <con2:body>$insertarSMSRequest</con2:body>
+                      </con2:request>
+                      <con2:response>
+                        <con2:body>insertarSMSResponse</con2:body>
+                      </con2:response>
+                      <con2:requestTransform>
+                        <con2:assign varName="insertarSMSRequest">
+                          <con1:id>_ActionId-5938258762724550598--5615c36b.13a0e950e4b.-68b6</con1:id>
+                          <con2:expr>
+                            <con1:xqueryTransform>
+                              <con1:resource ref="ITEL/Core/Resources/XQueries/ejecutador_Req_insertarElegidoSMSOCS"/>
+                              <con1:param name="suscripcion">
+                                <con1:path>if (data($body/ejec:Input_Parameters/PARAMETROS_TRAMA/PARAMETRO[NOMBRE='BONIFICAR']/VALOR) = 0) then
+   "smsFnFOnNet"
+   else if (data($body/ejec:Input_Parameters/PARAMETROS_TRAMA/PARAMETRO[NOMBRE='BONIFICAR']/VALOR) = 1) then
+   "smsFnFOffNet"
+   else if (data($body/ejec:Input_Parameters/PARAMETROS_TRAMA/PARAMETRO[NOMBRE='BONIFICAR']/VALOR) = 2) then
+   "smsFnFAny"
+   else ()</con1:path>
+                              </con1:param>
+                              <con1:param name="elegido">
+                                <con1:path>data($body/ejec:Input_Parameters/PARAMETROS_TRAMA/PARAMETRO[NOMBRE='HOSTID']/VALOR)</con1:path>
+                              </con1:param>
+                              <con1:param name="elegidoAntiguo">
+                                <con1:path>""</con1:path>
+                              </con1:param>
+                              <con1:param name="min">
+                                <con1:path>data($body/ejec:Input_Parameters/MIN_DESTINO)</con1:path>
+                              </con1:param>
+                              <con1:param name="fechaCreacion">
+                                <con1:path>data($suscripcionResponse/MENSAJE/CONSULTAR_SUSCRIPCION/result[fafID=data($body/*:Input_Parameters/PARAMETROS_NEGOCIO/PARAMETRO[NOMBRE='FAFID']/VALOR)]/startDate)</con1:path>
+                              </con1:param>
+                              <con1:param name="fechaExpiracion">
+                                <con1:path>data($suscripcionResponse/MENSAJE/CONSULTAR_SUSCRIPCION/result[fafID=data($body/*:Input_Parameters/PARAMETROS_NEGOCIO/PARAMETRO[NOMBRE='FAFID']/VALOR)]/expiryDate)</con1:path>
+                              </con1:param>
+                            </con1:xqueryTransform>
+                          </con2:expr>
+                        </con2:assign>
+                      </con2:requestTransform>
+                      <con2:responseTransform/>
+                    </con2:wsCallout>
+                  </con2:default>
+                </con2:ifThenElse>
+                <con2:ifThenElse>
+                  <con1:id>_ActionId-3240996374908289818-134d2eb4.136bb68b4fc.-7750</con1:id>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>data($insertarSMSResponse/MENSAJE/EXITO) != "TRUE"</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:assign varName="codError">
+                        <con1:id>_ActionId-3240996374908289818-134d2eb4.136bb68b4fc.-774f</con1:id>
+                        <con2:expr>
+                          <con1:xqueryText>"909"</con1:xqueryText>
+                        </con2:expr>
+                      </con2:assign>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:default/>
+                </con2:ifThenElse>
+              </con2:actions>
+            </con2:case>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>$metodo = "702"</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:ifThenElse>
+                  <con1:id>_ActionId-5938258762724550598--5615c36b.13a0e950e4b.-67bb</con1:id>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>$esOCS="false"</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:wsCallout>
+                        <con1:id>_ActionId-5938258762724550598--5615c36b.13a0e950e4b.-67b7</con1:id>
+                        <con2:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/insertarElegidoSMSLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>insertarElegidoSMS</con2:operation>
+                        <con2:request>
+                          <con2:body>$insertarSMSRequest</con2:body>
+                        </con2:request>
+                        <con2:response>
+                          <con2:body>insertarSMSResponse</con2:body>
+                        </con2:response>
+                        <con2:requestTransform>
+                          <con2:assign varName="insertarSMSRequest">
+                            <con1:id>_ActionId-5938258762724550598--5615c36b.13a0e950e4b.-67b8</con1:id>
+                            <con2:expr>
+                              <con1:xqueryTransform>
+                                <con1:resource ref="ITEL/Core/Resources/XQueries/insertarElegidoSMSPS_Res"/>
+                                <con1:param name="suscripcion">
+                                  <con1:path>data($serviciosEjecutados/SERVICIO[NOMBRE='ITEL/IN/Proxies/modificarSMSElegidosINLocal_PS']/PARAMETROS/PARAMETRO[NOMBRE='CUENTA']/VALOR)</con1:path>
+                                </con1:param>
+                                <con1:param name="elegido">
+                                  <con1:path>data($body/ejec:Input_Parameters/PARAMETROS_TRAMA/PARAMETRO[NOMBRE='HOSTID']/VALOR)</con1:path>
+                                </con1:param>
+                                <con1:param name="elegidoAntiguo">
+                                  <con1:path>data($body/ejec:Input_Parameters/PARAMETROS_TRAMA/PARAMETRO[NOMBRE='DIASVIGENCIA']/VALOR)</con1:path>
+                                </con1:param>
+                                <con1:param name="min">
+                                  <con1:path>data($body/ejec:Input_Parameters/MIN_DESTINO)</con1:path>
+                                </con1:param>
+                                <con1:param name="fechaCreacion">
+                                  <con1:path>data($body/ejec:Input_Parameters/PARAMETROS_NEGOCIO/PARAMETRO[NOMBRE='FECHA_MODIFICACION_ILIMITADO']/VALOR)</con1:path>
+                                </con1:param>
+                                <con1:param name="vigencia">
+                                  <con1:path>data($body/ejec:Input_Parameters/PARAMETROS_NEGOCIO/PARAMETRO[NOMBRE='VIGENCIA_ILIMITADO']/VALOR)</con1:path>
+                                </con1:param>
+                              </con1:xqueryTransform>
+                            </con2:expr>
+                          </con2:assign>
+                        </con2:requestTransform>
+                        <con2:responseTransform/>
+                      </con2:wsCallout>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:default>
+                    <con2:wsCallout>
+                      <con1:id>_ActionId-5938258762724550598--5615c36b.13a0e950e4b.-66cf</con1:id>
+                      <con2:service xsi:type="ref:ProxyRef" ref="ITEL/OCS/OLM/Proxies/consultarSuscripcionOCSLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                      <con2:operation>consultarSuscripcionOCS</con2:operation>
+                      <con2:request>
+                        <con2:body>$suscripcionRequest</con2:body>
+                      </con2:request>
+                      <con2:response>
+                        <con2:body>suscripcionResponse</con2:body>
+                      </con2:response>
+                      <con2:requestTransform>
+                        <con2:assign varName="suscripcionRequest">
+                          <con1:id>_ActionId-5938258762724550598--5615c36b.13a0e950e4b.-66d0</con1:id>
+                          <con2:expr>
+                            <con1:xqueryTransform>
+                              <con1:resource ref="ITEL/Core/Resources/XQueries/consultarSuscripcionOCSPS_Req"/>
+                              <con1:param name="min">
+                                <con1:path>data($body/ejec:Input_Parameters/MIN_DESTINO)</con1:path>
+                              </con1:param>
+                            </con1:xqueryTransform>
+                          </con2:expr>
+                        </con2:assign>
+                      </con2:requestTransform>
+                      <con2:responseTransform/>
+                    </con2:wsCallout>
+                    <con2:wsCallout>
+                      <con1:id>_ActionId-5938258762724550598--5615c36b.13a0e950e4b.-66d3</con1:id>
+                      <con2:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/insertarElegidoSMSOCSLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                      <con2:operation>insertarElegidoSMSOCS</con2:operation>
+                      <con2:request>
+                        <con2:body>$insertarSMSRequest</con2:body>
+                      </con2:request>
+                      <con2:response>
+                        <con2:body>insertarSMSResponse</con2:body>
+                      </con2:response>
+                      <con2:requestTransform>
+                        <con2:assign varName="insertarSMSRequest">
+                          <con1:id>_ActionId-5938258762724550598--5615c36b.13a0e950e4b.-66d4</con1:id>
+                          <con2:expr>
+                            <con1:xqueryTransform>
+                              <con1:resource ref="ITEL/Core/Resources/XQueries/ejecutador_Req_insertarElegidoSMSOCS"/>
+                              <con1:param name="suscripcion">
+                                <con1:path>if (data($body/ejec:Input_Parameters/PARAMETROS_TRAMA/PARAMETRO[NOMBRE='BONIFICAR']/VALOR) = 0) then
+   "smsFnFOnNet"
+   else if (data($body/ejec:Input_Parameters/PARAMETROS_TRAMA/PARAMETRO[NOMBRE='BONIFICAR']/VALOR) = 1) then
+   "smsFnFOffNet"
+   else if (data($body/ejec:Input_Parameters/PARAMETROS_TRAMA/PARAMETRO[NOMBRE='BONIFICAR']/VALOR) = 2) then
+   "smsFnFAny"
+   else ()</con1:path>
+                              </con1:param>
+                              <con1:param name="elegido">
+                                <con1:path>data($body/ejec:Input_Parameters/PARAMETROS_TRAMA/PARAMETRO[NOMBRE='HOSTID']/VALOR)</con1:path>
+                              </con1:param>
+                              <con1:param name="elegidoAntiguo">
+                                <con1:path>data($body/ejec:Input_Parameters/PARAMETROS_TRAMA/PARAMETRO[NOMBRE='DIASVIGENCIA']/VALOR)</con1:path>
+                              </con1:param>
+                              <con1:param name="min">
+                                <con1:path>data($body/ejec:Input_Parameters/MIN_DESTINO)</con1:path>
+                              </con1:param>
+                              <con1:param name="fechaCreacion">
+                                <con1:path>data($suscripcionResponse/MENSAJE/CONSULTAR_SUSCRIPCION/result[fafID=data($body/*:Input_Parameters/PARAMETROS_NEGOCIO/PARAMETRO[NOMBRE='FAFID']/VALOR)]/startDate)</con1:path>
+                              </con1:param>
+                              <con1:param name="fechaExpiracion">
+                                <con1:path>data($suscripcionResponse/MENSAJE/CONSULTAR_SUSCRIPCION/result[fafID=data($body/*:Input_Parameters/PARAMETROS_NEGOCIO/PARAMETRO[NOMBRE='FAFID']/VALOR)]/expiryDate)</con1:path>
+                              </con1:param>
+                            </con1:xqueryTransform>
+                          </con2:expr>
+                        </con2:assign>
+                      </con2:requestTransform>
+                      <con2:responseTransform/>
+                    </con2:wsCallout>
+                  </con2:default>
+                </con2:ifThenElse>
+                <con2:ifThenElse>
+                  <con1:id>_ActionId-3240996374908289818-134d2eb4.136bb68b4fc.-7691</con1:id>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>data($insertarSMSResponse/MENSAJE/EXITO) != "TRUE"</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:assign varName="codError">
+                        <con1:id>_ActionId-3240996374908289818-134d2eb4.136bb68b4fc.-7690</con1:id>
+                        <con2:expr>
+                          <con1:xqueryText>"909"</con1:xqueryText>
+                        </con2:expr>
+                      </con2:assign>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:default/>
+                </con2:ifThenElse>
+              </con2:actions>
+            </con2:case>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>$metodo = "703"</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:ifThenElse>
+                  <con1:id>_ActionId-5938258762724550598--5615c36b.13a0e950e4b.-66a9</con1:id>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>$esOCS="false"</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:wsCallout>
+                        <con1:id>_ActionId-5938258762724550598--5615c36b.13a0e950e4b.-66a5</con1:id>
+                        <con2:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/insertarElegidoSMSLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>insertarElegidoSMS</con2:operation>
+                        <con2:request>
+                          <con2:body>$insertarSMSRequest</con2:body>
+                        </con2:request>
+                        <con2:response>
+                          <con2:body>insertarSMSResponse</con2:body>
+                        </con2:response>
+                        <con2:requestTransform>
+                          <con2:assign varName="insertarSMSRequest">
+                            <con1:id>_ActionId-5938258762724550598--5615c36b.13a0e950e4b.-66a6</con1:id>
+                            <con2:expr>
+                              <con1:xqueryTransform>
+                                <con1:resource ref="ITEL/Core/Resources/XQueries/insertarElegidoSMSPS_Res"/>
+                                <con1:param name="suscripcion">
+                                  <con1:path>data($serviciosEjecutados/SERVICIO[NOMBRE='ITEL/IN/Proxies/modificarSMSElegidosINLocal_PS']/PARAMETROS/PARAMETRO[NOMBRE='CUENTA']/VALOR)</con1:path>
+                                </con1:param>
+                                <con1:param name="elegido">
+                                  <con1:path>""</con1:path>
+                                </con1:param>
+                                <con1:param name="elegidoAntiguo">
+                                  <con1:path>""</con1:path>
+                                </con1:param>
+                                <con1:param name="min">
+                                  <con1:path>data($body/ejec:Input_Parameters/MIN_DESTINO)</con1:path>
+                                </con1:param>
+                                <con1:param name="fechaCreacion">
+                                  <con1:path>data($body/ejec:Input_Parameters/PARAMETROS_NEGOCIO/PARAMETRO[NOMBRE='FECHA_RENOVACION_ILIMITADO']/VALOR)</con1:path>
+                                </con1:param>
+                                <con1:param name="vigencia">
+                                  <con1:path>data($body/ejec:Input_Parameters/PARAMETROS_NEGOCIO/PARAMETRO[NOMBRE='VIGENCIA_ILIMITADO']/VALOR)</con1:path>
+                                </con1:param>
+                              </con1:xqueryTransform>
+                            </con2:expr>
+                          </con2:assign>
+                        </con2:requestTransform>
+                        <con2:responseTransform/>
+                      </con2:wsCallout>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:default>
+                    <con2:wsCallout>
+                      <con1:id>_ActionId-5938258762724550598--5615c36b.13a0e950e4b.-65bd</con1:id>
+                      <con2:service xsi:type="ref:ProxyRef" ref="ITEL/OCS/OLM/Proxies/consultarSuscripcionOCSLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                      <con2:operation>consultarSuscripcionOCS</con2:operation>
+                      <con2:request>
+                        <con2:body>$suscripcionRequest</con2:body>
+                      </con2:request>
+                      <con2:response>
+                        <con2:body>suscripcionResponse</con2:body>
+                      </con2:response>
+                      <con2:requestTransform>
+                        <con2:assign varName="suscripcionRequest">
+                          <con1:id>_ActionId-5938258762724550598--5615c36b.13a0e950e4b.-65be</con1:id>
+                          <con2:expr>
+                            <con1:xqueryTransform>
+                              <con1:resource ref="ITEL/Core/Resources/XQueries/consultarSuscripcionOCSPS_Req"/>
+                              <con1:param name="min">
+                                <con1:path>data($body/ejec:Input_Parameters/MIN_DESTINO)</con1:path>
+                              </con1:param>
+                            </con1:xqueryTransform>
+                          </con2:expr>
+                        </con2:assign>
+                      </con2:requestTransform>
+                      <con2:responseTransform/>
+                    </con2:wsCallout>
+                    <con2:wsCallout>
+                      <con1:id>_ActionId-5938258762724550598--5615c36b.13a0e950e4b.-65b9</con1:id>
+                      <con2:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/insertarElegidoSMSOCSLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                      <con2:operation>insertarElegidoSMSOCS</con2:operation>
+                      <con2:request>
+                        <con2:body>$insertarSMSRequest</con2:body>
+                      </con2:request>
+                      <con2:response>
+                        <con2:body>insertarSMSResponse</con2:body>
+                      </con2:response>
+                      <con2:requestTransform>
+                        <con2:assign varName="insertarSMSRequest">
+                          <con1:id>_ActionId-5938258762724550598--5615c36b.13a0e950e4b.-65ba</con1:id>
+                          <con2:expr>
+                            <con1:xqueryTransform>
+                              <con1:resource ref="ITEL/Core/Resources/XQueries/ejecutador_Req_insertarElegidoSMSOCS"/>
+                              <con1:param name="suscripcion">
+                                <con1:path>if (data($body/ejec:Input_Parameters/PARAMETROS_TRAMA/PARAMETRO[NOMBRE='MONTORECARGA']/VALOR) = 0) then
+   "smsFnFOnNet"
+   else if (data($body/ejec:Input_Parameters/PARAMETROS_TRAMA/PARAMETRO[NOMBRE='MONTORECARGA']/VALOR) = 1) then
+   "smsFnFOffNet"
+   else if (data($body/ejec:Input_Parameters/PARAMETROS_TRAMA/PARAMETRO[NOMBRE='MONTORECARGA']/VALOR) = 2) then
+   "smsFnFAny"
+   else ()</con1:path>
+                              </con1:param>
+                              <con1:param name="elegido">
+                                <con1:path>""</con1:path>
+                              </con1:param>
+                              <con1:param name="elegidoAntiguo">
+                                <con1:path>""</con1:path>
+                              </con1:param>
+                              <con1:param name="min">
+                                <con1:path>data($body/ejec:Input_Parameters/MIN_DESTINO)</con1:path>
+                              </con1:param>
+                              <con1:param name="fechaCreacion">
+                                <con1:path>data($suscripcionResponse/MENSAJE/CONSULTAR_SUSCRIPCION/result[fafID=data($body/*:Input_Parameters/PARAMETROS_NEGOCIO/PARAMETRO[NOMBRE='FAFID']/VALOR)]/startDate)</con1:path>
+                              </con1:param>
+                              <con1:param name="fechaExpiracion">
+                                <con1:path>data($suscripcionResponse/MENSAJE/CONSULTAR_SUSCRIPCION/result[fafID=data($body/*:Input_Parameters/PARAMETROS_NEGOCIO/PARAMETRO[NOMBRE='FAFID']/VALOR)]/expiryDate)</con1:path>
+                              </con1:param>
+                            </con1:xqueryTransform>
+                          </con2:expr>
+                        </con2:assign>
+                      </con2:requestTransform>
+                      <con2:responseTransform/>
+                    </con2:wsCallout>
+                  </con2:default>
+                </con2:ifThenElse>
+                <con2:ifThenElse>
+                  <con1:id>_ActionId-3240996374908289818-134d2eb4.136bb68b4fc.-7685</con1:id>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>data($insertarSMSResponse/MENSAJE/EXITO) != "TRUE"</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:assign varName="codError">
+                        <con1:id>_ActionId-3240996374908289818-134d2eb4.136bb68b4fc.-7684</con1:id>
+                        <con2:expr>
+                          <con1:xqueryText>"909"</con1:xqueryText>
+                        </con2:expr>
+                      </con2:assign>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:default/>
+                </con2:ifThenElse>
+              </con2:actions>
+            </con2:case>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>$metodo = "704"</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:wsCallout>
+                  <con1:id>_ActionId-3240996374908289818-134d2eb4.136bb68b4fc.-766a</con1:id>
+                  <con2:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/eliminarElegidoSMSLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con2:operation>eliminarElegidoSMS</con2:operation>
+                  <con2:request>
+                    <con2:body>$eliminarSMSRequest</con2:body>
+                  </con2:request>
+                  <con2:response>
+                    <con2:body>eliminarSMSResponse</con2:body>
+                  </con2:response>
+                  <con2:requestTransform>
+                    <con2:assign varName="eliminarSMSRequest">
+                      <con1:id>_ActionId-3240996374908289818-134d2eb4.136bb68b4fc.-766b</con1:id>
+                      <con2:expr>
+                        <con1:xqueryTransform>
+                          <con1:resource ref="ITEL/Core/Resources/XQueries/eliminarElegidoSMSPS_Req"/>
+                          <con1:param name="elegido">
+                            <con1:path>if(data($body/ejec:Input_Parameters/PARAMETROS_TRAMA/PARAMETRO[NOMBRE='COMENTARIO']/VALOR) = "0") then
+	data($body/ejec:Input_Parameters/PARAMETROS_TRAMA/PARAMETRO[NOMBRE='HOSTID']/VALOR)
+else
+	""</con1:path>
+                          </con1:param>
+                          <con1:param name="min">
+                            <con1:path>data($body/ejec:Input_Parameters/MIN_DESTINO)</con1:path>
+                          </con1:param>
+                        </con1:xqueryTransform>
+                      </con2:expr>
+                    </con2:assign>
+                  </con2:requestTransform>
+                  <con2:responseTransform/>
+                </con2:wsCallout>
+                <con2:ifThenElse>
+                  <con1:id>_ActionId-3240996374908289818-134d2eb4.136bb68b4fc.-7669</con1:id>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>data($eliminarSMSResponse/MENSAJE/EXITO) != "TRUE"</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:assign varName="codError">
+                        <con1:id>_ActionId-3240996374908289818-134d2eb4.136bb68b4fc.-7668</con1:id>
+                        <con2:expr>
+                          <con1:xqueryText>"909"</con1:xqueryText>
+                        </con2:expr>
+                      </con2:assign>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:default/>
+                </con2:ifThenElse>
+              </con2:actions>
+            </con2:case>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>data($body/ejec:Input_Parameters/PARAMETROS_TRAMA/PARAMETRO[NOMBRE='METODOCONSECUTIVO']/VALOR) = "408"</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:wsCallout>
+                  <con1:id>_ActionId-1024557091068085480-325a112b.13e7d371987.-75dc</con1:id>
+                  <con2:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/insertarConsecutivoLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con2:operation>insertarConsecutivo</con2:operation>
+                  <con2:request>
+                    <con2:body>$insertarConsecutivoRequest</con2:body>
+                  </con2:request>
+                  <con2:response>
+                    <con2:body>insertarConsecutivoResponse</con2:body>
+                  </con2:response>
+                  <con2:requestTransform>
+                    <con2:assign varName="insertarConsecutivoRequest">
+                      <con1:id>_ActionId-1024557091068085480-325a112b.13e7d371987.-75b9</con1:id>
+                      <con2:expr>
+                        <con1:xqueryTransform>
+                          <con1:resource ref="ITEL/Core/Resources/XQueries/insertarConsecutivo_Req_Ejecutador"/>
+                          <con1:param name="consecutivo">
+                            <con1:path>xs:string(data($body/ejec:Input_Parameters/CONSECUTIVO))</con1:path>
+                          </con1:param>
+                        </con1:xqueryTransform>
+                      </con2:expr>
+                    </con2:assign>
+                  </con2:requestTransform>
+                  <con2:responseTransform>
+                    <con2:ifThenElse>
+                      <con1:id>_ActionId-1024557091068085480-325a112b.13e7d371987.-759c</con1:id>
+                      <con2:case>
+                        <con2:condition>
+                          <con1:xqueryText>data($insertarConsecutivoResponse/CODIGO) != '1'</con1:xqueryText>
+                        </con2:condition>
+                        <con2:actions>
+                          <con2:assign varName="codError">
+                            <con1:id>_ActionId-1024557091068085480-325a112b.13e7d371987.-7585</con1:id>
+                            <con2:expr>
+                              <con1:xqueryText>"909"</con1:xqueryText>
+                            </con2:expr>
+                          </con2:assign>
+                        </con2:actions>
+                      </con2:case>
+                      <con2:default/>
+                    </con2:ifThenElse>
+                  </con2:responseTransform>
+                </con2:wsCallout>
+              </con2:actions>
+            </con2:case>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>$metodo = "409"</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:ifThenElse>
+                  <con1:id>_ActionId-6159948894050787951-512e2d33.14716cc1435.-7f8b</con1:id>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>$body/ejec:Input_Parameters/PARAMETROS_TRAMA/PARAMETRO[NOMBRE="DIASVIGENCIA"]/VALOR = "1" 
+and $body/ejec:Input_Parameters/PARAMETROS_NEGOCIO/PARAMETRO[NOMBRE="CUENTA"]/VALOR = "3"</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:wsCallout>
+                        <con1:id>_ActionId-6159948894050787951-512e2d33.14716cc1435.-7f83</con1:id>
+                        <con2:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/reportarPaqueteRecurrente_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>PaquetesRecurrentes</con2:operation>
+                        <con2:request>
+                          <con2:body wrapped="false">$paquetesRecurrentesRequest</con2:body>
+                        </con2:request>
+                        <con2:response>
+                          <con2:body wrapped="false">paquetesRecurrentesResponse</con2:body>
+                        </con2:response>
+                        <con2:requestTransform>
+                          <con2:assign varName="paquetesRecurrentesRequest">
+                            <con1:id>_ActionId-6159948894050787951-512e2d33.14716cc1435.-7f86</con1:id>
+                            <con2:expr>
+                              <con1:xqueryTransform>
+                                <con1:resource ref="ITEL/Core/Resources/XQueries/paquetesRecurrentesPS_Req"/>
+                                <con1:param name="servicio">
+                                  <con1:path>data($body/ejec:Input_Parameters/PARAMETROS_TRAMA/PARAMETRO[NOMBRE="COMENTARIO"]/VALOR)</con1:path>
+                                </con1:param>
+                                <con1:param name="min">
+                                  <con1:path>data($body/ejec:Input_Parameters/MIN_DESTINO)</con1:path>
+                                </con1:param>
+                              </con1:xqueryTransform>
+                            </con2:expr>
+                          </con2:assign>
+                        </con2:requestTransform>
+                        <con2:responseTransform>
+                          <con2:ifThenElse>
+                            <con1:id>_ActionId-6159948894050787951-512e2d33.14716cc1435.-7f85</con1:id>
+                            <con2:case>
+                              <con2:condition>
+                                <con1:xqueryText>data($paquetesRecurrentesResponse/MENSAJE/SALIDA) != '1' or 
+data($paquetesRecurrentesResponse/CODIGO) != "OK"</con1:xqueryText>
+                              </con2:condition>
+                              <con2:actions>
+                                <con2:assign varName="codError">
+                                  <con1:id>_ActionId-6159948894050787951-512e2d33.14716cc1435.-7f84</con1:id>
+                                  <con2:expr>
+                                    <con1:xqueryText>"909"</con1:xqueryText>
+                                  </con2:expr>
+                                </con2:assign>
+                              </con2:actions>
+                            </con2:case>
+                            <con2:default/>
+                          </con2:ifThenElse>
+                        </con2:responseTransform>
+                      </con2:wsCallout>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>$codError = "1"
+and $body/ejec:Input_Parameters/PARAMETROS_NEGOCIO/PARAMETRO[NOMBRE="CUENTA"]/VALOR = "10"</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:wsCallout>
+                        <con1:id>_ActionId-5461007279276889299-2e4f5b74.154777e96f3.-71ec</con1:id>
+                        <con2:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/enviaSMSLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>enviarSMS</con2:operation>
+                        <con2:request>
+                          <con2:body>$enviarSMSResquest</con2:body>
+                        </con2:request>
+                        <con2:response>
+                          <con2:body>enviarSMSResponse</con2:body>
+                        </con2:response>
+                        <con2:requestTransform>
+                          <con2:assign varName="enviarSMSResquest">
+                            <con1:id>_ActionId-5461007279276889299-2e4f5b74.154777e96f3.-71b9</con1:id>
+                            <con2:expr>
+                              <con1:xqueryTransform>
+                                <con1:resource ref="ITEL/Core/Resources/XQueries/ejecutador_Req_enviarSMS"/>
+                                <con1:param name="origen">
+                                  <con1:path>data($body/ejec:Input_Parameters/PARAMETROS_TRAMA/PARAMETRO[NOMBRE='PREFIJOSMSPAQUETE']/VALOR)</con1:path>
+                                </con1:param>
+                                <con1:param name="mensaje">
+                                  <con1:path>data($body/ejec:Input_Parameters/PARAMETROS_TRAMA/PARAMETRO[NOMBRE='MENSAJEACTIVACION']/VALOR)</con1:path>
+                                </con1:param>
+                                <con1:param name="min">
+                                  <con1:path>data($body/ejec:Input_Parameters/MIN_DESTINO)</con1:path>
+                                </con1:param>
+                              </con1:xqueryTransform>
+                            </con2:expr>
+                          </con2:assign>
+                        </con2:requestTransform>
+                        <con2:responseTransform/>
+                      </con2:wsCallout>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:default/>
+                </con2:ifThenElse>
+              </con2:actions>
+            </con2:case>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>$codError = "1" and $metodo = ("601","604")</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:ifThenElse>
+                  <con1:id>_ActionId-3338367036929221406--e785a09.1495214c230.-7f93</con1:id>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>data($body/ejec:Input_Parameters/PARAMETROS_NEGOCIO/PARAMETRO[NOMBRE="ESPOSTPAGO"]/VALOR) = 'FALSE'
+and data($body/ejec:Input_Parameters/PARAMETROS_NEGOCIO/PARAMETRO[NOMBRE="ESUPDOWN"]/VALOR) = 'FALSE'
+and data($body/ejec:Input_Parameters/PARAMETROS_NEGOCIO/PARAMETRO[NOMBRE="ACREDITACUENTA"]/VALOR) = 'TRUE'</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:wsCallout>
+                        <con1:id>_ActionId-3338367036929221406--e785a09.1495214c230.-7f25</con1:id>
+                        <con2:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/actualizarCantidadCambiosDePlanLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>actualizarCambiosDePlan</con2:operation>
+                        <con2:request>
+                          <con2:body>$actualizarCambiosDePlanRequest</con2:body>
+                        </con2:request>
+                        <con2:response>
+                          <con2:body>actualizarCambiosDePlanResponse</con2:body>
+                        </con2:response>
+                        <con2:requestTransform>
+                          <con2:assign varName="actualizarCambiosDePlanRequest">
+                            <con1:id>_ActionId-3338367036929221406--e785a09.1495214c230.-7eec</con1:id>
+                            <con2:expr>
+                              <con1:xqueryTransform>
+                                <con1:resource ref="ITEL/Core/Resources/XQueries/ejecutador_Req_actualizarCambiosDePlan"/>
+                                <con1:param name="min">
+                                  <con1:path>data($body/ejec:Input_Parameters/MIN_DESTINO)</con1:path>
+                                </con1:param>
+                              </con1:xqueryTransform>
+                            </con2:expr>
+                          </con2:assign>
+                        </con2:requestTransform>
+                        <con2:responseTransform/>
+                      </con2:wsCallout>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:default/>
+                </con2:ifThenElse>
+              </con2:actions>
+            </con2:case>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>$codError = "1" and $metodo = ("306", "311", "314")</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:ifThenElse>
+                  <con1:id>_ActionId-2999359011571076042--72c97c75.156955b6f47.-6bd9</con1:id>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>$metodo = ("311", "314") and data($body/ejec:Input_Parameters/PARAMETROS_NEGOCIO/PARAMETRO[NOMBRE="ESPOSTPAGO"]/VALOR) = 'FALSE'</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:wsCallout>
+                        <con1:id>_ActionId-2999359011571076042--72c97c75.156955b6f47.-6bd5</con1:id>
+                        <con2:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/actualizarCantidadCambiosFNFLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>actualizarCambiosFNF</con2:operation>
+                        <con2:request>
+                          <con2:body>$actualizarCambiosFNF_Req</con2:body>
+                        </con2:request>
+                        <con2:response>
+                          <con2:body>actualizarCambiosFNF_Res</con2:body>
+                        </con2:response>
+                        <con2:requestTransform>
+                          <con2:assign varName="actualizarCambiosFNF_Req">
+                            <con1:id>_ActionId-2999359011571076042--72c97c75.156955b6f47.-6bd6</con1:id>
+                            <con2:expr>
+                              <con1:xqueryTransform>
+                                <con1:resource ref="ITEL/Core/Resources/XQueries/ejecutador_Req_actualizarCambiosFNF"/>
+                                <con1:param name="min">
+                                  <con1:path>data($body/ejec:Input_Parameters/MIN_DESTINO)</con1:path>
+                                </con1:param>
+                              </con1:xqueryTransform>
+                            </con2:expr>
+                          </con2:assign>
+                        </con2:requestTransform>
+                        <con2:responseTransform/>
+                      </con2:wsCallout>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>$metodo = ("306") and data($body/ejec:Input_Parameters/PARAMETROS_NEGOCIO/PARAMETRO[NOMBRE="ESPOSTPAGO"]/VALOR) = 'FALSE'
+and data($body/ejec:Input_Parameters/PARAMETROS_NEGOCIO/PARAMETRO[NOMBRE="VALIDARFNF"]/VALOR) = 'true'</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:wsCallout>
+                        <con1:id>_ActionId-8724250661692898960-945dc8e.157782939dc.-7eb3</con1:id>
+                        <con2:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/actualizarCantidadCambiosFNFLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>actualizarCambiosFNF</con2:operation>
+                        <con2:request>
+                          <con2:body>$actualizarCambiosFNF_Req</con2:body>
+                        </con2:request>
+                        <con2:response>
+                          <con2:body>actualizarCambiosFNF_Res</con2:body>
+                        </con2:response>
+                        <con2:requestTransform>
+                          <con2:assign varName="actualizarCambiosFNF_Req">
+                            <con1:id>_ActionId-8724250661692898960-945dc8e.157782939dc.-7eb4</con1:id>
+                            <con2:expr>
+                              <con1:xqueryTransform>
+                                <con1:resource ref="ITEL/Core/Resources/XQueries/ejecutador_Req_actualizarCambiosFNF"/>
+                                <con1:param name="min">
+                                  <con1:path>data($body/ejec:Input_Parameters/MIN_DESTINO)</con1:path>
+                                </con1:param>
+                              </con1:xqueryTransform>
+                            </con2:expr>
+                          </con2:assign>
+                        </con2:requestTransform>
+                        <con2:responseTransform/>
+                      </con2:wsCallout>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:default/>
+                </con2:ifThenElse>
+              </con2:actions>
+            </con2:case>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>$codError = '1' and $metodo = ('100','101')</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:ifThenElse>
+                  <con1:id>_ActionId-8834681232170300452-19a06721.156dd1d2b01.-7bee</con1:id>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>$codError = '1' and 
+contains(data($body/ejec:Input_Parameters/PARAMETROS_TRAMA/PARAMETRO[NOMBRE="MATERIALESRTC"]/VALOR),
+data($body/ejec:Input_Parameters/PARAMETROS_TRAMA/PARAMETRO[NOMBRE="POSPAGO"]/VALOR))</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:wsCallout>
+                        <con1:id>_ActionId-8834681232170300452-19a06721.156dd1d2b01.-7bea</con1:id>
+                        <con2:service xsi:type="ref:ProxyRef" ref="ITEL/OCS/AIR/Proxies/actualizarAccumulatorOCSLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>actualizarAccumulator</con2:operation>
+                        <con2:request>
+                          <con2:body>$actualizarAccumulatorRequest</con2:body>
+                        </con2:request>
+                        <con2:response>
+                          <con2:body>actualizarAccumulatorResponse</con2:body>
+                        </con2:response>
+                        <con2:requestTransform>
+                          <con2:assign varName="actualizarAccumulatorRequest">
+                            <con1:id>_ActionId-8834681232170300452-19a06721.156dd1d2b01.-7bed</con1:id>
+                            <con2:expr>
+                              <con1:xqueryTransform>
+                                <con1:resource ref="ITEL/Core/Resources/XQueries/ejecutador_Req_UpdateAccumulator"/>
+                                <con1:param name="input_Parameters1">
+                                  <con1:path>$body/ejec:Input_Parameters</con1:path>
+                                </con1:param>
+                              </con1:xqueryTransform>
+                            </con2:expr>
+                          </con2:assign>
+                        </con2:requestTransform>
+                        <con2:responseTransform>
+                          <con2:ifThenElse>
+                            <con1:id>_ActionId-8834681232170300452-19a06721.156dd1d2b01.-7bec</con1:id>
+                            <con2:case>
+                              <con2:condition>
+                                <con1:xqueryText>data($actualizarAccumulatorResponse/MENSAJE/ACTUALIZAR_ACCUMULATOR/MethodResponse/responseCode) != '0'</con1:xqueryText>
+                              </con2:condition>
+                              <con2:actions>
+                                <con2:assign varName="codError">
+                                  <con1:id>_ActionId-8834681232170300452-19a06721.156dd1d2b01.-7beb</con1:id>
+                                  <con2:expr>
+                                    <con1:xqueryText>"62"</con1:xqueryText>
+                                  </con2:expr>
+                                </con2:assign>
+                              </con2:actions>
+                            </con2:case>
+                            <con2:default/>
+                          </con2:ifThenElse>
+                        </con2:responseTransform>
+                      </con2:wsCallout>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-8834681232170300452-19a06721.156dd1d2b01.-7be9</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>$codError = '1'</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con2:wsCallout>
+                              <con1:id>_ActionId-8834681232170300452-19a06721.156dd1d2b01.-7be5</con1:id>
+                              <con2:service xsi:type="ref:ProxyRef" ref="ITEL/OCS/AIR/Proxies/actualizarOfferOCSLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                              <con2:operation>actualizarOffer</con2:operation>
+                              <con2:request>
+                                <con2:body>$actualizarOfferRequest</con2:body>
+                              </con2:request>
+                              <con2:response>
+                                <con2:body>actualizarOfferResponse</con2:body>
+                              </con2:response>
+                              <con2:requestTransform>
+                                <con2:assign varName="actualizarOfferRequest">
+                                  <con1:id>_ActionId-8834681232170300452-19a06721.156dd1d2b01.-7be8</con1:id>
+                                  <con2:expr>
+                                    <con1:xqueryTransform>
+                                      <con1:resource ref="ITEL/Core/Resources/XQueries/ejecutador_Req_UpdateOffer"/>
+                                      <con1:param name="input_Parameters1">
+                                        <con1:path>$body/ejec:Input_Parameters</con1:path>
+                                      </con1:param>
+                                    </con1:xqueryTransform>
+                                  </con2:expr>
+                                </con2:assign>
+                              </con2:requestTransform>
+                              <con2:responseTransform>
+                                <con2:ifThenElse>
+                                  <con1:id>_ActionId-8834681232170300452-19a06721.156dd1d2b01.-7be7</con1:id>
+                                  <con2:case>
+                                    <con2:condition>
+                                      <con1:xqueryText>data($actualizarOfferResponse/CODIGO) !='1' or data($actualizarOfferResponse/MENSAJE/ACTUALIZAR_OFFER/MethodResponse/responseCode) != '0'</con1:xqueryText>
+                                    </con2:condition>
+                                    <con2:actions>
+                                      <con2:assign varName="codError">
+                                        <con1:id>_ActionId-8834681232170300452-19a06721.156dd1d2b01.-7be6</con1:id>
+                                        <con2:expr>
+                                          <con1:xqueryText>"62"</con1:xqueryText>
+                                        </con2:expr>
+                                      </con2:assign>
+                                    </con2:actions>
+                                  </con2:case>
+                                  <con2:default/>
+                                </con2:ifThenElse>
+                              </con2:responseTransform>
+                            </con2:wsCallout>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default/>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:default/>
+                </con2:ifThenElse>
+              </con2:actions>
+            </con2:case>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>$metodo = ('502') and $codError = '1'</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:ifThenElse>
+                  <con1:id>_ActionId-5461007279276889299-2e4f5b74.154777e96f3.-70bb</con1:id>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>data($body/ejec:Input_Parameters/PARAMETROS_TRAMA/PARAMETRO[NOMBRE='HOSTID']/VALOR) = '1'</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:wsCallout>
+                        <con1:id>_ActionId-5461007279276889299-2e4f5b74.154777e96f3.-7090</con1:id>
+                        <con2:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/enviaSMSLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>enviarSMS</con2:operation>
+                        <con2:request>
+                          <con2:body>$enviarSMSResquest</con2:body>
+                        </con2:request>
+                        <con2:response>
+                          <con2:body>enviarSMSResponse</con2:body>
+                        </con2:response>
+                        <con2:requestTransform>
+                          <con2:assign varName="enviarSMSResquest">
+                            <con1:id>_ActionId-5461007279276889299-2e4f5b74.154777e96f3.-7078</con1:id>
+                            <con2:expr>
+                              <con1:xqueryTransform>
+                                <con1:resource ref="ITEL/Core/Resources/XQueries/ejecutador_Req_enviarSMS"/>
+                                <con1:param name="origen">
+                                  <con1:path>data($body/ejec:Input_Parameters/PARAMETROS_TRAMA/PARAMETRO[NOMBRE='PREFIJOSMSPAQUETE']/VALOR)</con1:path>
+                                </con1:param>
+                                <con1:param name="mensaje">
+                                  <con1:path>data($body/ejec:Input_Parameters/PARAMETROS_TRAMA/PARAMETRO[NOMBRE='MENSAJEDESACTIVACION']/VALOR)</con1:path>
+                                </con1:param>
+                                <con1:param name="min">
+                                  <con1:path>data($body/ejec:Input_Parameters/MIN_DESTINO)</con1:path>
+                                </con1:param>
+                              </con1:xqueryTransform>
+                            </con2:expr>
+                          </con2:assign>
+                        </con2:requestTransform>
+                        <con2:responseTransform/>
+                      </con2:wsCallout>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:default/>
+                </con2:ifThenElse>
+              </con2:actions>
+            </con2:case>
+            <con2:default/>
+          </con2:ifThenElse>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="PipelinePairNode1_response">
+      <con:stage name="respuesta" errorHandler="_onErrorHandler-1096434085378710523-1a87ec0a.12fa1638b8e.-7f54">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/DynamicDispatcher/" prefix="dyn"/>
+          <con3:variable name="respServicio" path="$respServicio" asChild="false">
+            <con3:schema ref="ITEL/Core/Resources/Schemas/PS_ITEL_DYNAMICDISPATCHER" element="WS_Result"/>
+          </con3:variable>
+        </con:context>
+        <con:actions>
+          <con2:replace contents-only="true" varName="body">
+            <con1:id>_ActionId-5174370892286694528-6956db40.133a81e5a33.-7ec1</con1:id>
+            <con2:expr>
+              <con1:xqueryTransform>
+                <con1:resource ref="ITEL/Core/Resources/XQueries/ejecutador_Res"/>
+                <con1:param name="descripcion">
+                  <con1:path>$reglasProvisionResponse/*:DESCRIPCION/text()</con1:path>
+                </con1:param>
+                <con1:param name="mensaje">
+                  <con1:path>"Ejecucion finalizada"</con1:path>
+                </con1:param>
+                <con1:param name="durEjecucionIN">
+                  <con1:path>$duracionEjecucion</con1:path>
+                </con1:param>
+                <con1:param name="serviciosEjecutados">
+                  <con1:path>$serviciosEjecutados</con1:path>
+                </con1:param>
+                <con1:param name="codigo">
+                  <con1:path>$codError</con1:path>
+                </con1:param>
+                <con1:param name="tiempoInicio">
+                  <con1:path>$tiempoInicioEtapa</con1:path>
+                </con1:param>
+                <con1:param name="balances">
+                  <con1:path>$balances</con1:path>
+                </con1:param>
+                <con1:param name="balancesAnterior">
+                  <con1:path>$balancesAnterior</con1:path>
+                </con1:param>
+                <con1:param name="durReglasProvision">
+                  <con1:path>$duracionReglas</con1:path>
+                </con1:param>
+                <con1:param name="durTxIN">
+                  <con1:path>$duracionServicios</con1:path>
+                </con1:param>
+              </con1:xqueryTransform>
+            </con2:expr>
+          </con2:replace>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="error" name="_onErrorHandler-1096434085378710523-1a87ec0a.12fa1638b8e.-7f56">
+      <con:stage name="error">
+        <con:context/>
+        <con:actions>
+          <con2:assign varName="codError">
+            <con1:id>_ActionId-1641293207969743559--28a4b30a.12fb0e9a486.-7c2f</con1:id>
+            <con2:expr>
+              <con1:xqueryText>"903"</con1:xqueryText>
+            </con2:expr>
+          </con2:assign>
+          <con1:resume>
+            <con1:id>_ActionId-5174370892286694528-6956db40.133a81e5a33.-7e86</con1:id>
+          </con1:resume>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="error" name="_onErrorHandler-1096434085378710523-1a87ec0a.12fa1638b8e.-7f54">
+      <con:stage name="error">
+        <con:context/>
+        <con:actions>
+          <con2:replace contents-only="true" varName="body">
+            <con1:id>_ActionId-5103641436641394287--981063f.1369dc53455.-7fb9</con1:id>
+            <con2:expr>
+              <con1:xqueryTransform>
+                <con1:resource ref="ITEL/Core/Resources/XQueries/ejecutador_Res"/>
+                <con1:param name="descripcion">
+                  <con1:path>"Error procesando la respuesta"</con1:path>
+                </con1:param>
+                <con1:param name="mensaje">
+                  <con1:path>"Ejecucion fallida"</con1:path>
+                </con1:param>
+                <con1:param name="durEjecucionIN">
+                  <con1:path>$duracionEjecucion</con1:path>
+                </con1:param>
+                <con1:param name="serviciosEjecutados">
+                  <con1:path>$serviciosEjecutados</con1:path>
+                </con1:param>
+                <con1:param name="codigo">
+                  <con1:path>"903"</con1:path>
+                </con1:param>
+                <con1:param name="tiempoInicio">
+                  <con1:path>$tiempoInicioEtapa</con1:path>
+                </con1:param>
+                <con1:param name="balances">
+                  <con1:path>$balances</con1:path>
+                </con1:param>
+                <con1:param name="balancesAnterior">
+                  <con1:path>$balancesAnterior</con1:path>
+                </con1:param>
+                <con1:param name="durReglasProvision">
+                  <con1:path>$duracionReglas</con1:path>
+                </con1:param>
+                <con1:param name="durTxIN">
+                  <con1:path>$duracionServicios</con1:path>
+                </con1:param>
+              </con1:xqueryTransform>
+            </con2:expr>
+          </con2:replace>
+          <con1:reply>
+            <con1:id>_ActionId-7995090476266788333-56400aef.1301d30a99e.-7fd7</con1:id>
+          </con1:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="error" name="_onErrorHandler-1641293207969743559--28a4b30a.12fb0e9a486.-7e31">
+      <con:stage name="error1">
+        <con:context/>
+        <con:actions>
+          <con2:assign varName="codError">
+            <con1:id>_ActionId-1641293207969743559--28a4b30a.12fb0e9a486.-7b65</con1:id>
+            <con2:expr>
+              <con1:xqueryText>"903"</con1:xqueryText>
+            </con2:expr>
+          </con2:assign>
+          <con1:resume>
+            <con1:id>_ActionId-7995090476266788333-56400aef.1301d30a99e.-7feb</con1:id>
+          </con1:resume>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="error" name="_onErrorHandler-4677080153069974397--794393f4.13027a7ee5c.-7ea4">
+      <con:stage name="error">
+        <con:context/>
+        <con:actions>
+          <con2:assign varName="codError">
+            <con1:id>_ActionId-4677080153069974397--794393f4.13027a7ee5c.-7e7a</con1:id>
+            <con2:expr>
+              <con1:xqueryText>"903"</con1:xqueryText>
+            </con2:expr>
+          </con2:assign>
+          <con1:resume>
+            <con1:id>_ActionId-4677080153069974397--794393f4.13027a7ee5c.-7e3f</con1:id>
+          </con1:resume>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="error" name="_onErrorHandler-5985043086313793460-3dcd6be3.1374b9d51ec.-789b">
+      <con:stage name="error">
+        <con:context/>
+        <con:actions>
+          <con2:assign varName="codError">
+            <con1:id>_ActionId-5985043086313793460-3dcd6be3.1374b9d51ec.-7892</con1:id>
+            <con2:expr>
+              <con1:xqueryText>"903"</con1:xqueryText>
+            </con2:expr>
+          </con2:assign>
+          <con1:resume>
+            <con1:id>_ActionId-5985043086313793460-3dcd6be3.1374b9d51ec.-7891</con1:id>
+          </con1:resume>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:flow>
+      <con:pipeline-node name="PipelinePairNode1">
+        <con:request>PipelinePairNode1_request</con:request>
+        <con:response>PipelinePairNode1_response</con:response>
+      </con:pipeline-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

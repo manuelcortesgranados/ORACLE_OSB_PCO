@@ -1,0 +1,15 @@
+<wsdl:definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/Application_PCO_DBAdapterProcedimientoAlmacenado04/Project_PCO_DBAdapterProcedimientoAlmacenado04/dbReference04" name="dbReference04-concrete" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <wsdl:import location="dbReference04.wsdl" namespace="http://xmlns.oracle.com/pcbpel/adapter/db/Application_PCO_DBAdapterProcedimientoAlmacenado04/Project_PCO_DBAdapterProcedimientoAlmacenado04/dbReference04"/>
+    <wsdl:binding name="dbReference04_ptt-binding" type="dbr:dbReference04_ptt" xmlns:dbr="http://xmlns.oracle.com/pcbpel/adapter/db/Application_PCO_DBAdapterProcedimientoAlmacenado04/Project_PCO_DBAdapterProcedimientoAlmacenado04/dbReference04">
+        <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+        <wsdl:operation name="dbReference04">
+            <soap:operation soapAction="dbReference04"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+</wsdl:definitions>

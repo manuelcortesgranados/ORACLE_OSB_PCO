@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config">
+  <ser:coreEntry isProxy="true" isEnabled="true" isAutoPublish="false" isTracingEnabled="false">
+    <ser:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config">
+      <con:wsdl ref="ITEL/IN/Resources/WSDLs/recargarIN_PS"/>
+      <con:port>
+        <con:name>RecargarINSOAP</con:name>
+        <con:namespace>http://www.comcel.com.co/RecargarIN/</con:namespace>
+      </con:port>
+      <con:selector type="SOAP body"/>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+    <ser:ws-policy>
+      <ser:binding-mode>wsdl-policy-attachments</ser:binding-mode>
+    </ser:ws-policy>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>local</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:inbound-properties/>
+    <tran:all-headers>true</tran:all-headers>
+  </ser:endpointConfig>
+  <ser:router>
+    <con:pipeline type="request" name="PipelinePairNode1_request">
+      <con:stage name="validacion" errorHandler="_onErrorHandler-3166700838857645387--551f9b11.133cb9965be.-7e6b">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/RecargarIN/" prefix="rec"/>
+        </con:context>
+        <con:actions>
+          <con2:validate>
+            <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-7e4f</con1:id>
+            <con2:schema ref="ITEL/IN/Resources/Schemas/PS_ITEL_RECARGAR"/>
+            <con2:schemaElement xmlns:rec="http://www.comcel.com.co/RecargarIN/">rec:Input_Parameters</con2:schemaElement>
+            <con2:varName>body</con2:varName>
+            <con2:location>
+              <con1:xpathText>./rec:Input_Parameters</con1:xpathText>
+            </con2:location>
+          </con2:validate>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="PipelinePairNode1_response"/>
+    <con:pipeline type="error" name="_onErrorHandler-3166700838857645387--551f9b11.133cb9965be.-7e6c">
+      <con:stage name="error">
+        <con:context xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con4="http://www.bea.com/wli/sb/stages/routing/config"/>
+        <con:actions xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con4="http://www.bea.com/wli/sb/stages/routing/config">
+          <con2:replace varName="body" contents-only="true">
+            <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-7e46</con1:id>
+            <con2:expr>
+              <con1:xqueryTransform>
+                <con1:resource ref="ITEL/IN/Resources/XQueries/recargarIN_Error"/>
+                <con1:param name="descripcion">
+                  <con1:path>"Error en etapa de routing"</con1:path>
+                </con1:param>
+                <con1:param name="mensaje">
+                  <con1:path>$fault/ctx:reason/text()</con1:path>
+                </con1:param>
+                <con1:param name="codigo">
+                  <con1:path>11</con1:path>
+                </con1:param>
+              </con1:xqueryTransform>
+            </con2:expr>
+          </con2:replace>
+          <con1:reply>
+            <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-7e45</con1:id>
+          </con1:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="error" name="_onErrorHandler-3166700838857645387--551f9b11.133cb9965be.-7e6b">
+      <con:stage name="error">
+        <con:context xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con4="http://www.bea.com/wli/sb/stages/routing/config"/>
+        <con:actions xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con4="http://www.bea.com/wli/sb/stages/routing/config">
+          <con2:replace varName="body" contents-only="true">
+            <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-7e4c</con1:id>
+            <con2:expr>
+              <con1:xqueryTransform>
+                <con1:resource ref="ITEL/IN/Resources/XQueries/recargarIN_Error"/>
+                <con1:param name="descripcion">
+                  <con1:path>"Error en etapa de validacion"</con1:path>
+                </con1:param>
+                <con1:param name="mensaje">
+                  <con1:path>$fault/ctx:reason/text()</con1:path>
+                </con1:param>
+                <con1:param name="codigo">
+                  <con1:path>11</con1:path>
+                </con1:param>
+              </con1:xqueryTransform>
+            </con2:expr>
+          </con2:replace>
+          <con1:reply>
+            <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-7e4b</con1:id>
+          </con1:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:flow>
+      <con:pipeline-node name="PipelinePairNode1">
+        <con:request>PipelinePairNode1_request</con:request>
+        <con:response>PipelinePairNode1_response</con:response>
+      </con:pipeline-node>
+      <con:route-node name="RouteEjecutarOperacionIN" error-handler="_onErrorHandler-3166700838857645387--551f9b11.133cb9965be.-7e6c">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/RecargarIN/" prefix="rec"/>
+        </con:context>
+        <con:actions>
+          <con3:route>
+            <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-7e6d</con1:id>
+            <con3:service ref="ITEL/IN/Business Services/ejecutarOperacionCorbaWS_BS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con3:operation>Recargar</con3:operation>
+            <con3:outboundTransform>
+              <con2:replace varName="body" contents-only="true">
+                <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-7e22</con1:id>
+                <con2:expr>
+                  <con1:xqueryTransform>
+                    <con1:resource ref="ITEL/IN/Resources/XQueries/recargarIN_Req_ejecutarOperacionIN"/>
+                    <con1:param name="input_Parameters">
+                      <con1:path>$body/rec:Input_Parameters</con1:path>
+                    </con1:param>
+                  </con1:xqueryTransform>
+                </con2:expr>
+              </con2:replace>
+            </con3:outboundTransform>
+            <con3:responseTransform>
+              <con2:ifThenElse>
+                <con1:id>_ActionId-4142010915876187785-7d725401.1353091e1a4.-7d7c</con1:id>
+                <con2:case>
+                  <con2:condition>
+                    <con1:xqueryText>data($body/*:RecargarResponse/@exito) = "true"</con1:xqueryText>
+                  </con2:condition>
+                  <con2:actions>
+                    <con2:assign varName="codigo">
+                      <con1:id>_ActionId-4142010915876187785-7d725401.1353091e1a4.-7d7b</con1:id>
+                      <con2:expr>
+                        <con1:xqueryText>"1"</con1:xqueryText>
+                      </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="descripcion">
+                      <con1:id>_ActionId-4142010915876187785-7d725401.1353091e1a4.-7d7a</con1:id>
+                      <con2:expr>
+                        <con1:xqueryText>"Ejecucion exitosa"</con1:xqueryText>
+                      </con2:expr>
+                    </con2:assign>
+                  </con2:actions>
+                </con2:case>
+                <con2:default>
+                  <con2:assign varName="codigo">
+                    <con1:id>_ActionId-4142010915876187785-7d725401.1353091e1a4.-7d79</con1:id>
+                    <con2:expr>
+                      <con1:xqueryTransform>
+                        <con1:resource ref="ITEL/IN/Resources/XQueries/obtenerCodigoError"/>
+                        <con1:param name="mensaje">
+                          <con1:path>data($body/*:RecargarResponse/@mensaje)</con1:path>
+                        </con1:param>
+                      </con1:xqueryTransform>
+                    </con2:expr>
+                  </con2:assign>
+                  <con2:assign varName="descripcion">
+                    <con1:id>_ActionId-4142010915876187785-7d725401.1353091e1a4.-7d78</con1:id>
+                    <con2:expr>
+                      <con1:xqueryText>data($body/*:RecargarResponse/@mensaje)</con1:xqueryText>
+                    </con2:expr>
+                  </con2:assign>
+                </con2:default>
+              </con2:ifThenElse>
+              <con2:replace varName="body" contents-only="true">
+                <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-7e05</con1:id>
+                <con2:expr>
+                  <con1:xqueryTransform>
+                    <con1:resource ref="ITEL/IN/Resources/XQueries/recargarIN_Res"/>
+                    <con1:param name="descripcion">
+                      <con1:path>$descripcion</con1:path>
+                    </con1:param>
+                    <con1:param name="codigo">
+                      <con1:path>$codigo</con1:path>
+                    </con1:param>
+                    <con1:param name="recargarResponse">
+                      <con1:path>$body/*:RecargarResponse</con1:path>
+                    </con1:param>
+                  </con1:xqueryTransform>
+                </con2:expr>
+              </con2:replace>
+            </con3:responseTransform>
+          </con3:route>
+        </con:actions>
+      </con:route-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

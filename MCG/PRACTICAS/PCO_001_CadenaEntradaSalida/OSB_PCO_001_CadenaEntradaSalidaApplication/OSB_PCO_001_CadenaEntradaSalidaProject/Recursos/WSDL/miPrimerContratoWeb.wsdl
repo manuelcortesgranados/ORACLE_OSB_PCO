@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<definitions targetNamespace="urn:miPrimerContratoWeb" xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:tns="urn:miPrimerContratoWeb" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+             xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:osita="http://www.osita.org">
+  <types>
+    <xsd:schema>
+      <xsd:import schemaLocation="../Schema/miPrimeraFirma.xsd" namespace="http://www.osita.org"/>
+    </xsd:schema>
+  </types>
+  <service name="miServicioOsita1">
+    <port name="miPuertoOsita1" binding="tns:miTipoPuertoOsita1SOAP11Binding">
+      <soap:address location="http://www.example.com"/>
+    </port>
+  </service>
+  <portType name="miTipoPuertoOsita1">
+    <operation name="miOperacion">
+      <input message="tns:miMensajeEntrada"/>
+      <output message="tns:miMensajeSalida"/>
+    </operation>
+  </portType>
+  <message name="miMensajeEntrada">
+    <part name="miParteEntrada" element="osita:ositaRequest"/>
+  </message>
+  <message name="miMensajeSalida">
+    <part name="miParteSalida" element="osita:ositaResponse"/>
+  </message>
+  <binding name="miTipoPuertoOsita1SOAP11Binding" type="tns:miTipoPuertoOsita1">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="miOperacion">
+      <soap:operation style="document" soapAction="urn:miPrimerContratoWeb/miOperacion"/>
+      <input>
+        <soap:body use="literal" parts="miParteEntrada"/>
+      </input>
+      <output>
+        <soap:body use="literal" parts="miParteSalida"/>
+      </output>
+    </operation>
+  </binding>
+</definitions>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/prueba2/Project1/bd_getStatusIccidActiva" name="bd_getStatusIccidActiva-concrete" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/prueba2/Project1/bd_getStatusIccidActiva" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/prueba2/Project1/bd_getStatusIccidActiva" location="../Resources/WSDLs/getStatusIccidActiva_BD.wsdl"/>
+  <binding name="bd_getStatusIccidActiva_ptt-binding" type="tns:bd_getStatusIccidActiva_ptt">
+    <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+    <operation name="bd_getStatusIccidActiva">
+      <soap:operation soapAction="bd_getStatusIccidActiva"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="bd_getStatusIccidActiva-service">
+    <port name="bd_getStatusIccidActiva-port" binding="tns:bd_getStatusIccidActiva_ptt-binding">
+      <soap:address location="jca://eis/DB/Activade"/>
+    </port>
+  </service>
+</definitions>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.comcel.com.co/AuditoriaITEL/"
+	xmlns:tns="http://www.comcel.com.co/AuditoriaITEL/">
+	
+	<xs:element name="Input_Parameters" type="tns:Input_Paramaters" />
+	
+	<xs:complexType name="Input_Paramaters">
+		<xs:sequence>
+			<xs:element name="EVEMIN" type="xs:string" />
+			<xs:element name="EVECOMENTARIO" type="xs:string" />	
+			<xs:element name="EVEHOSTID" type="xs:decimal" />		
+			<xs:element name="EVECONSECUTIVO" type="xs:string" />
+			<xs:element name="EVECODIGOPAQUETE" type="xs:decimal" />
+			<xs:element name="EVECOBRO" type="xs:string" />
+			<xs:element name="EVEFECHARECARGA" type="xs:dateTime" />
+			<xs:element name="EVECODRESPUESTA" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+
+</xs:schema>

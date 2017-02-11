@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.claro.com.co/rulesEngine/insertInternalCreditInformation"
+	xmlns:tns="http://www.claro.com.co/rulesEngine/insertInternalCreditInformation">
+	
+	
+	<element name="Input_Parameters" type="tns:Input_Parameters" />
+	<element name="WS_Result" type="tns:WS_Result" />
+
+	<complexType name="Input_Parameters">
+		<sequence>			
+			<element name="report" type="tns:PUBLIC.XMLTYPE"/>
+			<element name="customerDocumentType" type="string" />	
+		</sequence>
+	</complexType>
+	<complexType name="PUBLIC.XMLTYPE">
+		<sequence>
+			<any processContents="skip" />
+		</sequence>
+	</complexType>
+	<complexType name="WS_Result">
+		<sequence>
+			<element name="code" type="string" />
+			<element name="message" type="tns:responseType" />
+			<element name="description" type="string" />
+		</sequence>
+	</complexType>
+	
+	<complexType name="responseType">
+		<sequence>
+			<element name="success" type="string" />
+		</sequence>
+	</complexType>
+	
+</schema>

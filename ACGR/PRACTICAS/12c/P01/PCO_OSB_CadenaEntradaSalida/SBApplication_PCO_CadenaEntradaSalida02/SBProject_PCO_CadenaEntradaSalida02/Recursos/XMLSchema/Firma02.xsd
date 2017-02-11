@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.bebe02.org"
+            targetNamespace="http://www.bebe02.org" elementFormDefault="qualified">
+  <xsd:complexType name="OsitaRequestType">
+    <xsd:sequence>
+      <xsd:element name="ositaVariableCadenaEntrada" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="OsitaResponseType">
+    <xsd:sequence>
+      <xsd:element name="ositaVariableCadenaSalida" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="ositaRequest" type="OsitaRequestType"/>
+  <xsd:element name="ositaResponse" type="OsitaResponseType"/>
+</xsd:schema>

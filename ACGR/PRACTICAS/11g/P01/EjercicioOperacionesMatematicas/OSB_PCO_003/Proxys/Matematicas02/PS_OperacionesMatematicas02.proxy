@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+  <ser:coreEntry isProxy="true" isEnabled="true">
+    <ser:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config">
+      <con:wsdl ref="OSB_PCO_000/Recursos/Contratos_WSDL/Matematicas02/ContratoOperandos02"/>
+      <con:port>
+        <con:name>puertoMatematicas</con:name>
+        <con:namespace>http://www.contratoOperandos02.org/ContratoOperandos02/</con:namespace>
+      </con:port>
+      <con:selector type="SOAP action"/>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+    <ser:ws-policy>
+      <ser:binding-mode>wsdl-policy-attachments</ser:binding-mode>
+    </ser:ws-policy>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>http</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:URI>
+      <env:value>/OSB_PCO_003/Proxys/Matematicas02/PS_OperacionesMatematicas02</env:value>
+    </tran:URI>
+    <tran:inbound-properties/>
+    <tran:all-headers>false</tran:all-headers>
+    <tran:provider-specific>
+      <http:inbound-properties/>
+    </tran:provider-specific>
+  </ser:endpointConfig>
+  <ser:router>
+    <con:pipeline type="request" name="PipelinePairSuma_request">
+      <con:stage name="stage1">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.firmaMatematicas02.org/FirmaOperandos02" prefix="fir"/>
+        </con:context>
+        <con:actions>
+          <con2:assign varName="v_respSuma">
+            <con1:id>_ActionId-7915759914875243570-6c8fcfb2.1597e61d84c.-7fa1</con1:id>
+            <con2:expr>
+              <con1:xqueryText>$body/fir:operacionSumaRequest/fir:operando1+$body/fir:operacionSumaRequest/fir:operando2</con1:xqueryText>
+            </con2:expr>
+          </con2:assign>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="PipelinePairSuma_response">
+      <con:stage name="stage1">
+        <con:context/>
+        <con:actions>
+          <con2:replace varName="body" contents-only="true">
+            <con1:id>_ActionId-7915759914875243570-6c8fcfb2.1597e61d84c.-7f64</con1:id>
+            <con2:expr>
+              <con1:xqueryTransform>
+                <con1:resource ref="OSB_PCO_003/XQuerys/Matematicas02/XQuery_RespSuma"/>
+                <con1:param name="p_respSuma">
+                  <con1:path>$v_respSuma</con1:path>
+                </con1:param>
+              </con1:xqueryTransform>
+            </con2:expr>
+          </con2:replace>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="request" name="PipelinePairMultiplicacion_request">
+      <con:stage name="stage1">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.firmaMatematicas02.org/FirmaOperandos02" prefix="fir"/>
+        </con:context>
+        <con:actions>
+          <con2:assign varName="v_respMultiplicacion">
+            <con1:id>_ActionId-7915759914875243570-6c8fcfb2.1597e61d84c.-7f43</con1:id>
+            <con2:expr>
+              <con1:xqueryText>$body/fir:operacionMultiplicacionRequest/fir:operando1*$body/fir:operacionMultiplicacionRequest/fir:operando2</con1:xqueryText>
+            </con2:expr>
+          </con2:assign>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="PipelinePairMultiplicacion_response">
+      <con:stage name="stage1">
+        <con:context/>
+        <con:actions>
+          <con2:replace varName="body" contents-only="true">
+            <con1:id>_ActionId-7915759914875243570-6c8fcfb2.1597e61d84c.-7f18</con1:id>
+            <con2:expr>
+              <con1:xqueryTransform>
+                <con1:resource ref="OSB_PCO_003/XQuerys/Matematicas02/XQuery_RespMultiplicacion"/>
+                <con1:param name="p_respMultiplicacion">
+                  <con1:path>$v_respMultiplicacion</con1:path>
+                </con1:param>
+              </con1:xqueryTransform>
+            </con2:expr>
+          </con2:replace>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:flow>
+      <con:branch-node type="operation" name="BranchNode1">
+        <con:context/>
+        <con:branch-table>
+          <con:branch name="OperacionSuma">
+            <con:operator>equals</con:operator>
+            <con:value/>
+            <con:flow>
+              <con:pipeline-node name="PipelinePairSuma">
+                <con:request>PipelinePairSuma_request</con:request>
+                <con:response>PipelinePairSuma_response</con:response>
+              </con:pipeline-node>
+            </con:flow>
+          </con:branch>
+          <con:branch name="OperacionMultiplicacion">
+            <con:operator>equals</con:operator>
+            <con:value/>
+            <con:flow>
+              <con:pipeline-node name="PipelinePairMultiplicacion">
+                <con:request>PipelinePairMultiplicacion_request</con:request>
+                <con:response>PipelinePairMultiplicacion_response</con:response>
+              </con:pipeline-node>
+            </con:flow>
+          </con:branch>
+          <con:default-branch>
+            <con:flow/>
+          </con:default-branch>
+        </con:branch-table>
+      </con:branch-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

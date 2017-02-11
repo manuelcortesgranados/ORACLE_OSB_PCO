@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.claro.com.co/rulesEngine/isUpgradeOrDowngrade"
+	xmlns:tns="http://www.claro.com.co/rulesEngine/isUpgradeOrDowngrade"
+	xmlns:cd="http://www.claro.com.co/rulesEngine/canonicalModel/CustomerDomain"
+	xmlns:fd="http://www.claro.com.co/rulesEngine/canonicalModel/FrameworkDomain"
+	xmlns:cbe="http://www.claro.com.co/rulesEngine/canonicalModel/CommonBusinessEntities">
+    
+	<import namespace="http://www.claro.com.co/rulesEngine/canonicalModel/CustomerDomain" 
+    	schemaLocation="../../../Core/Resources/Schemas/CanonicalModel/CustomerDomain.xsd"/>
+    	
+	<import
+		namespace="http://www.claro.com.co/rulesEngine/canonicalModel/FrameworkDomain"
+		schemaLocation="../../../Core/Resources/Schemas/CanonicalModel/FrameworkDomain.xsd" />
+		
+	<element name="Input_Parameters" type="tns:Input_Parameters"></element>
+	<element name="WS_Result" type="tns:WS_Result"></element>
+
+	<complexType name="Input_Parameters">
+		<sequence>
+			<element name="customerOrder" type="cd:CustomerOrder" minOccurs="0" maxOccurs="unbounded" />
+		</sequence>
+	</complexType>
+
+	<complexType name="WS_Result">
+		<sequence>
+			<element name="code" type="string" />
+			<element name="message" type="tns:responseType" />
+			<element name="description" type="string" />
+		</sequence>
+	</complexType>
+
+	<complexType name="responseType">
+		<sequence>
+			<element name="plan" type="fd:Plan" minOccurs="0" />
+		</sequence>
+	</complexType>
+
+</schema>

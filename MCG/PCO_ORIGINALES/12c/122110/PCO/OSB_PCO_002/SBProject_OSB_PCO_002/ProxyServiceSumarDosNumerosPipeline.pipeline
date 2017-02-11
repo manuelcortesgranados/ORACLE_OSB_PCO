@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+    <con:coreEntry>
+        <con:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType">
+            <con:wsdl ref="SBProject_OSB_PCO_002/miContratoHolaMundoFault"/>
+            <con:binding>
+                <con:name>miPuertoTipo1SOAP11Binding</con:name>
+                <con:namespace>urn:miContratoHolaMundoFault</con:namespace>
+            </con:binding>
+        </con:binding>
+        <con:xqConfiguration>
+            <con:snippetVersion>1.0</con:snippetVersion>
+        </con:xqConfiguration>
+    </con:coreEntry>
+    <con:router errorHandler="error-N5601552b.N36f766de.0.1572001d7ea.N7fb2">
+        <con:pipeline type="request" name="request-N5601552b.N36f766de.0.1572001d7ea.N7fe7">
+            <con:stage id="_StageId-N5601552b.N36f766de.0.1572001d7ea.N7fe5" name="Stage1" errorHandler="error-N5601552b.35bcf57b.0.1572f95a757.N7fcc">
+                <con:context>
+                    <con1:userNsDecl prefix="miem" namespace="http://www.miempresa.org"/>
+                </con:context>
+                <con:actions>
+                    <con2:replace varName="body">
+                        <con1:id>_ActionId-N5601552b.N36f766de.0.1572001d7ea.N7f9f</con1:id>
+                        <con2:location>
+                            <con1:xpathText>./*</con1:xpathText>
+                        </con2:location>
+                        <con2:expr>
+                            <con1:xqueryTransform>
+                                <con1:resource ref="SBProject_OSB_PCO_002/RequestToResponse"/>
+                                <con1:param name="solicitud">
+                                    <con1:path>$body/miem:sumaRequest</con1:path>
+                                </con1:param>
+                            </con1:xqueryTransform>
+                        </con2:expr>
+                    </con2:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-N5601552b.N36f766de.0.1572001d7ea.N7fe6">
+            <con:stage id="_StageId-N5601552b.N36f766de.0.1572001d7ea.N7fe4" name="Stage1">
+                <con:context/>
+                <con:actions>
+                    <con1:reply>
+                        <con1:id>_ActionId-N5601552b.N36f766de.0.1572001d7ea.N7fa5</con1:id>
+                    </con1:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="error-N5601552b.N36f766de.0.1572001d7ea.N7fb2">
+            <con:stage id="_StageId-N5601552b.N36f766de.0.1572001d7ea.N7fb1" name="Stage1">
+                <con:context>
+                    <con1:userNsDecl prefix="miem" namespace="http://www.miempresa.org"/>
+                </con:context>
+                <con:actions>
+                    <con2:replace varName="fault">
+                        <con1:id>_ActionId-N5601552b.N36f766de.0.1572001d7ea.N7fa2</con1:id>
+                        <con2:location>
+                            <con1:xpathText>./*</con1:xpathText>
+                        </con2:location>
+                        <con2:expr>
+                            <con1:xqueryTransform>
+                                <con1:resource ref="SBProject_OSB_PCO_002/XQuery_ManejoError"/>
+                                <con1:param name="request">
+                                    <con1:path>$body/miem:sumaRequest</con1:path>
+                                </con1:param>
+                            </con1:xqueryTransform>
+                        </con2:expr>
+                    </con2:replace>
+                    <con1:reply isError="true">
+                        <con1:id>_ActionId-N5601552b.35bcf57b.0.1572f95a757.N7ffe</con1:id>
+                    </con1:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="error-N5601552b.35bcf57b.0.1572f95a757.N7fcc">
+            <con:stage id="_StageId-N5601552b.35bcf57b.0.1572f95a757.N7fcb" name="Stage1">
+                <con:context/>
+                <con:actions>
+                    <con2:Error>
+                        <con1:id>_ActionId-N5601552b.35bcf57b.0.1572f95a757.N7fc8</con1:id>
+                        <con2:errCode>001</con2:errCode>
+                        <con2:message>Mensaje de Error1</con2:message>
+                    </con2:Error>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:flow>
+            <con:pipeline-node name="Pipeline Pair Node1">
+                <con:request>request-N5601552b.N36f766de.0.1572001d7ea.N7fe7</con:request>
+                <con:response>response-N5601552b.N36f766de.0.1572001d7ea.N7fe6</con:response>
+            </con:pipeline-node>
+        </con:flow>
+    </con:router>
+</con:pipelineEntry>

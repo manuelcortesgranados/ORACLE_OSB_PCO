@@ -1,0 +1,22 @@
+
+/subscriptions/retrieve – Active Subscriptions by subscription identifier
+
+{
+"RetrieveSubscriptionRequest": {
+"authentication": {
+"user": "ITEL",
+"sourceApplicationId": "ITEL",
+"transactionId": "1"
+},
+"target": "INDIVIDUAL",
+"findBy": "SUBSCRIPTION",
+"filter": "status",
+"parameter": [{
+"name": "subscriptionId",
+"value": "7111369034573000"
+},{
+"name": "status",
+"value": "3"
+}]
+}
+}

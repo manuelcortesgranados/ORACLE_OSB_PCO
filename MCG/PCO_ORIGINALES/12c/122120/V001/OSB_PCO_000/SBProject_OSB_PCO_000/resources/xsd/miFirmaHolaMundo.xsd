@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:miPrefijo="http://www.miempresa.org"
+            targetNamespace="http://www.miempresa.org" elementFormDefault="qualified">
+  <xsd:complexType name="HolaMundoRequestType">
+    <xsd:sequence>
+      <xsd:element name="cadenaEntrada1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="HolaMundoResponseType">
+    <xsd:sequence>
+      <xsd:element name="cadenaSalida1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="HolaMundoRequest" type="miPrefijo:HolaMundoRequestType"/>
+  <xsd:element name="HolaMundoResponse" type="miPrefijo:HolaMundoResponseType"/>
+</xsd:schema>

@@ -1,0 +1,51 @@
+<wsdl:definitions name="consultarCantidadConsultasDia_PS" targetNamespace="http://www.comcel.com.co/consultarCantidadConsultasDia_PS/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.comcel.com.co/consultarCantidadConsultasDia_PS/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsd1="http://www.comcel.com.co/ConsultarCantidadConsultasDia/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://www.comcel.com.co/consultarCantidadConsultasDia_PS/">
+      <xsd:element name="NewOperation">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="in" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="NewOperationResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="out" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+    <xsd:schema>
+    	<xsd:import namespace="http://www.comcel.com.co/ConsultarCantidadConsultasDia/" schemaLocation="../Schemas/PS_ITEL_CONSULTARCANTIDADCONSULTASDIA.xsd">
+    	</xsd:import></xsd:schema></wsdl:types>
+  <wsdl:message name="bd_consultarCantidadConsultasDiaRequest">
+    <wsdl:part element="xsd1:Input_Parameters" name="Input_Parameters"/>
+  </wsdl:message>
+  <wsdl:message name="bd_consultarCantidadConsultasDiaResponse">
+    <wsdl:part element="xsd1:WS_Result" name="WS_Result"/>
+  </wsdl:message>
+  <wsdl:portType name="consultarCantidadConsultasDia_PS">
+    <wsdl:operation name="bd_consultarCantidadConsultasDia">
+      <wsdl:input message="tns:bd_consultarCantidadConsultasDiaRequest"/>
+      <wsdl:output message="tns:bd_consultarCantidadConsultasDiaResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="consultarCantidadConsultasDia_PSSOAP" type="tns:consultarCantidadConsultasDia_PS">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="bd_consultarCantidadConsultasDia">
+      <soap:operation soapAction="http://www.comcel.com.co/consultarCantidadConsultasDia_PS/bd_consultarCantidadConsultasDia"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="consultarCantidadConsultasDia_PS">
+    <wsdl:port binding="tns:consultarCantidadConsultasDia_PSSOAP" name="consultarCantidadConsultasDia_PSSOAP">
+      <soap:address location="http://www.comcel.com.co/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

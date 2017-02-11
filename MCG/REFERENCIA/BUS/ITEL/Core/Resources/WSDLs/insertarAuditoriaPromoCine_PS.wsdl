@@ -1,0 +1,37 @@
+<wsdl:definitions name="insertarAuditoriaPromoCine" targetNamespace="http://www.comcel.com.co/insertarAuditoriaPromoCine/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.comcel.com.co/insertarAuditoriaPromoCine/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsd1="http://www.comcel.com.co/insertarAuditoriaPromoCine">
+	<wsdl:types>
+		<xsd:schema>
+			<xsd:import namespace="http://www.comcel.com.co/insertarAuditoriaPromoCine" schemaLocation="../Schemas/PS_ITEL_INSERTAR_AUDITORIAPROMOCINE.xsd">
+			</xsd:import>
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="insertarPromoCineRequest">
+		<wsdl:part element="xsd1:Input_Parameters" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="insertarPromoCineResponse">
+		<wsdl:part element="xsd1:WS_Result" name="parameters"/>
+	</wsdl:message>
+	<wsdl:portType name="insertarAuditoriaPromoCine">
+		<wsdl:operation name="insertarPromoCine">
+			<wsdl:input message="tns:insertarPromoCineRequest"/>
+			<wsdl:output message="tns:insertarPromoCineResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="insertarAuditoriaPromoCineSOAP" type="tns:insertarAuditoriaPromoCine">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="insertarPromoCine">
+			<soap:operation soapAction="http://www.comcel.com.co/insertarAuditoriaPromoCine/insertarPromoCine"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="insertarAuditoriaPromoCine">
+		<wsdl:port binding="tns:insertarAuditoriaPromoCineSOAP" name="insertarAuditoriaPromoCineSOAP">
+			<soap:address location="http://www.comcel.com.co"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

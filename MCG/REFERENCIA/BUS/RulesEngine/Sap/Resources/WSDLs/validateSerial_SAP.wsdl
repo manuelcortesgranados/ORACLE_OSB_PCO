@@ -1,0 +1,27 @@
+<definitions targetNamespace="http://xmlns.oracle.com/pcbpel/iWay/wsdl/MySAP/SAP_SERVER/ZMM_VALIDAR_SERIAL" name="ZMM_VALIDAR_SERIAL" xmlns:iWayResponse="urn:sap-com:document:sap:rfc:functions.response" xmlns:ZMM_VALIDAR_SERIAL="http://xmlns.oracle.com/pcbpel/iWay/wsdl/MySAP/SAP_SERVER/ZMM_VALIDAR_SERIAL" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:iWayRequest="urn:sap-com:document:sap:rfc:functions">
+   <types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+         <import schemaLocation="../Schemas/BS_VALIDATE_SERIAL_REQ.xsd" namespace="urn:sap-com:document:sap:rfc:functions"/>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+         <import schemaLocation="../Schemas/BS_VALIDATE_SERIAL_RES.xsd" namespace="urn:sap-com:document:sap:rfc:functions.response"/>
+      </schema>
+   </types>
+   <message name="response">
+      <part element="iWayResponse:ZMM_VALIDAR_SERIAL.Response" name="output_ZMM_VALIDAR_SERIAL"/>
+   </message>
+   <message name="request">
+      <part element="iWayRequest:ZMM_VALIDAR_SERIAL" name="input_ZMM_VALIDAR_SERIAL"/>
+   </message>
+   <portType name="ZMM_VALIDAR_SERIALPortType">
+      <operation name="ZMM_VALIDAR_SERIAL">
+         <input message="ZMM_VALIDAR_SERIAL:request" name="Input_ZMM_VALIDAR_SERIAL"/>
+         <output message="ZMM_VALIDAR_SERIAL:response" name="Output_ZMM_VALIDAR_SERIAL"/>
+      </operation>
+   </portType>
+   <plt:partnerLinkType name="ZMM_VALIDAR_SERIALPartnerLinkType">
+      <plt:role name="ZMM_VALIDAR_SERIALRole">
+         <plt:portType name="ZMM_VALIDAR_SERIAL:ZMM_VALIDAR_SERIALPortType"/>
+      </plt:role>
+   </plt:partnerLinkType>
+</definitions>

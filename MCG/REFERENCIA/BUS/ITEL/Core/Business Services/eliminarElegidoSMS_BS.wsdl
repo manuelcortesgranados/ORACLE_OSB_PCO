@@ -1,0 +1,20 @@
+<definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/Ensayo/Reglas/bd_eliminarElegidoSMS" name="bd_eliminarElegidoSMS-concrete" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/Ensayo/Reglas/bd_eliminarElegidoSMS" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/Ensayo/Reglas/bd_eliminarElegidoSMS" location="../Resources/WSDLs/eliminarElegidoSMS_BD.wsdl"/>
+  <binding name="bd_eliminarElegidoSMS_ptt-binding" type="tns:bd_eliminarElegidoSMS_ptt">
+    <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+    <operation name="bd_eliminarElegidoSMS">
+      <soap:operation soapAction="bd_eliminarElegidoSMS"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="bd_eliminarElegidoSMS-service">
+    <port name="bd_eliminarElegidoSMS-port" binding="tns:bd_eliminarElegidoSMS_ptt-binding">
+      <soap:address location="jca://eis/DB/ITEL_SOA"/>
+    </port>
+  </service>
+</definitions>

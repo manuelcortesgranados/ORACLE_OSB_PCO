@@ -1,0 +1,14 @@
+<adapter-config name="bd_consultar_habilitadoSegundoElegido_db" adapter="Database Adapter" wsdlLocation="../WSDLs/consultarHabilitadoSegundoElegido_BD.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+
+	<connection-factory location="eis/DB/ITELDB" UIConnectionName="Des_Itel" adapterRef=""/>
+	<endpoint-interaction portType="bd_consultar_habilitadoSegundoElegido_db_ptt" operation="bd_consultar_habilitadoSegundoElegido_db">
+		<interaction-spec className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
+			<property name="PackageName" value="PKG_SOA_ITEL"/>
+			<property name="ProcedureName" value="PRC_CONSULTAR_HABSEGELEGIDO"/>
+			<property name="QueryTimeout" value="1"/>
+			<property name="GetActiveUnitOfWork" value="false"/>
+		</interaction-spec>
+		<output/>
+	</endpoint-interaction>
+
+</adapter-config>

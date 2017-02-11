@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://www.comcel.com.co"
+            targetNamespace="http://www.comcel.com.co/Ejecutador/"
+            elementFormDefault="qualified"
+            xmlns:tns="http://www.comcel.com.co/Ejecutador/">
+   <xs:element name="TRAMA_EJECUCION" type="tns:tramaEjeType"/>
+   <xs:complexType name="tramaEjeType">
+      <xs:sequence>
+         <xs:element name="MIN" type="xs:decimal"/>
+         <xs:element name="CODIGOPLATAFORMA" type="xs:string"/>
+         <xs:element name="SERVICIOSEJECUCION" type="tns:serviciosType"/>
+         <xs:element name="ERROR" type="xs:string"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="serviciosType">
+      <xs:sequence>
+         <xs:element name="SERVICIO" type="tns:servicioType" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+    <xs:complexType name="parametroType">
+      <xs:sequence>
+         <xs:element name="NOMBRE" type="xs:string"/>
+         <xs:element name="TIPO" type="xs:string"/>
+         <xs:element name="VALOR" type="xs:string"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="servicioType">
+      <xs:sequence>
+         <xs:element name="NOMBRE" type="xs:string"/>
+         <xs:element name="PARAMETROS" type="tns:parametrosType"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="parametrosType">
+      <xs:sequence>
+         <xs:element name="PARAMETRO" type="tns:parametroType" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+</xs:schema>

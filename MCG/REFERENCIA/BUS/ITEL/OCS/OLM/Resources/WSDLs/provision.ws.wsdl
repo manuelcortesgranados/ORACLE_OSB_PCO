@@ -1,0 +1,55 @@
+<!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is Metro/2.1 (branches/2.1-6728; 2011-02-03T14:14:58+0000) JAXWS-RI/2.2.3 JAXWS/2.2. --><definitions name="DSMNProvision" targetNamespace="http://webapps.online.ericsson.com" xmlns:tns="http://webapps.online.ericsson.com" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <types>    
+        <schema elementFormDefault="qualified" targetNamespace="http://webapps.online.ericsson.com" xmlns="http://www.w3.org/2001/XMLSchema">
+			<include schemaLocation="../Schemas/DA_ITEL_OPERACION_PROVISION_OLM.xsd"/>
+		</schema>
+		
+          <!-- <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://webapps.online.ericsson.com">-->
+    </types>
+    
+    <message name="dsmnRequest">
+            <part name="request" element="tns:dsmnRequest"/>
+    </message>
+    
+    <message name="dsmnResponse">
+            <part name="response" element="tns:dsmnResponse"/>
+    </message>
+
+    
+    <message name="serviceFailedException">
+            <part name="ServiceFailedException" element="tns:ServiceFailedException"/>
+    </message>
+    
+    <portType name="DSMNProvisionPortType">
+            <operation name="dsmnRequest">
+                <input name="dsmnRequest" message="tns:dsmnRequest"/>
+                <output name="dsmnResponse" message="tns:dsmnResponse"/>
+                <fault name="serviceFailedException" message="tns:serviceFailedException"/>
+            </operation>
+
+    </portType>
+    
+    <binding name="DSMNProvisionBinding" type="tns:DSMNProvisionPortType">
+            <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+            <operation name="dsmnRequest">
+                <soap:operation soapAction=""/>
+                <input>
+                    <soap:body use="literal"/>
+                </input>
+                <output>
+
+                    <soap:body use="literal"/>
+                </output>
+                <fault name="serviceFailedException">
+                    <soap:fault name="serviceFailedException" use="literal"/>
+                </fault>
+            </operation>
+    </binding>
+    
+    <service name="DSMNProvisionService">
+            <port name="DSMNProvisionPort" binding="tns:DSMNProvisionBinding">
+
+                <soap:address location="http://172.24.4.198:1110/internal/internal.ws"/>
+            </port>
+    </service>
+</definitions>

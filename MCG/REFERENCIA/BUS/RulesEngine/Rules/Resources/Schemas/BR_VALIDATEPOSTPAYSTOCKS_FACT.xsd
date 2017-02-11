@@ -1,0 +1,29 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://www.claro.com.co/rulesEngine/ValidatePostPayStocksFact"
+	xmlns:cbe="http://www.claro.com.co/rulesEngine/canonicalModel/CommonBusinessEntities"
+	xmlns:pd="http://www.claro.com.co/rulesEngine/canonicalModel/ProductDomain"
+	xmlns:msd="http://www.claro.com.co/rulesEngine/canonicalModel/MarketSalesDomain"
+	targetNamespace="http://www.claro.com.co/rulesEngine/ValidatePostPayStocksFact">
+	<xs:import
+		schemaLocation="../../../Core/Resources/Schemas/CanonicalModel/ProductDomain.xsd"
+		namespace="http://www.claro.com.co/rulesEngine/canonicalModel/ProductDomain" />
+		
+	<xs:import
+		schemaLocation="../../../Core/Resources/Schemas/CanonicalModel/MarketSalesDomain.xsd"
+		namespace="http://www.claro.com.co/rulesEngine/canonicalModel/MarketSalesDomain" />
+		
+	<xs:element name="ValidatePostPayStocksFactRequest" type="tns:ValidatePostPayStocksFactRequestType" />
+	<xs:element name="ValidatePostPayStocksFactResponse" type="tns:ValidatePostPayStocksFactResponseType" />
+	
+	<xs:complexType name="ValidatePostPayStocksFactRequestType">
+		<xs:sequence>
+			<xs:element name="Product" type="pd:Product" />
+			<xs:element name="SalesChannel" type="msd:SalesChannel" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ValidatePostPayStocksFactResponseType">
+		<xs:sequence>
+			<xs:element name="Product" type="pd:Product" />
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

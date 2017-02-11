@@ -1,0 +1,51 @@
+<wsdl:definitions name="actualizarBalanceFecha_PS" targetNamespace="http://www.comcel.com.co/actualizarBalanceFecha_PS/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.comcel.com.co/actualizarBalanceFecha_PS/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsd1="http://www.comcel.com.co/ActualizarBalanceFechaOCS/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://www.comcel.com.co/actualizarBalanceFecha_PS/">
+      <xsd:element name="actualizarBalanceFecha">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="in" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="actualizarBalanceFechaResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="out" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+    <xsd:schema>
+    	<xsd:import namespace="http://www.comcel.com.co/ActualizarBalanceFechaOCS/" schemaLocation="../Schemas/PS_ITEL_ACTUALIZAR_BALANCE_FECHA.xsd">
+    	</xsd:import></xsd:schema></wsdl:types>
+  <wsdl:message name="actualizarBalanceFechaRequest">
+    <wsdl:part element="xsd1:Input_Parameters" name="Input_Parameters"/>
+  </wsdl:message>
+  <wsdl:message name="actualizarBalanceFechaResponse">
+    <wsdl:part element="xsd1:WS_Result" name="WS_Result"/>
+  </wsdl:message>
+  <wsdl:portType name="actualizarBalanceFecha_PS">
+    <wsdl:operation name="actualizarBalanceFecha">
+      <wsdl:input message="tns:actualizarBalanceFechaRequest"/>
+      <wsdl:output message="tns:actualizarBalanceFechaResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="actualizarBalanceFecha_PSSOAP" type="tns:actualizarBalanceFecha_PS">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="actualizarBalanceFecha">
+      <soap:operation soapAction="http://www.comcel.com.co/actualizarBalanceFecha_PS/actualizarBalanceFecha"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="actualizarBalanceFecha_PS">
+    <wsdl:port binding="tns:actualizarBalanceFecha_PSSOAP" name="actualizarBalanceFecha_PSSOAP">
+      <soap:address location="http://www.comcel.com.co/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

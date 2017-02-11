@@ -1,0 +1,29 @@
+<schema targetNamespace="http://www.claro.com.co/rulesEngine/manager"
+	xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.claro.com.co/rulesEngine/manager">
+
+	<element name="Input_Parameters" type="tns:Input_Parameters" />
+
+	<complexType name="Input_Parameters">
+		<sequence>
+			<element name="process" type="string" />
+			<element name="operation" type="string" />
+			<element name="entities" type="anyType" />
+		</sequence>
+	</complexType>
+
+	<element name="WS_Result" type="tns:WS_Result" />
+
+	<complexType name="WS_Result">
+		<sequence>
+			<element name="code" type="string" />
+			<element name="message" type="tns:resultType" />
+			<element name="description" type="string" />
+		</sequence>
+	</complexType>
+
+	<complexType name="resultType">
+		<sequence>
+			<element name="entities" type="anyType" />
+		</sequence>
+	</complexType>
+</schema>

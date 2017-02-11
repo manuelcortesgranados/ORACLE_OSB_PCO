@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" 
+		targetNamespace="http://www.comcel.com.co/OCS/OperacionOCS_OLM"
+		xmlns:tns="http://www.comcel.com.co/OCS/OperacionOCS_OLM"
+		elementFormDefault="qualified">
+
+<!-- Operaciones -->
+
+<element name="CreateSubscriptionRequest" type="tns:CreateSubscriptionRequest" />
+
+<element name="ConsultarSuscripcionResponse" type="tns:ConsultarSuscripcionResponse" />
+
+<element name="OCSResponse" type="tns:OCSResponse" />
+
+<!-- Tipos de datos -->
+	
+	<complexType name="CreateSubscriptionRequest">
+		<attribute name="requestID" type="long" />
+		<attribute name="operation" type="string" />
+		<attribute name="productName" type="string" />
+		<attribute name="subscriberID" type="string" />
+		<attribute name="MSISDN" type="string" />
+		<attribute name="IMSI" type="string" />
+		<attribute name="IMEI" type="string" />
+		<attribute name="ICCID" type="string" />
+		<attribute name="EMAIL" type="string" />
+		<attribute name="subscriberType" type="string" />
+		<attribute name="deviceType" type="string" />
+		<attribute name="originatingNodeInfo" type="string" />
+	    <attribute name="externalData" type="string" />
+	    <attribute name="programmedActivationDate" type="date" />
+	    <attribute name="billingCycleDate" type="date" />
+	    <attribute name="proRataType" type="string" />
+	    <attribute name="charged" type="string" />
+	</complexType>	
+	
+	<complexType name="OCSResponse">
+	     <sequence>
+	       <element name="responseID" type="string"></element>
+	       <element name="resultID" type="string"></element>
+		   <element name="status" type="string"></element>
+		   <element name="errorSource" type="string" minOccurs="0" ></element>
+		   <element name="errorCode" type="string" minOccurs="0" ></element>
+		   <element name="errorType" type="string" minOccurs="0" ></element>
+		   <element name="errorDescription" type="string" minOccurs="0" ></element>
+		</sequence>
+		<attribute name="SUCCESS" type="string" />
+	</complexType>
+	
+	<complexType name="ConsultarSuscripcionResponse">
+		<sequence>
+			<element name="MethodResponse" type="tns:SuscripcionData" minOccurs="0" />
+		</sequence>
+	</complexType>
+	
+	<complexType name="SuscripcionData">
+		<sequence>
+			<element name="responseID" type="string" minOccurs="0" />
+			<element name="Result" type="tns:ResultDetail" maxOccurs="unbounded" />
+		</sequence>
+	</complexType>
+	
+	<complexType name="ResultDetail">
+		<sequence>
+		    <element name="resultID" type="string" />
+			<element name="Item" type="tns:ItemID" />
+		</sequence>
+	</complexType>
+
+	<complexType name="ItemID">
+		<sequence>
+			<element name="key" type="string" />
+			<element name="value" type="string" />
+		</sequence>
+	</complexType>
+	
+	
+</schema>

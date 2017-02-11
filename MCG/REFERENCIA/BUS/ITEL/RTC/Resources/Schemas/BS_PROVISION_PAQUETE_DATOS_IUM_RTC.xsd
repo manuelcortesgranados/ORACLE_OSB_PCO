@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://events.redirect.hp.com" attributeFormDefault="qualified"
+	elementFormDefault="qualified" targetNamespace="http://events.redirect.hp.com">
+
+	<xs:element name="GSIEventRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="msisdn" type="xs:string" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="GSIEventRequestResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="GSIEventRequestReturn" type="tns:GSIEventResponse" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="GSIEventResponse">
+		<xs:sequence>
+			<xs:element name="navegacion" nillable="true" type="xs:string" />
+			<xs:element name="op_status" nillable="true" type="xs:string" />
+			<xs:element name="rating_group" nillable="true" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ReAuthorizationRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="msisdn" type="xs:string" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ReAuthorizationRequestResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ReAuthorizationRequestReturn" type="xs:string" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+
+</xs:schema>

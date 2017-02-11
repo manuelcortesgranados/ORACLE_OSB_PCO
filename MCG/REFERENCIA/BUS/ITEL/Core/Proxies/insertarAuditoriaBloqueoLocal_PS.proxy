@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config">
+  <ser:coreEntry isProxy="true" isEnabled="true" isAutoPublish="false" isTracingEnabled="false">
+    <ser:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config">
+      <con:wsdl ref="ITEL/Core/Resources/WSDLs/insertarAuditoriaBloqueo_PS"/>
+      <con:port>
+        <con:name>insertarAuditoriaBloqueo_PSSOAP</con:name>
+        <con:namespace>http://www.comcel.com.co/insertarAuditoriaBloqueo_PS/</con:namespace>
+      </con:port>
+      <con:selector type="SOAP body"/>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+    <ser:ws-policy>
+      <ser:binding-mode>wsdl-policy-attachments</ser:binding-mode>
+    </ser:ws-policy>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>http</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:URI>
+      <env:value>/ITEL/Core/Proxies/insertarAuditoriaBloqueoLocal_PS</env:value>
+    </tran:URI>
+    <tran:inbound-properties/>
+    <tran:all-headers>false</tran:all-headers>
+    <tran:provider-specific>
+      <http:inbound-properties/>
+    </tran:provider-specific>
+  </ser:endpointConfig>
+  <ser:router>
+    <con:pipeline type="request" name="PipelinePairNode1_request" xmlns:con="http://www.bea.com/wli/sb/pipeline/config">
+      <con:stage name="validar" errorHandler="_onErrorHandler-2546228840045636875-6325533c.13484f4d0af.-789c">
+        <con:context>
+          <con4:varNsDecl namespace="http://www.comcel.com.co/InsertarAuditoriaBloqueo" prefix="ins" xmlns:con4="http://www.bea.com/wli/sb/stages/config"/>
+        </con:context>
+        <con:actions>
+          <con1:validate>
+            <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-2546228840045636875-6325533c.13484f4d0af.-789d</con4:id>
+            <con1:schema ref="ITEL/Core/Resources/Schemas/PS_ITEL_INSERTARAUDITORIABLOQUEO"/>
+            <con1:schemaElement xmlns:ins="http://www.comcel.com.co/InsertarAuditoriaBloqueo">ins:Input_Parameters</con1:schemaElement>
+            <con1:varName>body</con1:varName>
+            <con1:location>
+              <con4:xpathText xmlns:con4="http://www.bea.com/wli/sb/stages/config">./ins:Input_Parameters</con4:xpathText>
+            </con1:location>
+          </con1:validate>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="PipelinePairNode1_response" xmlns:con="http://www.bea.com/wli/sb/pipeline/config"/>
+    <con2:pipeline type="error" name="_onErrorHandler-2546228840045636875-6325533c.13484f4d0af.-789c">
+      <con2:stage name="error">
+        <con2:context/>
+        <con2:actions>
+          <con1:replace varName="body" contents-only="true">
+            <con:id>_ActionId-2546228840045636875-6325533c.13484f4d0af.-73de</con:id>
+            <con1:expr>
+              <con:xqueryTransform>
+                <con:resource ref="ITEL/Core/Resources/XQueries/insertarAuditoriaBloqueo_Error"/>
+                <con:param name="descripcion">
+                  <con:path>$fault/ctx:reason/text()</con:path>
+                </con:param>
+                <con:param name="codigo">
+                  <con:path>"ERROR DE ENRUTAMIENTO"</con:path>
+                </con:param>
+              </con:xqueryTransform>
+            </con1:expr>
+          </con1:replace>
+          <con:reply>
+            <con:id>_ActionId-2546228840045636875-6325533c.13484f4d0af.-7847</con:id>
+          </con:reply>
+        </con2:actions>
+      </con2:stage>
+    </con2:pipeline>
+    <con2:pipeline type="error" name="_onErrorHandler-2546228840045636875-6325533c.13484f4d0af.-779f">
+      <con2:stage name="error">
+        <con2:context/>
+        <con2:actions>
+          <con1:replace varName="body" contents-only="true">
+            <con:id>_ActionId-2546228840045636875-6325533c.13484f4d0af.-7767</con:id>
+            <con1:expr>
+              <con:xqueryTransform>
+                <con:resource ref="ITEL/Core/Resources/XQueries/insertarAuditoriaBloqueo_Error"/>
+                <con:param name="descripcion">
+                  <con:path>$fault/ctx:reason/text()</con:path>
+                </con:param>
+                <con:param name="codigo">
+                  <con:path>"ERROR DE ENRUTAMIENTO"</con:path>
+                </con:param>
+              </con:xqueryTransform>
+            </con1:expr>
+          </con1:replace>
+          <con:reply>
+            <con:id>_ActionId-2546228840045636875-6325533c.13484f4d0af.-774a</con:id>
+          </con:reply>
+        </con2:actions>
+      </con2:stage>
+    </con2:pipeline>
+    <con:flow xmlns:con="http://www.bea.com/wli/sb/pipeline/config">
+      <con:pipeline-node name="PipelinePairNode1">
+        <con:request>PipelinePairNode1_request</con:request>
+        <con:response>PipelinePairNode1_response</con:response>
+      </con:pipeline-node>
+      <con:route-node name="RouteToInsertarAuditoriaBloqueo_BS" error-handler="_onErrorHandler-2546228840045636875-6325533c.13484f4d0af.-779f">
+        <con:context>
+          <con4:varNsDecl namespace="http://www.comcel.com.co/InsertarAuditoriaBloqueo" prefix="ins" xmlns:con4="http://www.bea.com/wli/sb/stages/config"/>
+        </con:context>
+        <con:actions>
+          <con3:route>
+            <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-2546228840045636875-6325533c.13484f4d0af.-7810</con4:id>
+            <con3:service ref="ITEL/Core/Business Services/insertarAuditoriaBloqueo_BS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con3:operation>bd_insertarAuditoriaBloqueo</con3:operation>
+            <con3:outboundTransform>
+              <con1:replace varName="body" contents-only="true">
+                <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-2546228840045636875-6325533c.13484f4d0af.-77d8</con4:id>
+                <con1:expr>
+                  <con4:xqueryTransform xmlns:con4="http://www.bea.com/wli/sb/stages/config">
+                    <con4:resource ref="ITEL/Core/Resources/XQueries/insertarAuditoriaBloqueo_Req"/>
+                    <con4:param name="input_Parameters1">
+                      <con4:path>$body/ins:Input_Parameters</con4:path>
+                    </con4:param>
+                  </con4:xqueryTransform>
+                </con1:expr>
+              </con1:replace>
+            </con3:outboundTransform>
+            <con3:responseTransform>
+              <con1:replace varName="body" contents-only="true">
+                <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-2546228840045636875-6325533c.13484f4d0af.-77a0</con4:id>
+                <con1:expr>
+                  <con4:xqueryTransform xmlns:con4="http://www.bea.com/wli/sb/stages/config">
+                    <con4:resource ref="ITEL/Core/Resources/XQueries/insertarAuditoriaBloqueo_Res"/>
+                    <con4:param name="outputParameters1">
+                      <con4:path>$body/*:OutputParameters</con4:path>
+                    </con4:param>
+                  </con4:xqueryTransform>
+                </con1:expr>
+              </con1:replace>
+            </con3:responseTransform>
+          </con3:route>
+        </con:actions>
+      </con:route-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

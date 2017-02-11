@@ -1,0 +1,29 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:cd="http://www.claro.com.co/rulesEngine/canonicalModel/CustomerDomain"
+	xmlns:fd="http://www.claro.com.co/rulesEngine/canonicalModel/FrameworkDomain"
+	xmlns:cbe="http://www.claro.com.co/rulesEngine/canonicalModel/CommonBusinessEntities"
+	xmlns:tns="http://www.claro.com.co/rulesEngine/CreditCheckApprovedFact/"
+	targetNamespace="http://www.claro.com.co/rulesEngine/CreditCheckApprovedFact/">
+	
+	<xs:import namespace="http://www.claro.com.co/rulesEngine/canonicalModel/CustomerDomain" 
+    	schemaLocation="../../../Core/Resources/Schemas/CanonicalModel/CustomerDomain.xsd"/>
+    	
+	<xs:import
+		namespace="http://www.claro.com.co/rulesEngine/canonicalModel/FrameworkDomain"
+		schemaLocation="../../../Core/Resources/Schemas/CanonicalModel/FrameworkDomain.xsd" />
+		
+	<xs:element name="CreditCheckApprovedFactRequest" type="tns:CreditCheckApprovedFactRequestType" />
+	<xs:element name="CreditCheckApprovedFactResponse" type="tns:CreditCheckApprovedFactResponseType" />
+	
+	<xs:complexType name="CreditCheckApprovedFactRequestType">
+		<xs:sequence>
+			<xs:element name="CustomerBillingBehavior" type="cd:CustomerBillingBehavior" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CreditCheckApprovedFactResponseType">
+		<xs:sequence>
+			<xs:element name="Plan" type="fd:Plan" />
+			<xs:element name="ParameterCollection" type="cbe:ParameterCollection" />
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

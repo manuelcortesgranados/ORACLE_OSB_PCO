@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://www.comcel.com.co"
+           targetNamespace="http://www.comcel.com.co/Ejecutador/"
+           elementFormDefault="qualified"
+           xmlns:tns="http://www.comcel.com.co/Ejecutador/">
+   <xs:element name="TRAMA_EJECUCION" type="tns:tramaEjeType"/>
+   <xs:complexType name="tramaEjeType">
+      <xs:sequence>
+         <xs:element name="MIN" type="xs:decimal"/>
+         <xs:element name="PARAMETROSNEGOCIO" type="tns:negocioType"/>
+         <xs:element name="CODIGOPLATAFORMA" type="xs:string"/>
+         <xs:element name="CONTRATO" type="xs:string"/>
+         <xs:element name="INITIALCHARGEOFFER" type="xs:string"/>
+         <xs:element name="FAFOFFERS" type="tns:DataArray"/>
+         <xs:element name="FAFOFFERS_SIZE" type="xs:decimal"/>
+         <xs:element name="SDP" type="xs:string"/>
+         <xs:element name="SERVICIOSEJECUCION" type="tns:serviciosType"/>
+         <xs:element name="ERROR" type="xs:string"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="negocioType">
+      <xs:sequence>
+         <xs:element name="CARGAINICIAL" type="xs:decimal"/>
+         <xs:element name="CREACONBLOQUEO" type="xs:string"/>
+         <xs:element name="CREACONCARGAINICIAL" type="xs:string"/>
+         <xs:element name="CARGADIFERIDA" type="xs:string"/>
+         <xs:element name="MESESADIFERIR" type="xs:decimal"/>
+         <xs:element name="VIGENCIA_CARGA" type="xs:decimal"/>
+         <xs:element name="POSPAGO" type="xs:string"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="serviciosType">
+      <xs:sequence>
+         <xs:element name="SERVICIO" type="tns:servicioType" minOccurs="0"
+                     maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+  
+   <xs:complexType name="parametroType">
+      <xs:sequence>
+         <xs:element name="NOMBRE" type="xs:string"/>
+         <xs:element name="TIPO" type="xs:string"/>
+         <xs:element name="VALOR" type="xs:string"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="servicioType">
+      <xs:sequence>
+         <xs:element name="NOMBRE" type="xs:string"/>
+         <xs:element name="PARAMETROS" type="tns:parametrosType"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="parametrosType">
+      <xs:sequence>
+         <xs:element name="PARAMETRO" type="tns:parametroType" minOccurs="0"
+                     maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+   
+   <xs:complexType name="Subscriber">
+		<xs:sequence>
+			<xs:element name="CUSTOMERID" type="xs:string" />
+			<xs:element name="Cgpa" type="xs:string" />
+			<xs:element name="Contract" type="xs:string" />
+			<xs:element name="IsLocked" type="xs:string" />
+			<xs:element name="IsFraudLocked" type="xs:string" />
+			<xs:element name="IsFirstCallPassed" type="xs:string" />
+			<xs:element name="IsGPRSUsed" type="xs:string" />
+			<xs:element name="IsWelcomeBackPromoDone" type="xs:string" />
+			<xs:element name="IsFnFPossible" type="xs:string" />
+			<xs:element name="FnF_Numbers" type="tns:DataArray"/>
+			<xs:element name="IsBestFnFPossible" type="xs:string" />
+			<xs:element name="BestFnF_Numbers" type="tns:DataArray" />
+                        <xs:element name="SMSOnNet_Numbers" type="tns:DataArray" />
+                        <xs:element name="SMSOnNet_ExpirationDate" type="xs:string" />
+                        <xs:element name="SMSOffNet_Numbers" type="tns:DataArray" />
+                        <xs:element name="SMSOffNet_ExpirationDate" type="xs:string" />
+                        <xs:element name="SMSAny_Numbers" type="tns:DataArray" />
+                        <xs:element name="SMSAny_ExpirationDate" type="xs:string" />
+                        <xs:element name="IsFAPossible" type="xs:string" />
+                        <xs:element name="FA_ActivationEndTime" type="xs:string" />
+                        <xs:element name="FA_Destination" type="xs:string" />
+			<xs:element name="OnPeakAccountID" type="tns:AccountID" />
+			<xs:element name="OffPeakAccountID" type="tns:AccountID" />
+			<xs:element name="FreeSMSAccountID" type="tns:AccountID" />
+			<xs:element name="BonusAccountID" type="tns:AccountID" />
+			<xs:element name="MinutesAccountID2" type="tns:AccountID" />
+			<xs:element name="MinutesAccountID3" type="tns:AccountID" />
+			<xs:element name="MinutesAccountID4" type="tns:AccountID" />
+			<xs:element name="MonetaryAccountID2" type="tns:AccountID" />
+			<xs:element name="MonetaryAccountID3" type="tns:AccountID" />
+			<xs:element name="PreActiveEndDate" type="xs:string" />
+			<xs:element name="LastKnownPeriod" type="xs:string" />
+			<xs:element name="ActiveEndDate" type="xs:string" />
+                        <xs:element name="GraceEndDate" type="xs:string" />
+			<xs:element name="BestFnF_ActivationEndTime" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+        
+        <xs:complexType name="SubscriberCreate">
+	     <xs:sequence>
+	            <xs:element name="AccountGroupID" type="xs:string"/>
+                    <xs:element name="AddressRoles" type="xs:string"/>
+                    <xs:element name="AddressSeq" type="xs:string"/>
+                    <xs:element name="ContractID" type="xs:string"/>
+                    <xs:element name="ContractType" type="xs:string"/>
+                    <xs:element name="CustomerStatus" type="xs:string"/>
+                    <xs:element name="DirectoryNumber" type="xs:string"/>
+                    <xs:element name="IVRLanguage" type="xs:string"/>
+                    <xs:element name="PublicMarketCode" type="xs:string"/>
+                    <xs:element name="PartyRoleSHName" type="xs:string"/>
+                    <xs:element name="PartyType" type="xs:string"/>
+                    <xs:element name="PaymentResponsibility" type="xs:string"/>
+                    <xs:element name="PortNumber" type="xs:string"/>
+                    <xs:element name="PublicNetworkId" type="xs:string"/>
+                    <xs:element name="PublicSubMarketCode" type="xs:string"/>
+                    <xs:element name="ReasonCode" type="xs:string"/>
+                    <xs:element name="SdpID" type="xs:string"/>
+                    <xs:element name="StorageMediumNumber" type="xs:string"/>
+                    <xs:element name="TemporaryBlocked" type="xs:string"/>
+                    <xs:element name="OfferIdPub" type="xs:string"/>
+	     </xs:sequence>
+	 </xs:complexType>
+	
+	<xs:complexType name="DataArray">
+		<xs:sequence>
+			<xs:element name="Detail" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="AccountID">
+		<xs:sequence>
+			<xs:element name="Balance" type="xs:string" />
+			<xs:element name="ExpiryDate" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

@@ -1,0 +1,14 @@
+<adapter-config name="bd_consultarRangoTelmex" adapter="Database Adapter" wsdlLocation="../WSDLs/consultarRangoTelmex_BD.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/DB/BSCSQA" UIConnectionName="BSCSQA" adapterRef=""/>
+  <endpoint-interaction portType="bd_consultarRangoTelmex_ptt" operation="bd_consultarRangoTelmex">
+    <interaction-spec className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
+      <property name="SchemaName" value="SYSADM"/>
+      <property name="ProcedureName" value="SP_RANGO_TELMEX"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+      <property name="QueryTimeout" value="1"/>
+    </interaction-spec>
+    <output/>
+  </endpoint-interaction>
+
+</adapter-config>

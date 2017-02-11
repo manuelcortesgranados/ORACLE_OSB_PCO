@@ -1,0 +1,20 @@
+<wsdl:definitions name="enviarAuditoriaDiaSorpresaElegidosJMS" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/jms/Comcel/ITEL/enviarAuditoriaDiaSorpresaElegidosJMS" xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/jms/Comcel/ITEL/enviarAuditoriaDiaSorpresaElegidosJMS" xmlns:imp1="http://www.comcel.com.co/AuditoriaDiaSorpresaElegidosITEL/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/">
+	<plt:partnerLinkType name="enviarAuditoriaDiaSorpresaElegidos_plt">
+		<plt:role name="enviarAuditoriaDiaSorpresaElegidos_role">
+			<plt:portType name="tns:enviarAuditoriaDiaSorpresaElegidos_ptt"/>
+		</plt:role>
+	</plt:partnerLinkType>
+	<wsdl:types>
+		<schema xmlns="http://www.w3.org/2001/XMLSchema">
+			<import namespace="http://www.comcel.com.co/AuditoriaDiaSorpresaElegidosITEL/" schemaLocation="../Schemas/MS_ITEL_AUDITORIADIASORPRESAELEGIDOS.xsd"/>
+		</schema>
+	</wsdl:types>
+	<wsdl:message name="enviarAuditoriaDiaSorpresaElegidos_msg">
+		<wsdl:part name="body" element="imp1:Input_Parameters"/>
+	</wsdl:message>
+	<wsdl:portType name="enviarAuditoriaDiaSorpresaElegidos_ptt">
+		<wsdl:operation name="enviarAuditoriaDiaSorpresaElegidos">
+			<wsdl:input message="tns:enviarAuditoriaDiaSorpresaElegidos_msg"/>
+		</wsdl:operation>
+	</wsdl:portType>
+</wsdl:definitions>

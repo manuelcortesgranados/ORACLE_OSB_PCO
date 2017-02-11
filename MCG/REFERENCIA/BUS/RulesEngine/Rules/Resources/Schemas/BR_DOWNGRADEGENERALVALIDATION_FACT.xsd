@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://www.claro.com.co/rulesEngine/DowngradeGeneralValidationFact"
+	targetNamespace="http://www.claro.com.co/rulesEngine/DowngradeGeneralValidationFact"
+	xmlns:cd="http://www.claro.com.co/rulesEngine/canonicalModel/CustomerDomain"
+	xmlns:pd="http://www.claro.com.co/rulesEngine/canonicalModel/ProductDomain"
+	xmlns:cbe="http://www.claro.com.co/rulesEngine/canonicalModel/CommonBusinessEntities">
+	
+	
+	<xs:import schemaLocation="../../../Core/Resources/Schemas/CanonicalModel/CustomerDomain.xsd"
+		namespace="http://www.claro.com.co/rulesEngine/canonicalModel/CustomerDomain" />
+		
+		
+	<xs:element name="DowngradeGeneralValidationFactRequest"
+		type="tns:DowngradeGeneralValidationFactRequestType" />
+	<xs:element name="DowngradeGeneralValidationFactResponse"
+		type="tns:DowngradeGeneralValidationFactResponseType" />
+	<xs:complexType name="DowngradeGeneralValidationFactRequestType">
+		<xs:sequence>
+			<xs:element name="Product" type="pd:Product" />
+			<xs:element name="InternalAccountBehavior" type="cd:InternalAccountBehavior" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DowngradeGeneralValidationFactResponseType">
+		<xs:sequence>
+			<xs:element name="ExceptionBusinessCollection" type="cbe:ExceptionBusinessCollection"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

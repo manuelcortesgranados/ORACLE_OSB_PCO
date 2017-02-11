@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+  <ser:coreEntry isProxy="true" isEnabled="true" isAutoPublish="false" isTracingEnabled="false">
+    <ser:binding type="SOAP" isSoap12="false" xsi:type="con3:SoapBindingType" xmlns:con3="http://www.bea.com/wli/sb/services/bindings/config">
+      <con3:wsdl ref="ITEL/OCS/AIR/Resources/WSDLs/recargar_PS"/>
+      <con3:port>
+        <con3:name>recargar_PSSOAP</con3:name>
+        <con3:namespace>http://www.comcel.com.co/recargar_PS/</con3:namespace>
+      </con3:port>
+      <con3:selector type="SOAP body"/>
+      <con3:WSI-compliant>false</con3:WSI-compliant>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+    <ser:ws-policy>
+      <ser:binding-mode>wsdl-policy-attachments</ser:binding-mode>
+    </ser:ws-policy>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>http</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:URI>
+      <env:value>/ITEL/OCS/AIR/Proxies/recargarOCSLocal_PS</env:value>
+    </tran:URI>
+    <tran:inbound-properties/>
+    <tran:all-headers>false</tran:all-headers>
+    <tran:provider-specific>
+      <http:inbound-properties/>
+    </tran:provider-specific>
+  </ser:endpointConfig>
+  <ser:router>
+    <con:pipeline type="request" name="PipelinePairNode1_request">
+      <con:stage name="validacion" errorHandler="_onErrorHandler-4620812513406190403--23567778.136f0385e83.-7f24">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/RecargarOCS/" prefix="rec"/>
+        </con:context>
+        <con:actions>
+          <con2:validate>
+            <con1:id>_ActionId-4620812513406190403--23567778.136f0385e83.-7f25</con1:id>
+            <con2:schema ref="ITEL/OCS/AIR/Resources/Schemas/PS_ITEL_RECARGAR"/>
+            <con2:schemaElement xmlns:rec="http://www.comcel.com.co/RecargarOCS/">rec:Input_Parameters</con2:schemaElement>
+            <con2:varName>body</con2:varName>
+            <con2:location>
+              <con1:xpathText>./rec:Input_Parameters</con1:xpathText>
+            </con2:location>
+          </con2:validate>
+        </con:actions>
+      </con:stage>
+      <con:stage name="enrutamiento" errorHandler="_onErrorHandler-4620812513406190403--23567778.136f0385e83.-7e99">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/RecargarOCS/" prefix="rec"/>
+        </con:context>
+        <con:actions>
+          <con2:wsCallout>
+            <con1:id>_ActionId-4620812513406190403--23567778.136f0385e83.-7e9a</con1:id>
+            <con2:service xsi:type="ref:ProxyRef" ref="ITEL/OCS/AIR/Proxies/ejecutarOperacionAIRHTTPLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con2:request>
+              <con2:payload>$ejecutarOperacionRequest</con2:payload>
+            </con2:request>
+            <con2:response>
+              <con2:payload>ejecutarOperacionResponse</con2:payload>
+            </con2:response>
+            <con2:requestTransform>
+              <con2:assign varName="ejecutarOperacionRequest">
+                <con1:id>_ActionId-4620812513406190403--23567778.136f0385e83.-7e9c</con1:id>
+                <con2:expr>
+                  <con1:xqueryTransform>
+                    <con1:resource ref="ITEL/OCS/AIR/Resources/XQueries/recargar_Req"/>
+                    <con1:param name="input_Parameters1">
+                      <con1:path>$body/rec:Input_Parameters</con1:path>
+                    </con1:param>
+                  </con1:xqueryTransform>
+                </con2:expr>
+              </con2:assign>
+            </con2:requestTransform>
+            <con2:responseTransform>
+              <con2:ifThenElse>
+                <con1:id>_ActionId-3320457338110958878--11b03aa.138902065ad.-7fbc</con1:id>
+                <con2:case>
+                  <con2:condition>
+                    <con1:xqueryText>data( $ejecutarOperacionResponse/params/param/value/struct/member[name = "responseCode"]/value ) = "0"</con1:xqueryText>
+                  </con2:condition>
+                  <con2:actions>
+                    <con2:assign varName="codigo">
+                      <con1:id>_ActionId-3320457338110958878--11b03aa.138902065ad.-7fa5</con1:id>
+                      <con2:expr>
+                        <con1:xqueryText>"1"</con1:xqueryText>
+                      </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="descripcion">
+                      <con1:id>_ActionId-3320457338110958878--11b03aa.138902065ad.-7f7f</con1:id>
+                      <con2:expr>
+                        <con1:xqueryText>"Ejecucion exitosa"</con1:xqueryText>
+                      </con2:expr>
+                    </con2:assign>
+                  </con2:actions>
+                </con2:case>
+                <con2:case>
+                  <con2:condition>
+                    <con1:xqueryText>fn:exists( $ejecutarOperacionResponse/fault )</con1:xqueryText>
+                  </con2:condition>
+                  <con2:actions>
+                    <con2:assign varName="codigo">
+                      <con1:id>_ActionId-3320457338110958878--11b03aa.138902065ad.-7f68</con1:id>
+                      <con2:expr>
+                        <con1:xqueryText>"901"</con1:xqueryText>
+                      </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="descripcion">
+                      <con1:id>_ActionId-3320457338110958878--11b03aa.138902065ad.-7f67</con1:id>
+                      <con2:expr>
+                        <con1:xqueryText>data($ejecutarOperacionResponse/fault/value/struct/member[name='faultString']/value/string)</con1:xqueryText>
+                      </con2:expr>
+                    </con2:assign>
+                  </con2:actions>
+                </con2:case>
+                <con2:default>
+                  <con2:assign varName="codigo">
+                    <con1:id>_ActionId-3320457338110958878--11b03aa.138902065ad.-7f6d</con1:id>
+                    <con2:expr>
+                      <con1:xqueryTransform>
+                        <con1:resource ref="ITEL/OCS/AIR/Resources/XQueries/obtenerCodigoError"/>
+                        <con1:param name="codigoOCS">
+                          <con1:path>data( $ejecutarOperacionResponse/params/param/value/struct/member[name = "responseCode"]/value )</con1:path>
+                        </con1:param>
+                      </con1:xqueryTransform>
+                    </con2:expr>
+                  </con2:assign>
+                  <con2:assign varName="descripcion">
+                    <con1:id>_ActionId-3320457338110958878--11b03aa.138902065ad.-7f6f</con1:id>
+                    <con2:expr>
+                      <con1:xqueryText>concat("Ejecucion fallida. Codigo: ",data( $ejecutarOperacionResponse/params/param/value/struct/member[name = "responseCode"]/value ))</con1:xqueryText>
+                    </con2:expr>
+                  </con2:assign>
+                </con2:default>
+              </con2:ifThenElse>
+              <con2:replace varName="body" contents-only="true">
+                <con1:id>_ActionId-4620812513406190403--23567778.136f0385e83.-7e9b</con1:id>
+                <con2:expr>
+                  <con1:xqueryTransform>
+                    <con1:resource ref="ITEL/OCS/AIR/Resources/XQueries/recargar_Res"/>
+                    <con1:param name="descripcion">
+                      <con1:path>$descripcion</con1:path>
+                    </con1:param>
+                    <con1:param name="codigo">
+                      <con1:path>$codigo</con1:path>
+                    </con1:param>
+                    <con1:param name="methodResponse1">
+                      <con1:path>$ejecutarOperacionResponse</con1:path>
+                    </con1:param>
+                  </con1:xqueryTransform>
+                </con2:expr>
+              </con2:replace>
+            </con2:responseTransform>
+          </con2:wsCallout>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="PipelinePairNode1_response"/>
+    <con:pipeline type="error" name="_onErrorHandler-4620812513406190403--23567778.136f0385e83.-7f24">
+      <con:stage name="error">
+        <con:context/>
+        <con:actions>
+          <con2:replace varName="body" contents-only="true">
+            <con1:id>_ActionId-4620812513406190403--23567778.136f0385e83.-7f15</con1:id>
+            <con2:expr>
+              <con1:xqueryTransform>
+                <con1:resource ref="ITEL/OCS/AIR/Resources/XQueries/recargar_Error"/>
+                <con1:param name="descripcion">
+                  <con1:path>$fault/ctx:reason/text()</con1:path>
+                </con1:param>
+                <con1:param name="mensaje">
+                  <con1:path>"Error etapa de validacion"</con1:path>
+                </con1:param>
+                <con1:param name="codigo">
+                  <con1:path>"ERROR"</con1:path>
+                </con1:param>
+              </con1:xqueryTransform>
+            </con2:expr>
+          </con2:replace>
+          <con1:reply>
+            <con1:id>_ActionId-4620812513406190403--23567778.136f0385e83.-7ef6</con1:id>
+          </con1:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="error" name="_onErrorHandler-4620812513406190403--23567778.136f0385e83.-7e99">
+      <con:stage name="error">
+        <con:context/>
+        <con:actions>
+          <con2:replace varName="body" contents-only="true">
+            <con1:id>_ActionId-4620812513406190403--23567778.136f0385e83.-7e45</con1:id>
+            <con2:expr>
+              <con1:xqueryTransform>
+                <con1:resource ref="ITEL/OCS/AIR/Resources/XQueries/recargar_Error"/>
+                <con1:param name="descripcion">
+                  <con1:path>$fault/ctx:reason/text()</con1:path>
+                </con1:param>
+                <con1:param name="mensaje">
+                  <con1:path>"Error etapa de enrutamiento"</con1:path>
+                </con1:param>
+                <con1:param name="codigo">
+                  <con1:path>"20"</con1:path>
+                </con1:param>
+              </con1:xqueryTransform>
+            </con2:expr>
+          </con2:replace>
+          <con1:reply>
+            <con1:id>_ActionId-4620812513406190403--23567778.136f0385e83.-7e30</con1:id>
+          </con1:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:flow>
+      <con:pipeline-node name="PipelinePairNode1">
+        <con:request>PipelinePairNode1_request</con:request>
+        <con:response>PipelinePairNode1_response</con:response>
+      </con:pipeline-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

@@ -1,0 +1,1957 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config">
+  <ser:coreEntry isProxy="true" isEnabled="true" isAutoPublish="false" isTracingEnabled="false">
+    <ser:binding type="SOAP" isSoap12="false" xsi:type="con4:SoapBindingType" xmlns:con4="http://www.bea.com/wli/sb/services/bindings/config">
+      <con4:wsdl ref="ITEL/Core/Resources/WSDLs/consultarReglasProvision_PS"/>
+      <con4:port>
+        <con4:name>ConsultarReglasProvisionSOAP</con4:name>
+        <con4:namespace>http://www.comcel.com.co/ConsultarReglasProvision/</con4:namespace>
+      </con4:port>
+      <con4:selector type="SOAP body"/>
+      <con4:WSI-compliant>false</con4:WSI-compliant>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+    <ser:ws-policy>
+      <ser:binding-mode>wsdl-policy-attachments</ser:binding-mode>
+    </ser:ws-policy>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>local</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:inbound-properties/>
+    <tran:all-headers>true</tran:all-headers>
+  </ser:endpointConfig>
+  <ser:router>
+    <con:pipeline type="request" name="PipelinePairNode1_request">
+      <con:stage name="validacion" errorHandler="_onErrorHandler-1641293207969743559--28a4b30a.12fb0e9a486.-7d67">
+        <con:context>
+          <con2:varNsDecl namespace="http://www.comcel.com.co/ConsultarReglasProvision/" prefix="con"/>
+        </con:context>
+        <con:actions>
+          <con1:assign varName="tiempo">
+            <con2:id>_ActionId-1641293207969743559--28a4b30a.12fb0e9a486.-7d7b</con2:id>
+            <con1:expr>
+              <con2:xqueryText>fn:current-time()</con2:xqueryText>
+            </con1:expr>
+          </con1:assign>
+          <con1:assign varName="metodo">
+            <con2:id>_ActionId-8293588777535050436-6f3c5993.1358ce6525d.-7678</con2:id>
+            <con1:expr>
+              <con2:xqueryText>$body/con:Input_Parameters/METODO/text()</con2:xqueryText>
+            </con1:expr>
+          </con1:assign>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="PipelinePairNode1_response">
+      <con:stage name="salida" errorHandler="_onErrorHandler-8877291560722884217--47ef7fb6.12fc08af6af.-7dde">
+        <con:context/>
+        <con:actions>
+          <con1:replace varName="body" contents-only="true">
+            <con2:id>_ActionId-8877291560722884217--47ef7fb6.12fc08af6af.-7d3d</con2:id>
+            <con1:expr>
+              <con2:xqueryTransform>
+                <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Error"/>
+                <con2:param name="tiempoI">
+                  <con2:path>$tiempo</con2:path>
+                </con2:param>
+                <con2:param name="descripcion">
+                  <con2:path>"Metodo no existe "</con2:path>
+                </con2:param>
+                <con2:param name="mensaje">
+                  <con2:path>""</con2:path>
+                </con2:param>
+                <con2:param name="codigo">
+                  <con2:path>"6"</con2:path>
+                </con2:param>
+              </con2:xqueryTransform>
+            </con1:expr>
+          </con1:replace>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="error" name="_onErrorHandler-1641293207969743559--28a4b30a.12fb0e9a486.-7d67">
+      <con:stage name="error">
+        <con:context/>
+        <con:actions>
+          <con1:replace varName="body" contents-only="true">
+            <con2:id>_ActionId-1641293207969743559--28a4b30a.12fb0e9a486.-7d28</con2:id>
+            <con1:expr>
+              <con2:xqueryTransform>
+                <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Error"/>
+                <con2:param name="tiempoI">
+                  <con2:path>$tiempo</con2:path>
+                </con2:param>
+                <con2:param name="descripcion">
+                  <con2:path>$fault/ctx:reason/text()</con2:path>
+                </con2:param>
+                <con2:param name="mensaje">
+                  <con2:path>"error aj ejecutar trama"</con2:path>
+                </con2:param>
+                <con2:param name="codigo">
+                  <con2:path>"6"</con2:path>
+                </con2:param>
+              </con2:xqueryTransform>
+            </con1:expr>
+          </con1:replace>
+          <con2:reply>
+            <con2:id>_ActionId-1641293207969743559--28a4b30a.12fb0e9a486.-7d4c</con2:id>
+          </con2:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="error" name="_onErrorHandler-1641293207969743559--28a4b30a.12fb0e9a486.-7d66">
+      <con:stage name="error1">
+        <con:context/>
+        <con:actions>
+          <con1:replace varName="body" contents-only="true">
+            <con2:id>_ActionId-1641293207969743559--28a4b30a.12fb0e9a486.-7cb6</con2:id>
+            <con1:expr>
+              <con2:xqueryTransform>
+                <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Error"/>
+                <con2:param name="tiempoI">
+                  <con2:path>$tiempo</con2:path>
+                </con2:param>
+                <con2:param name="descripcion">
+                  <con2:path>$fault/ctx:reason/text()</con2:path>
+                </con2:param>
+                <con2:param name="mensaje">
+                  <con2:path>"error aj ejecutar trama"</con2:path>
+                </con2:param>
+                <con2:param name="codigo">
+                  <con2:path>"6"</con2:path>
+                </con2:param>
+              </con2:xqueryTransform>
+            </con1:expr>
+          </con1:replace>
+          <con2:reply>
+            <con2:id>_ActionId-1641293207969743559--28a4b30a.12fb0e9a486.-7cb5</con2:id>
+          </con2:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="error" name="_onErrorHandler-8877291560722884217--47ef7fb6.12fc08af6af.-7dde">
+      <con:stage name="error1">
+        <con:context/>
+        <con:actions>
+          <con1:replace varName="body" contents-only="true">
+            <con2:id>_ActionId-8877291560722884217--47ef7fb6.12fc08af6af.-7d52</con2:id>
+            <con1:expr>
+              <con2:xqueryTransform>
+                <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Error"/>
+                <con2:param name="tiempoI">
+                  <con2:path>$tiempo</con2:path>
+                </con2:param>
+                <con2:param name="descripcion">
+                  <con2:path>$fault/ctx:reason/text()</con2:path>
+                </con2:param>
+                <con2:param name="mensaje">
+                  <con2:path>"error aj ejecutar trama"</con2:path>
+                </con2:param>
+                <con2:param name="codigo">
+                  <con2:path>"6"</con2:path>
+                </con2:param>
+              </con2:xqueryTransform>
+            </con1:expr>
+          </con1:replace>
+          <con2:reply>
+            <con2:id>_ActionId-8877291560722884217--47ef7fb6.12fc08af6af.-7d51</con2:id>
+          </con2:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:flow>
+      <con:pipeline-node name="PipelinePairNode1">
+        <con:request>PipelinePairNode1_request</con:request>
+        <con:response>PipelinePairNode1_response</con:response>
+      </con:pipeline-node>
+      <con:route-node name="RouteNode1" error-handler="_onErrorHandler-1641293207969743559--28a4b30a.12fb0e9a486.-7d66">
+        <con:context>
+          <con2:varNsDecl namespace="http://www.comcel.com.co/ConsultarReglasProvision/" prefix="con"/>
+        </con:context>
+        <con:actions>
+          <con1:ifThenElse>
+            <con2:id>_ActionId-1641293207969743559--28a4b30a.12fb0e9a486.-7d68</con2:id>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText>$body/con:Input_Parameters/METODO/text() = "400" or $body/con:Input_Parameters/METODO/text() = "407"
+or $body/con:Input_Parameters/METODO/text() = "411"</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con3:route>
+                  <con2:id>_ActionId-1641293207969743559--28a4b30a.12fb0e9a486.-7c89</con2:id>
+                  <con3:service ref="ITEL/Trama400/Proxies/calcularProvisionTrama400Local_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con3:operation>calcularProvisionTrama400</con3:operation>
+                  <con3:outboundTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-1641293207969743559--28a4b30a.12fb0e9a486.-7c65</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Req_CalcularProvTrama400Local"/>
+                          <con2:param name="input_Parameters1">
+                            <con2:path>$body/con:Input_Parameters</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                  </con3:outboundTransform>
+                  <con3:responseTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-1641293207969743559--28a4b30a.12fb0e9a486.-7c4c</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Res_Trama400"/>
+                          <con2:param name="tiempoI">
+                            <con2:path>$tiempo</con2:path>
+                          </con2:param>
+                          <con2:param name="wS_Result1">
+                            <con2:path>$body/*:WS_Result</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                    <con2:reply>
+                      <con2:id>_ActionId-8877291560722884217--47ef7fb6.12fc08af6af.-7ddf</con2:id>
+                    </con2:reply>
+                  </con3:responseTransform>
+                </con3:route>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText>$body/con:Input_Parameters/METODO/text() = "401"</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con3:route>
+                  <con2:id>_ActionId-9164421316729189481-5e59910f.1334276bdac.-78f7</con2:id>
+                  <con3:service ref="ITEL/Trama401/Proxies/calcularProvisionTrama401Local_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con3:operation>calcularProvisionTrama401</con3:operation>
+                  <con3:outboundTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-9164421316729189481-5e59910f.1334276bdac.-78f4</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Req_CalcularProvTrama401Local"/>
+                          <con2:param name="input_Parameters">
+                            <con2:path>$body/con:Input_Parameters</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                  </con3:outboundTransform>
+                  <con3:responseTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-9164421316729189481-5e59910f.1334276bdac.-78f1</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Res_Trama401"/>
+                          <con2:param name="tiempoI">
+                            <con2:path>$tiempo</con2:path>
+                          </con2:param>
+                          <con2:param name="wS_Result1">
+                            <con2:path>$body/*:WS_Result</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                    <con2:reply>
+                      <con2:id>_ActionId-9164421316729189481-5e59910f.1334276bdac.-78ee</con2:id>
+                    </con2:reply>
+                  </con3:responseTransform>
+                </con3:route>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText>$body/con:Input_Parameters/METODO/text() = "414"</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con3:route>
+                  <con2:id>_ActionId-2253312439982545409-5f03a207.1531049037b.-6075</con2:id>
+                  <con3:service ref="ITEL/Trama414/Proxies/calcularProvisionTrama414Local_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con3:operation>calcularProvisionTrama414</con3:operation>
+                  <con3:outboundTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-2253312439982545409-5f03a207.1531049037b.-6074</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Req_CalcularProvTrama414Local"/>
+                          <con2:param name="input_Parameters">
+                            <con2:path>$body/con:Input_Parameters</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                  </con3:outboundTransform>
+                  <con3:responseTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-2253312439982545409-5f03a207.1531049037b.-6073</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Res_Trama414"/>
+                          <con2:param name="tiempoI">
+                            <con2:path>$tiempo</con2:path>
+                          </con2:param>
+                          <con2:param name="wS_Result1">
+                            <con2:path>$body/*:WS_Result</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                    <con2:reply>
+                      <con2:id>_ActionId-2253312439982545409-5f03a207.1531049037b.-6072</con2:id>
+                    </con2:reply>
+                  </con3:responseTransform>
+                </con3:route>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText>$body/con:Input_Parameters/METODO/text() = "415"</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con3:route>
+                  <con2:id>_ActionId-4489625380589970335-74ff277e.158d60ec101.-7f5e</con2:id>
+                  <con3:service ref="ITEL/Trama415/Proxies/calcularProvisionTrama415Local_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con3:operation>calcularProvisionTrama415</con3:operation>
+                  <con3:outboundTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-4489625380589970335-74ff277e.158d60ec101.-7f05</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Req_CalcularProvTrama415Local"/>
+                          <con2:param name="input_Parameters">
+                            <con2:path>$body/con:Input_Parameters</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                  </con3:outboundTransform>
+                  <con3:responseTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-4489625380589970335-74ff277e.158d60ec101.-7ee7</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Res_Trama415"/>
+                          <con2:param name="tiempoI">
+                            <con2:path>$tiempo</con2:path>
+                          </con2:param>
+                          <con2:param name="wS_Result1">
+                            <con2:path>$body/*:WS_Result</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                    <con2:reply>
+                      <con2:id>_ActionId-4489625380589970335-74ff277e.158d60ec101.-7f25</con2:id>
+                    </con2:reply>
+                  </con3:responseTransform>
+                </con3:route>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText>$body/con:Input_Parameters/METODO/text() = "402"</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con3:route>
+                  <con2:id>_ActionId-6642073677733693123-1e83b37b.1338e6b032b.-7f80</con2:id>
+                  <con3:service ref="ITEL/Trama402/Proxies/calcularProvisionTrama402Local_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con3:operation>calcularProvisionTrama402</con3:operation>
+                  <con3:outboundTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-6642073677733693123-1e83b37b.1338e6b032b.-7f7f</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Req_CalcularProvTrama402Local"/>
+                          <con2:param name="input_Parameters">
+                            <con2:path>$body/con:Input_Parameters</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                  </con3:outboundTransform>
+                  <con3:responseTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-6642073677733693123-1e83b37b.1338e6b032b.-7f7e</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Res_Trama402"/>
+                          <con2:param name="tiempoI">
+                            <con2:path>$tiempo</con2:path>
+                          </con2:param>
+                          <con2:param name="wS_Result1">
+                            <con2:path>$body/*:WS_Result</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                    <con2:reply>
+                      <con2:id>_ActionId-6642073677733693123-1e83b37b.1338e6b032b.-7f7d</con2:id>
+                    </con2:reply>
+                  </con3:responseTransform>
+                </con3:route>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText>$body/con:Input_Parameters/METODO/text() = "403"</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con3:route>
+                  <con2:id>_ActionId-7001066806149452896--2da22352.133b383c0e8.-7da5</con2:id>
+                  <con3:service ref="ITEL/Trama403/Proxies/calcularProvisionTrama403Local_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con3:operation>calcularProvisionTrama403</con3:operation>
+                  <con3:outboundTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-7001066806149452896--2da22352.133b383c0e8.-7da4</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Req_CalcularProvTrama403Local"/>
+                          <con2:param name="input_Parameters1">
+                            <con2:path>$body/con:Input_Parameters</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                  </con3:outboundTransform>
+                  <con3:responseTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-7001066806149452896--2da22352.133b383c0e8.-7da3</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Res_Trama403"/>
+                          <con2:param name="tiempoI">
+                            <con2:path>$tiempo</con2:path>
+                          </con2:param>
+                          <con2:param name="wS_Result1">
+                            <con2:path>$body/*:WS_Result</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                    <con2:reply>
+                      <con2:id>_ActionId-7001066806149452896--2da22352.133b383c0e8.-7da2</con2:id>
+                    </con2:reply>
+                  </con3:responseTransform>
+                </con3:route>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText>$body/con:Input_Parameters/METODO/text() = "405"</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con3:route>
+                  <con2:id>_ActionId-440002342435620209--3fe474f1.133d60c8086.-7da5</con2:id>
+                  <con3:service ref="ITEL/Trama405/Proxies/calcularProvisionTrama405Local_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con3:operation>calcularProvisionTrama405</con3:operation>
+                  <con3:outboundTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-440002342435620209--3fe474f1.133d60c8086.-7da4</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Req_CalcularProvTrama405Local"/>
+                          <con2:param name="input_Parameters1">
+                            <con2:path>$body/con:Input_Parameters</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                  </con3:outboundTransform>
+                  <con3:responseTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-440002342435620209--3fe474f1.133d60c8086.-7da3</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Res_Trama405"/>
+                          <con2:param name="tiempoI">
+                            <con2:path>$tiempo</con2:path>
+                          </con2:param>
+                          <con2:param name="wS_Result1">
+                            <con2:path>$body/*:WS_Result</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                    <con2:reply>
+                      <con2:id>_ActionId-440002342435620209--3fe474f1.133d60c8086.-7da2</con2:id>
+                    </con2:reply>
+                  </con3:responseTransform>
+                </con3:route>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText>$body/con:Input_Parameters/METODO/text() = "410"</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con3:route>
+                  <con2:id>_ActionId-4921274548082121420--69da317d.1453d141c80.-7d19</con2:id>
+                  <con3:service ref="ITEL/Trama410/Proxies/calcularProvisionTrama410Local_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con3:operation>calcularProvision</con3:operation>
+                  <con3:outboundTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-4921274548082121420--69da317d.1453d141c80.-7cc4</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Req_CalcularProvTrama410Local"/>
+                          <con2:param name="input_Parameters1">
+                            <con2:path>$body/con:Input_Parameters</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                  </con3:outboundTransform>
+                  <con3:responseTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-4921274548082121420--69da317d.1453d141c80.-7c8f</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Res_Trama410"/>
+                          <con2:param name="tiempoI">
+                            <con2:path>$tiempo</con2:path>
+                          </con2:param>
+                          <con2:param name="wS_Result1">
+                            <con2:path>$body/*:WS_Result</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                    <con2:reply>
+                      <con2:id>_ActionId-4921274548082121420--69da317d.1453d141c80.-7c56</con2:id>
+                    </con2:reply>
+                  </con3:responseTransform>
+                </con3:route>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText>$body/con:Input_Parameters/METODO/text() = "406"</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con3:route>
+                  <con2:id>_ActionId-440002342435620209--3fe474f1.133d60c8086.-7d8c</con2:id>
+                  <con3:service ref="ITEL/Trama406/Proxies/calcularProvisionTrama406Local_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con3:operation>calcularProvisionTrama406</con3:operation>
+                  <con3:outboundTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-440002342435620209--3fe474f1.133d60c8086.-7d8b</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Req_CalcularProvTrama406Local"/>
+                          <con2:param name="input_Parameters1">
+                            <con2:path>$body/con:Input_Parameters</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                  </con3:outboundTransform>
+                  <con3:responseTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-440002342435620209--3fe474f1.133d60c8086.-7d8a</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Res_Trama406"/>
+                          <con2:param name="tiempoI">
+                            <con2:path>$tiempo</con2:path>
+                          </con2:param>
+                          <con2:param name="wS_Result1">
+                            <con2:path>$body/*:WS_Result</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                    <con2:reply>
+                      <con2:id>_ActionId-440002342435620209--3fe474f1.133d60c8086.-7d89</con2:id>
+                    </con2:reply>
+                  </con3:responseTransform>
+                </con3:route>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText>$body/con:Input_Parameters/METODO/text() = "200"</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con3:route>
+                  <con2:id>_ActionId-440002342435620209--3fe474f1.133d60c8086.-78cc</con2:id>
+                  <con3:service ref="ITEL/Trama200/Proxies/calcularProvisionTrama200Local_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con3:operation>calcularProvisionTrama200</con3:operation>
+                  <con3:outboundTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-440002342435620209--3fe474f1.133d60c8086.-78cb</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Req_CalcularProvTrama200Local"/>
+                          <con2:param name="input_Parameters1">
+                            <con2:path>$body/con:Input_Parameters</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                  </con3:outboundTransform>
+                  <con3:responseTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-440002342435620209--3fe474f1.133d60c8086.-78ca</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Res_Trama200"/>
+                          <con2:param name="tiempoI">
+                            <con2:path>$tiempo</con2:path>
+                          </con2:param>
+                          <con2:param name="wS_Result1">
+                            <con2:path>$body/*:WS_Result</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                    <con2:reply>
+                      <con2:id>_ActionId-440002342435620209--3fe474f1.133d60c8086.-78c9</con2:id>
+                    </con2:reply>
+                  </con3:responseTransform>
+                </con3:route>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText>$body/con:Input_Parameters/METODO/text() = "600"</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con3:route>
+                  <con2:id>_ActionId-440002342435620209--3fe474f1.133d60c8086.-6862</con2:id>
+                  <con3:service ref="ITEL/Trama600/Proxies/calcularProvisionTrama600Local_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con3:operation>calcularProvisionTrama600</con3:operation>
+                  <con3:outboundTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-440002342435620209--3fe474f1.133d60c8086.-6861</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Req_CalcularProvTrama600Local"/>
+                          <con2:param name="input_Parameters1">
+                            <con2:path>$body/con:Input_Parameters</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                  </con3:outboundTransform>
+                  <con3:responseTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-440002342435620209--3fe474f1.133d60c8086.-6860</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Res_Trama600"/>
+                          <con2:param name="tiempoI">
+                            <con2:path>$tiempo</con2:path>
+                          </con2:param>
+                          <con2:param name="wS_Result1">
+                            <con2:path>$body/*:WS_Result</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                    <con2:reply>
+                      <con2:id>_ActionId-440002342435620209--3fe474f1.133d60c8086.-685f</con2:id>
+                    </con2:reply>
+                  </con3:responseTransform>
+                </con3:route>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText>$body/con:Input_Parameters/METODO/text() = "601"
+or 
+$body/con:Input_Parameters/METODO/text() = "604"</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con3:route>
+                  <con2:id>_ActionId-964004872606951551-7a2ae4fc.134571caa37.-7ff8</con2:id>
+                  <con3:service ref="ITEL/Trama601/Proxies/calcularProvisionTrama601Local_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con3:operation>calcularProvisionTrama601</con3:operation>
+                  <con3:outboundTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-964004872606951551-7a2ae4fc.134571caa37.-7ff7</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Req_CalcularProvTrama601Local"/>
+                          <con2:param name="input_Parameters1">
+                            <con2:path>$body/con:Input_Parameters</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                  </con3:outboundTransform>
+                  <con3:responseTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-964004872606951551-7a2ae4fc.134571caa37.-7ff6</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Res_Trama601"/>
+                          <con2:param name="tiempoI">
+                            <con2:path>$tiempo</con2:path>
+                          </con2:param>
+                          <con2:param name="wS_Result1">
+                            <con2:path>$body/*:WS_Result</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                    <con2:reply>
+                      <con2:id>_ActionId-964004872606951551-7a2ae4fc.134571caa37.-7ff5</con2:id>
+                    </con2:reply>
+                  </con3:responseTransform>
+                </con3:route>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText>$body/con:Input_Parameters/METODO/text() = "100"
+or $body/con:Input_Parameters/METODO/text() = "101"</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con3:route>
+                  <con2:id>_ActionId-964004872606951551-7a2ae4fc.134571caa37.-7fdf</con2:id>
+                  <con3:service ref="ITEL/Trama100/Proxies/calcularProvisionTrama100Local_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con3:operation>calcularProvisionTrama100</con3:operation>
+                  <con3:outboundTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-964004872606951551-7a2ae4fc.134571caa37.-7fde</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Req_CalcularProvTrama100Local"/>
+                          <con2:param name="input_Parameters1">
+                            <con2:path>$body/con:Input_Parameters</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                  </con3:outboundTransform>
+                  <con3:responseTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-964004872606951551-7a2ae4fc.134571caa37.-7fdd</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Res_Trama100"/>
+                          <con2:param name="tiempoI">
+                            <con2:path>$tiempo</con2:path>
+                          </con2:param>
+                          <con2:param name="wS_Result1">
+                            <con2:path>$body/*:WS_Result</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                    <con2:reply>
+                      <con2:id>_ActionId-964004872606951551-7a2ae4fc.134571caa37.-7fdc</con2:id>
+                    </con2:reply>
+                  </con3:responseTransform>
+                </con3:route>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText>$body/con:Input_Parameters/METODO/text() = "602"</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con3:route>
+                  <con2:id>_ActionId-964427640171779689-ec893eb.134854095cd.-7c4d</con2:id>
+                  <con3:service ref="ITEL/Trama602/Proxies/calcularProvisionTrama602Local_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con3:operation>calcularProvisionTrama602</con3:operation>
+                  <con3:outboundTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-964427640171779689-ec893eb.134854095cd.-7c4c</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Req_CalcularProvTrama602Local"/>
+                          <con2:param name="input_Parameters1">
+                            <con2:path>$body/con:Input_Parameters</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                  </con3:outboundTransform>
+                  <con3:responseTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-964427640171779689-ec893eb.134854095cd.-7c4b</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Res_Trama602"/>
+                          <con2:param name="tiempoI">
+                            <con2:path>$tiempo</con2:path>
+                          </con2:param>
+                          <con2:param name="wS_Result1">
+                            <con2:path>$body/*:WS_Result</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                    <con2:reply>
+                      <con2:id>_ActionId-964427640171779689-ec893eb.134854095cd.-7c4a</con2:id>
+                    </con2:reply>
+                  </con3:responseTransform>
+                </con3:route>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText>$body/con:Input_Parameters/METODO/text() = "603"</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con3:route>
+                  <con2:id>_ActionId-5618718265904858971-719f07d0.134d2146c7e.-7c8e</con2:id>
+                  <con3:service ref="ITEL/Trama603/Proxies/calcularProvisionTrama603Local_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con3:operation>calcularProvisionTrama603</con3:operation>
+                  <con3:outboundTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-5618718265904858971-719f07d0.134d2146c7e.-7c8d</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Req_CalcularProvTrama603Local"/>
+                          <con2:param name="input_Parameters1">
+                            <con2:path>$body/con:Input_Parameters</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                  </con3:outboundTransform>
+                  <con3:responseTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-5618718265904858971-719f07d0.134d2146c7e.-7c8c</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Res_Trama603"/>
+                          <con2:param name="tiempoI">
+                            <con2:path>$tiempo</con2:path>
+                          </con2:param>
+                          <con2:param name="wS_Result1">
+                            <con2:path>$body/*:WS_Result</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                    <con2:reply>
+                      <con2:id>_ActionId-5618718265904858971-719f07d0.134d2146c7e.-7c8b</con2:id>
+                    </con2:reply>
+                  </con3:responseTransform>
+                </con3:route>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText>$body/con:Input_Parameters/METODO/text() = "301"</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con3:route>
+                  <con2:id>_ActionId-7051547070538756707--c80fc17.1357752e02c.-7d1d</con2:id>
+                  <con3:service ref="ITEL/Trama301/Proxies/calcularProvisionTrama301Local_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con3:operation>calcularProvisionTrama301</con3:operation>
+                  <con3:outboundTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-7051547070538756707--c80fc17.1357752e02c.-7d1c</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Req_CalcularProvTrama301Local"/>
+                          <con2:param name="input_Parameters1">
+                            <con2:path>$body/con:Input_Parameters</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                  </con3:outboundTransform>
+                  <con3:responseTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-7051547070538756707--c80fc17.1357752e02c.-7d1b</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Res_Trama301"/>
+                          <con2:param name="tiempoI">
+                            <con2:path>$tiempo</con2:path>
+                          </con2:param>
+                          <con2:param name="wS_Result1">
+                            <con2:path>$body/*:WS_Result</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                    <con2:reply>
+                      <con2:id>_ActionId-7051547070538756707--c80fc17.1357752e02c.-7d1a</con2:id>
+                    </con2:reply>
+                  </con3:responseTransform>
+                </con3:route>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText>$body/con:Input_Parameters/METODO/text() = "302"</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con3:route>
+                  <con2:id>_ActionId-8293588777535050436-6f3c5993.1358ce6525d.-769d</con2:id>
+                  <con3:service ref="ITEL/Trama302/Proxies/calcularProvisionTrama302Local_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con3:operation>calcularProvisionTrama302</con3:operation>
+                  <con3:outboundTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-8293588777535050436-6f3c5993.1358ce6525d.-769c</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Req_CalcularProvTrama302Local"/>
+                          <con2:param name="input_Parameters1">
+                            <con2:path>$body/con:Input_Parameters</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                  </con3:outboundTransform>
+                  <con3:responseTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-8293588777535050436-6f3c5993.1358ce6525d.-769b</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Res_Trama302"/>
+                          <con2:param name="tiempoI">
+                            <con2:path>$tiempo</con2:path>
+                          </con2:param>
+                          <con2:param name="wS_Result1">
+                            <con2:path>$body/*:WS_Result</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                    <con2:reply>
+                      <con2:id>_ActionId-8293588777535050436-6f3c5993.1358ce6525d.-769a</con2:id>
+                    </con2:reply>
+                  </con3:responseTransform>
+                </con3:route>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText>$body/con:Input_Parameters/METODO/text() = "303"</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con3:route>
+                  <con2:id>_ActionId-1907298126438667581-74f6db6a.13650f18a40.-7fdb</con2:id>
+                  <con3:service ref="ITEL/Trama303/Proxies/calcularProvisionTrama303Local_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con3:operation>calcularProvisionTrama303</con3:operation>
+                  <con3:outboundTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-1907298126438667581-74f6db6a.13650f18a40.-7fda</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Req_CalcularProvTrama303Local"/>
+                          <con2:param name="input_Parameters1">
+                            <con2:path>$body/con:Input_Parameters</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                  </con3:outboundTransform>
+                  <con3:responseTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-1907298126438667581-74f6db6a.13650f18a40.-7fd9</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Res_Trama303"/>
+                          <con2:param name="tiempoI">
+                            <con2:path>$tiempo</con2:path>
+                          </con2:param>
+                          <con2:param name="wS_Result1">
+                            <con2:path>$body/*:WS_Result</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                    <con2:reply>
+                      <con2:id>_ActionId-1907298126438667581-74f6db6a.13650f18a40.-7fd8</con2:id>
+                    </con2:reply>
+                  </con3:responseTransform>
+                </con3:route>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText>$body/con:Input_Parameters/METODO/text() = "304"</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con3:route>
+                  <con2:id>_ActionId-1322561854153617247--49b2eba4.135b0287864.-7212</con2:id>
+                  <con3:service ref="ITEL/Trama304/Proxies/calcularProvisionTrama304Local_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con3:operation>calcularProvision</con3:operation>
+                  <con3:outboundTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-1322561854153617247--49b2eba4.135b0287864.-7211</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Req_CalcularProvTrama304Local"/>
+                          <con2:param name="input_Parameters1">
+                            <con2:path>$body/con:Input_Parameters</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                  </con3:outboundTransform>
+                  <con3:responseTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-1322561854153617247--49b2eba4.135b0287864.-7210</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Res_Trama304"/>
+                          <con2:param name="tiempoI">
+                            <con2:path>$tiempo</con2:path>
+                          </con2:param>
+                          <con2:param name="wS_Result1">
+                            <con2:path>$body/*:WS_Result</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                    <con2:reply>
+                      <con2:id>_ActionId-1322561854153617247--49b2eba4.135b0287864.-720f</con2:id>
+                    </con2:reply>
+                  </con3:responseTransform>
+                </con3:route>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText>$body/con:Input_Parameters/METODO/text() = "314"</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con3:route>
+                  <con2:id>_ActionId-115449510887105376--45f9c8e6.145be7ff1b4.-7cb0</con2:id>
+                  <con3:service ref="ITEL/Trama314/Proxies/calcularProvisionTrama314Local_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con3:operation>calcularProvision</con3:operation>
+                  <con3:outboundTransform>
+                    <con1:replace varName="body" contents-only="true">
+                      <con2:id>_ActionId-115449510887105376--45f9c8e6.145be7ff1b4.-7c76</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Req_CalcularProvTrama314Local"/>
+                          <con2:param name="input_Parameters1">
+                            <con2:path>$body/con:Input_Parameters</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                  </con3:outboundTransform>
+                  <con3:responseTransform>
+                    <con1:replace varName="body" contents-only="true">
+                      <con2:id>_ActionId-115449510887105376--45f9c8e6.145be7ff1b4.-7c3d</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Res_Trama314"/>
+                          <con2:param name="tiempoI">
+                            <con2:path>$tiempo</con2:path>
+                          </con2:param>
+                          <con2:param name="wS_Result1">
+                            <con2:path>$body/*:WS_Result</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                    <con2:reply>
+                      <con2:id>_ActionId-115449510887105376--45f9c8e6.145be7ff1b4.-7c20</con2:id>
+                    </con2:reply>
+                  </con3:responseTransform>
+                </con3:route>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText>$body/con:Input_Parameters/METODO/text() = "315"</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con3:route>
+                  <con2:id>_ActionId-707124088434942540-5a5bd0be.145ae2ac39f.-7b42</con2:id>
+                  <con3:service ref="ITEL/Trama315/Proxies/calcularProvisionTrama315Local_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con3:operation>calcularProvision</con3:operation>
+                  <con3:outboundTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-707124088434942540-5a5bd0be.145ae2ac39f.-7b2d</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Req_CalcularProvTrama315Local"/>
+                          <con2:param name="input_Parameters1">
+                            <con2:path>$body/con:Input_Parameters</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                  </con3:outboundTransform>
+                  <con3:responseTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-707124088434942540-5a5bd0be.145ae2ac39f.-7b1e</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Res_Trama315"/>
+                          <con2:param name="tiempoI">
+                            <con2:path>$tiempo</con2:path>
+                          </con2:param>
+                          <con2:param name="wS_Result1">
+                            <con2:path>$body/*:WS_Result</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                    <con2:reply>
+                      <con2:id>_ActionId-707124088434942540-5a5bd0be.145ae2ac39f.-7b04</con2:id>
+                    </con2:reply>
+                  </con3:responseTransform>
+                </con3:route>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText>$body/con:Input_Parameters/METODO/text() = "312"</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con3:route>
+                  <con2:id>_ActionId-8585969624932901464-7ba7c514.13fa51823a9.-789a</con2:id>
+                  <con3:service ref="ITEL/Trama312/Proxies/calcularProvisionTrama312Local_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con3:operation>calcularProvision</con3:operation>
+                  <con3:outboundTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-8585969624932901464-7ba7c514.13fa51823a9.-7846</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Req_CalcularProvTrama312Local"/>
+                          <con2:param name="input_Parameters1">
+                            <con2:path>$body/con:Input_Parameters</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                  </con3:outboundTransform>
+                  <con3:responseTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-8585969624932901464-7ba7c514.13fa51823a9.-77f2</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Res_Trama312"/>
+                          <con2:param name="tiempoI">
+                            <con2:path>$tiempo</con2:path>
+                          </con2:param>
+                          <con2:param name="wS_Result1">
+                            <con2:path>$body/*:WS_Result</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                    <con2:reply>
+                      <con2:id>_ActionId-8585969624932901464-7ba7c514.13fa51823a9.-77b9</con2:id>
+                    </con2:reply>
+                  </con3:responseTransform>
+                </con3:route>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText>$body/con:Input_Parameters/METODO/text() = "305"</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con3:route>
+                  <con2:id>_ActionId-3240996374908289818-134d2eb4.136bb68b4fc.-7f1d</con2:id>
+                  <con3:service ref="ITEL/Trama305/Proxies/calcularProvisionTrama305Local_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con3:operation>calcularProvisionTrama305</con3:operation>
+                  <con3:outboundTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-3240996374908289818-134d2eb4.136bb68b4fc.-7f1c</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Req_CalcularProvTrama305Local"/>
+                          <con2:param name="input_Parameters1">
+                            <con2:path>$body/con:Input_Parameters</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                  </con3:outboundTransform>
+                  <con3:responseTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-3240996374908289818-134d2eb4.136bb68b4fc.-7f1b</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Res_Trama305"/>
+                          <con2:param name="tiempoI">
+                            <con2:path>$tiempo</con2:path>
+                          </con2:param>
+                          <con2:param name="wS_Result1">
+                            <con2:path>$body/*:WS_Result</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                    <con2:reply>
+                      <con2:id>_ActionId-3240996374908289818-134d2eb4.136bb68b4fc.-7f1a</con2:id>
+                    </con2:reply>
+                  </con3:responseTransform>
+                </con3:route>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText>$body/con:Input_Parameters/METODO/text() = "306"</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con3:route>
+                  <con2:id>_ActionId-1322561854153617247--49b2eba4.135b0287864.-7fe5</con2:id>
+                  <con3:service ref="ITEL/Trama306/Proxies/calcularProvisionTrama306Local_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con3:operation>calcularProvisionTrama306</con3:operation>
+                  <con3:outboundTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-1322561854153617247--49b2eba4.135b0287864.-7fe4</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Req_CalcularProvTrama306Local"/>
+                          <con2:param name="input_Parameters1">
+                            <con2:path>$body/con:Input_Parameters</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                  </con3:outboundTransform>
+                  <con3:responseTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-1322561854153617247--49b2eba4.135b0287864.-7fe3</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Res_Trama306"/>
+                          <con2:param name="tiempoI">
+                            <con2:path>$tiempo</con2:path>
+                          </con2:param>
+                          <con2:param name="wS_Result1">
+                            <con2:path>$body/*:WS_Result</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                    <con2:reply>
+                      <con2:id>_ActionId-1322561854153617247--49b2eba4.135b0287864.-7fe2</con2:id>
+                    </con2:reply>
+                  </con3:responseTransform>
+                </con3:route>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText>$body/con:Input_Parameters/METODO/text() = "307"</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con3:route>
+                  <con2:id>_ActionId-3709213966522911369-231e8735.1367486c6dc.-78ab</con2:id>
+                  <con3:service ref="ITEL/Trama307/Proxies/calcularProvisionTrama307Local_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con3:operation>calcularProvisionTrama307</con3:operation>
+                  <con3:outboundTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-3709213966522911369-231e8735.1367486c6dc.-78aa</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Req_CalcularProvTrama307Local"/>
+                          <con2:param name="input_Parameters1">
+                            <con2:path>$body/con:Input_Parameters</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                  </con3:outboundTransform>
+                  <con3:responseTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-3709213966522911369-231e8735.1367486c6dc.-78a9</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Res_Trama307"/>
+                          <con2:param name="tiempoI">
+                            <con2:path>$tiempo</con2:path>
+                          </con2:param>
+                          <con2:param name="wS_Result1">
+                            <con2:path>$body/*:WS_Result</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                    <con2:reply>
+                      <con2:id>_ActionId-3709213966522911369-231e8735.1367486c6dc.-78a8</con2:id>
+                    </con2:reply>
+                  </con3:responseTransform>
+                </con3:route>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText>$body/con:Input_Parameters/METODO/text() = "308"</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con3:route>
+                  <con2:id>_ActionId-1322561854153617247--49b2eba4.135b0287864.-71c6</con2:id>
+                  <con3:service ref="ITEL/Trama308/Proxies/calcularProvisionTrama308Local_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con3:operation>calcularProvisionTrama308</con3:operation>
+                  <con3:outboundTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-1322561854153617247--49b2eba4.135b0287864.-71c5</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Req_CalcularProvTrama308Local"/>
+                          <con2:param name="input_Parameters1">
+                            <con2:path>$body/con:Input_Parameters</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                  </con3:outboundTransform>
+                  <con3:responseTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-1322561854153617247--49b2eba4.135b0287864.-71c4</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Res_Trama308"/>
+                          <con2:param name="tiempoI">
+                            <con2:path>$tiempo</con2:path>
+                          </con2:param>
+                          <con2:param name="wS_Result1">
+                            <con2:path>$body/*:WS_Result</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                    <con2:reply>
+                      <con2:id>_ActionId-1322561854153617247--49b2eba4.135b0287864.-71c3</con2:id>
+                    </con2:reply>
+                  </con3:responseTransform>
+                </con3:route>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText>$body/con:Input_Parameters/METODO/text() = "311"</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con3:route>
+                  <con2:id>_ActionId-8585969624932901464-7ba7c514.13fa51823a9.-7c65</con2:id>
+                  <con3:service ref="ITEL/Trama311/Proxies/calcularProvisionTrama311Local_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con3:operation>calcularProvisionTrama311</con3:operation>
+                  <con3:outboundTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-8585969624932901464-7ba7c514.13fa51823a9.-7c11</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Req_CalcularProvTrama311Local"/>
+                          <con2:param name="input_Parameters1">
+                            <con2:path>$body/con:Input_Parameters</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                  </con3:outboundTransform>
+                  <con3:responseTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-8585969624932901464-7ba7c514.13fa51823a9.-7bbd</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Res_Trama311"/>
+                          <con2:param name="tiempoI">
+                            <con2:path>$tiempo</con2:path>
+                          </con2:param>
+                          <con2:param name="wS_Result1">
+                            <con2:path>$body/*:WS_Result</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                    <con2:reply>
+                      <con2:id>_ActionId-8585969624932901464-7ba7c514.13fa51823a9.-7b84</con2:id>
+                    </con2:reply>
+                  </con3:responseTransform>
+                </con3:route>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText>$body/con:Input_Parameters/METODO/text() = "309"</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con3:route>
+                  <con2:id>_ActionId-1322561854153617247--49b2eba4.135b0287864.-7962</con2:id>
+                  <con3:service ref="ITEL/Trama309/Proxies/calcularProvisionTrama309Local_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con3:operation>calcularProvisionTrama309</con3:operation>
+                  <con3:outboundTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-1322561854153617247--49b2eba4.135b0287864.-7961</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Req_CalcularProvTrama309Local"/>
+                          <con2:param name="input_Parameters1">
+                            <con2:path>$body/con:Input_Parameters</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                  </con3:outboundTransform>
+                  <con3:responseTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-1322561854153617247--49b2eba4.135b0287864.-7960</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Res_Trama309"/>
+                          <con2:param name="tiempoI">
+                            <con2:path>$tiempo</con2:path>
+                          </con2:param>
+                          <con2:param name="wS_Result1">
+                            <con2:path>$body/*:WS_Result</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                    <con2:reply>
+                      <con2:id>_ActionId-1322561854153617247--49b2eba4.135b0287864.-795f</con2:id>
+                    </con2:reply>
+                  </con3:responseTransform>
+                </con3:route>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText>$body/con:Input_Parameters/METODO/text() = "310"</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con3:route>
+                  <con2:id>_ActionId-5823006968542368613-72ec1483.13f76d84837.-7acf</con2:id>
+                  <con3:service ref="ITEL/Trama310/Proxies/calcularProvisionTrama310Local_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con3:operation>calcularProvisionTrama310</con3:operation>
+                  <con3:outboundTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-5823006968542368613-72ec1483.13f76d84837.-79b7</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Req_CalcularProvTrama310Local"/>
+                          <con2:param name="input_Parameters1">
+                            <con2:path>$body/con:Input_Parameters</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                  </con3:outboundTransform>
+                  <con3:responseTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-5823006968542368613-72ec1483.13f76d84837.-790d</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Res_Trama310"/>
+                          <con2:param name="tiempoI">
+                            <con2:path>$tiempo</con2:path>
+                          </con2:param>
+                          <con2:param name="wS_Result1">
+                            <con2:path>$body/*:WS_Result</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                    <con2:reply>
+                      <con2:id>_ActionId-5823006968542368613-72ec1483.13f76d84837.-790f</con2:id>
+                    </con2:reply>
+                  </con3:responseTransform>
+                </con3:route>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText>$body/con:Input_Parameters/METODO/text() = "313"</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con3:route>
+                  <con2:id>_ActionId-2221623722735529487-1db40fc4.144e54cf8b1.-7873</con2:id>
+                  <con3:service ref="ITEL/Trama313/Proxies/calcularProvisionTrama313Local_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con3:operation>calcularProvision</con3:operation>
+                  <con3:outboundTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-2221623722735529487-1db40fc4.144e54cf8b1.-785f</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Req_CalcularProvTrama313Local"/>
+                          <con2:param name="input_Parameters1">
+                            <con2:path>$body/con:Input_Parameters</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                  </con3:outboundTransform>
+                  <con3:responseTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-2221623722735529487-1db40fc4.144e54cf8b1.-784a</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Res_Trama313"/>
+                          <con2:param name="tiempoI">
+                            <con2:path>$tiempo</con2:path>
+                          </con2:param>
+                          <con2:param name="wS_Result1">
+                            <con2:path>$body/*:WS_Result</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                    <con2:reply>
+                      <con2:id>_ActionId-2221623722735529487-1db40fc4.144e54cf8b1.-7834</con2:id>
+                    </con2:reply>
+                  </con3:responseTransform>
+                </con3:route>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText>$body/con:Input_Parameters/METODO/text() = "501"</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con3:route>
+                  <con2:id>_ActionId-1322561854153617247--49b2eba4.135b0287864.-794a</con2:id>
+                  <con3:service ref="ITEL/Trama501/Proxies/calcularProvisionTrama501Local_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con3:operation>calcularProvisionTrama501</con3:operation>
+                  <con3:outboundTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-1322561854153617247--49b2eba4.135b0287864.-7949</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Req_CalcularProvTrama501Local"/>
+                          <con2:param name="input_Parameters1">
+                            <con2:path>$body/con:Input_Parameters</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                  </con3:outboundTransform>
+                  <con3:responseTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-1322561854153617247--49b2eba4.135b0287864.-7948</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Res_Trama501"/>
+                          <con2:param name="tiempoI">
+                            <con2:path>$tiempo</con2:path>
+                          </con2:param>
+                          <con2:param name="wS_Result1">
+                            <con2:path>$body/*:WS_Result</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                    <con2:reply>
+                      <con2:id>_ActionId-1322561854153617247--49b2eba4.135b0287864.-7947</con2:id>
+                    </con2:reply>
+                  </con3:responseTransform>
+                </con3:route>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText>$body/con:Input_Parameters/METODO/text() = "502"</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con3:route>
+                  <con2:id>_ActionId-4132889789295945889--4dae96c2.145d822b89c.-7dc1</con2:id>
+                  <con3:service ref="ITEL/Trama502/Proxies/calcularProvisionTrama502Local_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con3:outboundTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-4132889789295945889--4dae96c2.145d822b89c.-7ce5</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Req_CalcularProvTrama502Local"/>
+                          <con2:param name="input_Parameters1">
+                            <con2:path>$body/con:Input_Parameters</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                  </con3:outboundTransform>
+                  <con3:responseTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-4132889789295945889--4dae96c2.145d822b89c.-7cad</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Res_Trama502"/>
+                          <con2:param name="tiempoI">
+                            <con2:path>$tiempo</con2:path>
+                          </con2:param>
+                          <con2:param name="wS_Result1">
+                            <con2:path>$body/*:WS_Result</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                    <con2:reply>
+                      <con2:id>_ActionId-4132889789295945889--4dae96c2.145d822b89c.-7c90</con2:id>
+                    </con2:reply>
+                  </con3:responseTransform>
+                </con3:route>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText>$body/con:Input_Parameters/METODO/text() = "503"</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con3:route>
+                  <con2:id>_ActionId-4121053732405088544-7ebba738.158cfb81d2a.-76c9</con2:id>
+                  <con3:service ref="ITEL/Trama503/Proxies/calcularProvisionTrama503Local_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con3:operation>calcularProvisionTrama503</con3:operation>
+                  <con3:outboundTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-4121053732405088544-7ebba738.158cfb81d2a.-76b4</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Req_CalcularProvTrama503Local"/>
+                          <con2:param name="input_Parameters1">
+                            <con2:path>$body/*:Input_Parameters</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                  </con3:outboundTransform>
+                  <con3:responseTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-4121053732405088544-7ebba738.158cfb81d2a.-764b</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Res_Trama503"/>
+                          <con2:param name="tiempoI">
+                            <con2:path>$tiempo</con2:path>
+                          </con2:param>
+                          <con2:param name="wS_Result1">
+                            <con2:path>$body/*:WS_Result</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                    <con2:reply>
+                      <con2:id>_ActionId-4121053732405088544-7ebba738.158cfb81d2a.-764d</con2:id>
+                    </con2:reply>
+                  </con3:responseTransform>
+                </con3:route>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText>$body/con:Input_Parameters/METODO/text() = "700"</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con3:route>
+                  <con2:id>_ActionId-5103641436641394287--981063f.1369dc53455.-7fec</con2:id>
+                  <con3:service ref="ITEL/Trama700/Proxies/calcularProvisionTrama700Local_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con3:operation>calcularProvisionTrama700</con3:operation>
+                  <con3:outboundTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-5103641436641394287--981063f.1369dc53455.-7feb</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Req_CalcularProvTrama700Local"/>
+                          <con2:param name="input_Parameters1">
+                            <con2:path>$body/con:Input_Parameters</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                  </con3:outboundTransform>
+                  <con3:responseTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-5103641436641394287--981063f.1369dc53455.-7fea</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Res_Trama700"/>
+                          <con2:param name="tiempoI">
+                            <con2:path>$tiempo</con2:path>
+                          </con2:param>
+                          <con2:param name="wS_Result1">
+                            <con2:path>$body/*:WS_Result</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                    <con2:reply>
+                      <con2:id>_ActionId-5103641436641394287--981063f.1369dc53455.-7fe9</con2:id>
+                    </con2:reply>
+                  </con3:responseTransform>
+                </con3:route>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText>$body/con:Input_Parameters/METODO/text() = "701"</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con3:route>
+                  <con2:id>_ActionId-3240996374908289818-134d2eb4.136bb68b4fc.-7f38</con2:id>
+                  <con3:service ref="ITEL/Trama701/Proxies/calcularProvisionTrama701Local_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con3:operation>calcularProvisionTrama701</con3:operation>
+                  <con3:outboundTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-3240996374908289818-134d2eb4.136bb68b4fc.-7f37</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Req_CalcularProvTrama701Local"/>
+                          <con2:param name="input_Parameters1">
+                            <con2:path>$body/con:Input_Parameters</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                  </con3:outboundTransform>
+                  <con3:responseTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-3240996374908289818-134d2eb4.136bb68b4fc.-7f36</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Res_Trama701"/>
+                          <con2:param name="tiempoI">
+                            <con2:path>$tiempo</con2:path>
+                          </con2:param>
+                          <con2:param name="wS_Result1">
+                            <con2:path>$body/*:WS_Result</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                    <con2:reply>
+                      <con2:id>_ActionId-3240996374908289818-134d2eb4.136bb68b4fc.-7f35</con2:id>
+                    </con2:reply>
+                  </con3:responseTransform>
+                </con3:route>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText>$body/con:Input_Parameters/METODO/text() = "702"</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con3:route>
+                  <con2:id>_ActionId-3240996374908289818-134d2eb4.136bb68b4fc.-7ef0</con2:id>
+                  <con3:service ref="ITEL/Trama702/Proxies/calcularProvisionTrama702Local_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con3:operation>calcularProvisionTrama702</con3:operation>
+                  <con3:outboundTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-3240996374908289818-134d2eb4.136bb68b4fc.-7eef</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Req_CalcularProvTrama702Local"/>
+                          <con2:param name="input_Parameters1">
+                            <con2:path>$body/con:Input_Parameters</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                  </con3:outboundTransform>
+                  <con3:responseTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-3240996374908289818-134d2eb4.136bb68b4fc.-7eee</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Res_Trama702"/>
+                          <con2:param name="tiempoI">
+                            <con2:path>$tiempo</con2:path>
+                          </con2:param>
+                          <con2:param name="wS_Result1">
+                            <con2:path>$body/*:WS_Result</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                    <con2:reply>
+                      <con2:id>_ActionId-3240996374908289818-134d2eb4.136bb68b4fc.-7eed</con2:id>
+                    </con2:reply>
+                  </con3:responseTransform>
+                </con3:route>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText>$body/con:Input_Parameters/METODO/text() = "703"</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con3:route>
+                  <con2:id>_ActionId-3240996374908289818-134d2eb4.136bb68b4fc.-7730</con2:id>
+                  <con3:service ref="ITEL/Trama703/Proxies/calcularProvisionTrama703Local_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con3:operation>calcularProvisionTrama703</con3:operation>
+                  <con3:outboundTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-3240996374908289818-134d2eb4.136bb68b4fc.-772f</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Req_CalcularProvTrama703Local"/>
+                          <con2:param name="input_Parameters1">
+                            <con2:path>$body/con:Input_Parameters</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                  </con3:outboundTransform>
+                  <con3:responseTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-3240996374908289818-134d2eb4.136bb68b4fc.-772e</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Res_Trama703"/>
+                          <con2:param name="tiempoI">
+                            <con2:path>$tiempo</con2:path>
+                          </con2:param>
+                          <con2:param name="wS_Result1">
+                            <con2:path>$body/*:WS_Result</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                    <con2:reply>
+                      <con2:id>_ActionId-3240996374908289818-134d2eb4.136bb68b4fc.-772d</con2:id>
+                    </con2:reply>
+                  </con3:responseTransform>
+                </con3:route>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText>$body/con:Input_Parameters/METODO/text() = "704"</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con3:route>
+                  <con2:id>_ActionId-3240996374908289818-134d2eb4.136bb68b4fc.-782a</con2:id>
+                  <con3:service ref="ITEL/Trama704/Proxies/calcularProvisionTrama704Local_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con3:operation>calcularProvisionTrama704</con3:operation>
+                  <con3:outboundTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-3240996374908289818-134d2eb4.136bb68b4fc.-7829</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Req_CalcularProvTrama704Local"/>
+                          <con2:param name="input_Parameters1">
+                            <con2:path>$body/con:Input_Parameters</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                  </con3:outboundTransform>
+                  <con3:responseTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-3240996374908289818-134d2eb4.136bb68b4fc.-7828</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Res_Trama704"/>
+                          <con2:param name="tiempoI">
+                            <con2:path>$tiempo</con2:path>
+                          </con2:param>
+                          <con2:param name="wS_Result1">
+                            <con2:path>$body/*:WS_Result</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                    <con2:reply>
+                      <con2:id>_ActionId-3240996374908289818-134d2eb4.136bb68b4fc.-7827</con2:id>
+                    </con2:reply>
+                  </con3:responseTransform>
+                </con3:route>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText>$body/con:Input_Parameters/METODO/text() = "705"</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con3:route>
+                  <con2:id>_ActionId-3240996374908289818-134d2eb4.136bb68b4fc.-764b</con2:id>
+                  <con3:service ref="ITEL/Trama705/Proxies/calcularProvisionTrama705Local_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con3:operation>calcularProvisionTrama705</con3:operation>
+                  <con3:outboundTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-3240996374908289818-134d2eb4.136bb68b4fc.-764a</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Req_CalcularProvTrama705Local"/>
+                          <con2:param name="input_Parameters1">
+                            <con2:path>$body/con:Input_Parameters</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                  </con3:outboundTransform>
+                  <con3:responseTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-3240996374908289818-134d2eb4.136bb68b4fc.-7649</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Res_Trama705"/>
+                          <con2:param name="tiempoI">
+                            <con2:path>$tiempo</con2:path>
+                          </con2:param>
+                          <con2:param name="wS_Result1">
+                            <con2:path>$body/*:WS_Result</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                    <con2:reply>
+                      <con2:id>_ActionId-3240996374908289818-134d2eb4.136bb68b4fc.-7648</con2:id>
+                    </con2:reply>
+                  </con3:responseTransform>
+                </con3:route>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText>$body/con:Input_Parameters/METODO/text() = "409"</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con3:route>
+                  <con2:id>_ActionId-3738246199404536167--3fed7bd5.13f7be9077c.-5d55</con2:id>
+                  <con3:service ref="ITEL/Trama409/Proxies/calcularProvisionTrama409Local_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con3:operation>calcularProvisionTrama409</con3:operation>
+                  <con3:outboundTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-3738246199404536167--3fed7bd5.13f7be9077c.-5d54</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Req_CalcularProvTrama409Local"/>
+                          <con2:param name="input_Parameters1">
+                            <con2:path>$body/con:Input_Parameters</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                  </con3:outboundTransform>
+                  <con3:responseTransform>
+                    <con1:replace contents-only="true" varName="body">
+                      <con2:id>_ActionId-3738246199404536167--3fed7bd5.13f7be9077c.-5d53</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarReglasProvision_Res_Trama409"/>
+                          <con2:param name="tiempoI">
+                            <con2:path>$tiempo</con2:path>
+                          </con2:param>
+                          <con2:param name="wS_Result1">
+                            <con2:path>$body/*:WS_Result</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                    <con2:reply>
+                      <con2:id>_ActionId-3738246199404536167--3fed7bd5.13f7be9077c.-5d52</con2:id>
+                    </con2:reply>
+                  </con3:responseTransform>
+                </con3:route>
+              </con1:actions>
+            </con1:case>
+            <con1:default/>
+          </con1:ifThenElse>
+        </con:actions>
+      </con:route-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.claro.com.co/dynamicRouter"
+	xmlns:tns="http://www.claro.com.co/dynamicRouter">
+	
+	<element name="Input_Parameters" type="tns:Input_Parameters" />
+	<element name="WS_Result" type="tns:WS_Result" />
+
+	<complexType name="Input_Parameters">
+		<sequence>
+			<element name="service" type="string" />
+			<element name="parameters" type="string" />
+		</sequence>
+	</complexType>
+
+	<complexType name="WS_Result">
+		<sequence>
+			<element name="code" type="string" />
+			<element name="message" type="string" />
+			<element name="description" type="string" />
+		</sequence>
+	</complexType>
+
+</schema>

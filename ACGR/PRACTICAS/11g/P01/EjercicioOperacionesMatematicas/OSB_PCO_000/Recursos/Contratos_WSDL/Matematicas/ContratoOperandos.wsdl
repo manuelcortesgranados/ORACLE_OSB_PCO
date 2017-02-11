@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:mat="http://www.contratoMatematicas.org/ContratoOperandos/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ContratoOperandos" targetNamespace="http://www.contratoMatematicas.org/ContratoOperandos/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd1="http://www.firmaMatematicas.org/FirmaOperandos">
+    <wsdl:types>
+    	<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    		<xsd:import
+    			namespace="http://www.firmaMatematicas.org/FirmaOperandos"
+    			schemaLocation="../../Firmas_XSD/Matematicas/FirmaOperandos.xsd">
+    		</xsd:import></xsd:schema></wsdl:types>
+    <wsdl:message name="OperacionSumaResponse">
+        <wsdl:part name="parameters"
+        	element="xsd1:operacionSumaResponse">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="OperacionRestaRequest">
+        <wsdl:part name="parameters"
+        	element="xsd1:operacionRestaRequest">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="OperacionRestaResponse">
+        <wsdl:part name="parameters"
+        	element="xsd1:operacionRestaResponse">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="OperacionMultiplicacionRequest">
+        <wsdl:part name="parameters"
+        	element="xsd1:operacionMultiplicacionRequest">
+        </wsdl:part>
+        
+    </wsdl:message>
+    <wsdl:message name="OperacionMultiplicacionResponse">
+        <wsdl:part name="parameters"
+        	element="xsd1:operacionMultiplicacionResponse">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="OperacionDivisionRequest">
+        <wsdl:part name="parameters"
+        	element="xsd1:operacionDivisionRequest">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="OperacionDivisionResponse">
+        <wsdl:part name="parameters"
+        	element="xsd1:operacionDivisionResponse">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="NewMessage">
+    	<wsdl:part name="parameters"
+    		element="xsd1:operacionSumaRequest">
+    	</wsdl:part></wsdl:message>
+    <wsdl:portType name="tipoPuertoMatematicas">
+    	<wsdl:operation name="OperacionSuma">
+    		<wsdl:input message="mat:NewMessage"></wsdl:input>
+    		<wsdl:output message="mat:OperacionSumaResponse"></wsdl:output>
+    	</wsdl:operation>
+    	<wsdl:operation name="OperacionResta">
+    		<wsdl:input message="mat:OperacionRestaRequest"></wsdl:input>
+    		<wsdl:output message="mat:OperacionRestaResponse"></wsdl:output>
+    	</wsdl:operation>
+    	<wsdl:operation name="OperacionMultiplicacion">
+    		<wsdl:input message="mat:OperacionMultiplicacionRequest"></wsdl:input>
+    		<wsdl:output message="mat:OperacionMultiplicacionResponse"></wsdl:output>
+    	</wsdl:operation>
+    	<wsdl:operation name="OperacionDivision">
+    		<wsdl:input message="mat:OperacionDivisionRequest"></wsdl:input>
+    		<wsdl:output message="mat:OperacionDivisionResponse"></wsdl:output>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="bindingMatematicas"
+    	type="mat:tipoPuertoMatematicas">
+
+    	<soap:binding style="document"
+    		transport="http://schemas.xmlsoap.org/soap/http" />
+    	<wsdl:operation name="OperacionSuma">
+
+    		<soap:operation
+    			soapAction="http://www.contratoMatematicas.org/ContratoOperandos/OperacionSuma" />
+    		<wsdl:input>
+
+    			<soap:body use="literal" />
+    		</wsdl:input>
+    		<wsdl:output>
+
+    			<soap:body use="literal" />
+    		</wsdl:output>
+    	</wsdl:operation>
+    	<wsdl:operation name="OperacionResta">
+
+    		<soap:operation
+    			soapAction="http://www.contratoMatematicas.org/ContratoOperandos/OperacionResta" />
+    		<wsdl:input>
+
+    			<soap:body use="literal" />
+    		</wsdl:input>
+    		<wsdl:output>
+
+    			<soap:body use="literal" />
+    		</wsdl:output>
+    	</wsdl:operation>
+    	<wsdl:operation name="OperacionMultiplicacion">
+
+    		<soap:operation
+    			soapAction="http://www.contratoMatematicas.org/ContratoOperandos/OperacionMultiplicacion" />
+    		<wsdl:input>
+
+    			<soap:body use="literal" />
+    		</wsdl:input>
+    		<wsdl:output>
+
+    			<soap:body use="literal" />
+    		</wsdl:output>
+    	</wsdl:operation>
+    	<wsdl:operation name="OperacionDivision">
+
+    		<soap:operation
+    			soapAction="http://www.contratoMatematicas.org/ContratoOperandos/OperacionDivision" />
+    		<wsdl:input>
+
+    			<soap:body use="literal" />
+    		</wsdl:input>
+    		<wsdl:output>
+
+    			<soap:body use="literal" />
+    		</wsdl:output>
+    	</wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="servicioWebMatematicas">
+		<wsdl:port name="puertoMatematicas" binding="mat:bindingMatematicas">
+			<soap:address location="http://www.servicioMatematicas.org/" />
+		</wsdl:port>
+	</wsdl:service>
+	</wsdl:definitions>

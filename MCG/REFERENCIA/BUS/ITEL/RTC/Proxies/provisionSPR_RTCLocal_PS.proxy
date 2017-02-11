@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con2="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+  <ser:coreEntry isProxy="true" isEnabled="true" isAutoPublish="false" isTracingEnabled="false">
+    <ser:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config">
+      <con:wsdl ref="ITEL/RTC/Resources/WSDLs/provisionSPR_RTC_PS"/>
+      <con:port>
+        <con:name>ProvisionSPR_RTCSOAP</con:name>
+        <con:namespace>http://www.comcel.com.co/ITEL/provisionSPR_RTC/</con:namespace>
+      </con:port>
+      <con:selector type="SOAP body"/>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+    <ser:ws-policy>
+      <ser:binding-mode>wsdl-policy-attachments</ser:binding-mode>
+    </ser:ws-policy>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>local</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:inbound-properties/>
+    <tran:all-headers>true</tran:all-headers>
+  </ser:endpointConfig>
+  <ser:router>
+    <con:pipeline type="request" name="PipelinePairNode1_request">
+      <con:stage name="validacion" errorHandler="_onErrorHandler-3976274206821643667--72c6792a.143fd98ceca.-7f0d">
+        <con:context xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+          <con1:varNsDecl namespace="http://www.comcel.com.co/ITEL/addSubscriptionToSubscriber/" prefix="add"/>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/ITEL/provisionPaqueteDatosRTC/" prefix="prov"/>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/ITEL/provisionSPR_RTC/" prefix="prov1"/>
+        </con:context>
+        <con:actions xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+          <con2:assign varName="namespace">
+            <con1:id>_ActionId-3976274206821643667--72c6792a.143fd98ceca.-7f80</con1:id>
+            <con2:expr>
+              <con1:xqueryText>fn:namespace-uri($body/*:Input_Parameters)</con1:xqueryText>
+            </con2:expr>
+          </con2:assign>
+          <con2:validate>
+            <con1:id>_ActionId-3976274206821643667--72c6792a.143fd98ceca.-7f7f</con1:id>
+            <con2:schema ref="ITEL/RTC/Resources/Schemas/PS_PROVISION_SPR_RTC"/>
+            <con2:schemaElement xmlns:ins="http://www.comcel.com.co/ITEL/insertarRegistroAuditoria/" xmlns:ins1="http://www.comcel.com.co/ITEL/insertarRegistroRepositorio/" xmlns:con4="http://www.comcel.com.co/ITEL/consultarResgistrosCICLOP9/" xmlns:con5="http://www.comcel.com.co/ITEL/consultarAuditoriaCICLOP9/" xmlns:get="http://www.comcel.com.co/ITEL/getActiveSubscriberProductsByMSISDN/" xmlns:add="http://www.comcel.com.co/ITEL/addSubscriptionToSubscriber/" xmlns:prov="http://www.comcel.com.co/ITEL/provisionPaqueteDatosRTC/" xmlns:prov1="http://www.comcel.com.co/ITEL/provisionSPR_RTC/">prov1:Input_Parameters</con2:schemaElement>
+            <con2:varName>body</con2:varName>
+            <con2:location>
+              <con1:xpathText>./prov1:Input_Parameters</con1:xpathText>
+            </con2:location>
+          </con2:validate>
+        </con:actions>
+      </con:stage>
+      <con:stage name="Provision" errorHandler="_onErrorHandler-3976274206821643667--72c6792a.143fd98ceca.-7d50">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/ITEL/provisionSPR_RTC/" prefix="prov"/>
+        </con:context>
+        <con:actions>
+          <con3:assign varName="inputParameters">
+            <con1:id>_ActionId-3630520219124671809-5f19c7e8.146d49c373a.-6c4d</con1:id>
+            <con3:expr>
+              <con1:xqueryText>$body/prov:Input_Parameters</con1:xqueryText>
+            </con3:expr>
+          </con3:assign>
+          <con3:wsCallout>
+            <con1:id>_ActionId-3976274206821643667--72c6792a.143fd98ceca.-7d55</con1:id>
+            <con3:service xsi:type="ref:BusinessServiceRef" ref="ITEL/RTC/Business Services/provisionSPR_RTC_BS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con3:operation>submitSubscriberRequest</con3:operation>
+            <con3:request>
+              <con3:param>
+                <con3:name>xmlSubscriberRequest</con3:name>
+                <con3:variable>$xmlSubscriberRequest</con3:variable>
+              </con3:param>
+            </con3:request>
+            <con3:response>
+              <con3:param>
+                <con3:name>xmlResponse</con3:name>
+                <con3:variable>xmlResponse</con3:variable>
+              </con3:param>
+            </con3:response>
+            <con3:requestTransform>
+              <con3:assign varName="xmlSubscriberRequest">
+                <con1:id>_ActionId-3976274206821643667--72c6792a.143fd98ceca.-7cf2</con1:id>
+                <con3:expr>
+                  <con1:xqueryTransform>
+                    <con1:resource ref="ITEL/RTC/Resources/XQueries/provisionSPR_RTC_Req"/>
+                    <con1:param name="input_Parameters1">
+                      <con1:path>$inputParameters</con1:path>
+                    </con1:param>
+                    <con1:param name="operacion">
+                      <con1:path>data($inputParameters/xmlSubscriberRequest/operacion)</con1:path>
+                    </con1:param>
+                  </con1:xqueryTransform>
+                </con3:expr>
+              </con3:assign>
+            </con3:requestTransform>
+            <con3:responseTransform>
+              <con3:replace varName="body" contents-only="true">
+                <con1:id>_ActionId-3976274206821643667--72c6792a.143fd98ceca.-7d12</con1:id>
+                <con3:expr>
+                  <con1:xqueryTransform>
+                    <con1:resource ref="ITEL/RTC/Resources/XQueries/provisionSPR_RTC_Res"/>
+                    <con1:param name="anyType1">
+                      <con1:path>$xmlResponse</con1:path>
+                    </con1:param>
+                  </con1:xqueryTransform>
+                </con3:expr>
+              </con3:replace>
+            </con3:responseTransform>
+          </con3:wsCallout>
+          <con3:ifThenElse>
+            <con1:id>_ActionId-3630520219124671809-5f19c7e8.146d49c373a.-6e4d</con1:id>
+            <con3:case>
+              <con3:condition>
+                <con1:xqueryText>substring-before(substring-after(data($xmlResponse), '&lt;errorCode>'), '&lt;/errorCode>') = '009'</con1:xqueryText>
+              </con3:condition>
+              <con3:actions>
+                <con3:wsCallout>
+                  <con1:id>_ActionId-3630520219124671809-5f19c7e8.146d49c373a.-6d9c</con1:id>
+                  <con3:service xsi:type="ref:BusinessServiceRef" ref="ITEL/RTC/Business Services/provisionSPR_RTC_BS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con3:operation>submitSubscriberRequest</con3:operation>
+                  <con3:request>
+                    <con3:param>
+                      <con3:name>xmlSubscriberRequest</con3:name>
+                      <con3:variable>$xmlSubscriberRequest</con3:variable>
+                    </con3:param>
+                  </con3:request>
+                  <con3:response>
+                    <con3:param>
+                      <con3:name>xmlResponse</con3:name>
+                      <con3:variable>xmlResponse</con3:variable>
+                    </con3:param>
+                  </con3:response>
+                  <con3:requestTransform>
+                    <con3:assign varName="xmlSubscriberRequest">
+                      <con1:id>_ActionId-3630520219124671809-5f19c7e8.146d49c373a.-6d9e</con1:id>
+                      <con3:expr>
+                        <con1:xqueryTransform>
+                          <con1:resource ref="ITEL/RTC/Resources/XQueries/provisionSPR_RTC_Req"/>
+                          <con1:param name="input_Parameters1">
+                            <con1:path>$inputParameters</con1:path>
+                          </con1:param>
+                          <con1:param name="operacion">
+                            <con1:path>data('insert')</con1:path>
+                          </con1:param>
+                        </con1:xqueryTransform>
+                      </con3:expr>
+                    </con3:assign>
+                  </con3:requestTransform>
+                  <con3:responseTransform>
+                    <con3:replace varName="body" contents-only="true">
+                      <con1:id>_ActionId-3630520219124671809-5f19c7e8.146d49c373a.-6d9d</con1:id>
+                      <con3:expr>
+                        <con1:xqueryTransform>
+                          <con1:resource ref="ITEL/RTC/Resources/XQueries/provisionSPR_RTC_Res"/>
+                          <con1:param name="anyType1">
+                            <con1:path>$xmlResponse</con1:path>
+                          </con1:param>
+                        </con1:xqueryTransform>
+                      </con3:expr>
+                    </con3:replace>
+                  </con3:responseTransform>
+                </con3:wsCallout>
+              </con3:actions>
+            </con3:case>
+            <con3:default/>
+          </con3:ifThenElse>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="PipelinePairNode1_response"/>
+    <con:pipeline type="error" name="_onErrorHandler-3976274206821643667--72c6792a.143fd98ceca.-7f0d">
+      <con:stage name="error">
+        <con:context xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config"/>
+        <con:actions xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+          <con2:replace contents-only="true" varName="body">
+            <con1:id>_ActionId-3976274206821643667--72c6792a.143fd98ceca.-7ed4</con1:id>
+            <con2:expr>
+              <con1:xqueryTransform>
+                <con1:resource ref="ITEL/RTC/Resources/XQueries/provisionSPR_RTC_Error"/>
+                <con1:param name="descripcion">
+                  <con1:path>"Error etapa validacion"</con1:path>
+                </con1:param>
+                <con1:param name="mensaje">
+                  <con1:path>$fault/ctx:reason/text()</con1:path>
+                </con1:param>
+                <con1:param name="codigo">
+                  <con1:path>"42"</con1:path>
+                </con1:param>
+              </con1:xqueryTransform>
+            </con2:expr>
+          </con2:replace>
+          <con1:reply>
+            <con1:id>_ActionId-3976274206821643667--72c6792a.143fd98ceca.-7ed3</con1:id>
+          </con1:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="error" name="_onErrorHandler-3976274206821643667--72c6792a.143fd98ceca.-7d50">
+      <con:stage name="error">
+        <con:context xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config"/>
+        <con:actions xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+          <con2:replace contents-only="true" varName="body">
+            <con1:id>_ActionId-3630520219124671809-5f19c7e8.146d49c373a.-6e86</con1:id>
+            <con2:expr>
+              <con1:xqueryTransform>
+                <con1:resource ref="ITEL/RTC/Resources/XQueries/provisionSPR_RTC_Error"/>
+                <con1:param name="descripcion">
+                  <con1:path>"Error etapa provision"</con1:path>
+                </con1:param>
+                <con1:param name="mensaje">
+                  <con1:path>$fault/ctx:reason/text()</con1:path>
+                </con1:param>
+                <con1:param name="codigo">
+                  <con1:path>"42"</con1:path>
+                </con1:param>
+              </con1:xqueryTransform>
+            </con2:expr>
+          </con2:replace>
+          <con1:reply>
+            <con1:id>_ActionId-3630520219124671809-5f19c7e8.146d49c373a.-6e85</con1:id>
+          </con1:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:flow>
+      <con:pipeline-node name="PipelinePairNode1">
+        <con:request>PipelinePairNode1_request</con:request>
+        <con:response>PipelinePairNode1_response</con:response>
+      </con:pipeline-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

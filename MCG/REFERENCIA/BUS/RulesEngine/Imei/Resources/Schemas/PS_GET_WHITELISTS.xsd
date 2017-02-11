@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <schema xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.claro.com.co/rulesEngine/getWhiteLists" 
+	xmlns:tns="http://www.claro.com.co/rulesEngine/getWhiteLists"
+	xmlns:cd="http://www.claro.com.co/rulesEngine/canonicalModel/CustomerDomain"
+	xmlns:pd="http://www.claro.com.co/rulesEngine/canonicalModel/ProductDomain"
+	>
+	
+	<import namespace="http://www.claro.com.co/rulesEngine/canonicalModel/CustomerDomain"
+		schemaLocation="../../../Core/Resources/Schemas/CanonicalModel/CustomerDomain.xsd" />
+		<import namespace="http://www.claro.com.co/rulesEngine/canonicalModel/ProductDomain"
+		schemaLocation="../../../Core/Resources/Schemas/CanonicalModel/ProductDomain.xsd" />
+				
+	<element name="Input_Parameters" type="tns:Input_Parameters" />
+	<element name="WS_Result" type="tns:WS_Result" />
+    
+    <annotation>
+		<documentation>
+			<![CDATA[
+			typeId -> CustomerDocumentType, customerDocumentTypeCode 
+			numberId -> CustomerDocumentType, description
+			Imei -> Product, productCode.
+			equipmentBrought -> Product, description 
+			]]>
+		</documentation>
+	</annotation>
+	<complexType name="Input_Parameters">
+		<sequence>
+			<element name="customerDocument" type="cd:CustomerDocument"/>
+			<element name="customerOrder" type="cd:CustomerOrder"/>
+		</sequence>
+	</complexType>
+	
+	<complexType name="WS_Result">
+		<sequence>
+			<element name="code" type="string" />
+			<element name="message" type="tns:responseType" />
+			<element name="description" type="string" />
+		</sequence>
+	</complexType>
+	
+	<complexType name="responseType">
+		<sequence>
+			<element name="platformStatus" type="pd:PlatformStatus"/>
+		</sequence>
+	</complexType>
+	
+	<!-- 
+	<simpleType name="typeId">
+		<annotation>
+			<documentation>
+				1: Cedula ciudadanía 2: Pasaporte 3: Número de identificación
+				Tributaria NIT 4:Cedula de extranjería CE
+			</documentation>
+		</annotation>
+		<restriction base="string">
+			<length value="1" />
+			<pattern value="1|2|3|4" />
+		</restriction>
+	</simpleType>
+	<simpleType name="typeNumberId">
+		<restriction base="string">
+			<minLength value="1" />
+			<maxLength value="20" />
+		</restriction>
+	</simpleType>
+	<simpleType name="typeIMEI">
+		<annotation>
+			<documentation>
+				Formato: XXXXXXYYZZZZZZW donde XXXXXX: se denomina Type Allocation Code
+				(TAC) YY: se denomina Final Assembly Code (FAC) e indica el
+				fabricante del equipo. ZZZZZZ: es el número de serie del teléfono.
+				W: es el dígito verificador, usado para verificar que el IMEI es
+				correcto.
+			</documentation>
+		</annotation>
+		<restriction base="string">
+			<minLength value="14" />
+			<maxLength value="15" />
+			<pattern value="[0-9]*" />
+		</restriction>
+	</simpleType>
+	<simpleType name="typeEquipmentBrought">
+		<restriction base="string">
+			<minLength value="1" />
+			<maxLength value="1" />
+			<pattern value="S|N" />
+		</restriction>
+	</simpleType>  -->
+	
+</schema>

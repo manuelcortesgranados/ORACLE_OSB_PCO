@@ -1,0 +1,42 @@
+<xs:schema targetNamespace="http://www.comcel.com.co/CambiarPlanIN/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.comcel.com.co/CambiarPlanIN/" xmlns:oper="http://www.comcel.com.co/IN/OperacionCorba">
+	
+	<xs:import namespace="http://www.comcel.com.co/IN/OperacionCorba" schemaLocation="DA_ITEL_OPERACION_CORBA.xsd"/>
+	
+	<xs:element name="Input_Parameters" type="tns:Input_Parameters"/>
+	<xs:element name="WS_Result" type="tns:WS_Result"/>
+
+	<xs:complexType name="Input_Parameters">
+		<xs:sequence>
+			<xs:element name="PREFIX" type="xs:string"/>
+			<xs:element name="MIN" type="xs:string"/>
+			<xs:element name="PLAN" type="xs:string"/>
+			<xs:element name="PLAN_ORIGINAL" type="xs:string"/>
+			<xs:element name="CARGA" type="tns:Carga" minOccurs="0"/>
+			<xs:element name="IN" type="xs:string"/>
+			<xs:element name="TIMEOUT" type="xs:long"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="Carga">
+		<xs:sequence>
+			<xs:element name="POLITICA_EXPIRACION" type="xs:long"/>
+			<xs:element name="DIAS_EXTENSION" type="xs:long"/>
+			<xs:element name="FECHA_ABSOLUTA" type="xs:string"/>
+			<xs:element name="CUENTA" type="xs:long"/>
+			<xs:element name="VALOR" type="xs:long"/>
+			<xs:element name="USUARIO" type="xs:string"/>
+			<xs:element name="TIQUETE" type="xs:string"/>
+			<xs:element name="TIQUETE_COMPENSACION" type="xs:string"/>
+			<xs:element name="REQUESTOR_ID" type="xs:long"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="WS_Result">
+		<xs:sequence>
+			<xs:element name="CODIGO" type="xs:string"/>
+			<xs:element name="MENSAJE" type="xs:string"/>
+			<xs:element name="DESCRIPCION" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+
+</xs:schema>

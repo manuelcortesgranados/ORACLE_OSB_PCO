@@ -1,0 +1,20 @@
+<definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/ITEL/Adaptadores/bd_actualizarConsultasRealizadas" name="bd_actualizarConsultasRealizadas-concrete" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/ITEL/Adaptadores/bd_actualizarConsultasRealizadas" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+	<import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/ITEL/Adaptadores/bd_actualizarConsultasRealizadas" location="../Resources/WSDLs/actualizarConsultasRealizadas_BD.wsdl"/>
+	<binding name="bd_actualizarConsultasRealizadas_ptt-binding" type="tns:bd_actualizarConsultasRealizadas_ptt">
+		<soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+		<operation name="bd_actualizarConsultasRealizadas">
+			<soap:operation soapAction="bd_actualizarConsultasRealizadas"/>
+			<input>
+				<soap:body use="literal"/>
+			</input>
+			<output>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+	</binding>
+	<service name="bd_actualizarConsultasRealizadas-service">
+		<port name="bd_actualizarConsultasRealizadas-port" binding="tns:bd_actualizarConsultasRealizadas_ptt-binding">
+			<soap:address location="jca://eis/DB/ITEL_SOA"/>
+		</port>
+	</service>
+</definitions>

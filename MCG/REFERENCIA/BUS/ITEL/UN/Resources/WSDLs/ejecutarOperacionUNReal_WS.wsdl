@@ -1,0 +1,76 @@
+<wsdl:definitions name="ejecutarOperacionUNReal_WS" targetNamespace="http://www.example.org/ejecutarOperacionUNReal_WS/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.example.org/ejecutarOperacionUNReal_WS/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsd1="http://nsn.com/ossbss/charge.once/wsdl/entity/Tis/xsd/1">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://www.example.org/ejecutarOperacionUNReal_WS/">
+      <xsd:element name="NewOperation">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="in" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="NewOperationResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="out" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="ExecuteCommandFault">
+      	<xsd:complexType>
+      		<xsd:sequence>
+
+      			<xsd:element name="ExecuteCommandFault" type="xsd:string">
+      			</xsd:element>
+      		</xsd:sequence>
+      	</xsd:complexType>
+      </xsd:element>
+      <xsd:element name="ExecuteCommandFault1">
+      	<xsd:complexType>
+      		<xsd:sequence>
+
+      			<xsd:element name="ExecuteCommandFault1" type="xsd:string">
+      			</xsd:element>
+      		</xsd:sequence>
+      	</xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+    <xsd:schema>
+    	<xsd:import namespace="http://nsn.com/ossbss/charge.once/wsdl/entity/Tis/xsd/1" schemaLocation="../Schemas/PS_ITEL_OPERACION_UNIFIED_BASETYPES.xsd">
+    	</xsd:import></xsd:schema></wsdl:types>
+  <wsdl:message name="ExecuteCommandRequest">
+    <wsdl:part element="xsd1:CommandRequestData" name="request"/>
+  </wsdl:message>
+  <wsdl:message name="ExecuteCommandResponse">
+    <wsdl:part element="xsd1:CommandResponseData" name="response"/>
+  </wsdl:message>
+  <wsdl:message name="ExecuteCommandFault">
+  	<wsdl:part name="fault" element="xsd1:FaultMessage"/>
+  </wsdl:message>
+  <wsdl:message name="ExecuteCommandFault1">
+
+  </wsdl:message>
+  <wsdl:portType name="ejecutarOperacionUNReal_WS">
+    <wsdl:operation name="ExecuteCommand">
+      <wsdl:input message="tns:ExecuteCommandRequest"/>
+      <wsdl:output message="tns:ExecuteCommandResponse"/>
+            <wsdl:fault name="fault" message="tns:ExecuteCommandFault"/>
+        </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ejecutarOperacionUNReal_WSSOAP" type="tns:ejecutarOperacionUNReal_WS">
+  	<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+  	<wsdl:operation name="ExecuteCommand">
+  		<soap:operation soapAction="http://www.example.org/ejecutarOperacionUNReal_WS/ExecuteCommand"/>
+  		<wsdl:input>
+  			<soap:body use="literal"/>
+  		</wsdl:input>
+  		<wsdl:output>
+  			<soap:body use="literal"/>
+  		</wsdl:output>
+  	</wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ejecutarOperacionUNReal_WS">
+    <wsdl:port binding="tns:ejecutarOperacionUNReal_WSSOAP" name="ejecutarOperacionUNReal_WSSOAP">
+      <soap:address location="http://192.168.136.225:9880/services/TisService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

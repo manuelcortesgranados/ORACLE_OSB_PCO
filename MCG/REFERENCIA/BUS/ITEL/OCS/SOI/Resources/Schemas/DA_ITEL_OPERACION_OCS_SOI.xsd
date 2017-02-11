@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" 
+targetNamespace="http://www.comcel.com.co/OCS/OperacionCorbaOCS"
+xmlns:tns="http://www.comcel.com.co/OCS/OperacionCorbaOCS"
+elementFormDefault="qualified">
+
+	 <element name="EjecutarComandoRequest" type="tns:EjecutarComandoRequest"/>
+	 <element name="CrearSuscriptorRequest" type="tns:CrearSuscriptorRequest"/>
+	 <element name="ConsultarSuscriptorRequest" type="tns:ConsultarSuscriptorRequest"/>
+	 <element name="EliminarSuscriptorRequest" type="tns:EliminarSuscriptorRequest"/>
+	 <element name="BloquearSuscriptorRequest" type="tns:BloquearSuscriptorRequest"/>
+	 <element name="CambiarMinRequest" type="tns:CambiarMinRequest"/>
+	 <element name="CambiarPlanRequest" type="tns:CambiarPlanRequest"/>
+	 <element name="CompensarCrearSuscriptorRequest" type="tns:CompensarCrearSuscriptorRequest"/>
+	 <element name="CompensarCambiarMinRequest" type="tns:CompensarCambiarMinRequest"/>
+	 <element name="CompensarCambiarPlanRequest" type="tns:CompensarCambiarPlanRequest"/>
+	 
+	 <element name="EjecutarComandoResponse" type="tns:EjecutarComandoResponse"/>
+	 <element name="CrearSuscriptorResponse" type="tns:CrearSuscriptorResponse"/>
+	 <element name="ConsultarSuscriptorResponse" type="tns:ConsultarSuscriptorResponse"/>
+	 <element name="EliminarSuscriptorResponse" type="tns:EliminarSuscriptorResponse"/>
+	 <element name="BloquearSuscriptorResponse" type="tns:BloquearSuscriptorResponse"/>
+	 <element name="CambiarMinResponse" type="tns:CambiarMinResponse"/>
+	 <element name="CambiarPlanResponse" type="tns:CambiarPlanResponse"/>
+	 <element name="CompensacionResponse" type="tns:CompensacionResponse"/>
+	 
+	 <complexType name="EjecutarComandoRequest">
+	     <sequence>
+	         <element name="comando" type="string"/>
+	         <element name="datos" type="tns:DataArray"/>
+	     </sequence>
+	     <attribute name="in" type="string"/>
+	 </complexType>
+	 
+	 <complexType name="CrearSuscriptorRequest">
+	     <sequence>
+	         <element name="suscriptor" type="tns:SubscriberCreate"/>
+	     </sequence>
+	     <attribute name="in" type="string"/>
+	     <attribute name="timeout" type="long"/>
+	 </complexType>
+	 
+	 <complexType name="ConsultarSuscriptorRequest">
+	     <!-- <attribute name="prefijo" type="string"/>-->
+	     <attribute name="min" type="string"/>
+	     <attribute name="in" type="string"/>
+	     <attribute name="timeout" type="long"/>
+	 </complexType>
+	 
+	 <complexType name="EliminarSuscriptorRequest">
+	     <attribute name="min" type="string"/>
+		 <attribute name="in" type="string"/>
+		 <attribute name="timeout" type="long"/>
+	 </complexType>
+	 
+	 <complexType name="BloquearSuscriptorRequest">
+	     <attribute name="min" type="string"/>
+		 <attribute name="bloqueoFraude" type="boolean"/>
+		 <attribute name="bloqueoGeneral" type="boolean"/>
+		 <attribute name="in" type="string"/>
+		 <attribute name="timeout" type="long"/>
+	 </complexType>
+	 
+	 <complexType name="CambiarMinRequest">
+	     <sequence>
+			<element name="suscriptorNuevo" type="tns:SubscriberCreate"/>
+		</sequence>
+		<attribute name="minAnterior" type="string"/>
+		<attribute name="in" type="string"/>
+		<attribute name="timeout" type="long"/>
+	 </complexType>
+	 
+	 <complexType name="CambiarPlanRequest">
+	    <attribute name="min" type="string"/>
+		<attribute name="plan" type="string"/>
+		<attribute name="planOriginal" type="string"/>
+		<attribute name="acc_grp_id" type="string"/>
+		<attribute name="in" type="string"/>
+		<attribute name="timeout" type="long"/>
+	 </complexType>
+	 
+	 <complexType name="CompensarCrearSuscriptorRequest">
+	     <attribute name="prefijo" type="string"/>
+	     <attribute name="min" type="string"/>
+	     <attribute name="in" type="string"/>
+	 </complexType>
+	 
+	 <complexType name="CompensarCambiarMinRequest">
+	     <sequence>
+	         <element name="suscriptor" type="tns:SubscriberFinal"/>
+	     </sequence>
+	     <attribute name="prefijo" type="string"/>
+	     <attribute name="min" type="string"/>
+	     <attribute name="hostId" type="string"/>
+	     <attribute name="requestorId" type="long"/>
+	     <attribute name="in" type="string"/>
+	 </complexType>
+	 
+	 <complexType name="CompensarCambiarPlanRequest">
+	     <attribute name="prefijo" type="string"/>
+	     <attribute name="min" type="string"/>
+	     <attribute name="plan" type="string"/>
+	     <attribute name="fechaExpiracion" type="string"/>
+	     <attribute name="in" type="string"/>
+	 </complexType>
+	 
+	 <simpleType name="Operacion">
+	     <restriction base="string">
+	         <enumeration value="Carga"/>
+	         <enumeration value="Recarga"/>
+	     </restriction>
+	 </simpleType>
+	 
+	 <simpleType name="Interfaz">
+	     <restriction base="string">
+	         <enumeration value="CIB"/>
+	         <enumeration value="SMAF"/>
+	     </restriction>
+	 </simpleType>
+	 
+	 
+	 
+	 <complexType name="EjecutarComandoResponse">
+	     <sequence>
+	         <element name="resultado" type="tns:Resultado"/>
+	     </sequence>
+	     <attribute name="exito" type="boolean"/>
+	     <attribute name="mensaje" type="string"/>
+	 </complexType>
+	 
+	 <complexType name="CrearSuscriptorResponse">
+	     <attribute name="exito" type="boolean"/>
+	     <attribute name="mensaje" type="string"/>
+	 </complexType>
+	 
+	 <complexType name="ConsultarSuscriptorResponse">
+	     <sequence>
+	         <element name="suscriptor" type="tns:SubscriberFinal"/>
+	     </sequence>
+	     <attribute name="exito" type="boolean"/>
+	     <attribute name="mensaje" type="string"/>
+	     <attribute name="cluster" type="string"/>
+	 </complexType>
+	 <complexType name="EliminarSuscriptorResponse">
+	     <attribute name="exito" type="boolean"/>
+	     <attribute name="mensaje" type="string"/>
+	 </complexType>
+	 <complexType name="BloquearSuscriptorResponse">
+	     <attribute name="exito" type="boolean"/>
+	     <attribute name="mensaje" type="string"/>
+	 </complexType>
+	 <complexType name="CambiarMinResponse">
+	     <attribute name="exito" type="boolean"/>
+	     <attribute name="mensaje" type="string"/>
+	 </complexType>
+	 <complexType name="CambiarPlanResponse">
+	     <attribute name="exito" type="boolean"/>
+	     <attribute name="mensaje" type="string"/>
+	 </complexType>
+	 <complexType name="CompensacionResponse">
+	     <attribute name="exito" type="boolean"/>
+	     <attribute name="mensaje" type="string"/>
+	 </complexType>
+	 
+	 <complexType name="SubscriberCreate">
+	     <sequence>
+	            <element name="AccountGroupID" type="string"/>
+				<element name="AddressRoles" type="string"/>
+				<element name="AddressSeq" type="string"/>
+				<element name="PublicContractID" type="string"/>
+				<element name="ContractType" type="string"/>
+				<element name="CustomerStatus" type="string"/>
+				<element name="DirectoryNumber" type="string"/>
+				<element name="PublicIVRLanguage" type="string"/>
+				<element name="PublicMarketCode" type="string"/>
+				<element name="PartyRoleSHName" type="string"/>
+				<element name="PartyType" type="string"/>
+				<element name="PaymentResponsibility" type="string"/>
+				<element name="PortNumber" type="string"/>
+				<element name="PublicNetworkId" type="string"/>
+				<element name="PublicSubMarketCode" type="string"/>
+				<element name="ReasonCode" type="string"/>
+				<element name="SdpID" type="string"/>
+				<element name="StorageMediumNumber" type="string"/>
+				<element name="TemporaryBlocked" type="string"/>
+				<element name="OfferIdPub" type="string" minOccurs="0"/>
+	     </sequence>
+	 </complexType>
+	 
+	 <complexType name="SubscriberFinal">
+		<sequence>
+			<element name="DirectoryNumber" type="string" />
+			<element name="PublicRatePlanCode" type="string" />						
+			<element name="ContractStatus" type="string" />
+			<element name="RefillBarredUntil" type="string" />
+			<element name="Prepaid_LC_State" type="string" />
+			<element name="AccountGroupID" type="string" />
+			<element name="ActivationDate" type="string" minOccurs="0" />
+		</sequence>
+	</complexType>
+	 
+	 <complexType name="DataArray">
+	     <sequence>
+	         <element maxOccurs="unbounded" minOccurs="0" name="Detail" type="string"/>
+	     </sequence>
+	 </complexType>
+	 <complexType name="AccountID">
+	     <sequence>
+	         <element name="Balance" type="string"/>
+	         <element name="ExpiryDate" type="string"/>
+	     </sequence>
+	 </complexType>
+	 <complexType name="Resultado">
+	     <sequence>
+	         <element maxOccurs="unbounded" minOccurs="0" name="respuesta" type="string"/>
+	     </sequence>
+	     <attribute name="posicion" type="integer"/>
+	 </complexType>
+	
+	<complexType name="OCSResponse">
+	  <!--   <sequence>
+		   <element name="CS_PASSWORD" type="string"></element>
+		   <element name="CONVRATETYPE_PAYMENT" type="string"></element>
+		   <element name="CS_PREVBALANCE" type="string"></element>
+		   <element name="CS_ACTIVATION_DATE" type="date"></element>
+		   <element name="CS_STATUS" type="string"></element>
+		   <element name="TB_PURPOSE" type="string"></element>
+		   <element name="CS_ID" type="string"></element>
+		   <element name="CS_FC_ID" type="string"></element>
+		   <element name="REFUND_CURRENCY_ID_PUB" type="string"></element>
+		   <element name="CS_BILL_INFORMATION" type="boolean"></element>		   
+		</sequence>
+		<attribute name="SUCCESS" type="string" />	-->
+	</complexType>
+	
+	
+</schema>

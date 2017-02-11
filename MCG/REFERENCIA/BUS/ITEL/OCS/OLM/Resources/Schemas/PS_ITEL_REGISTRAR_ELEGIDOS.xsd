@@ -1,0 +1,52 @@
+<xs:schema targetNamespace="http://www.comcel.com.co/RegistrarElegidosOCS/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.comcel.com.co/RegistrarElegidosOCS/" xmlns:oper="http://webapps.online.ericsson.com">	
+	
+	<xs:import namespace="http://webapps.online.ericsson.com" schemaLocation="DA_ITEL_OPERACION_PROVISION_OLM.xsd"/>
+	
+	<xs:element name="Input_Parameters" type="tns:Input_Parameters"/>
+	<xs:element name="WS_Result" type="tns:WS_Result"/>
+
+	<xs:complexType name="Input_Parameters">
+		<xs:sequence>
+			<xs:element name="REQUESTID" type="xs:long"/>
+			<xs:element name="OPERATION" type="xs:string"/>
+			<xs:element name="PRODUCTNAME" type="xs:string"/>
+			<xs:element name="SUBSCRIBERID" type="xs:string"/>
+			<xs:element name="MSISDN" type="xs:string"/>
+			<xs:element name="MSISDNELEGIDOTOREGISTER" type="tns:DataArray" minOccurs="0"/>			
+			<!-- <xs:element name="IMSI" type="xs:string" minOccurs="0"/>
+			<xs:element name="IMEI" type="xs:string"  minOccurs="0"/>
+			<xs:element name="ICCID" type="xs:string" minOccurs="0"/>
+			<xs:element name="EMAIL" type="xs:string" minOccurs="0"/>
+			<xs:element name="SUBSCRIBERTYPE" type="xs:string" minOccurs="0"/>
+			<xs:element name="DEVICETYPE" type="xs:string" minOccurs="0"/> -->
+			<xs:element name="ORIGINATINGNODEINFO" type="xs:string"/>			
+			<xs:element name="EXTERNALDATA" type="xs:string"/>
+			<!-- <xs:element name="REGISTRATIONDATE" type="xs:string" minOccurs="0"/>	-->		
+			<xs:element name="CHARGED" type="xs:string"/>
+			<xs:element name="FAFIDLIST" type="xs:string"/>
+			<!--<xs:element name="MSISDNELEGIDOTOREGISTER" type="xs:string"/>
+			 <xs:element name="MSISDNELEGIDOTOREGISTER" type="tns:DataArray" minOccurs="0"/>-->			
+		</xs:sequence>
+	</xs:complexType>	
+	
+	<xs:complexType name="WS_Result">
+		<xs:sequence>
+			<xs:element name="CODIGO" type="xs:string"/>
+			<xs:element name="MENSAJE" type="tns:MensajeType"/>
+			<xs:element name="DESCRIPCION" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="MensajeType">
+		<xs:sequence>
+			<xs:element name="REGISTRAR_ELEGIDOS" type="oper:dsmnResponse"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="DataArray">
+		<xs:sequence>
+			<xs:element name="Detail" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+</xs:schema>

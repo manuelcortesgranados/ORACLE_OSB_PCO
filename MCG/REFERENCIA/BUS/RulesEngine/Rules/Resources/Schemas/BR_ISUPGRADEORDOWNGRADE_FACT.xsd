@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.claro.com.co/rulesEngine/IsUpgradeOrDowngradeFact/"
+	xmlns:cd="http://www.claro.com.co/rulesEngine/canonicalModel/CustomerDomain"
+	xmlns:fd="http://www.claro.com.co/rulesEngine/canonicalModel/FrameworkDomain"
+	xmlns:tns="http://www.claro.com.co/rulesEngine/IsUpgradeOrDowngradeFact/">
+	
+	<xs:import
+		schemaLocation="../../../Core/Resources/Schemas/CanonicalModel/CustomerDomain.xsd"
+		namespace="http://www.claro.com.co/rulesEngine/canonicalModel/CustomerDomain" />
+	<xs:import
+		schemaLocation="../../../Core/Resources/Schemas/CanonicalModel/FrameworkDomain.xsd"
+		namespace="http://www.claro.com.co/rulesEngine/canonicalModel/FrameworkDomain" />
+	
+	<xs:element name="IsUpgradeOrDowngradeFactRequest" type="tns:IsUpgradeOrDowngradeFactRequestType" />
+	<xs:element name="IsUpgradeOrDowngradeFactResponse" type="tns:IsUpgradeOrDowngradeFactResponseType" />
+	<xs:complexType name="IsUpgradeOrDowngradeFactRequestType">
+		<xs:sequence>
+			<xs:element name="CustomerOrder" type="cd:CustomerOrder" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="IsUpgradeOrDowngradeFactResponseType">
+		<xs:sequence>
+			<xs:element name="Plan" type="fd:Plan" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

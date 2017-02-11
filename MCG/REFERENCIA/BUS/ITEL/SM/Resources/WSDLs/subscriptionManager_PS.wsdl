@@ -1,0 +1,48 @@
+<wsdl:definitions name="subscriptionManager_PS"
+	targetNamespace="http://www.comcel.com.co/ITEL/subscriptionManager"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.comcel.com.co/ITEL/subscriptionManager"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<wsdl:types>
+		<xsd:schema>
+			<xsd:import
+				namespace="http://www.comcel.com.co/ITEL/subscriptionManager"
+				schemaLocation="../Schemas/PS_SUBSCRIPTION_MANAGER.xsd">
+			</xsd:import>
+		</xsd:schema>
+	</wsdl:types>
+
+	<wsdl:message name="SubscriptionManagerRequest">
+		<wsdl:part element="tns:SubscriptionManagerRequest" name="SubscriptionManagerRequest" />
+	</wsdl:message>
+	<wsdl:message name="SubscriptionManagerResponse">
+		<wsdl:part element="tns:SubscriptionManagerResponse" name="SubscriptionManagerResponse" />
+	</wsdl:message>
+
+	<wsdl:portType name="SubscriptionManagerInterface">
+		<wsdl:operation name="subscriptionManager">
+			<wsdl:input message="tns:SubscriptionManagerRequest" />
+			<wsdl:output message="tns:SubscriptionManagerResponse" />
+		</wsdl:operation>
+	</wsdl:portType>
+
+
+	<wsdl:binding name="SubscriptionManagerSoapBinding" type="tns:SubscriptionManagerInterface">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="subscriptionManager">
+			<soap:operation
+				soapAction="http:/www.comcel.com.co/ITEL/subscriptionManager" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="SubscriptionManager">
+		<wsdl:port binding="tns:SubscriptionManagerSoapBinding" name="SubscriptionManagerPort">
+			<soap:address location="http://www.comcel.com.co/" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,71 @@
+<schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/sp/bd_consultarListaPaquetesTAT" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/sp/bd_consultarListaPaquetesTAT" elementFormDefault="qualified">
+   <element name="InputParameters">
+      <complexType/>
+   </element>
+   <element name="OutputParameters">
+      <complexType>
+         <sequence>           
+            <element name="P_PAQUETES" type="db:PaqueteRowSet" db:index="5" db:type="RowSet" minOccurs="0" nillable="true"/>
+         </sequence>
+      </complexType>
+   </element>
+   <complexType name="PaqueteRowSet">
+      <sequence>
+         <element name="PAQUETE" minOccurs="0" maxOccurs="unbounded">
+            <complexType>
+               <sequence>
+                  <element name="CODIGO_PAQUETE" db:type="VARCHAR2" maxOccurs="unbounded" nillable="true">
+                     <simpleType>
+                        <restriction base="string">
+                           <maxLength value="60"/>
+                        </restriction>
+                     </simpleType>
+                  </element>
+                  <element name="DES_CORTA" db:type="VARCHAR2" maxOccurs="unbounded" nillable="true">
+                     <simpleType>
+                        <restriction base="string">
+                           <maxLength value="300"/>
+                        </restriction>
+                     </simpleType>
+                  </element>
+                  <element name="VALOR" db:type="NUMBER" maxOccurs="unbounded" nillable="true">
+                     <simpleType>
+                        <restriction base="string">
+                           <maxLength value="60"/>
+                        </restriction>
+                     </simpleType>
+                  </element>
+                  <element name="VIGENCIA" db:type="VARCHAR2" maxOccurs="unbounded" nillable="true">
+                     <simpleType>
+                        <restriction base="string">
+                           <maxLength value="60"/>
+                        </restriction>
+                     </simpleType>
+                  </element>
+                  <element name="CANTIDAD" db:type="VARCHAR2" maxOccurs="unbounded" nillable="true">
+                     <simpleType>
+                        <restriction base="string">
+                           <maxLength value="60"/>
+                        </restriction>
+                     </simpleType>
+                  </element>
+                  <element name="TIPO" db:type="VARCHAR2" maxOccurs="unbounded" nillable="true">
+                     <simpleType>
+                        <restriction base="string">
+                           <maxLength value="1000"/>
+                        </restriction>
+                     </simpleType>
+                  </element>
+                  <element name="DESC_LARGA" db:type="VARCHAR2" maxOccurs="unbounded" nillable="true">
+                     <simpleType>
+                        <restriction base="string">
+                           <maxLength value="60"/>
+                        </restriction>
+                     </simpleType>
+                  </element>
+               </sequence>
+            </complexType>
+         </element>
+      </sequence>
+   </complexType>
+</schema>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.comcel.com.co/OCS/OperacionTypes"
+	xmlns:tns="http://www.comcel.com.co/OCS/OperacionTypes"
+	elementFormDefault="qualified">
+
+	<complexType name="methodCall">
+		<sequence>
+			<element ref="tns:methodName" />
+			<element name="params" type="tns:params" />
+		</sequence>
+	</complexType>
+
+	<complexType name="methodResponse">
+		<sequence>
+			<element name="params" type="tns:params" />
+		</sequence>
+	</complexType>
+
+	<complexType name="params">
+		<sequence>
+			<element name="param" type="tns:param" />
+		</sequence>
+	</complexType>
+
+	<complexType name="param">
+		<sequence>
+			<element name="value" type="tns:value" />
+		</sequence>
+	</complexType>
+
+	<complexType name="value">
+		<sequence>
+			<element name="array" minOccurs="0" type="tns:array" />
+			<element name="struct" minOccurs="0" type="tns:struct" />
+			<choice minOccurs="0">
+				<element ref="tns:i4" />
+				<element ref="tns:string" />
+			</choice>
+		</sequence>
+	</complexType>
+
+	<complexType name="struct">
+		<sequence>
+			<element name="member" minOccurs="0" maxOccurs="unbounded"
+				type="tns:member" />
+		</sequence>
+	</complexType>
+
+	<complexType name="member">
+		<choice minOccurs="0" maxOccurs="unbounded">
+			<element ref="tns:name" />
+			<element name="value" type="tns:value" />
+		</choice>
+	</complexType>
+
+	<complexType name="array">
+		<sequence>
+			<element name="data" type="tns:data" />
+		</sequence>
+	</complexType>
+
+	<complexType name="data">
+		<sequence>
+			<element name="value" maxOccurs="unbounded" type="tns:value" />
+		</sequence>
+	</complexType>
+
+	<element name="methodName" type="string" />
+	<element name="name" type="string" />
+	<element name="i4" type="integer" />
+	<element name="string" type="string" />
+</schema>

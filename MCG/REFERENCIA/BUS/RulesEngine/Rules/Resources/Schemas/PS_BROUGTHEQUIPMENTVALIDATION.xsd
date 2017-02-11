@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.claro.com.co/rulesEngine/broughtEquipmentValidation"
+	xmlns:tns="http://www.claro.com.co/rulesEngine/broughtEquipmentValidation"
+	xmlns:pd="http://www.claro.com.co/rulesEngine/canonicalModel/ProductDomain"
+	xmlns:cd="http://www.claro.com.co/rulesEngine/canonicalModel/CustomerDomain"
+	xmlns:cbe="http://www.claro.com.co/rulesEngine/canonicalModel/CommonBusinessEntities"
+	xmlns:fd="http://www.claro.com.co/rulesEngine/canonicalModel/FrameworkDomain"
+	xmlns:msd="http://www.claro.com.co/rulesEngine/canonicalModel/MarketSalesDomain">
+
+	<import
+		schemaLocation="../../../Core/Resources/Schemas/CanonicalModel/ProductDomain.xsd"
+		namespace="http://www.claro.com.co/rulesEngine/canonicalModel/ProductDomain" />
+    <import
+		schemaLocation="../../../Core/Resources/Schemas/CanonicalModel/CustomerDomain.xsd"
+		namespace="http://www.claro.com.co/rulesEngine/canonicalModel/CustomerDomain" />
+
+	<element name="Input_Parameters" type="tns:Input_Parameters"></element>
+	<element name="WS_Result" type="tns:WS_Result"></element>
+
+	<complexType name="Input_Parameters">
+		<sequence>
+			<element name="product" type="pd:Product" />
+			<element name="customerBillingBehavior" type="cd:CustomerBillingBehavior" />
+		</sequence>
+	</complexType>
+
+	<complexType name="WS_Result">
+		<sequence>
+			<element name="code" type="string" />
+			<element name="message" type="tns:responseType" />
+			<element name="description" type="string" />
+		</sequence>
+	</complexType>
+
+	<complexType name="responseType">
+		<sequence>
+			<element name="product" type="pd:Product" />
+		</sequence>
+	</complexType>
+
+</schema>

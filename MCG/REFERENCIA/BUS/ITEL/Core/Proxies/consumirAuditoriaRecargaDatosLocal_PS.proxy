@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jms="http://www.bea.com/wli/sb/transports/jms" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con3="http://www.bea.com/wli/sb/stages/publish/config">
+  <ser:coreEntry isProxy="true" isEnabled="true" isAutoPublish="false" isTracingEnabled="false">
+    <ser:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config">
+      <con:wsdl ref="ITEL/Core/Resources/WSDLs/consumirAuditoriaRecargaDatosJMS_PS"/>
+      <con:binding>
+        <con:name>consumirAuditoriaRecargaDatos_ptt-binding</con:name>
+        <con:namespace>http://xmlns.oracle.com/pcbpel/adapter/jms/Comcel/ITEL/consumirAuditoriaRecargaDatosJMS</con:namespace>
+      </con:binding>
+      <con:selector type="SOAP action"/>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+    <ser:ws-policy>
+      <ser:binding-mode>wsdl-policy-attachments</ser:binding-mode>
+    </ser:ws-policy>
+    <ser:transactions isRequired="false" sameTxForResponse="false"/>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>jms</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:URI>
+      <env:value>jms://OSBG1:8013,OSBG2:8013,OSBG3:8013,OSBG4:8013,OSBG5:8013,OSBG6:8013,OSBG7:8013,OSBG8:8013,OSBG9:8013,OSBG10:8013,OSBG11:8013,OSBG12:8013,OSBG13:8013,OSBG14:8013,OSBG15:8013,OSBG16:8013,OSBG17:8013,OSBG18:8013,OSBG19:8013,OSBG20:8013,OSBG21:8013,OSBG22:8013,OSBG23:8013,OSBG24:8013,OSBG25:8013,OSBG26:8013,OSBG27:8013,OSBG28:8013,OSBG29:8013,OSBG30:8013,OSBG31:8013,OSBG32:8013,OSBG33:8013,OSBG34:8013,OSBG35:8013,OSBG36:8013,OSBG37:8013,OSBG38:8013,OSBG39:8013,OSBG40:8013,OSBG41:8013,OSBG42:8013,OSBG43:8013,OSBG44:8013,OSBG45:8013,OSBG46:8013,OSBG47:8013,OSBG48:8013/weblogic.jms.ConnectionFactory/jms/auditoriaRecargaDatosQueue</env:value>
+    </tran:URI>
+    <tran:inbound-properties/>
+    <tran:all-headers>false</tran:all-headers>
+    <tran:provider-specific xsi:type="jms:JmsEndPointConfiguration">
+      <jms:is-queue>true</jms:is-queue>
+      <jms:is-secure>false</jms:is-secure>
+      <jms:inbound-properties>
+        <jms:response-required>false</jms:response-required>
+        <jms:XA-required>false</jms:XA-required>
+        <jms:transaction-timeout>600</jms:transaction-timeout>
+      </jms:inbound-properties>
+      <jms:request-encoding>UTF-8</jms:request-encoding>
+      <jms:jndi-timeout>0</jms:jndi-timeout>
+    </tran:provider-specific>
+  </ser:endpointConfig>
+  <ser:router>
+    <con:pipeline type="request" name="PipelinePairNode1_request">
+      <con:stage name="EjecutarPromocionDatos" errorHandler="_onErrorHandler-1684014731205898325-31ea59a0.14d71d54256.-7617">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/AuditoriaITEL/" prefix="aud"/>
+        </con:context>
+        <con:actions>
+          <con2:wsCallout>
+            <con1:id>_ActionId-1684014731205898325-31ea59a0.14d71d54256.-77d9</con1:id>
+            <con2:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/consultarRecargaDatosLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con2:operation>consultarRecargaDatos</con2:operation>
+            <con2:request>
+              <con2:body>$consultarRecargaDatosRequest</con2:body>
+            </con2:request>
+            <con2:response>
+              <con2:body>consultarRecargaDatosResponse</con2:body>
+            </con2:response>
+            <con2:requestTransform>
+              <con2:assign varName="consultarRecargaDatosRequest">
+                <con1:id>_ActionId-1684014731205898325-31ea59a0.14d71d54256.-7769</con1:id>
+                <con2:expr>
+                  <con1:xqueryTransform>
+                    <con1:resource ref="ITEL/Core/Resources/XQueries/consumirAuditoriaRecargaDatos_consultarRecargaDatos_Req"/>
+                    <con1:param name="input_Parameters1">
+                      <con1:path>$body/aud:Input_Parameters</con1:path>
+                    </con1:param>
+                  </con1:xqueryTransform>
+                </con2:expr>
+              </con2:assign>
+            </con2:requestTransform>
+            <con2:responseTransform/>
+          </con2:wsCallout>
+        </con:actions>
+      </con:stage>
+      <con:stage name="ProvisionPaqueteRTC" errorHandler="_onErrorHandler-3750151797360029177-4f7dbeff.14e4a907730.-7f35">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/AuditoriaITEL/" prefix="aud"/>
+        </con:context>
+        <con:actions>
+          <con2:ifThenElse>
+            <con1:id>_ActionId-3750151797360029177-4f7dbeff.14e4a907730.-7f3d</con1:id>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>$consultarRecargaDatosResponse/MENSAJE/CODIGO = 'A'
+and $consultarRecargaDatosResponse/MENSAJE/BONO != 'NA'</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:wsCallout>
+                  <con1:id>_ActionId-8681111482846191864-e645a43.15593779c06.-7eb1</con1:id>
+                  <con2:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/enviaSMSLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con2:operation>enviarSMS</con2:operation>
+                  <con2:request>
+                    <con2:body>$enviarSMSRequest</con2:body>
+                  </con2:request>
+                  <con2:response>
+                    <con2:body>enviarSMSResponse</con2:body>
+                  </con2:response>
+                  <con2:requestTransform>
+                    <con2:assign varName="enviarSMSRequest">
+                      <con1:id>_ActionId-8681111482846191864-e645a43.15593779c06.-7e79</con1:id>
+                      <con2:expr>
+                        <con1:xqueryTransform>
+                          <con1:resource ref="ITEL/Core/Resources/XQueries/consumirAuditoriaRecargaDatos_enviarSMS_Req"/>
+                          <con1:param name="input_Parameters1">
+                            <con1:path>$body/aud:Input_Parameters</con1:path>
+                          </con1:param>
+                          <con1:param name="bono">
+                            <con1:path>data($consultarRecargaDatosResponse/MENSAJE/BONO)</con1:path>
+                          </con1:param>
+                        </con1:xqueryTransform>
+                      </con2:expr>
+                    </con2:assign>
+                  </con2:requestTransform>
+                  <con2:responseTransform/>
+                </con2:wsCallout>
+                <con2:wsCallout>
+                  <con1:id>_ActionId-3750151797360029177-4f7dbeff.14e4a907730.-7f36</con1:id>
+                  <con2:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/insertarAuditoriaRecargaDatosLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con2:operation>insertarElegido</con2:operation>
+                  <con2:request>
+                    <con2:body>$insertarAuditoriaRecargaDatosRequest</con2:body>
+                  </con2:request>
+                  <con2:response>
+                    <con2:body>insertarAuditoriaRecargaDatosResponse</con2:body>
+                  </con2:response>
+                  <con2:requestTransform>
+                    <con2:assign varName="insertarAuditoriaRecargaDatosRequest">
+                      <con1:id>_ActionId-3750151797360029177-4f7dbeff.14e4a907730.-7f37</con1:id>
+                      <con2:expr>
+                        <con1:xqueryTransform>
+                          <con1:resource ref="ITEL/Core/Resources/XQueries/consumirAuditoriaRecargaDatos_insertarAuditoriaRecargaDatos_Req"/>
+                          <con1:param name="input_Parameters1">
+                            <con1:path>$body/aud:Input_Parameters</con1:path>
+                          </con1:param>
+                          <con1:param name="evefechaprc">
+                            <con1:path>fn:current-dateTime()</con1:path>
+                          </con1:param>
+                          <con1:param name="evecodresprtc">
+                            <con1:path>concat(data($enviarSMSResponse/MENSAJE/SQLCODE) , '|' , data($enviarSMSResponse/MENSAJE/DESCRIPCION))</con1:path>
+                          </con1:param>
+                        </con1:xqueryTransform>
+                      </con2:expr>
+                    </con2:assign>
+                  </con2:requestTransform>
+                  <con2:responseTransform/>
+                </con2:wsCallout>
+              </con2:actions>
+            </con2:case>
+            <con2:default/>
+          </con2:ifThenElse>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="PipelinePairNode1_response"/>
+    <con:pipeline type="error" name="_onErrorHandler-1684014731205898325-31ea59a0.14d71d54256.-7617">
+      <con:stage name="Error">
+        <con:context xmlns:jca="http://www.bea.com/wli/sb/transports/jca" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con4="http://www.bea.com/wli/sb/stages/publish/config"/>
+        <con:actions xmlns:jca="http://www.bea.com/wli/sb/transports/jca" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con4="http://www.bea.com/wli/sb/stages/publish/config">
+          <con1:log xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config">
+            <con5:id xmlns:con5="http://www.bea.com/wli/sb/stages/config">_ActionId-1684014731205898325-31ea59a0.14d71d54256.-756f</con5:id>
+            <con1:logLevel>error</con1:logLevel>
+            <con1:expr>
+              <con5:xqueryText xmlns:con5="http://www.bea.com/wli/sb/stages/config">$fault/ctx:reason</con5:xqueryText>
+            </con1:expr>
+          </con1:log>
+          <con1:reply>
+            <con1:id>_ActionId-1684014731205898325-31ea59a0.14d71d54256.-756e</con1:id>
+          </con1:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="error" name="_onErrorHandler-3750151797360029177-4f7dbeff.14e4a907730.-7f35">
+      <con:stage name="Error">
+        <con:context xmlns:jca="http://www.bea.com/wli/sb/transports/jca" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con4="http://www.bea.com/wli/sb/stages/publish/config">
+          <con1:varNsDecl namespace="http://www.comcel.com.co/AuditoriaITEL/" prefix="aud"/>
+        </con:context>
+        <con:actions xmlns:jca="http://www.bea.com/wli/sb/transports/jca" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con4="http://www.bea.com/wli/sb/stages/publish/config">
+          <con2:wsCallout xmlns:con3="http://www.bea.com/wli/sb/stages/publish/config">
+            <con1:id>_ActionId-3750151797360029177-4f7dbeff.14e4a907730.-7d6d</con1:id>
+            <con2:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/insertarAuditoriaRecargaDatosLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con2:operation>insertarElegido</con2:operation>
+            <con2:request>
+              <con2:body>$insertarAuditoriaRecargaDatosRequest</con2:body>
+            </con2:request>
+            <con2:response>
+              <con2:body>insertarAuditoriaRecargaDatosResponse</con2:body>
+            </con2:response>
+            <con2:requestTransform>
+              <con2:assign varName="insertarAuditoriaRecargaDatosRequest">
+                <con1:id>_ActionId-3750151797360029177-4f7dbeff.14e4a907730.-7d6e</con1:id>
+                <con2:expr>
+                  <con1:xqueryTransform>
+                    <con1:resource ref="ITEL/Core/Resources/XQueries/consumirAuditoriaRecargaDatos_insertarAuditoriaRecargaDatos_Req"/>
+                    <con1:param name="input_Parameters1">
+                      <con1:path>$body/aud:Input_Parameters</con1:path>
+                    </con1:param>
+                    <con1:param name="evefechaprc">
+                      <con1:path>fn:current-dateTime()</con1:path>
+                    </con1:param>
+                    <con1:param name="evecodresprtc">
+                      <con1:path>data($fault/ctx:reason)</con1:path>
+                    </con1:param>
+                  </con1:xqueryTransform>
+                </con2:expr>
+              </con2:assign>
+            </con2:requestTransform>
+            <con2:responseTransform/>
+          </con2:wsCallout>
+          <con1:log xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config">
+            <con5:id xmlns:con5="http://www.bea.com/wli/sb/stages/config">_ActionId-3750151797360029177-4f7dbeff.14e4a907730.-7ec4</con5:id>
+            <con1:logLevel>error</con1:logLevel>
+            <con1:expr>
+              <con5:xqueryText xmlns:con5="http://www.bea.com/wli/sb/stages/config">$fault/ctx:reason</con5:xqueryText>
+            </con1:expr>
+          </con1:log>
+          <con1:reply>
+            <con1:id>_ActionId-3750151797360029177-4f7dbeff.14e4a907730.-7ec3</con1:id>
+          </con1:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:flow>
+      <con:pipeline-node name="PipelinePairNode1">
+        <con:request>PipelinePairNode1_request</con:request>
+        <con:response>PipelinePairNode1_response</con:response>
+      </con:pipeline-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

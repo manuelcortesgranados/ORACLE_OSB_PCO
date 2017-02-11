@@ -1,0 +1,802 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2005 rel. 3 U (http://www.altova.com) by Danny Martinez (Computec) -->
+<!-- edited with XMLSPY v2004 rel. 4 U (http://www.xmlspy.com) by Danny Martinez (Computec) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="informe">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:choice minOccurs="0">
+					<xs:element name="naturalNacional">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="identificacion">
+									<xs:complexType>
+										<xs:attribute name="estado">
+											<xs:annotation>
+												<xs:documentation>See Table 2</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+										<xs:attribute name="fechaExpedicion" type="xs:long">
+											<xs:annotation>
+												<xs:documentation>Número de milisegundos desde Enero 1, 1970 00:00:00.000 GMT-5 (Gregorian)</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+										<xs:attribute name="ciudad"/>
+										<xs:attribute name="departamento"/>
+										<xs:attribute name="numero" use="required"/>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="edad" minOccurs="0">
+									<xs:complexType>
+										<xs:attribute name="min" use="required"/>
+										<xs:attribute name="max" use="optional"/>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="llave" minOccurs="0"/>
+							</xs:sequence>
+							<xs:attribute name="nombres"/>
+							<xs:attribute name="primerApellido"/>
+							<xs:attribute name="segundoApellido" use="optional"/>
+							<xs:attribute name="nombreCompleto" use="required"/>
+							<xs:attribute name="genero">
+								<xs:annotation>
+									<xs:documentation>See Table 20 3 or 4</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+							<xs:attribute name="estadoCivil" use="optional">
+								<xs:annotation>
+									<xs:documentation>See Table 20</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+							<xs:attribute name="validada" type="xs:boolean" use="required">
+								<xs:annotation>
+									<xs:documentation>true si esta validado contra la registraduría, false si esta validado contra otras fuentes de información, lo cual incluye otros suscriptores.</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="naturalExtranjera">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="llave" minOccurs="0"/>
+							</xs:sequence>
+							<xs:attribute name="nombre" use="required"/>
+							<xs:attribute name="identificacion" use="required"/>
+							<xs:attribute name="nacionalidad"/>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="juridicaNacional">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="llave" minOccurs="0"/>
+							</xs:sequence>
+							<xs:attribute name="nombre" use="required"/>
+							<xs:attribute name="identificacion" use="required"/>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="juridicaExtranjera">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="llave" minOccurs="0"/>
+							</xs:sequence>
+							<xs:attribute name="nombre" use="required"/>
+							<xs:attribute name="identificacion" use="required"/>
+						</xs:complexType>
+					</xs:element>
+				</xs:choice>
+				<xs:element name="score"  minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="razon" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:attribute name="codigo" use="required"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="tipo"  use="required" >
+							<xs:annotation>
+								<xs:documentation>See Table 19</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="puntaje" use="required"/>
+						<xs:attribute name="clasificacion" use="optional"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="cuentaAhorro" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="cuentaAhorroType"/>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="cuentaCorriente" type="cuentaCorrienteType" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="tarjetaCredito" type="tarjetaCreditoType" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="cuentaCartera" type="cuentaCarteraType" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="endeudamientoGlobal" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="llave" minOccurs="0"/>
+						</xs:sequence>
+						<xs:attribute name="calificacion" use="required">
+							<xs:annotation>
+								<xs:documentation>See Table 14</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="saldoPendiente" type="xs:double" use="required">
+							<xs:annotation>
+								<xs:documentation>El dato corresponden al valor real. NO esta en miles.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="tipoCredito" use="required">
+							<xs:annotation>
+								<xs:documentation>See Table 9</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="moneda" use="required">
+							<xs:annotation>
+								<xs:documentation>See Table 10</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="numeroCreditos" type="xs:int" use="required"/>
+						<xs:attribute name="fechaReporte" type="xs:long" use="required">
+							<xs:annotation>
+								<xs:documentation>Número de milisegundos desde Enero 1, 1970 00:00:00.000 GMT-5 (Gregorian)</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="entidad" use="required"/>
+						<xs:attribute name="garantia" use="required">
+							<xs:annotation>
+								<xs:documentation>See Table 11</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="consulta" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="llave" minOccurs="0"/>
+						</xs:sequence>
+						<xs:attribute name="fecha" type="xs:long" use="required">
+							<xs:annotation>
+								<xs:documentation>Número de milisegundos desde Enero 1, 1970 00:00:00.000 GMT-5 (Gregorian)</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="tipoCuenta">
+							<xs:annotation>
+								<xs:documentation>See Table 3</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="entidad" use="required"/>
+						<xs:attribute name="oficina" use="optional"/>
+						<xs:attribute name="ciudad" use="required"/>
+						<xs:attribute name="razon" use="required">
+							<xs:annotation>
+								<xs:documentation>See Table 23</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="alerta" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="fuente" minOccurs="0">
+								<xs:complexType>
+									<xs:attribute name="codigo" use="required">
+										<xs:annotation>
+											<xs:documentation>Código de la fuente a la que esta asociada la alerta.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="nombre"/>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="llave" minOccurs="0"/>
+						</xs:sequence>
+						<xs:attribute name="colocacion" type="xs:long" use="required">
+							<xs:annotation>
+								<xs:documentation>Número de milisegundos desde Enero 1, 1970 00:00:00.000 GMT-5 (Gregorian)</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="vencimiento" type="xs:long" use="required">
+							<xs:annotation>
+								<xs:documentation>Número de milisegundos desde Enero 1, 1970 00:00:00.000 GMT-5 (Gregorian)</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="modificacion" type="xs:long">
+							<xs:annotation>
+								<xs:documentation>Si se especifica, el usuario cancelo la alerta explicitamente, antes de la fecha de vencimiento. Número de milisegundos desde Enero 1, 1970 00:00:00.000 GMT-5 (Gregorian)</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="codigo" use="required">
+							<xs:annotation>
+								<xs:documentation>See Table 28</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="texto">
+							<xs:annotation>
+								<xs:documentation>Texto descriptivo de la alerta</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="comentario" type="comentarioType" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="respuestaPersonalizada" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence maxOccurs="unbounded">
+							<xs:element name="linea">
+								<xs:annotation>
+									<xs:documentation>Contiene el Texto de la Línea</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:attribute name="consecutivo">
+										<xs:annotation>
+											<xs:documentation>Se refiere al número de Línea al que corresponde.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="productosValores" minOccurs="0">
+					<xs:complexType>
+						<xs:attribute name="producto" type="xs:int"/>
+						<xs:attribute name="valor1" type="xs:long"/>
+						<xs:attribute name="valor2" type="xs:long"/>
+						<xs:attribute name="valor3" type="xs:long"/>
+						<xs:attribute name="valor4" type="xs:long"/>
+						<xs:attribute name="valor5" type="xs:long"/>
+						<xs:attribute name="valor6" type="xs:long"/>
+						<xs:attribute name="valor7" type="xs:long"/>
+						<xs:attribute name="valor8" type="xs:long"/>
+						<xs:attribute name="valor9" type="xs:long"/>
+						<xs:attribute name="valor10" type="xs:long"/>
+						<xs:attribute name="valor1smlv" type="xs:double"/>
+						<xs:attribute name="valor2smlv" type="xs:double"/>
+						<xs:attribute name="valor3smlv" type="xs:double"/>
+						<xs:attribute name="valor4smlv" type="xs:double"/>
+						<xs:attribute name="valor5smlv" type="xs:double"/>
+						<xs:attribute name="valor6smlv" type="xs:double"/>
+						<xs:attribute name="valor7smlv" type="xs:double"/>
+						<xs:attribute name="valor8smlv" type="xs:double"/>
+						<xs:attribute name="valor9smlv" type="xs:double"/>
+						<xs:attribute name="valor10smlv" type="xs:double"/>
+						<xs:attribute name="clasificacion" type="xs:string"/>
+						<xs:attribute name="razon1" type="xs:string"/>
+						<xs:attribute name="razon2" type="xs:string"/>
+						<xs:attribute name="razon3" type="xs:string"/>
+						<xs:attribute name="razon4" type="xs:string"/>
+						<xs:attribute name="razon5" type="xs:string"/>
+						<xs:attribute name="razon6" type="xs:string"/>
+						<xs:attribute name="razon7" type="xs:string"/>
+						<xs:attribute name="razon8" type="xs:string"/>
+						<xs:attribute name="razon9" type="xs:string"/>
+						<xs:attribute name="razon10" type="xs:string"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="fechaConsulta" type="xs:long" use="required">
+				<xs:annotation>
+					<xs:documentation>Número de milisegundos desde Enero 1, 1970 00:00:00.000 GMT-5 (Gregorian)</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="respuesta" use="required">
+				<xs:annotation>
+					<xs:documentation>See table 13</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="version" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="cuentaCorrienteType">
+		<xs:sequence>
+			<xs:element name="reclamo" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>El comentario es el texto del tag</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="llave" minOccurs="0"/>
+					</xs:sequence>
+					<xs:attribute name="tipoLeyenda">
+						<xs:annotation>
+							<xs:documentation>1 - Reclamo en tramite 2- Reclamo en Discusión Judicial</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="fechaCierre" type="xs:long" use="optional">
+						<xs:annotation>
+							<xs:documentation>Número de milisegundos desde Enero 1, 1970 00:00:00.000 GMT-5 (Gregorian)</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="estado" use="required">
+						<xs:annotation>
+							<xs:documentation>See Table 26</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="tipo" use="required">
+						<xs:annotation>
+							<xs:documentation>See Table 25</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="fecha" type="xs:long" use="optional">
+						<xs:annotation>
+							<xs:documentation>Número de milisegundos desde Enero 1, 1970 00:00:00.000 GMT-5 (Gregorian)</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="ratificado" type="xs:boolean" use="required"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="adjetivo" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="llave" minOccurs="0"/>
+					</xs:sequence>
+					<xs:attribute name="codigo" use="required">
+						<xs:annotation>
+							<xs:documentation>See Table 8</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="fecha" type="xs:long" use="required">
+						<xs:annotation>
+							<xs:documentation>Número de milisegundos desde Enero 1, 1970 00:00:00.000 GMT-5 (Gregorian)</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="llave" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="bloqueada" type="xs:boolean" use="required">
+			<xs:annotation>
+				<xs:documentation>true si esta bloqueada por autorregulación, posiblemente por que tiene un reclamo sin respuesta</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="estado" use="required">
+			<xs:annotation>
+				<xs:documentation>See Table 16</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="entidad" use="required"/>
+		<xs:attribute name="ultimaActualizacion" type="xs:long" use="required">
+			<xs:annotation>
+				<xs:documentation>Número de milisegundos desde Enero 1, 1970 00:00:00.000 GMT-5 (Gregorian)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="numeroCuenta" use="required"/>
+		<xs:attribute name="fechaApertura" type="xs:long" use="required">
+			<xs:annotation>
+				<xs:documentation>Número de milisegundos desde Enero 1, 1970 00:00:00.000 GMT-5 (Gregorian)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="oficina" type="xs:string" use="required"/>
+		<xs:attribute name="ciudad" use="optional"/>
+		<xs:attribute name="codSuscriptor" use="optional"/>
+		<xs:attribute name="situacionTitular" type="xs:short" use="required">
+			<xs:annotation>
+				<xs:documentation>See table 29</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="cuentaAhorroType">
+		<xs:sequence>
+			<xs:element name="reclamo" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>El comentario es el texto del tag</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="llave" minOccurs="0"/>
+					</xs:sequence>
+					<xs:attribute name="tipoLeyenda">
+						<xs:annotation>
+							<xs:documentation>1 - Reclamo en tramite 2- Reclamo en Discusión Judicial</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="fecha" type="xs:long" use="required">
+						<xs:annotation>
+							<xs:documentation>Número de milisegundos desde Enero 1, 1970 00:00:00.000 GMT-5 (Gregorian)</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="estado" use="required">
+						<xs:annotation>
+							<xs:documentation>See Table 26</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="tipo" use="optional">
+						<xs:annotation>
+							<xs:documentation>See Table 25</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="ratificado" type="xs:boolean" use="required"/>
+					<xs:attribute name="fechaCierre" type="xs:long" use="optional">
+						<xs:annotation>
+							<xs:documentation>Número de milisegundos desde Enero 1, 1970 00:00:00.000 GMT-5 (Gregorian)</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="adjetivo" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="llave" minOccurs="0"/>
+					</xs:sequence>
+					<xs:attribute name="codigo" use="required">
+						<xs:annotation>
+							<xs:documentation>See Table 8</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="fecha" type="xs:long" use="required">
+						<xs:annotation>
+							<xs:documentation>Número de milisegundos desde Enero 1, 1970 00:00:00.000 GMT-5 (Gregorian)</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="llave" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="estado" use="required">
+			<xs:annotation>
+				<xs:documentation>See Table 16</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="entidad" use="required"/>
+		<xs:attribute name="ultimaActualizacion" type="xs:long" use="required">
+			<xs:annotation>
+				<xs:documentation>Número de milisegundos desde Enero 1, 1970 00:00:00.000 GMT-5 (Gregorian)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="numeroCuenta" use="required"/>
+		<xs:attribute name="fechaApertura" type="xs:long" use="required">
+			<xs:annotation>
+				<xs:documentation>Número de milisegundos desde Enero 1, 1970 00:00:00.000 GMT-5 (Gregorian)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="oficina" type="xs:string" use="required"/>
+		<xs:attribute name="ciudad" use="optional"/>
+		<xs:attribute name="bloqueada" type="xs:boolean" use="required">
+			<xs:annotation>
+				<xs:documentation>true si esta bloqueada por autorregulación, posiblemente por que tiene un reclamo sin respuesta</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="codSuscriptor" use="optional"/>
+		<xs:attribute name="situacionTitular" type="xs:short" use="required">
+			<xs:annotation>
+				<xs:documentation>See table 29</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="tarjetaCreditoType">
+		<xs:sequence>
+			<xs:element name="valores" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Los datos corresponden al valor real. NO estan en miles.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attribute name="cupo" type="xs:double" use="optional"/>
+					<xs:attribute name="saldoActual" type="xs:double" use="optional"/>
+					<xs:attribute name="saldoMora" type="xs:double" use="optional"/>
+					<xs:attribute name="cuota" type="xs:double" use="optional"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="reclamo" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>El comentario es el texto del tag</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="llave" minOccurs="0"/>
+					</xs:sequence>
+					<xs:attribute name="tipoLeyenda">
+						<xs:annotation>
+							<xs:documentation>1 - Reclamo en tramite 2- Reclamo en Discusión Judicial</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="fechaCierre" type="xs:long" use="optional">
+						<xs:annotation>
+							<xs:documentation>Número de milisegundos desde Enero 1, 1970 00:00:00.000 GMT-5 (Gregorian)</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="estado" use="required">
+						<xs:annotation>
+							<xs:documentation>See Table 26</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="tipo" use="required">
+						<xs:annotation>
+							<xs:documentation>See Table 25</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="fecha" type="xs:long" use="optional">
+						<xs:annotation>
+							<xs:documentation>Número de milisegundos desde Enero 1, 1970 00:00:00.000 GMT-5 (Gregorian)</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="ratificado" type="xs:boolean" use="required"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="adjetivo" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="llave" minOccurs="0"/>
+					</xs:sequence>
+					<xs:attribute name="codigo" use="required">
+						<xs:annotation>
+							<xs:documentation>See Table 8</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="fecha" type="xs:long" use="required">
+						<xs:annotation>
+							<xs:documentation>Número de milisegundos desde Enero 1, 1970 00:00:00.000 GMT-5 (Gregorian)</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="alivio" minOccurs="0">
+				<xs:complexType>
+					<xs:attribute name="estado" use="required"/>
+					<xs:attribute name="mes" use="required"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="llave" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="estado" use="required">
+			<xs:annotation>
+				<xs:documentation>See Table 4. Estado basado en hasta 24 meses de comportamiento.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="estado48">
+			<xs:annotation>
+				<xs:documentation>See Table 4. Estado basado en hasta 48 meses de comportamiento.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="entidad" use="required"/>
+		<xs:attribute name="ultimaActualizacion" type="xs:long" use="required">
+			<xs:annotation>
+				<xs:documentation>Número de milisegundos desde Enero 1, 1970 00:00:00.000 GMT-5 (Gregorian)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="numero" use="required"/>
+		<xs:attribute name="fechaApertura" type="xs:long" use="required">
+			<xs:annotation>
+				<xs:documentation>Número de milisegundos desde Enero 1, 1970 00:00:00.000 GMT-5 (Gregorian)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="fechaVencimiento" type="xs:long" use="required">
+			<xs:annotation>
+				<xs:documentation>Número de milisegundos desde Enero 1, 1970 00:00:00.000 GMT-5 (Gregorian)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="comportamiento" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Cada caracter corresponde al comporamiento en un mes. See Table 5</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="amparada" type="xs:boolean" use="required">
+			<xs:annotation>
+				<xs:documentation>Si tiene garante esta amparada.(amparada="true")</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="formaPago" use="optional">
+			<xs:annotation>
+				<xs:documentation>See Table 18</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="bloqueada" type="xs:boolean" use="required">
+			<xs:annotation>
+				<xs:documentation>true si esta bloqueada por autorregulación, posiblemente por que tiene un reclamo sin respuesta</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="codSuscriptor" use="optional"/>
+		<xs:attribute name="positivoNegativo" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>P - estado positivo de la cuenta N - estado negativo de la cuenta</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="oficina" type="xs:string" use="required"/>
+		<xs:attribute name="situacionTitular" type="xs:short" use="required">
+			<xs:annotation>
+				<xs:documentation>See table 29</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="estadoOrigen" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>See table 31</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="prescripcion">
+			<xs:annotation>
+				<xs:documentation>Si la cuenta fue prescrita irá una P de otra manera irá un espacio en blanco</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="cuentaCarteraType">
+		<xs:sequence>
+			<xs:element name="valores" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Los datos corresponden al valor real. NO estan en miles.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attribute name="valorInicial" type="xs:double" use="optional"/>
+					<xs:attribute name="saldoActual" type="xs:double" use="optional"/>
+					<xs:attribute name="saldoMora" type="xs:double" use="optional"/>
+					<xs:attribute name="cuota" type="xs:double" use="optional"/>
+					<xs:attribute name="cuotasCanceladas" type="xs:int" use="optional"/>
+					<xs:attribute name="totalCuotas" type="xs:int" use="optional"/>
+					<xs:attribute name="maximaMora" type="xs:int" use="optional">
+						<xs:annotation>
+							<xs:documentation>See table 27</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="reclamo" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>El comentario es el texto del tag</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="llave" minOccurs="0"/>
+					</xs:sequence>
+					<xs:attribute name="tipoLeyenda">
+						<xs:annotation>
+							<xs:documentation>1 - Reclamo en tramite 2- Reclamo en Discusión Judicial</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="fechaCierre" type="xs:long" use="optional">
+						<xs:annotation>
+							<xs:documentation>Número de milisegundos desde Enero 1, 1970 00:00:00.000 GMT-5 (Gregorian)</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="estado" use="required">
+						<xs:annotation>
+							<xs:documentation>See Table 26</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="tipo" use="required">
+						<xs:annotation>
+							<xs:documentation>See Table 25</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="fecha" type="xs:long" use="optional">
+						<xs:annotation>
+							<xs:documentation>Número de milisegundos desde Enero 1, 1970 00:00:00.000 GMT-5 (Gregorian)</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="ratificado" type="xs:boolean" use="required"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="adjetivo" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="llave" minOccurs="0"/>
+					</xs:sequence>
+					<xs:attribute name="codigo" use="required">
+						<xs:annotation>
+							<xs:documentation>See Table 8</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="fecha" type="xs:long" use="required">
+						<xs:annotation>
+							<xs:documentation>Número de milisegundos desde Enero 1, 1970 00:00:00.000 GMT-5 (Gregorian)</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="alivio" minOccurs="0">
+				<xs:complexType>
+					<xs:attribute name="estado" use="required"/>
+					<xs:attribute name="mes" use="required"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="llave" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="bloqueada" type="xs:boolean" use="required">
+			<xs:annotation>
+				<xs:documentation>true si esta bloqueada por autorregulación, posiblemente por que tiene un reclamo sin respuesta</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="periodicidad" use="optional">
+			<xs:annotation>
+				<xs:documentation>See table 7</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="comportamiento" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Cada caracter corresponde al comporamiento en un mes. See Table 5</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="fechaApertura" type="xs:long" use="required">
+			<xs:annotation>
+				<xs:documentation>Número de milisegundos desde Enero 1, 1970 00:00:00.000 GMT-5 (Gregorian)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="fechaVencimiento" type="xs:long" use="required">
+			<xs:annotation>
+				<xs:documentation>Número de milisegundos desde Enero 1, 1970 00:00:00.000 GMT-5 (Gregorian)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="numeroObligacion" use="required"/>
+		<xs:attribute name="ultimaActualizacion" type="xs:long" use="required">
+			<xs:annotation>
+				<xs:documentation>Número de milisegundos desde Enero 1, 1970 00:00:00.000 GMT-5 (Gregorian)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="entidad" use="required"/>
+		<xs:attribute name="estado" use="required">
+			<xs:annotation>
+				<xs:documentation>See table 4. estado basado en 48 meses de comportamiento.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="estado48">
+			<xs:annotation>
+				<xs:documentation>See Table 4. Estado basado en hasta 48 meses de comportamiento.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="tipoObligacion" use="optional">
+			<xs:annotation>
+				<xs:documentation>See Table 17</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="tipoCuenta" use="required">
+			<xs:annotation>
+				<xs:documentation>See Table 3</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="garante" use="required">
+			<xs:annotation>
+				<xs:documentation>See Table 6</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="formaPago" use="optional">
+			<xs:annotation>
+				<xs:documentation>See Table 18</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="codSuscriptor" use="optional"/>
+		<xs:attribute name="positivoNegativo" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>P - cuenta en estado positivo N - cuenta en estado negativo</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="oficina" type="xs:string" use="required"/>
+		<xs:attribute name="mesePermanencia" type="xs:short">
+			<xs:annotation>
+				<xs:documentation>Número de meses de la clausula de permanencia</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="situacionTitular" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>See table 29</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="estadoOrigen" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>See table 31</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="tipoContrato" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>See table 30</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="ejecucionContrato" type="xs:short">
+			<xs:annotation>
+				<xs:documentation>Cantidad de meses que lleva en ejecucion el contrato, si es de termino definido.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="prescripcion">
+			<xs:annotation>
+				<xs:documentation>Si la cuenta fue prescrita irá una P de otra manera irá un espacio en blanco</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="comentarioType" mixed="true">
+		<xs:sequence>
+			<xs:element name="llave" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="tipo" use="required">
+			<xs:annotation>
+				<xs:documentation>See Table 24</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="fechaVencimiento" type="xs:long" use="required"/>
+	</xs:complexType>
+</xs:schema>

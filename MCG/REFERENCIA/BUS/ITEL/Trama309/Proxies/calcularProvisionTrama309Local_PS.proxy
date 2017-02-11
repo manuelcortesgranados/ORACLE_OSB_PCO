@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con2="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+  <ser:coreEntry isProxy="true" isEnabled="true" isAutoPublish="false" isTracingEnabled="false">
+    <ser:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config">
+      <con:wsdl ref="ITEL/Trama309/Resources/WSDLs/calcularProvisionTrama309_PS"/>
+      <con:port>
+        <con:name>calcularProvisionTrama309_PSSOAP</con:name>
+        <con:namespace>http://www.comcel.com.co/calcularProvisionTrama309_PS/</con:namespace>
+      </con:port>
+      <con:selector type="SOAP body"/>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+    <ser:ws-policy>
+      <ser:binding-mode>wsdl-policy-attachments</ser:binding-mode>
+    </ser:ws-policy>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>local</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:inbound-properties/>
+    <tran:all-headers>true</tran:all-headers>
+  </ser:endpointConfig>
+  <ser:router>
+    <con:pipeline type="error" name="_onErrorHandler-5855012717930773282-470f72e.135c0da5dbd.-7dc3">
+      <con:stage name="error">
+        <con:context/>
+        <con:actions>
+          <con3:replace varName="body" contents-only="true">
+            <con1:id>_ActionId-5855012717930773282-470f72e.135c0da5dbd.-7db3</con1:id>
+            <con3:expr>
+              <con1:xqueryTransform>
+                <con1:resource ref="ITEL/Trama309/Resources/XQueries/calcularProvisionTrama309_Error"/>
+                <con1:param name="descripcion">
+                  <con1:path>$fault/ctx:reason/text()</con1:path>
+                </con1:param>
+                <con1:param name="codigo">
+                  <con1:path>"6"</con1:path>
+                </con1:param>
+              </con1:xqueryTransform>
+            </con3:expr>
+          </con3:replace>
+          <con1:reply>
+            <con1:id>_ActionId-5855012717930773282-470f72e.135c0da5dbd.-7da7</con1:id>
+          </con1:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:flow>
+      <con:route-node name="RouteTo_CalcularProvision_BS" error-handler="_onErrorHandler-5855012717930773282-470f72e.135c0da5dbd.-7dc3">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/CalcularProvisionTrama309/" prefix="cal"/>
+        </con:context>
+        <con:actions>
+          <con2:route>
+            <con1:id>_ActionId-5855012717930773282-470f72e.135c0da5dbd.-7e81</con1:id>
+            <con2:service ref="ITEL/Trama309/Business Services/calcularProvisionTrama309_BS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con2:operation>callFunctionStateless</con2:operation>
+            <con2:outboundTransform>
+              <con3:replace varName="body" contents-only="true">
+                <con1:id>_ActionId-5855012717930773282-470f72e.135c0da5dbd.-7e6b</con1:id>
+                <con3:expr>
+                  <con1:xqueryTransform>
+                    <con1:resource ref="ITEL/Trama309/Resources/XQueries/calcularProvisionTrama309_Req"/>
+                    <con1:param name="input_Parameters1">
+                      <con1:path>$body/cal:Input_Parameters</con1:path>
+                    </con1:param>
+                  </con1:xqueryTransform>
+                </con3:expr>
+              </con3:replace>
+            </con2:outboundTransform>
+            <con2:responseTransform>
+              <con3:replace varName="body" contents-only="true">
+                <con1:id>_ActionId-5855012717930773282-470f72e.135c0da5dbd.-7e51</con1:id>
+                <con3:expr>
+                  <con1:xqueryTransform>
+                    <con1:resource ref="ITEL/Trama309/Resources/XQueries/calcularProvisionTrama309_Res"/>
+                    <con1:param name="callFunctionStatelessDecision1">
+                      <con1:path>$body/*:callFunctionStatelessDecision</con1:path>
+                    </con1:param>
+                  </con1:xqueryTransform>
+                </con3:expr>
+              </con3:replace>
+              <con4:assign varName="elegidos" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                <con2:id>_ActionId-5855012717930773282-470f72e.135c0da5dbd.-7e18</con2:id>
+                <con4:expr>
+                  <con2:xqueryText>let $paramElegidos := $body/cal:WS_Result/MENSAJE/SERVICIO/PARAMETROS/PARAMETRO[NOMBRE='ELEGIDOS']
+return
+ if ($paramElegidos != "" ) then 
+	fn-bea:inlinedXML( $paramElegidos/VALOR/text() ) else ""</con2:xqueryText>
+                </con4:expr>
+              </con4:assign>
+              <con4:replace varName="body" contents-only="true" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                <con2:id>_ActionId-5855012717930773282-470f72e.135c0da5dbd.-7dc4</con2:id>
+                <con4:location>
+                  <con2:xpathText>./cal:WS_Result/MENSAJE/SERVICIO/PARAMETROS/PARAMETRO[NOMBRE='ELEGIDOS']/VALOR</con2:xpathText>
+                </con4:location>
+                <con4:expr>
+                  <con2:xqueryText>$elegidos/*:BestFnF_Numbers//*</con2:xqueryText>
+                </con4:expr>
+              </con4:replace>
+              <con3:assign varName="elegidosOriginales">
+                <con1:id>_ActionId-367003415922824066-761dc27a.13663f15df7.-7b14</con1:id>
+                <con3:expr>
+                  <con1:xqueryText>let $paramElegidos := $body/cal:WS_Result/MENSAJE/SERVICIO/PARAMETROS/PARAMETRO[NOMBRE='ELEGIDOS_ORIGINALES']
+return
+ if ($paramElegidos != "" ) then 
+	fn-bea:inlinedXML( $paramElegidos/VALOR/text() ) else ""</con1:xqueryText>
+                </con3:expr>
+              </con3:assign>
+              <con3:replace varName="body" contents-only="true">
+                <con1:id>_ActionId-367003415922824066-761dc27a.13663f15df7.-7afa</con1:id>
+                <con3:location>
+                  <con1:xpathText>./cal:WS_Result/MENSAJE/SERVICIO/PARAMETROS/PARAMETRO[NOMBRE='ELEGIDOS_ORIGINALES']/VALOR</con1:xpathText>
+                </con3:location>
+                <con3:expr>
+                  <con1:xqueryText>$elegidosOriginales/*:BestFnF_Numbers//*</con1:xqueryText>
+                </con3:expr>
+              </con3:replace>
+            </con2:responseTransform>
+          </con2:route>
+        </con:actions>
+      </con:route-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

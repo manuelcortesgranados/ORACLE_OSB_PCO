@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://getcreditscorebycustomer.performancemanagement.schema.amx.com" targetNamespace="http://getcreditscorebycustomer.performancemanagement.schema.amx.com" elementFormDefault="qualified">
+	<xs:element name="GetCreditScoreByCustomerRequest" type="tns:GetCreditScoreByCustomerRequest"/>
+	<xs:element name="GetCreditScoreByCustomerResponse" type="tns:GetCreditScoreByCustomerResponse"/>
+	<xs:complexType name="GetCreditScoreByCustomerRequest">
+		<xs:sequence>
+			<xs:element name="CreditScoreInformation" type="tns:CreditScoreInformation" minOccurs="1"/>
+			<xs:element name="AccreditationInfo" type="tns:AccreditationInfo" minOccurs="0"/>
+			<xs:element name="AffiliateInformation" type="tns:AffiliateInformation" minOccurs="1"/>
+			<xs:element name="BiometricValidation" type="tns:BiometricValidation" minOccurs="0"/>
+			<xs:element name="creditApprovalId" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GetCreditScoreByCustomerResponse">
+		<xs:sequence>
+			<xs:element name="GetCreditScoreResponseInfo" type="tns:GetCreditScoreResponseInfo" minOccurs="1"/>
+			<xs:element name="NumberOfLinesAllowedPerGAMAandProductType" type="tns:NumberOfLinesAllowedPerGAMAandProductType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="numberOfFinancedActiveLines" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CreditScoreInformation">
+		<xs:sequence>
+			<xs:element name="orderId" type="xs:string" minOccurs="1"/>
+			<xs:element name="oaType" type="xs:string" minOccurs="1"/>
+			<xs:element name="creditCheckApproved" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="creditRefNumber" type="xs:string" minOccurs="0"/>
+			<xs:element name="salesChannel" type="xs:string" minOccurs="1"/>
+			<xs:element name="location" type="xs:string" minOccurs="0"/>
+			<xs:element name="dealerOnBehalf" type="xs:string" minOccurs="0"/>
+			<xs:element name="dealerId" type="xs:string" minOccurs="0"/>
+			<xs:element name="userId" type="xs:string" minOccurs="1"/>
+			<xs:element name="region" type="xs:string" minOccurs="0"/>
+			<xs:element name="identifierNumber" type="xs:string" minOccurs="1"/>
+			<xs:element name="identifierType" type="xs:string" minOccurs="1"/>
+			<xs:element name="firstName" type="xs:string" minOccurs="1"/>
+			<xs:element name="lastName" type="xs:string" minOccurs="1"/>
+			<xs:element name="vipIndication" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="nuncaIndication" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="AddressInfoDetails" type="tns:AddressInfoDetails" minOccurs="0"/>
+			<xs:element name="phoneNumber" type="xs:string" minOccurs="0"/>
+			<xs:element name="dateOfBirth" type="xs:date" minOccurs="0"/>
+			<xs:element name="customerType" type="xs:string" minOccurs="0"/>
+			<xs:element name="customerSubtype" type="xs:string" minOccurs="0"/>
+			<xs:element name="customerId" type="xs:string" minOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AddressInfoDetails">
+		<xs:sequence>
+			<xs:element name="addressText" type="xs:string" minOccurs="0"/>
+			<xs:element name="city" type="xs:string" minOccurs="1"/>
+			<xs:element name="district" type="xs:string" minOccurs="1"/>
+			<xs:element name="state" type="xs:string" minOccurs="1"/>
+			<xs:element name="costCenterRegion" type="xs:string" minOccurs="1"/>
+			<xs:element name="country" type="xs:string" minOccurs="1"/>
+			<xs:element name="area" type="xs:string" minOccurs="0"/>
+			<xs:element name="quarter" type="xs:string" minOccurs="0"/>
+			<xs:element name="streetType" type="xs:string" minOccurs="0"/>
+			<xs:element name="streetName" type="xs:string" minOccurs="0"/>
+			<xs:element name="streetPrefix" type="xs:string" minOccurs="0"/>
+			<xs:element name="streetNumber" type="xs:string" minOccurs="0"/>
+			<xs:element name="streetSuffix" type="xs:string" minOccurs="0"/>
+			<xs:element name="streetIntersection" type="xs:string" minOccurs="0"/>
+			<xs:element name="streetIntersectionSuffix" type="xs:string" minOccurs="0"/>
+			<xs:element name="additionalInfo" type="xs:string" minOccurs="0"/>
+			<xs:element name="buildingType" type="xs:string" minOccurs="0"/>
+			<xs:element name="buildingNumber" type="xs:string" minOccurs="0"/>
+			<xs:element name="internalBuildingNumber" type="xs:string" minOccurs="0"/>
+			<xs:element name="internalBuildingNumberSuffix" type="xs:string" minOccurs="0"/>
+			<xs:element name="apartmentNumber" type="xs:string" minOccurs="0"/>
+			<xs:element name="totalNumOfFloors" type="xs:string" minOccurs="0"/>
+			<xs:element name="neighborhood" type="xs:string" minOccurs="1"/>
+			<xs:element name="poBox" type="xs:string" minOccurs="0"/>
+			<xs:element name="postalCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="socioEconomicalRank" type="xs:string" minOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AccreditationInfo">
+		<xs:sequence>
+			<xs:element name="accreditationType" type="xs:string" minOccurs="1"/>
+			<xs:element name="onBehalfSaleChannel" type="xs:string" minOccurs="0"/>
+			<xs:element name="AccreditationData" type="tns:AccreditationData" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="AccreditationDocuments" type="tns:AccreditationDocuments" minOccurs="1" maxOccurs="3"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AffiliateInformation">
+		<xs:sequence>
+			<xs:element name="affiliate" type="xs:string" minOccurs="1"/>
+			<xs:element name="market" type="xs:string" minOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GetCreditScoreResponseInfo">
+		<xs:sequence>
+			<xs:element name="firstName" type="xs:string" minOccurs="0"/>
+			<xs:element name="secondName" type="xs:string" minOccurs="0"/>
+			<xs:element name="lastName" type="xs:string" minOccurs="0"/>
+			<xs:element name="secondLastName" type="xs:string" minOccurs="0"/>
+			<xs:element name="issueDateOfId" type="xs:date" minOccurs="0"/>
+			<xs:element name="scoreExpiryDate" type="xs:date" minOccurs="1"/>
+			<xs:element name="dateCreditBureauConsulted" type="xs:date" minOccurs="1"/>
+			<xs:element name="creditRefNumber" type="xs:string" minOccurs="0"/>
+			<xs:element name="evidentaAlreadyValid" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="creditScoreCode" type="xs:string" minOccurs="1"/>
+			<xs:element name="creditScoreDescription" type="xs:string" minOccurs="1"/>
+			<xs:element name="gama" type="xs:string" minOccurs="0"/>
+			<xs:element name="exceptions" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="evaluationStatus" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="ceRejectMessage" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="ageRange" type="xs:string" minOccurs="0"/>
+			<xs:element name="idPlaceOfIssue" type="xs:string" minOccurs="0"/>
+			<xs:element name="idExpirationDate" type="xs:date" minOccurs="0"/>
+			<xs:element name="listOfRequiredDocuments" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="paymentBehavior" type="xs:string" minOccurs="0"/>
+			<xs:element name="pastDueAmount" type="xs:string" minOccurs="0"/>
+			<xs:element name="planType" type="xs:string" minOccurs="0"/>
+			<xs:element name="purchaseLimit" type="xs:string" minOccurs="0"/>
+			<xs:element name="totalNumberOfLines" type="xs:int" minOccurs="0"/>
+			<xs:element name="rcPaymentInAdvancedRequired" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="equipmentImmediatePaymentRequired" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="payMeansRequired" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="acquisitionType" type="xs:string" minOccurs="0"/>
+			<xs:element name="url" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="NumberOfLinesAllowedPerGAMAandProductType">
+		<xs:sequence>
+			<xs:element name="totalNumberOfLinesAllowed" type="xs:string" minOccurs="1"/>
+			<xs:element name="gama" type="xs:string" minOccurs="1"/>
+			<xs:element name="productType" type="xs:string" minOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AccreditationData">
+		<xs:sequence>
+			<xs:element name="accreditationName" type="xs:string" minOccurs="1"/>
+			<xs:element name="accreditationValue" type="xs:string" minOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AccreditationDocuments">
+		<xs:sequence>
+			<xs:element name="documentCategory" type="xs:string" minOccurs="1"/>
+			<xs:element name="documentType" type="xs:string" minOccurs="1"/>
+			<xs:element name="documentName" type="xs:string" minOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BiometricValidation">
+		<xs:sequence>
+			<xs:element name="type" type="xs:string" minOccurs="1"/>
+			<xs:element name="errorCode" type="xs:string" minOccurs="1"/>
+			<xs:element name="errorDesc" type="xs:string" minOccurs="1"/>
+			<xs:element name="auditNumber" type="xs:string" minOccurs="1"/>
+			<xs:element name="isPreviredAllowed" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

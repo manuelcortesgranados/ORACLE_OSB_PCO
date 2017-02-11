@@ -1,0 +1,51 @@
+<wsdl:definitions name="consultarReglasTrama309_PS" targetNamespace="http://www.comcel.com.co/consultarReglasTrama309_PS/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.comcel.com.co/consultarReglasTrama309_PS/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsd1="http://www.comcel.com.co/ConsultarReglasTrama309/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://www.comcel.com.co/consultarReglasTrama309_PS/">
+      <xsd:element name="consultarReglas">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="in" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="consultarReglasResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="out" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+    <xsd:schema>
+    	<xsd:import namespace="http://www.comcel.com.co/ConsultarReglasTrama309/" schemaLocation="../Schemas/PS_ITEL_CONSULTARREGLASTRAMA309.xsd">
+    	</xsd:import></xsd:schema></wsdl:types>
+  <wsdl:message name="consultarReglasTrama309Request">
+    <wsdl:part element="xsd1:Input_Parameters" name="Input_Parameters"/>
+  </wsdl:message>
+  <wsdl:message name="consultarReglasTrama309Response">
+    <wsdl:part element="xsd1:WS_Result" name="WS_Result"/>
+  </wsdl:message>
+  <wsdl:portType name="consultarReglasTrama309_PS">
+    <wsdl:operation name="consultarReglasTrama309">
+      <wsdl:input message="tns:consultarReglasTrama309Request"/>
+      <wsdl:output message="tns:consultarReglasTrama309Response"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="consultarReglasTrama309_PSSOAP" type="tns:consultarReglasTrama309_PS">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="consultarReglasTrama309">
+      <soap:operation soapAction="http://www.comcel.com.co/consultarReglasTrama309_PS/consultarReglasTrama309"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="consultarReglasTrama309_PS">
+    <wsdl:port binding="tns:consultarReglasTrama309_PSSOAP" name="consultarReglasTrama309_PSSOAP">
+      <soap:address location="http://www.comcel.com.co/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

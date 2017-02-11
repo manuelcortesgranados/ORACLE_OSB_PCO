@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config">
+  <ser:coreEntry isProxy="true" isEnabled="true" isAutoPublish="false" isTracingEnabled="false">
+    <ser:binding type="SOAP" isSoap12="false" xsi:type="con4:SoapBindingType" xmlns:con4="http://www.bea.com/wli/sb/services/bindings/config">
+      <con4:wsdl ref="ITEL/Core/Resources/WSDLs/consultarPaquetesDatos_PS"/>
+      <con4:port>
+        <con4:name>ConsultarPaquetesDatosSOAP</con4:name>
+        <con4:namespace>http://www.comcel.com.co/ConsultarPaquetesDatos/</con4:namespace>
+      </con4:port>
+      <con4:selector type="SOAP body"/>
+      <con4:WSI-compliant>false</con4:WSI-compliant>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+    <ser:ws-policy>
+      <ser:binding-mode>wsdl-policy-attachments</ser:binding-mode>
+    </ser:ws-policy>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>http</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:URI>
+      <env:value>/ITEL/Core/Proxies/consultarPaquetesDatos_PS</env:value>
+    </tran:URI>
+    <tran:inbound-properties/>
+    <tran:all-headers>false</tran:all-headers>
+    <tran:provider-specific>
+      <http:inbound-properties/>
+    </tran:provider-specific>
+  </ser:endpointConfig>
+  <ser:router>
+    <con:pipeline type="request" name="PipelinePairNode1_request">
+      <con:stage name="validacion" errorHandler="_onErrorHandler-3738246199404536167--3fed7bd5.13f7be9077c.-6896">
+        <con:context>
+          <con2:varNsDecl namespace="http://www.comcel.com.co/ConsultarPaquetes/" prefix="con"/>
+          <con2:varNsDecl namespace="http://www.comcel.com.co/ConsultarPaquetesDatos/" prefix="con1"/>
+        </con:context>
+        <con:actions>
+          <con1:validate>
+            <con2:id>_ActionId-3738246199404536167--3fed7bd5.13f7be9077c.-69ad</con2:id>
+            <con1:schema ref="ITEL/Core/Resources/Schemas/PS_ITEL_CONSULTARPAQUETESDATOS"/>
+            <con1:schemaElement xmlns:con="http://www.comcel.com.co/ConsultarPaquetes/" xmlns:con4="http://www.comcel.com.co/ConsultarPaquetesDatos/">con4:Input_Parameters</con1:schemaElement>
+            <con1:varName>body</con1:varName>
+            <con1:location>
+              <con2:xpathText>./con1:Input_Parameters</con2:xpathText>
+            </con1:location>
+          </con1:validate>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="PipelinePairNode1_response"/>
+    <con:pipeline type="error" name="_onErrorHandler-3738246199404536167--3fed7bd5.13f7be9077c.-6896">
+      <con:stage name="error">
+        <con:context/>
+        <con:actions>
+          <con1:replace varName="body" contents-only="true">
+            <con2:id>_ActionId-3738246199404536167--3fed7bd5.13f7be9077c.-6893</con2:id>
+            <con1:expr>
+              <con2:xqueryTransform>
+                <con2:resource ref="ITEL/Core/Resources/XQueries/consultarPaquetesDatos_Error"/>
+                <con2:param name="descripcion">
+                  <con2:path>$fault/ctx:reason/text()</con2:path>
+                </con2:param>
+                <con2:param name="mensaje">
+                  <con2:path>""</con2:path>
+                </con2:param>
+                <con2:param name="codigo">
+                  <con2:path>"ERROR"</con2:path>
+                </con2:param>
+              </con2:xqueryTransform>
+            </con1:expr>
+          </con1:replace>
+          <con1:reply xmlns:con1="http://www.bea.com/wli/sb/stages/config">
+            <con1:id>_ActionId-3738246199404536167--3fed7bd5.13f7be9077c.-6892</con1:id>
+          </con1:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="error" name="_onErrorHandler-3738246199404536167--3fed7bd5.13f7be9077c.-6806">
+      <con:stage name="error">
+        <con:context/>
+        <con:actions>
+          <con1:replace varName="body" contents-only="true">
+            <con2:id>_ActionId-3738246199404536167--3fed7bd5.13f7be9077c.-6795</con2:id>
+            <con1:expr>
+              <con2:xqueryTransform>
+                <con2:resource ref="ITEL/Core/Resources/XQueries/consultarPaquetesDatos_Error"/>
+                <con2:param name="descripcion">
+                  <con2:path>$fault/ctx:reason/text()</con2:path>
+                </con2:param>
+                <con2:param name="mensaje">
+                  <con2:path>""</con2:path>
+                </con2:param>
+                <con2:param name="codigo">
+                  <con2:path>"ERROR"</con2:path>
+                </con2:param>
+              </con2:xqueryTransform>
+            </con1:expr>
+          </con1:replace>
+          <con1:reply xmlns:con1="http://www.bea.com/wli/sb/stages/config">
+            <con1:id>_ActionId-3738246199404536167--3fed7bd5.13f7be9077c.-6794</con1:id>
+          </con1:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:flow>
+      <con:pipeline-node name="PipelinePairNode1">
+        <con:request>PipelinePairNode1_request</con:request>
+        <con:response>PipelinePairNode1_response</con:response>
+      </con:pipeline-node>
+      <con:route-node name="RouteToConsultarPaquetesDatosBS" error-handler="_onErrorHandler-3738246199404536167--3fed7bd5.13f7be9077c.-6806">
+        <con:context>
+          <con2:varNsDecl namespace="http://www.comcel.com.co/ConsultarPaquetes/" prefix="con"/>
+          <con2:varNsDecl namespace="http://www.comcel.com.co/ConsultarPaquetesDatos/" prefix="con1"/>
+        </con:context>
+        <con:actions>
+          <con3:route>
+            <con2:id>_ActionId-3738246199404536167--3fed7bd5.13f7be9077c.-6807</con2:id>
+            <con3:service ref="ITEL/Core/Business Services/consultarPaquetesDatos_BS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con3:operation>bd_consultarPaquetesDatos</con3:operation>
+            <con3:outboundTransform>
+              <con1:replace varName="body" contents-only="true">
+                <con2:id>_ActionId-3738246199404536167--3fed7bd5.13f7be9077c.-6741</con2:id>
+                <con1:expr>
+                  <con2:xqueryTransform>
+                    <con2:resource ref="ITEL/Core/Resources/XQueries/consultarPaquetesDatos_Req"/>
+                    <con2:param name="input_Parameters1">
+                      <con2:path>$body/con1:Input_Parameters</con2:path>
+                    </con2:param>
+                  </con2:xqueryTransform>
+                </con1:expr>
+              </con1:replace>
+            </con3:outboundTransform>
+            <con3:responseTransform>
+              <con1:replace varName="body" contents-only="true">
+                <con2:id>_ActionId-3738246199404536167--3fed7bd5.13f7be9077c.-672c</con2:id>
+                <con1:expr>
+                  <con2:xqueryTransform>
+                    <con2:resource ref="ITEL/Core/Resources/XQueries/consultarPaquetesDatos_Res"/>
+                    <con2:param name="descripcion">
+                      <con2:path>"Consulta realizada exitosamente"</con2:path>
+                    </con2:param>
+                    <con2:param name="outputParameters1">
+                      <con2:path>$body/*:OutputParameters</con2:path>
+                    </con2:param>
+                  </con2:xqueryTransform>
+                </con1:expr>
+              </con1:replace>
+            </con3:responseTransform>
+          </con3:route>
+        </con:actions>
+      </con:route-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

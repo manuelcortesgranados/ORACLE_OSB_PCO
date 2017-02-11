@@ -1,0 +1,36 @@
+<wsdl:definitions targetNamespace="http://www.claro.com.co/rulesEngine/getExternalCreditInformation" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.claro.com.co/rulesEngine/getExternalCreditInformation" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<wsdl:types>
+			<schema xmlns="http://www.w3.org/2001/XMLSchema">
+				<import namespace="http://www.claro.com.co/rulesEngine/getExternalCreditInformation" schemaLocation="../Schemas/PS_GET_EXTERNALCREDITINFORMATION.xsd"/>
+			</schema>
+	</wsdl:types>
+	<wsdl:message name="Input_Parameters">
+		<wsdl:part element="tns:Input_Parameters" name="Input_Parameters"/>
+	</wsdl:message>
+	<wsdl:message name="WS_Result">
+		<wsdl:part element="tns:WS_Result" name="WS_Result"/>
+	</wsdl:message>
+	<wsdl:portType name="GetExternalCreditInformation">
+		<wsdl:operation name="getExternalCreditInformation">
+			<wsdl:input message="tns:Input_Parameters"/>
+			<wsdl:output message="tns:WS_Result"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="GetExternalCreditInformationSOAP" type="tns:GetExternalCreditInformation">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="getExternalCreditInformation">
+			<soap:operation soapAction="http://www.claro.com.co/GetInternalCreditInformation/getInternalCreditInformation"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="GetExternalCreditInformation">
+		<wsdl:port binding="tns:GetExternalCreditInformationSOAP" name="getExternalCreditInformationSOAP">
+			<soap:address location="http://www.claro.com.co/"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

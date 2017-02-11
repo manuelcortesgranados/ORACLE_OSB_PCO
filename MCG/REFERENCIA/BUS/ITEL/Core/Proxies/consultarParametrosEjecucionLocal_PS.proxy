@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config">
+  <ser:coreEntry isProxy="true" isEnabled="true" isAutoPublish="false" isTracingEnabled="false">
+    <ser:binding type="SOAP" isSoap12="false" xsi:type="con4:SoapBindingType" xmlns:con4="http://www.bea.com/wli/sb/services/bindings/config">
+      <con4:wsdl ref="ITEL/Core/Resources/WSDLs/consultarParametrosEjecucion_PS"/>
+      <con4:binding>
+        <con4:name>ConsultarParametrosEjecucionSOAP</con4:name>
+        <con4:namespace>http://www.comcel.com.co/ConsultarParametrosEjecucion/</con4:namespace>
+      </con4:binding>
+      <con4:selector type="SOAP body"/>
+      <con4:WSI-compliant>false</con4:WSI-compliant>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+    <ser:ws-policy>
+      <ser:binding-mode>wsdl-policy-attachments</ser:binding-mode>
+    </ser:ws-policy>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>local</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:inbound-properties/>
+    <tran:all-headers>true</tran:all-headers>
+  </ser:endpointConfig>
+  <ser:router>
+    <con:pipeline type="request" name="PipelinePairNode1_request">
+      <con:stage name="validar" errorHandler="_onErrorHandler-5503355093146939009--7fa9a687.1373c5d9727.-6599">
+        <con:context>
+          <con2:varNsDecl namespace="http://www.comcel.com.co/ActualizarCantidadConsultasDia/" prefix="act"/>
+          <con2:varNsDecl namespace="http://www.comcel.com.co/ActualizarCantidadConsultasGratisDia/" prefix="act1"/>
+          <con2:varNsDecl namespace="http://www.comcel.com.co/ConsultarParametrosEjecucion/" prefix="con"/>
+        </con:context>
+        <con:actions>
+          <con1:validate>
+            <con2:id>_ActionId-5503355093146939009--7fa9a687.1373c5d9727.-659a</con2:id>
+            <con1:schema ref="ITEL/Core/Resources/Schemas/PS_ITEL_CONSULTARPARAMETROSEJECUCION"/>
+            <con1:schemaElement xmlns:act="http://www.comcel.com.co/ActualizarCantidadConsultasGratisDia/" xmlns:con4="http://www.comcel.com.co/ConsultarParametrosEjecucion/">con4:Input_Parameters</con1:schemaElement>
+            <con1:varName>body</con1:varName>
+            <con1:location>
+              <con2:xpathText>./con:Input_Parameters</con2:xpathText>
+            </con1:location>
+          </con1:validate>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline name="_onErrorHandler-5503355093146939009--7fa9a687.1373c5d9727.-6599" type="error">
+      <con:stage name="error">
+        <con:context/>
+        <con:actions>
+          <con1:replace varName="body" contents-only="true">
+            <con2:id>_ActionId-5503355093146939009--7fa9a687.1373c5d9727.-658e</con2:id>
+            <con1:expr>
+              <con2:xqueryTransform>
+                <con2:resource ref="ITEL/Core/Resources/XQueries/consultarParametrosEjecucion_Error"/>
+                <con2:param name="mensaje">
+                  <con2:path>""</con2:path>
+                </con2:param>
+                <con2:param name="descripcion">
+                  <con2:path>$fault/ctx:reason/text()</con2:path>
+                </con2:param>
+                <con2:param name="codigo">
+                  <con2:path>"ERROR"</con2:path>
+                </con2:param>
+              </con2:xqueryTransform>
+            </con1:expr>
+          </con1:replace>
+          <con2:reply>
+            <con2:id>_ActionId-5503355093146939009--7fa9a687.1373c5d9727.-658d</con2:id>
+          </con2:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="error" name="_onErrorHandler-2192494151280045366-20cb3f8d.132a69d6662.-7fdc">
+      <con:stage name="error">
+        <con:context/>
+        <con:actions>
+          <con1:replace varName="body" contents-only="true">
+            <con2:id>_ActionId-2192494151280045366-20cb3f8d.132a69d6662.-7f91</con2:id>
+            <con1:expr>
+              <con2:xqueryTransform>
+                <con2:resource ref="ITEL/Core/Resources/XQueries/consultarParametrosEjecucion_Error"/>
+                <con2:param name="mensaje">
+                  <con2:path>""</con2:path>
+                </con2:param>
+                <con2:param name="descripcion">
+                  <con2:path>$fault/ctx:reason/text()</con2:path>
+                </con2:param>
+                <con2:param name="codigo">
+                  <con2:path>"ERROR"</con2:path>
+                </con2:param>
+              </con2:xqueryTransform>
+            </con1:expr>
+          </con1:replace>
+          <con2:reply>
+            <con2:id>_ActionId-5174370892286694528-6956db40.133a81e5a33.-7fe5</con2:id>
+          </con2:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="PipelinePairNode1_response"/>
+    <con:flow>
+      <con:pipeline-node name="PipelinePairNode1">
+        <con:request>PipelinePairNode1_request</con:request>
+        <con:response>PipelinePairNode1_response</con:response>
+      </con:pipeline-node>
+      <con:route-node name="RouteNode1" error-handler="_onErrorHandler-2192494151280045366-20cb3f8d.132a69d6662.-7fdc">
+        <con:context>
+          <con2:varNsDecl prefix="con" namespace="http://www.comcel.com.co/ConsultarParametrosEjecucion/"/>
+        </con:context>
+        <con:actions>
+          <con3:route>
+            <con2:id>_ActionId-2192494151280045366-20cb3f8d.132a69d6662.-7fdd</con2:id>
+            <con3:service ref="ITEL/Core/Business Services/consultarParametrosEjecucion_BS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con3:operation>bd_consultarParametrosEjecucion</con3:operation>
+            <con3:outboundTransform>
+              <con1:replace varName="body" contents-only="true">
+                <con2:id>_ActionId-2192494151280045366-20cb3f8d.132a69d6662.-7ecb</con2:id>
+                <con1:expr>
+                  <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">&lt;prc:InputParameters xmlns:prc="http://xmlns.oracle.com/pcbpel/adapter/db/SOA_TEST/PKG_SOA_ITEL/PRC_CONSULTAR_PARAMETROS/"/></con:xqueryText>
+                </con1:expr>
+              </con1:replace>
+            </con3:outboundTransform>
+            <con3:responseTransform>
+              <con1:replace varName="body" contents-only="true">
+                <con2:id>_ActionId-2192494151280045366-20cb3f8d.132a69d6662.-7fb7</con2:id>
+                <con1:expr>
+                  <con2:xqueryTransform>
+                    <con2:resource ref="ITEL/Core/Resources/XQueries/consultarParametrosEjecucion_Res"/>
+                    <con2:param name="descripcion">
+                      <con2:path>"Consulta ejecutada correctamente"</con2:path>
+                    </con2:param>
+                    <con2:param name="outputParameters1">
+                      <con2:path>$body/*:OutputParameters</con2:path>
+                    </con2:param>
+                  </con2:xqueryTransform>
+                </con1:expr>
+              </con1:replace>
+            </con3:responseTransform>
+          </con3:route>
+        </con:actions>
+      </con:route-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

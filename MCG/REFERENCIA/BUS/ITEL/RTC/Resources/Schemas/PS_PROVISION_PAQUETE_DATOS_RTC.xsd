@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://www.comcel.com.co/ProvisionPaqueteDatosRTC/" 
+     xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+     xmlns:tns="http://www.comcel.com.co/ProvisionPaqueteDatosRTC/">
+	<xs:element name="Input_Parameters" type="tns:Input_Parameters"/>
+	<xs:element name="WS_Result" type="tns:WS_Result"/>
+
+	<xs:complexType name="Input_Parameters">
+		<xs:sequence>
+                        <xs:element minOccurs="0" name="msisdn" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="activationRequest" nillable="true" type="tns:SuscriptionRequest"/>
+                        <xs:element minOccurs="0" name="applicationId" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="mail" nillable="true" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="WS_Result">
+		<xs:sequence>
+			<xs:element name="CODIGO" type="xs:string" />
+			<xs:element name="MENSAJE" type="tns:MensajeType" />
+			<xs:element name="DESCRIPCION" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="MensajeType">
+		<xs:sequence>
+                    <xs:element minOccurs="0" name="billingId" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="errorCode" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="errorDescription" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="statusCode" type="xs:int"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+            <xs:complexType name="SuscriptionRequest">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="isProgrammed" nillable="true" type="xs:boolean"/>	
+                    <xs:element minOccurs="0" name="maxRecurrenceNum" type="xs:int"/>
+                    <xs:element minOccurs="0" name="messageId" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="productId" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="programmedDate" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="recurrence" type="xs:int"/>
+                    <xs:element minOccurs="0" name="welcomePackageID" nillable="true" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>	
+		
+            
+	
+</xs:schema>

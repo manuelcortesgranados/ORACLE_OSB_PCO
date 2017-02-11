@@ -1,0 +1,24 @@
+<?binding.jca bd_insertarAuditoriaElegidoSMS_db.jca?><wsdl:definitions name="bd_insertarAuditoriaElegidoSMS" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/Ensayo/Reglas/bd_insertarAuditoriaElegidoSMS" xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/ITELSOA/PKG_SOA_ITEL/PRC_INSERT_AUDITORIA_ELESMS/" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/Ensayo/Reglas/bd_insertarAuditoriaElegidoSMS" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/">
+    <plt:partnerLinkType name="bd_insertarAuditoriaElegidoSMS_plt">
+        <plt:role name="bd_insertarAuditoriaElegidoSMS_role">
+            <plt:portType name="tns:bd_insertarAuditoriaElegidoSMS_ptt"/>
+        </plt:role>
+    </plt:partnerLinkType>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/ITELSOA/PKG_SOA_ITEL/PRC_INSERT_AUDITORIA_ELESMS/" schemaLocation="../Schemas/BD_ITEL_INSERTARAUDITORIAELEGIDOSMS.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="args_in_msg">
+        <wsdl:part name="InputParameters" element="db:InputParameters"/>
+    </wsdl:message>
+    <wsdl:message name="args_out_msg">
+        <wsdl:part name="OutputParameters" element="db:OutputParameters"/>
+    </wsdl:message>
+    <wsdl:portType name="bd_insertarAuditoriaElegidoSMS_ptt">
+        <wsdl:operation name="bd_insertarAuditoriaElegidoSMS">
+            <wsdl:input message="tns:args_in_msg"/>
+            <wsdl:output message="tns:args_out_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

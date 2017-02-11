@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://ericsson.com/services/ws_cma3/sessionchange"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://ericsson.com/services/ws_cma3/sessionchange"
+	elementFormDefault="qualified">
+
+	<xs:complexType name="valuesListpartRequest">
+		<xs:all>
+			<xs:element name="key" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>
+													&lt;p&gt;
+													Name of the value that shall be changed. For details about the session parameters that can be set, refer to
+													&lt;xref&gt;'Specification of Session Parameters'&lt;/xref&gt;
+													in the CIL documentation.
+													&lt;/p&gt;
+											</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="value" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>
+													&lt;p&gt;New value for a named value.&lt;/p&gt;
+											</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="valuesRequest">
+		<xs:sequence>
+			<xs:element name="item" type="tns:valuesListpartRequest" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="sessionChangeRequest">
+		<xs:all>
+			<xs:annotation>
+				<xs:documentation>
+						&lt;p&gt;
+						
+						&lt;/p&gt;
+				</xs:documentation>
+			</xs:annotation>
+			<xs:element name="values" type="tns:valuesRequest" minOccurs="0"/>
+		</xs:all>
+	</xs:complexType>
+
+</schema>

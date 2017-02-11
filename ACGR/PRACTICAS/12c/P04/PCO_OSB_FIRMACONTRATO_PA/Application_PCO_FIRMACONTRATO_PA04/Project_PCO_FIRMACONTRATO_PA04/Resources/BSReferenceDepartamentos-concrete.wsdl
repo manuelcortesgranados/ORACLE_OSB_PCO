@@ -1,0 +1,15 @@
+<wsdl:definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/Application_PCO_FIRMACONTRATO_PA04/Project_PCO_FIRMACONTRATO_PA04/BSReferenceDepartamentos" name="BSReferenceDepartamentos-concrete" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <wsdl:import location="BSReferenceDepartamentos.wsdl" namespace="http://xmlns.oracle.com/pcbpel/adapter/db/Application_PCO_FIRMACONTRATO_PA04/Project_PCO_FIRMACONTRATO_PA04/BSReferenceDepartamentos"/>
+    <wsdl:binding name="BSReferenceDepartamentos_ptt-binding" type="bsr:BSReferenceDepartamentos_ptt" xmlns:bsr="http://xmlns.oracle.com/pcbpel/adapter/db/Application_PCO_FIRMACONTRATO_PA04/Project_PCO_FIRMACONTRATO_PA04/BSReferenceDepartamentos">
+        <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+        <wsdl:operation name="BSReferenceDepartamentos">
+            <soap:operation soapAction="BSReferenceDepartamentos"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+</wsdl:definitions>

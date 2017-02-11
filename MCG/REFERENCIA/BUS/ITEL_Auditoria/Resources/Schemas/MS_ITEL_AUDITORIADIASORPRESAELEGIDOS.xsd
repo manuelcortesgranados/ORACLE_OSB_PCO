@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.comcel.com.co/AuditoriaDiaSorpresaElegidosITEL/"
+	xmlns:tns="http://www.comcel.com.co/AuditoriaDiaSorpresaElegidosITEL/">
+	
+	<xs:element name="Input_Parameters" type="tns:Input_Paramaters" />
+	
+	<xs:complexType name="Input_Paramaters">
+		<xs:sequence>
+			<xs:element name="EVEMETODO" type="xs:string" />
+			<xs:element name="EVEMIN" type="xs:string" />			
+			<xs:element name="EVEELEGIDOS" type="tns:EVEELEGIDOSType" />
+			<xs:element name="EVEFECHA" type="xs:dateTime" />		
+			<xs:element name="EVECOBRO" type="xs:decimal" />
+			<xs:element name="EVEVIGENCIA" type="xs:decimal" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="EVEELEGIDOSType">
+		<xs:sequence>
+			<xs:element name="PARAMETRO" type="tns:EVEELEGIDOType" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+
+	<xs:complexType name="EVEELEGIDOType">
+		<xs:sequence>
+			<xs:element name="FAFID" type="xs:string"></xs:element>
+			<xs:element name="MINELEG" type="xs:string"></xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

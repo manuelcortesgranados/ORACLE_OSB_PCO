@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+  <ser:coreEntry isProxy="true" isEnabled="true" isAutoPublish="false" isTracingEnabled="false">
+    <ser:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config">
+      <con:wsdl ref="ITEL/OCS/SOI/Resources/WSDLs/bloquearSuscriptorOCS_PS"/>
+      <con:port>
+        <con:name>BloquearSuscriptorOCSSOAP</con:name>
+        <con:namespace>http://www.comcel.com.co/BloquearSuscriptorOCS/</con:namespace>
+      </con:port>
+      <con:selector type="SOAP body"/>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+    <ser:ws-policy>
+      <ser:binding-mode>wsdl-policy-attachments</ser:binding-mode>
+    </ser:ws-policy>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>local</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:inbound-properties/>
+    <tran:all-headers>true</tran:all-headers>
+  </ser:endpointConfig>
+  <ser:router>
+    <con:pipeline type="request" name="PipelinePairNode1_request">
+      <con:stage name="validacion" errorHandler="_onErrorHandler-1528284064515419493--790d2c7e.139492373e2.-7fa7">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/BloquearSuscriptorOCS/" prefix="bloq"/>
+        </con:context>
+        <con:actions>
+          <con2:validate>
+            <con1:id>_ActionId-1528284064515419493--790d2c7e.139492373e2.-7f40</con1:id>
+            <con2:schema ref="ITEL/OCS/SOI/Resources/Schemas/PS_ITEL_BLOQUEAR_SUSCRIPTOR"/>
+            <con2:schemaElement xmlns:bloq="http://www.comcel.com.co/BloquearSuscriptorOCS/">bloq:Input_Parameters</con2:schemaElement>
+            <con2:varName>body</con2:varName>
+            <con2:location>
+              <con1:xpathText>./bloq:Input_Parameters</con1:xpathText>
+            </con2:location>
+          </con2:validate>
+        </con:actions>
+      </con:stage>
+      <con:stage name="bloqueo" errorHandler="_onErrorHandler-6776084542434479367-28c94254.14f4259fd3e.-7336">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/BloquearSuscriptorOCS/" prefix="bloq"/>
+        </con:context>
+        <con:actions>
+          <con2:assign varName="codigo">
+            <con1:id>_ActionId-6776084542434479367-28c94254.14f4259fd3e.-744c</con1:id>
+            <con2:expr>
+              <con1:xqueryText>"1"</con1:xqueryText>
+            </con2:expr>
+          </con2:assign>
+          <con2:ifThenElse>
+            <con1:id>_ActionId-6776084542434479367-28c94254.14f4259fd3e.-70ad</con1:id>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>exists($body/bloq:Input_Parameters/BLOQUEO_GENERAL)
+and data($body/bloq:Input_Parameters/BLOQUEO_GENERAL) = ('true')
+and exists($body/bloq:Input_Parameters/BLOQUEO_FRAUDE)
+and data($body/bloq:Input_Parameters/BLOQUEO_FRAUDE) = ('true','false')</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:wsCallout>
+                  <con1:id>_ActionId-6776084542434479367-28c94254.14f4259fd3e.-6f04</con1:id>
+                  <con2:service xsi:type="ref:ProxyRef" ref="ITEL/OCS/AIR/Proxies/actualizarBloqueoRecargaOCSLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con2:operation>actualizarBloqueoRecarga</con2:operation>
+                  <con2:request>
+                    <con2:body>$bloqueoRequest</con2:body>
+                  </con2:request>
+                  <con2:response>
+                    <con2:body>bloqueoResponse</con2:body>
+                  </con2:response>
+                  <con2:requestTransform>
+                    <con2:assign varName="bloqueoRequest">
+                      <con1:id>_ActionId-6776084542434479367-28c94254.14f4259fd3e.-6eb0</con1:id>
+                      <con2:expr>
+                        <con1:xqueryTransform>
+                          <con1:resource ref="ITEL/OCS/SOI/Resources/XQueries/bloquearSuscriptorOCS_Req_ejecutarbloqueoRecargaOCS"/>
+                          <con1:param name="input_Parameters1">
+                            <con1:path>$body/bloq:Input_Parameters</con1:path>
+                          </con1:param>
+                        </con1:xqueryTransform>
+                      </con2:expr>
+                    </con2:assign>
+                  </con2:requestTransform>
+                  <con2:responseTransform>
+                    <con2:ifThenElse>
+                      <con1:id>_ActionId-6776084542434479367-28c94254.14f4259fd3e.-6e3f</con1:id>
+                      <con2:case>
+                        <con2:condition>
+                          <con1:xqueryText>data( $bloqueoResponse/CODIGO ) = "1"</con1:xqueryText>
+                        </con2:condition>
+                        <con2:actions/>
+                      </con2:case>
+                      <con2:default>
+                        <con2:assign varName="codigo">
+                          <con1:id>_ActionId-6776084542434479367-28c94254.14f4259fd3e.-6e3e</con1:id>
+                          <con2:expr>
+                            <con1:xqueryText>"2"</con1:xqueryText>
+                          </con2:expr>
+                        </con2:assign>
+                      </con2:default>
+                    </con2:ifThenElse>
+                  </con2:responseTransform>
+                </con2:wsCallout>
+                <con2:ifThenElse>
+                  <con1:id>_ActionId-6776084542434479367-28c94254.14f4259fd3e.-6e16</con1:id>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>not($codigo = ("2"))</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:wsCallout>
+                        <con1:id>_ActionId-6776084542434479367-28c94254.14f4259fd3e.-6ded</con1:id>
+                        <con2:service xsi:type="ref:ProxyRef" ref="ITEL/OCS/AIR/Proxies/actualizarBloqueoTemporalOCSLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>actualizarBloqueoTemporal</con2:operation>
+                        <con2:request>
+                          <con2:body>$bloqueoTemporalRequest</con2:body>
+                        </con2:request>
+                        <con2:response>
+                          <con2:body>bloqueoTemporalResponse</con2:body>
+                        </con2:response>
+                        <con2:requestTransform>
+                          <con2:assign varName="bloqueoTemporalRequest">
+                            <con1:id>_ActionId-6776084542434479367-28c94254.14f4259fd3e.-6d99</con1:id>
+                            <con2:expr>
+                              <con1:xqueryTransform>
+                                <con1:resource ref="ITEL/OCS/SOI/Resources/XQueries/bloquearSuscriptorOCS_Req_ejecutarbloqueoTemporalOCS"/>
+                                <con1:param name="input_Parameters1">
+                                  <con1:path>$body/bloq:Input_Parameters</con1:path>
+                                </con1:param>
+                              </con1:xqueryTransform>
+                            </con2:expr>
+                          </con2:assign>
+                        </con2:requestTransform>
+                        <con2:responseTransform/>
+                      </con2:wsCallout>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:default/>
+                </con2:ifThenElse>
+              </con2:actions>
+            </con2:case>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>exists($body/bloq:Input_Parameters/BLOQUEO_GENERAL)
+and data($body/bloq:Input_Parameters/BLOQUEO_GENERAL) = ('false')
+and exists($body/bloq:Input_Parameters/BLOQUEO_FRAUDE)
+and data($body/bloq:Input_Parameters/BLOQUEO_FRAUDE) = ('true','false')</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:wsCallout>
+                  <con1:id>_ActionId-6776084542434479367-28c94254.14f4259fd3e.-6d91</con1:id>
+                  <con2:service xsi:type="ref:ProxyRef" ref="ITEL/OCS/AIR/Proxies/actualizarBloqueoTemporalOCSLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con2:operation>actualizarBloqueoTemporal</con2:operation>
+                  <con2:request>
+                    <con2:body>$bloqueoTemporalRequest</con2:body>
+                  </con2:request>
+                  <con2:response>
+                    <con2:body>bloqueoTemporalResponse</con2:body>
+                  </con2:response>
+                  <con2:requestTransform>
+                    <con2:assign varName="bloqueoTemporalRequest">
+                      <con1:id>_ActionId-6776084542434479367-28c94254.14f4259fd3e.-6d94</con1:id>
+                      <con2:expr>
+                        <con1:xqueryTransform>
+                          <con1:resource ref="ITEL/OCS/SOI/Resources/XQueries/bloquearSuscriptorOCS_Req_ejecutarbloqueoTemporalOCS"/>
+                          <con1:param name="input_Parameters1">
+                            <con1:path>$body/bloq:Input_Parameters</con1:path>
+                          </con1:param>
+                        </con1:xqueryTransform>
+                      </con2:expr>
+                    </con2:assign>
+                  </con2:requestTransform>
+                  <con2:responseTransform>
+                    <con2:ifThenElse>
+                      <con1:id>_ActionId-6776084542434479367-28c94254.14f4259fd3e.-6d93</con1:id>
+                      <con2:case>
+                        <con2:condition>
+                          <con1:xqueryText>data( $bloqueoTemporalResponse/CODIGO ) = "1"</con1:xqueryText>
+                        </con2:condition>
+                        <con2:actions/>
+                      </con2:case>
+                      <con2:default>
+                        <con2:assign varName="codigo">
+                          <con1:id>_ActionId-6776084542434479367-28c94254.14f4259fd3e.-6d92</con1:id>
+                          <con2:expr>
+                            <con1:xqueryText>"2"</con1:xqueryText>
+                          </con2:expr>
+                        </con2:assign>
+                      </con2:default>
+                    </con2:ifThenElse>
+                  </con2:responseTransform>
+                </con2:wsCallout>
+                <con2:ifThenElse>
+                  <con1:id>_ActionId-6776084542434479367-28c94254.14f4259fd3e.-6d57</con1:id>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>not($codigo = ("2"))
+and exists($body/bloq:Input_Parameters/BLOQUEO_FRAUDE)
+and data($body/bloq:Input_Parameters/BLOQUEO_FRAUDE) = ('true','false')</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:wsCallout>
+                        <con1:id>_ActionId-6776084542434479367-28c94254.14f4259fd3e.-6d55</con1:id>
+                        <con2:service xsi:type="ref:ProxyRef" ref="ITEL/OCS/AIR/Proxies/actualizarBloqueoRecargaOCSLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>actualizarBloqueoRecarga</con2:operation>
+                        <con2:request>
+                          <con2:body>$bloqueoRequest</con2:body>
+                        </con2:request>
+                        <con2:response>
+                          <con2:body>bloqueoResponse</con2:body>
+                        </con2:response>
+                        <con2:requestTransform>
+                          <con2:assign varName="bloqueoRequest">
+                            <con1:id>_ActionId-6776084542434479367-28c94254.14f4259fd3e.-6d56</con1:id>
+                            <con2:expr>
+                              <con1:xqueryTransform>
+                                <con1:resource ref="ITEL/OCS/SOI/Resources/XQueries/bloquearSuscriptorOCS_Req_ejecutarbloqueoRecargaOCS"/>
+                                <con1:param name="input_Parameters1">
+                                  <con1:path>$body/bloq:Input_Parameters</con1:path>
+                                </con1:param>
+                              </con1:xqueryTransform>
+                            </con2:expr>
+                          </con2:assign>
+                        </con2:requestTransform>
+                        <con2:responseTransform/>
+                      </con2:wsCallout>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:default/>
+                </con2:ifThenElse>
+              </con2:actions>
+            </con2:case>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>exists($body/bloq:Input_Parameters/BLOQUEO_GENERAL)
+and data($body/bloq:Input_Parameters/BLOQUEO_GENERAL) = ('true','false')</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:wsCallout>
+                  <con1:id>_ActionId-6776084542434479367-28c94254.14f4259fd3e.-6d41</con1:id>
+                  <con2:service xsi:type="ref:ProxyRef" ref="ITEL/OCS/AIR/Proxies/actualizarBloqueoTemporalOCSLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con2:operation>actualizarBloqueoTemporal</con2:operation>
+                  <con2:request>
+                    <con2:body>$bloqueoTemporalRequest</con2:body>
+                  </con2:request>
+                  <con2:response>
+                    <con2:body>bloqueoTemporalResponse</con2:body>
+                  </con2:response>
+                  <con2:requestTransform>
+                    <con2:assign varName="bloqueoTemporalRequest">
+                      <con1:id>_ActionId-6776084542434479367-28c94254.14f4259fd3e.-6ca8</con1:id>
+                      <con2:expr>
+                        <con1:xqueryTransform>
+                          <con1:resource ref="ITEL/OCS/SOI/Resources/XQueries/bloquearSuscriptorOCS_Req_ejecutarbloqueoTemporalOCS"/>
+                          <con1:param name="input_Parameters1">
+                            <con1:path>$body/bloq:Input_Parameters</con1:path>
+                          </con1:param>
+                        </con1:xqueryTransform>
+                      </con2:expr>
+                    </con2:assign>
+                  </con2:requestTransform>
+                  <con2:responseTransform/>
+                </con2:wsCallout>
+              </con2:actions>
+            </con2:case>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>exists($body/bloq:Input_Parameters/BLOQUEO_FRAUDE)
+and data($body/bloq:Input_Parameters/BLOQUEO_FRAUDE) = ('true','false')</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:wsCallout>
+                  <con1:id>_ActionId-6776084542434479367-28c94254.14f4259fd3e.-6d32</con1:id>
+                  <con2:service xsi:type="ref:ProxyRef" ref="ITEL/OCS/AIR/Proxies/actualizarBloqueoRecargaOCSLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con2:operation>actualizarBloqueoRecarga</con2:operation>
+                  <con2:request>
+                    <con2:body>$bloqueoRequest</con2:body>
+                  </con2:request>
+                  <con2:response>
+                    <con2:body>bloqueoResponse</con2:body>
+                  </con2:response>
+                  <con2:requestTransform>
+                    <con2:assign varName="bloqueoRequest">
+                      <con1:id>_ActionId-6776084542434479367-28c94254.14f4259fd3e.-6c54</con1:id>
+                      <con2:expr>
+                        <con1:xqueryTransform>
+                          <con1:resource ref="ITEL/OCS/SOI/Resources/XQueries/bloquearSuscriptorOCS_Req_ejecutarbloqueoRecargaOCS"/>
+                          <con1:param name="input_Parameters1">
+                            <con1:path>$body/bloq:Input_Parameters</con1:path>
+                          </con1:param>
+                        </con1:xqueryTransform>
+                      </con2:expr>
+                    </con2:assign>
+                  </con2:requestTransform>
+                  <con2:responseTransform/>
+                </con2:wsCallout>
+              </con2:actions>
+            </con2:case>
+            <con2:default/>
+          </con2:ifThenElse>
+          <con2:replace varName="body" contents-only="true">
+            <con1:id>_ActionId-6776084542434479367-28c94254.14f4259fd3e.-71b5</con1:id>
+            <con2:expr>
+              <con1:xqueryTransform>
+                <con1:resource ref="ITEL/OCS/SOI/Resources/XQueries/bloquearSuscriptorOCS_Res"/>
+                <con1:param name="wS_Result1">
+                  <con1:path>if( fn:empty( $bloqueoResponse) ) then
+	&lt;act:WS_Result 	xmlns:act="http://www.comcel.com.co/ActualizarBloqueoRecargaOCS/"/>
+else
+	$bloqueoResponse</con1:path>
+                </con1:param>
+                <con1:param name="wS_Result2">
+                  <con1:path>if( fn:empty( $bloqueoTemporalResponse) ) then
+	&lt;act:WS_Result 	xmlns:act="http://www.comcel.com.co/ActualizarBloqueoTemporalOCS/"/>
+else
+	$bloqueoTemporalResponse</con1:path>
+                </con1:param>
+              </con1:xqueryTransform>
+            </con2:expr>
+          </con2:replace>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="PipelinePairNode1_response"/>
+    <con:pipeline type="error" name="_onErrorHandler-1528284064515419493--790d2c7e.139492373e2.-7fa7">
+      <con:stage name="error">
+        <con:context/>
+        <con:actions>
+          <con2:replace contents-only="true" varName="body">
+            <con1:id>_ActionId-1528284064515419493--790d2c7e.139492373e2.-7f8a</con1:id>
+            <con2:expr>
+              <con1:xqueryTransform>
+                <con1:resource ref="ITEL/OCS/SOI/Resources/XQueries/bloquearSuscriptorOCSSOI_Error"/>
+                <con1:param name="mensaje">
+                  <con1:path>$fault/ctx:reason/text()</con1:path>
+                </con1:param>
+                <con1:param name="descripcion">
+                  <con1:path>"Error etapa de validacion"</con1:path>
+                </con1:param>
+                <con1:param name="codigo">
+                  <con1:path>"40"</con1:path>
+                </con1:param>
+              </con1:xqueryTransform>
+            </con2:expr>
+          </con2:replace>
+          <con1:reply>
+            <con1:id>_ActionId-1528284064515419493--790d2c7e.139492373e2.-7f63</con1:id>
+          </con1:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="error" name="_onErrorHandler-6776084542434479367-28c94254.14f4259fd3e.-7336">
+      <con:stage name="stage1">
+        <con:context/>
+        <con:actions>
+          <con2:replace varName="body" contents-only="true">
+            <con1:id>_ActionId-6776084542434479367-28c94254.14f4259fd3e.-730e</con1:id>
+            <con2:expr>
+              <con1:xqueryTransform>
+                <con1:resource ref="ITEL/OCS/SOI/Resources/XQueries/bloquearSuscriptorOCSSOI_Error"/>
+                <con1:param name="codigo">
+                  <con1:path>"20"</con1:path>
+                </con1:param>
+                <con1:param name="descripcion">
+                  <con1:path>"Error etapa de routing"</con1:path>
+                </con1:param>
+                <con1:param name="mensaje">
+                  <con1:path>$fault/ctx:reason/text()</con1:path>
+                </con1:param>
+              </con1:xqueryTransform>
+            </con2:expr>
+          </con2:replace>
+          <con1:reply>
+            <con1:id>_ActionId-6776084542434479367-28c94254.14f4259fd3e.-72f6</con1:id>
+          </con1:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:flow>
+      <con:pipeline-node name="PipelinePairNode1">
+        <con:request>PipelinePairNode1_request</con:request>
+        <con:response>PipelinePairNode1_response</con:response>
+      </con:pipeline-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

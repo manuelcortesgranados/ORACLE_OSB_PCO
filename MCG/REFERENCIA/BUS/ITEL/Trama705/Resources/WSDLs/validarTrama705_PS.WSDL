@@ -1,0 +1,36 @@
+<wsdl:definitions name="ValidarTrama705" targetNamespace="http://www.comcel.com.co/ValidarTrama705/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.comcel.com.co/ValidarTrama705/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<wsdl:types>
+		<schema xmlns="http://www.w3.org/2001/XMLSchema">
+			<import namespace="http://www.comcel.com.co/ValidarTrama705/" schemaLocation="../Schemas/PS_ITEL_VALIDARTRAMA705.xsd"/>
+		</schema>
+	</wsdl:types>
+	<wsdl:message name="Input_Parameters">
+		<wsdl:part element="tns:Input_Parameters" name="Input_Parameters"/>
+	</wsdl:message>
+	<wsdl:message name="WS_Result">
+		<wsdl:part element="tns:WS_Result" name="WS_Result"/>
+	</wsdl:message>
+	<wsdl:portType name="ValidarTrama705">
+		<wsdl:operation name="validarTrama705">
+			<wsdl:input message="tns:Input_Parameters"/>
+			<wsdl:output message="tns:WS_Result"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="ValidarTrama705SOAP" type="tns:ValidarTrama705">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="validarTrama705">
+			<soap:operation soapAction="http://www.comcel.com.co/ValidarTrama705/validarTrama705"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="ValidarTrama705">
+		<wsdl:port binding="tns:ValidarTrama705SOAP" name="ValidarTrama705SOAP">
+			<soap:address location="http://www.comcel.com.co/"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

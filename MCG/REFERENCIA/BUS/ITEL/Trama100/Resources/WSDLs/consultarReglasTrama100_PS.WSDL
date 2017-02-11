@@ -1,0 +1,53 @@
+<wsdl:definitions name="consultarReglasTrama100_PS" targetNamespace="http://www.comcel.com.co/consultarReglasTrama100_PS/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.comcel.com.co/consultarReglasTrama100_PS/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsd1="http://www.comcel.com.co/ConsultarReglasTrama100/">
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://www.comcel.com.co/consultarReglasTrama100_PS/">
+			<xsd:element name="NewOperation">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="in" type="xsd:string"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="NewOperationResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="out" type="xsd:string"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:schema>
+		<xsd:schema>
+			<xsd:import namespace="http://www.comcel.com.co/ConsultarReglasTrama100/" schemaLocation="../Schemas/PS_ITEL_CONSULTARREGLASTRAMA100.xsd">
+			</xsd:import>
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="consultarReglasTrama100Request">
+		<wsdl:part element="xsd1:Input_Parameters" name="Input_Parameters"/>
+	</wsdl:message>
+	<wsdl:message name="consultarReglasTrama100Response">
+		<wsdl:part element="xsd1:WS_Result" name="WS_Result"/>
+	</wsdl:message>
+	<wsdl:portType name="consultarReglasTrama100_PS">
+		<wsdl:operation name="consultarReglasTrama100">
+			<wsdl:input message="tns:consultarReglasTrama100Request"/>
+			<wsdl:output message="tns:consultarReglasTrama100Response"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="consultarReglasTrama100_PSSOAP" type="tns:consultarReglasTrama100_PS">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="consultarReglasTrama100">
+			<soap:operation soapAction="http://www.comcel.com.co/consultarReglasTrama100_PS/consultarReglasTrama100"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="consultarReglasTrama100_PS">
+		<wsdl:port binding="tns:consultarReglasTrama100_PSSOAP" name="consultarReglasTrama100_PSSOAP">
+			<soap:address location="http://www.comcel.com.co/"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

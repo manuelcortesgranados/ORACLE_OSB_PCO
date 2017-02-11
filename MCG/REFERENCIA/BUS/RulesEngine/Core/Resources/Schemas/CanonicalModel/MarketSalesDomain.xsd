@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.claro.com.co/rulesEngine/canonicalModel/MarketSalesDomain"
+	xmlns:msd="http://www.claro.com.co/rulesEngine/canonicalModel/MarketSalesDomain">
+	<annotation>
+		<documentation>
+			<![CDATA[
+			Canonical representation of the SalesChannel
+			]]>
+		</documentation>
+	</annotation>
+
+	<complexType name="SalesChannel">
+		<sequence>
+			<element name="id" type="integer" minOccurs="0"/>
+			<element name="code" type="string" minOccurs="0"/>
+			<element name="description" type="string" minOccurs="0"/>
+		</sequence>
+	</complexType>
+</schema>

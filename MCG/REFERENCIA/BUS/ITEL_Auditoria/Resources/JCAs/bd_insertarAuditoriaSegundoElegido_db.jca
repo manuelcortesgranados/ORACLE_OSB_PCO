@@ -1,0 +1,14 @@
+<adapter-config name="bd_insertarAuditoriaSegundoElegido" adapter="Database Adapter" wsdlLocation="../WSDLs/insertarAuditoriaSegundoElegido_BD.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/DB/ITEL_SOA" UIConnectionName="desarrollo" adapterRef=""/>
+  <endpoint-interaction portType="bd_insertarAuditoriaSegundoElegido_ptt" operation="bd_insertarAuditoriaSegundoElegido">
+    <interaction-spec className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
+      <property name="PackageName" value="PKG_SOA_ITEL"/>
+      <property name="ProcedureName" value="PRC_INSERT_AUDITORIA_SELEGIDO"/>
+      <property name="QueryTimeout" value="1"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+    <output/>
+  </endpoint-interaction>
+
+</adapter-config>

@@ -1,0 +1,43 @@
+<wsdl:definitions name="validateImeiDigitVerify"
+	targetNamespace="http://www.claro.com.co/rulesEngine/validateImeiDigitVerify"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:tns="http://www.claro.com.co/rulesEngine/validateImeiDigitVerify"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<wsdl:types>
+		<schema xmlns="http://www.w3.org/2001/XMLSchema">
+			<import namespace="http://www.claro.com.co/rulesEngine/validateImeiDigitVerify"
+				schemaLocation="../Schemas/PS_VALIDATEIMEIDIGITVERIFY.xsd" />
+		</schema>
+	</wsdl:types>
+	<wsdl:message name="Input_Parameters">
+		<wsdl:part element="tns:Input_Parameters" name="Input_Parameters" />
+	</wsdl:message>
+	<wsdl:message name="WS_Result">
+		<wsdl:part element="tns:WS_Result" name="WS_Result" />
+	</wsdl:message>
+	<wsdl:portType name="validateImeiDigitVerifyInterface">
+		<wsdl:operation name="validateImeiDigitVerify">
+			<wsdl:input message="tns:Input_Parameters" />
+			<wsdl:output message="tns:WS_Result" />
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="validateImeiDigitVerifySOAP" type="tns:validateImeiDigitVerifyInterface">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="validateImeiDigitVerify">
+			<soap:operation
+				soapAction="http://www.claro.com.co/rulesEngine/validateImeiDigitVerify" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="validateImeiDigitVerify">
+		<wsdl:port binding="tns:validateImeiDigitVerifySOAP" name="validateImeiDigitVerifySOAP">
+			<soap:address location="http://www.claro.com.co/" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

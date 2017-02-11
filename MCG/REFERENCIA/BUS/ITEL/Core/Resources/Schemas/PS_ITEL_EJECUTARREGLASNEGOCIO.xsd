@@ -1,0 +1,90 @@
+<xs:schema targetNamespace="http://www.comcel.com.co/EjecutarReglasNegocio/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.comcel.com.co/EjecutarReglasNegocio/" xmlns:oper="http://www.comcel.com.co/IN/OperacionCorba" xmlns:oper2="http://www.comcel.com.co/OCS/OperacionOCS_AIR" xmlns:oper3="http://www.comcel.com.co/OCS/OperacionCorbaOCS" xmlns:oper4="http://webapps.online.ericsson.com">
+	
+	<xs:import namespace="http://www.comcel.com.co/IN/OperacionCorba" schemaLocation="../../../IN/Resources/Schemas/DA_ITEL_OPERACION_CORBA.xsd"/>
+		
+	<xs:import namespace="http://www.comcel.com.co/OCS/OperacionOCS_AIR" schemaLocation="../../../OCS/AIR/Resources/Schemas/DA_ITEL_OPERACION_OCS_AIR.xsd"/>	
+		
+	<xs:import namespace="http://www.comcel.com.co/OCS/OperacionCorbaOCS" schemaLocation="../../../OCS/SOI/Resources/Schemas/DA_ITEL_OPERACION_OCS_SOI.xsd"/>
+	
+	<xs:import namespace="http://webapps.online.ericsson.com" schemaLocation="../../../OCS/OLM/Resources/Schemas/DA_ITEL_OPERACION_SERVICE_OLM.xsd"/>
+		
+	
+	<xs:element name="Input_Parameters" type="tns:Input_Paramaters"/>
+	<xs:element name="WS_Result" type="tns:WS_Result"/>
+
+	<xs:complexType name="Input_Paramaters">
+		<xs:sequence>
+			<xs:element name="METODO" type="xs:string"/>
+			<xs:element name="MIN_DESTINO" type="xs:string"/>
+			<xs:element name="MIN_ORIGEN" type="xs:string"/>
+			<xs:element name="IN_DESTINO" type="xs:string"/>
+			<xs:element name="IN_ORIGEN" type="xs:string"/>
+			<xs:element name="PREFIJO" type="xs:string"/>
+			<xs:element name="CONSECUTIVO" type="xs:string"/>
+			<xs:element name="CONTRATO" type="xs:string"/>
+			<xs:element name="CONTRATOESPOSTPAGO" type="xs:string"/>
+			<xs:element name="CATEGORIA" type="xs:string"/>
+			<xs:element name="CARGAINICIAL" type="xs:string"/>
+			<xs:element name="BLOQUEA" type="xs:string"/>
+			<xs:element name="VIGENCIA" type="xs:string"/>
+			<xs:element name="PARAMETROS_TRAMA" type="tns:parametrosType"/>
+			<xs:element name="TIEMPO_INICIO" type="xs:dateTime"/>
+			<xs:element name="TIMEOUT" type="xs:integer"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="WS_Result">
+		<xs:sequence>
+			<xs:element name="CODIGO" type="xs:string"/>
+			<xs:element name="MENSAJE" type="tns:resultadoType"/>
+			<xs:element name="DESCRIPCION" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="resultadoType">
+		<xs:sequence>
+			<xs:element name="PARAMETROS_REGLAS" type="tns:parametrosType"/>
+			<xs:element name="SUSCRIPTOR_DESTINO" type="oper:Subscriber"/>
+			<xs:element name="SUSCRIPTOR_ORIGEN" type="oper:Subscriber"/>
+			<xs:element name="DURREGLASNEGOCIO" type="xs:integer"/>
+			<xs:element name="DURSUSCRIPTOR" type="xs:integer"/>
+			<xs:element name="SUSCRIPTOR_OCS" type="tns:suscriptorOCSType" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="clusterDestino" type="xs:string"/>
+		<xs:attribute name="clusterOrigen" type="xs:string"/>
+	</xs:complexType>
+	
+	<xs:complexType name="parametrosType">
+		<xs:sequence>
+			<xs:element name="PARAMETRO" type="tns:parametroType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="parametroType">
+		<xs:sequence>
+			<xs:element name="NOMBRE" type="xs:string"/>
+			<xs:element name="TIPO" type="xs:string"/>
+			<xs:element name="VALOR" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="suscriptorOCSType">
+		<xs:sequence>
+			<xs:element name="BALANCES" type="oper2:AccountsData" minOccurs="0"/>
+			<xs:element name="DATOS_SUSCRIPTOR" type="oper3:SubscriberFinal" minOccurs="0"/>
+			<xs:element name="DATOS_CONTRATO" type="tns:contratoType" minOccurs="0"/>
+			<xs:element name="FAF_LIST" type="oper2:fafInformationListDetail" minOccurs="0"/>
+			<xs:element name="DATOS_SUSCRIPCION" type="oper4:dsmnResponse" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="contratoType">
+		<xs:sequence>
+			<xs:element name="CONTRATO" type="xs:string"/>
+			<xs:element name="PROVIDER" type="xs:decimal"/>
+			<xs:element name="TARIFF" type="xs:decimal"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+		
+</xs:schema>

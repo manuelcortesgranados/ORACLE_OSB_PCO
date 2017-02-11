@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://ericsson.com/services/ws_cma3/contractofferswrite"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:sessionchange="http://ericsson.com/services/ws_cma3/sessionchange"
+	xmlns:tns="http://ericsson.com/services/ws_cma3/contractofferswrite"
+	elementFormDefault="qualified">
+	
+	<xs:import schemaLocation="DA_ITEL_OPERACION_OCS_ECMS_SESSION.xsd" namespace="http://ericsson.com/services/ws_cma3/sessionchange" />
+	<xs:element name="contractOffersWriteRequest" type="tns:contractOffersWriteRequest"/>
+
+	<xs:complexType name="pAMEntity">
+		<xs:all>
+			<xs:element name="privateKey" type="xs:long" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+																&lt;p&gt;Identifier of a PAM Class.&lt;/p&gt;
+														</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="publicKey" type="xs:integer" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+																&lt;p&gt;External identifier of a PAM Class.&lt;/p&gt;
+														</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="pAMPeriodRelativeDatesDTO">
+		<xs:all>
+			<xs:annotation>
+				<xs:documentation>
+												&lt;p&gt;External identifier of a PAM Schedule.&lt;/p&gt;
+										</xs:documentation>
+			</xs:annotation>
+			<xs:element name="pamClass" type="tns:pAMEntity" minOccurs="0"/>
+			<xs:element name="pamSchedule" type="tns:pAMEntity" minOccurs="0"/>
+			<xs:element name="startPamPeriodIndicator" type="xs:integer" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+													&lt;p&gt;The start PAM indicator which defines the start period.&lt;/p&gt;
+											</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="expiryPamPeriodIndicator" type="xs:integer" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+													&lt;p&gt;The expiry PAM indicator which defines the end period.&lt;/p&gt;
+											</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="referenceDTO">
+		<xs:all>
+			<xs:element name="privateKey" type="xs:long" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+													&lt;p&gt;Contract id &lt;/p&gt;
+											</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="publicKey" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+													&lt;p&gt;Public key of the contract&lt;/p&gt;
+											</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="contractOffersWriteInputDTO">
+		<xs:all>
+			<xs:annotation>
+				<xs:documentation>
+									&lt;p&gt;Identifies a contract with the public or private key.&lt;/p&gt;
+							</xs:documentation>
+			</xs:annotation>
+			<xs:element name="contract" type="tns:referenceDTO" minOccurs="0"/>
+			<xs:element name="offerID" type="xs:long" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+										&lt;p&gt;Identifier of the offer.&lt;/p&gt;
+								</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="offerExternalKey" type="xs:integer" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+										&lt;p&gt;Public key of the offer&lt;/p&gt;
+								</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="productID" type="xs:integer" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+										&lt;p&gt;Identifier of the product. It must be set only when an action has to be performed on a product.&lt;/p&gt;
+								</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="offerAction" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>
+										&lt;p&gt;Action to be performed on the offer. Possible values are:
+										&lt;ul&gt;&lt;li&gt;A = Add an offer to the contract.&lt;/li&gt;&lt;li&gt;U = Update an offer of a contract.&lt;/li&gt;&lt;li&gt;D = Delete an offer from a contract.&lt;/li&gt;&lt;li&gt;C = Advanced creation/modification of an offer of a contract.&lt;/li&gt;&lt;/ul&gt;
+										&lt;/p&gt;
+								</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="offerStartDate" type="xs:dateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+										&lt;p&gt;The start date of the offer. This field is must for Update Offer Action&lt;/p&gt;
+								</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="offerExpiryDate" type="xs:dateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+										&lt;p&gt;The expiry date of the offer.&lt;/p&gt;
+								</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="pamPeriod" type="tns:pAMPeriodRelativeDatesDTO" minOccurs="0"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="inputAttributes">
+		<xs:all>
+			<xs:element name="contractOffersWriteInput" type="tns:contractOffersWriteInputDTO" minOccurs="0"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="contractOffersWriteRequest">
+		<xs:all>
+			<xs:element name="inputAttributes" type="tns:inputAttributes" minOccurs="0"/>
+			<xs:element name="sessionChangeRequest" type="sessionchange:sessionChangeRequest" minOccurs="0"/>
+		</xs:all>
+	</xs:complexType>
+
+</schema>

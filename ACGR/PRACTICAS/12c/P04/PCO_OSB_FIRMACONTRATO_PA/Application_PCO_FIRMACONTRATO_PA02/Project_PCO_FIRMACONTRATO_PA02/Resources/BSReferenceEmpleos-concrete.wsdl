@@ -1,0 +1,15 @@
+<wsdl:definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/Application_PCO_FIRMACONTRATO_PA02/Project_PCO_FIRMACONTRATO_PA02/BSReferenceEmpleos" name="BSReferenceEmpleos-concrete" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <wsdl:import location="BSReferenceEmpleos.wsdl" namespace="http://xmlns.oracle.com/pcbpel/adapter/db/Application_PCO_FIRMACONTRATO_PA02/Project_PCO_FIRMACONTRATO_PA02/BSReferenceEmpleos"/>
+    <wsdl:binding name="BSReferenceEmpleos_ptt-binding" type="bsr:BSReferenceEmpleos_ptt" xmlns:bsr="http://xmlns.oracle.com/pcbpel/adapter/db/Application_PCO_FIRMACONTRATO_PA02/Project_PCO_FIRMACONTRATO_PA02/BSReferenceEmpleos">
+        <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+        <wsdl:operation name="BSReferenceEmpleos">
+            <soap:operation soapAction="BSReferenceEmpleos"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+</wsdl:definitions>

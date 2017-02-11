@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.claro.com.co/rulesEngine/getInternalCreditInformation"
+	xmlns:tns="http://www.claro.com.co/rulesEngine/getInternalCreditInformation"
+	xmlns:cd="http://www.claro.com.co/rulesEngine/canonicalModel/CustomerDomain"
+	xmlns:cbe="http://www.claro.com.co/rulesEngine/canonicalModel/CommonBusinessEntities">	
+	
+    <import namespace="http://www.claro.com.co/rulesEngine/canonicalModel/CommonBusinessEntities"
+		schemaLocation="../../../Core/Resources/Schemas/CanonicalModel/CommonBusinessEntities.xsd" />
+    
+  <import namespace="http://www.claro.com.co/rulesEngine/canonicalModel/CustomerDomain"
+		schemaLocation="../../../Core/Resources/Schemas/CanonicalModel/CustomerDomain.xsd" />
+    
+	<element name="Input_Parameters" type="tns:Input_Parameters" />
+	<element name="WS_Result" type="tns:WS_Result" />
+
+	<complexType name="Input_Parameters">
+		<sequence>
+			<element name="customer" type="cd:Customer" />
+			<element name="parameterCollection" type="cbe:ParameterCollection" />
+		</sequence>
+	</complexType>
+
+	<complexType name="WS_Result">
+		<sequence>
+			<element name="code" type="string" />
+			<element name="message" type="tns:responseType" />
+			<element name="description" type="string" />
+		</sequence>
+	</complexType>
+
+	<complexType name="responseType">
+		<sequence>
+			<element name="customerBillingBehavior" type="cd:CustomerBillingBehavior" />
+		</sequence>
+	</complexType>
+
+</schema>

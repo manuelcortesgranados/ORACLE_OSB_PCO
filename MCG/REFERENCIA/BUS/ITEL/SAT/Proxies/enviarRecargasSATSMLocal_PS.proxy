@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config">
+  <ser:coreEntry isProxy="true" isEnabled="true">
+    <ser:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config">
+      <con:wsdl ref="ITEL/SAT/Resources/WSDLs/enviarRecargasSATSM_PS"/>
+      <con:binding>
+        <con:name>EnviarRecargasSATSMSOAP</con:name>
+        <con:namespace>http://www.comcel.com.co/EnviarRecargasSATSM/</con:namespace>
+      </con:binding>
+      <con:selector type="SOAP body"/>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+    <ser:ws-policy>
+      <ser:binding-mode>wsdl-policy-attachments</ser:binding-mode>
+    </ser:ws-policy>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>local</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:inbound-properties/>
+    <tran:all-headers>true</tran:all-headers>
+  </ser:endpointConfig>
+  <ser:router>
+    <con:pipeline type="request" name="PipelinePairNode1_request">
+      <con:stage name="validacion" errorHandler="_onErrorHandler-5430437882278550258-6d08e9e5.157d83a534f.-7c48">
+        <con:context xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config">
+          <con1:varNsDecl namespace="http://www.claro.com.co/AprovisionadorSOA/addSubscriptionToSubscriber/" prefix="add"/>
+          <con1:varNsDecl namespace="http://www.claro.com.co/AprovisionadorSOA/provisionPaqueteDatosRTC/" prefix="prov"/>
+          <con1:varNsDecl prefix="prov1" namespace="http://www.comcel.com.co/ITEL/provisionPaqueteDatosRTC/"/>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/ProvisionPaqueteDatosRTC/" prefix="prov2"/>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/ProvisionPaqueteDatosSM/" prefix="prov3"/>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/SuscriptionAddRequestSM/" prefix="sus"/>
+        </con:context>
+        <con:actions xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config">
+          <con4:validate xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config">
+            <con1:id>_ActionId-5430437882278550258-6d08e9e5.157d83a534f.-7c4c</con1:id>
+            <con4:schema ref="ITEL/SAT/Resources/Schemas/PS_ENVIAR_RECARGAS_SAT_SM"/>
+            <con6:schemaElement xmlns:ins="http://www.claro.com.co/AprovisionadorSOA/insertarRegistroAuditoria/" xmlns:ins1="http://www.claro.com.co/AprovisionadorSOA/insertarRegistroRepositorio/" xmlns:con4="http://www.claro.com.co/AprovisionadorSOA/consultarResgistrosCICLOP9/" xmlns:con5="http://www.claro.com.co/AprovisionadorSOA/consultarAuditoriaCICLOP9/" xmlns:get="http://www.claro.com.co/AprovisionadorSOA/getActiveSubscriberProductsByMSISDN/" xmlns:add="http://www.claro.com.co/AprovisionadorSOA/addSubscriptionToSubscriber/" xmlns:prov="http://www.claro.com.co/AprovisionadorSOA/provisionPaqueteDatosRTC/" xmlns:prov1="http://www.comcel.com.co/ITEL/provisionPaqueteDatosRTC/" xmlns:prov2="http://www.comcel.com.co/ProvisionPaqueteDatosRTC/" xmlns:prov3="http://www.comcel.com.co/ProvisionPaqueteDatosSM/" xmlns:sus="http://www.comcel.com.co/SuscriptionAddRequestSM/" xmlns:env1="http://www.comcel.com.co/EnviarRecargasSATSM/" xmlns:con6="http://www.bea.com/wli/sb/stages/transform/config">env1:Input_Parameter</con6:schemaElement>
+            <con4:varName>body</con4:varName>
+            <con4:location>
+              <con1:xpathText>./*:Input_Parameter</con1:xpathText>
+            </con4:location>
+            <con4:resultVarName/>
+          </con4:validate>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="PipelinePairNode1_response"/>
+    <con:pipeline type="error" name="_onErrorHandler-5430437882278550258-6d08e9e5.157d83a534f.-7c48">
+      <con:stage name="error">
+        <con:context xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+        <con:actions xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config">
+          <con4:replace contents-only="true" varName="body" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config">
+            <con1:id>_ActionId-5430437882278550258-6d08e9e5.157d83a534f.-7b9f</con1:id>
+            <con4:expr>
+              <con1:xqueryTransform>
+                <con1:resource ref="ITEL/SAT/Resources/XQueries/enviarRecargasSATSM_Error"/>
+                <con1:param name="mensaje">
+                  <con1:path>"Error validando parametros"</con1:path>
+                </con1:param>
+                <con1:param name="descripcion">
+                  <con1:path>data($fault/*:reason)</con1:path>
+                </con1:param>
+                <con1:param name="codigo">
+                  <con1:path>"ERROR"</con1:path>
+                </con1:param>
+              </con1:xqueryTransform>
+            </con4:expr>
+          </con4:replace>
+          <con1:reply>
+            <con1:id>_ActionId-5430437882278550258-6d08e9e5.157d83a534f.-7b9e</con1:id>
+          </con1:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="error" name="_onErrorHandler-5430437882278550258-6d08e9e5.157d83a534f.-7b11">
+      <con:stage name="error">
+        <con:context/>
+        <con:actions>
+          <con1:replace varName="body" contents-only="true">
+            <con2:id>_ActionId-5430437882278550258-6d08e9e5.157d83a534f.-7a89</con2:id>
+            <con1:expr>
+              <con2:xqueryTransform>
+                <con2:resource ref="ITEL/SAT/Resources/XQueries/enviarRecargasSATSM_Error"/>
+                <con2:param name="mensaje">
+                  <con2:path>"Error procesando transaccion"</con2:path>
+                </con2:param>
+                <con2:param name="descripcion">
+                  <con2:path>data($fault/*:reason)</con2:path>
+                </con2:param>
+                <con2:param name="codigo">
+                  <con2:path>if(fn:contains(fn:lower-case(data($fault/*:reason)),'time'))
+then 
+("1") else
+("64")</con2:path>
+                </con2:param>
+              </con2:xqueryTransform>
+            </con1:expr>
+          </con1:replace>
+          <con2:reply>
+            <con2:id>_ActionId-5430437882278550258-6d08e9e5.157d83a534f.-7ac5</con2:id>
+          </con2:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:flow>
+      <con:pipeline-node name="PipelinePairNode1">
+        <con:request>PipelinePairNode1_request</con:request>
+        <con:response>PipelinePairNode1_response</con:response>
+      </con:pipeline-node>
+      <con:route-node name="RouteNode1" error-handler="_onErrorHandler-5430437882278550258-6d08e9e5.157d83a534f.-7b11">
+        <con:context>
+          <con2:varNsDecl namespace="http://www.comcel.com.co/EnviarRecargasSATSM/" prefix="env"/>
+        </con:context>
+        <con:actions>
+          <con3:route>
+            <con2:id>_ActionId-5430437882278550258-6d08e9e5.157d83a534f.-7b78</con2:id>
+            <con3:service ref="ITEL/SAT/Business Services/enviarRecargasSATSM_BS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con3:outboundTransform>
+              <con1:replace contents-only="true" varName="body">
+                <con2:id>_ActionId-5430437882278550258-6d08e9e5.157d83a534f.-7b5c</con2:id>
+                <con1:expr>
+                  <con2:xqueryTransform>
+                    <con2:resource ref="ITEL/SAT/Resources/XQueries/enviarRecargasSATSM_Req"/>
+                    <con2:param name="input_Parameter1">
+                      <con2:path>$body/env:Input_Parameter</con2:path>
+                    </con2:param>
+                  </con2:xqueryTransform>
+                </con1:expr>
+              </con1:replace>
+            </con3:outboundTransform>
+            <con3:responseTransform>
+              <con1:replace varName="body" contents-only="true">
+                <con2:id>_ActionId-5430437882278550258-6d08e9e5.157d83a534f.-7b12</con2:id>
+                <con1:expr>
+                  <con2:xqueryTransform>
+                    <con2:resource ref="ITEL/SAT/Resources/XQueries/enviarRecargasSATSM_Res"/>
+                    <con2:param name="descripcion">
+                      <con2:path>"Se ejecuto correctamente"</con2:path>
+                    </con2:param>
+                    <con2:param name="response">
+                      <con2:path>data($body)</con2:path>
+                    </con2:param>
+                  </con2:xqueryTransform>
+                </con1:expr>
+              </con1:replace>
+            </con3:responseTransform>
+          </con3:route>
+        </con:actions>
+      </con:route-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

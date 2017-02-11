@@ -1,0 +1,34 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://www.claro.com.co/rulesEngine/DualMatrixFact"
+	xmlns:cd="http://www.claro.com.co/rulesEngine/canonicalModel/CustomerDomain"
+	xmlns:cbe="http://www.claro.com.co/rulesEngine/canonicalModel/CommonBusinessEntities"
+	xmlns:pd="http://www.claro.com.co/rulesEngine/canonicalModel/ProductDomain"
+	targetNamespace="http://www.claro.com.co/rulesEngine/DualMatrixFact">
+	<xs:import
+
+		schemaLocation="../../../Core/Resources/Schemas/CanonicalModel/CustomerDomain.xsd"
+		namespace="http://www.claro.com.co/rulesEngine/canonicalModel/CustomerDomain" />
+
+	<xs:import
+		schemaLocation="../../../Core/Resources/Schemas/CanonicalModel/CommonBusinessEntities.xsd"
+		namespace="http://www.claro.com.co/rulesEngine/canonicalModel/CommonBusinessEntities" />
+
+	<xs:import
+		schemaLocation="../../../Core/Resources/Schemas/CanonicalModel/ProductDomain.xsd"
+		namespace="http://www.claro.com.co/rulesEngine/canonicalModel/ProductDomain" />
+
+	<xs:element name="DualMatrixFactRequest" type="tns:DualMatrixFactRequestType" />
+	<xs:element name="DualMatrixFactResponse" type="tns:DualMatrixFactResponseType" />
+	<xs:complexType name="DualMatrixFactRequestType">
+		<xs:sequence>
+			<xs:element name="Customer" type="cd:Customer" />
+			<xs:element name="Zone" type="cbe:Zone" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DualMatrixFactResponseType">
+		<xs:sequence>
+			<xs:element name="SalesMatrixResult" type="pd:SalesMatrixResult"
+				minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

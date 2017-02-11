@@ -1,0 +1,36 @@
+<wsdl:definitions name="ValidarTrama310" targetNamespace="http://www.comcel.com.co/ValidarTrama310/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.comcel.com.co/ValidarTrama310/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<wsdl:types>
+		<schema xmlns="http://www.w3.org/2001/XMLSchema">
+			<import namespace="http://www.comcel.com.co/ValidarTrama310/" schemaLocation="../Schemas/PS_ITEL_VALIDARTRAMA310.xsd"/>
+		</schema>
+	</wsdl:types>
+	<wsdl:message name="Input_Parameters">
+		<wsdl:part element="tns:Input_Parameters" name="Input_Parameters"/>
+	</wsdl:message>
+	<wsdl:message name="WS_Result">
+		<wsdl:part element="tns:WS_Result" name="WS_Result"/>
+	</wsdl:message>
+	<wsdl:portType name="ValidarTrama310">
+		<wsdl:operation name="validarTrama310">
+			<wsdl:input message="tns:Input_Parameters"/>
+			<wsdl:output message="tns:WS_Result"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="ValidarTrama310SOAP" type="tns:ValidarTrama310">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="validarTrama310">
+			<soap:operation soapAction="http://www.comcel.com.co/ValidarTrama310/validarTrama310"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="ValidarTrama310">
+		<wsdl:port binding="tns:ValidarTrama310SOAP" name="ValidarTrama310SOAP">
+			<soap:address location="http://www.comcel.com.co/"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

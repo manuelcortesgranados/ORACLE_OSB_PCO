@@ -1,0 +1,23 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://www.claro.com.co/rulesEngine/ValidateCfmFact"
+	xmlns:cd="http://www.claro.com.co/rulesEngine/canonicalModel/CustomerDomain"
+	targetNamespace="http://www.claro.com.co/rulesEngine/ValidateCfmFact">
+	
+	<xs:import schemaLocation="../../../Core/Resources/Schemas/CanonicalModel/CustomerDomain.xsd"
+         namespace="http://www.claro.com.co/rulesEngine/canonicalModel/CustomerDomain"/>
+		
+	<xs:element name="ValidateCfmFactRequest" type="tns:ValidateCfmFactRequestType" />
+	<xs:element name="ValidateCfmFactResponse" type="tns:ValidateCfmFactResponseType" />
+	
+	
+	<xs:complexType name="ValidateCfmFactRequestType">
+		<xs:sequence>
+			<xs:element name="Customer" type="cd:Customer" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ValidateCfmFactResponseType">
+		<xs:sequence>
+			<xs:element name="CustomerOrder" type="cd:CustomerOrder" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

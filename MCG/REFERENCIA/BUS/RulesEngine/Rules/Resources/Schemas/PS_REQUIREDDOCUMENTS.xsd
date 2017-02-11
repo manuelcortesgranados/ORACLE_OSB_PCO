@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.claro.com.co/rulesEngine/requiredDocuments"
+	xmlns:tns="http://www.claro.com.co/rulesEngine/requiredDocuments"
+	xmlns:cd="http://www.claro.com.co/rulesEngine/canonicalModel/CustomerDomain"
+	xmlns:cbe="http://www.claro.com.co/rulesEngine/canonicalModel/CommonBusinessEntities"
+	xmlns:pd="http://www.claro.com.co/rulesEngine/canonicalModel/ProductDomain"
+	xmlns:msd="http://www.claro.com.co/rulesEngine/canonicalModel/MarketSalesDomain">
+
+	<import
+		namespace="http://www.claro.com.co/rulesEngine/canonicalModel/CustomerDomain"
+		schemaLocation="../../../Core/Resources/Schemas/CanonicalModel/CustomerDomain.xsd" />
+	<import
+		namespace="http://www.claro.com.co/rulesEngine/canonicalModel/MarketSalesDomain"
+		schemaLocation="../../../Core/Resources/Schemas/CanonicalModel/MarketSalesDomain.xsd" />
+
+	<element name="Input_Parameters" type="tns:Input_Parameters"></element>
+	<element name="WS_Result" type="tns:WS_Result"></element>
+
+	<complexType name="Input_Parameters">
+		<sequence>
+			<element name="zone" type="cbe:Zone" />
+			<element name="customer" type="cd:Customer" />
+			<element name="salesChannel" type="msd:SalesChannel" />
+		</sequence>
+	</complexType>
+
+	<complexType name="WS_Result">
+		<sequence>
+			<element name="code" type="string" />
+			<element name="message" type="tns:responseType" />
+			<element name="description" type="string" />
+		</sequence>
+	</complexType>
+
+	<complexType name="responseType">
+		<sequence>
+			<element name="requiredDocuments" type="pd:RequiredDocuments"
+				minOccurs="0" maxOccurs="unbounded" />
+		</sequence>
+	</complexType>
+
+</schema>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config">
+  <ser:coreEntry isProxy="true" isEnabled="true">
+    <ser:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config">
+      <con:wsdl ref="RulesEngine/Rules/Resources/WSDLs/installmentMatrix_PS"/>
+      <con:port>
+        <con:name>InstallmentMatrixSOAP</con:name>
+        <con:namespace>http://www.claro.com.co/rulesEngine/installmentMatrix</con:namespace>
+      </con:port>
+      <con:selector type="SOAP body"/>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+    <ser:ws-policy>
+      <ser:binding-mode>wsdl-policy-attachments</ser:binding-mode>
+    </ser:ws-policy>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>local</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:inbound-properties/>
+    <tran:all-headers>true</tran:all-headers>
+  </ser:endpointConfig>
+  <ser:router errorHandler="_onErrorHandler-5329648897146782892-4895d682.13ff34ad9d6.-7d11">
+    <con:pipeline type="request" name="PipelinePairNode1_request">
+      <con:stage name="rules">
+        <con:context>
+          <con2:varNsDecl namespace="http://www.claro.com.co/rulesEngine/installmentMatrix" prefix="ins"/>
+        </con:context>
+        <con:actions>
+          <con1:assign varName="namespace">
+            <con2:id>_ActionId-5329648897146782892-4895d682.13ff34ad9d6.-7d16</con2:id>
+            <con1:expr>
+              <con2:xqueryText>fn:namespace-uri($body/*:Input_Parameters)</con2:xqueryText>
+            </con1:expr>
+          </con1:assign>
+          <con1:wsCallout>
+            <con2:id>_ActionId-5329648897146782892-4895d682.13ff34ad9d6.-7d18</con2:id>
+            <con1:service xsi:type="ref:BusinessServiceRef" ref="RulesEngine/Rules/Business Services/installmentMatrix_BS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con1:operation>callFunctionStateless</con1:operation>
+            <con1:request>
+              <con1:body>$callFunctionStatelessRequest</con1:body>
+            </con1:request>
+            <con1:response>
+              <con1:body>callFunctionStatelessResponse</con1:body>
+            </con1:response>
+            <con1:requestTransform>
+              <con1:assign varName="callFunctionStatelessRequest">
+                <con2:id>_ActionId-5329648897146782892-4895d682.13ff34ad9d6.-7cd7</con2:id>
+                <con1:expr>
+                  <con2:xqueryTransform>
+                    <con2:resource ref="RulesEngine/Rules/Resources/XQueries/installmentMatrix_Req"/>
+                    <con2:param name="input_Parameters1">
+                      <con2:path>$body/ins:Input_Parameters</con2:path>
+                    </con2:param>
+                  </con2:xqueryTransform>
+                </con1:expr>
+              </con1:assign>
+            </con1:requestTransform>
+            <con1:responseTransform>
+              <con1:replace varName="body" contents-only="true">
+                <con2:id>_ActionId-5329648897146782892-4895d682.13ff34ad9d6.-7d14</con2:id>
+                <con1:expr>
+                  <con2:xqueryTransform>
+                    <con2:resource ref="RulesEngine/Rules/Resources/XQueries/installmentMatrix_Res"/>
+                    <con2:param name="callFunctionStatelessDecision1">
+                      <con2:path>$callFunctionStatelessResponse</con2:path>
+                    </con2:param>
+                  </con2:xqueryTransform>
+                </con1:expr>
+              </con1:replace>
+            </con1:responseTransform>
+          </con1:wsCallout>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="PipelinePairNode1_response"/>
+    <con:pipeline type="error" name="_onErrorHandler-5329648897146782892-4895d682.13ff34ad9d6.-7d11">
+      <con:stage name="BusinessRulesError">
+        <con:context/>
+        <con:actions>
+          <con1:replace contents-only="true" varName="body">
+            <con2:id>_ActionId-5329648897146782892-4895d682.13ff34ad9d6.-7d10</con2:id>
+            <con1:expr>
+              <con2:xqueryTransform>
+                <con2:resource ref="RulesEngine/Util/Resources/XQueries/genericError"/>
+                <con2:param name="targetNamespace">
+                  <con2:path>$namespace</con2:path>
+                </con2:param>
+                <con2:param name="fault">
+                  <con2:path>$fault</con2:path>
+                </con2:param>
+                <con2:param name="code">
+                  <con2:path>"26"</con2:path>
+                </con2:param>
+              </con2:xqueryTransform>
+            </con1:expr>
+          </con1:replace>
+          <con2:reply>
+            <con2:id>_ActionId-5329648897146782892-4895d682.13ff34ad9d6.-7d0f</con2:id>
+          </con2:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:flow>
+      <con:pipeline-node name="PipelinePairNode1">
+        <con:request>PipelinePairNode1_request</con:request>
+        <con:response>PipelinePairNode1_response</con:response>
+      </con:pipeline-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

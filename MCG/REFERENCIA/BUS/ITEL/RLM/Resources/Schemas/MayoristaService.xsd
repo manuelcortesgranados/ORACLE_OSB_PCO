@@ -1,0 +1,115 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<xs:schema xmlns:tns="http://comcel/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://comcel/">
+
+<xs:element name="Actualizar_saldo" type="tns:Actualizar_saldo" />
+
+<xs:element name="Actualizar_saldoResponse" type="tns:Actualizar_saldoResponse" />
+
+<xs:element name="ConsultaTransaccion" type="tns:ConsultaTransaccion" />
+
+<xs:element name="ConsultaTransaccionResponse" type="tns:ConsultaTransaccionResponse" />
+
+<xs:element name="Consulta_saldo" type="tns:Consulta_saldo" />
+
+<xs:element name="Consulta_saldoResponse" type="tns:Consulta_saldoResponse" />
+
+<xs:element name="existeMayorista" type="tns:existeMayorista" />
+
+<xs:element name="existeMayoristaResponse" type="tns:existeMayoristaResponse" />
+
+<xs:complexType name="Actualizar_saldo">
+<xs:sequence>
+<xs:element name="nit" type="xs:long" />
+<xs:element name="tipo" type="xs:int" />
+<xs:element name="valor" type="xs:long" />
+<xs:element name="Idtransaccion" type="xs:long" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="Actualizar_saldoResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:responseWS" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="responseWS">
+<xs:sequence>
+<xs:element name="actualizar_saldo" type="tns:respuesta" minOccurs="0" />
+<xs:element name="consulta_saldo" type="tns:respuestaSaldo" minOccurs="0" />
+<xs:element name="consulta_transaccion" type="tns:respuestaTransaccion" minOccurs="0" />
+<xs:element name="error_desc" type="xs:string" minOccurs="0" />
+<xs:element name="estado_peticion" type="xs:string" minOccurs="0" />
+<xs:element name="existe_mayorista" type="tns:respuestaExiste" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="respuesta">
+<xs:sequence>
+<xs:element name="cod_respuesta" type="xs:int" minOccurs="0" />
+<xs:element name="msj_respuesta" type="xs:string" minOccurs="0" />
+<xs:element name="saldo_final" type="xs:long" minOccurs="0" />
+<xs:element name="saldo_inicial" type="xs:long" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="respuestaSaldo">
+<xs:sequence>
+<xs:element name="cod_respuesta" type="xs:int" minOccurs="0" />
+<xs:element name="msj_respuesta" type="xs:string" minOccurs="0" />
+<xs:element name="saldo" type="xs:long" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="respuestaTransaccion">
+<xs:sequence>
+<xs:element name="cod_respuesta" type="xs:int" minOccurs="0" />
+<xs:element name="msj_respuesta" type="xs:string" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="respuestaExiste">
+<xs:sequence>
+<xs:element name="existe" type="xs:int" minOccurs="0" />
+<xs:element name="msj_respuesta" type="xs:string" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="ConsultaTransaccion">
+<xs:sequence>
+<xs:element name="idTransaccion" type="xs:long" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="ConsultaTransaccionResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:responseWS" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="Consulta_saldo">
+<xs:sequence>
+<xs:element name="nit" type="xs:long" />
+<xs:element name="tipo" type="xs:int" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="Consulta_saldoResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:responseWS" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="existeMayorista">
+<xs:sequence>
+<xs:element name="nit" type="xs:long" />
+<xs:element name="tipo" type="xs:int" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="existeMayoristaResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:responseWS" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

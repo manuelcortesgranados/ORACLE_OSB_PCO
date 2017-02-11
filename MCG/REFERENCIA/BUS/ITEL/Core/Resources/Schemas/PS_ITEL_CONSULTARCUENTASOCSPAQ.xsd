@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.comcel.com.co/ConsultarCuentasOCS/" 
+	xmlns:tns="http://www.comcel.com.co/ConsultarCuentasOCS/">
+	<xs:element name="Input_Parameters" type="tns:Input_Paramaters" />
+	<xs:element name="WS_Result" type="tns:WS_Result" />
+
+	<xs:complexType name="Input_Paramaters"/>
+
+	<xs:complexType name="WS_Result">
+		<xs:sequence>
+			<xs:element name="CODIGO" type="xs:string" />
+			<xs:element name="MENSAJE" type="tns:respuestaType" />
+			<xs:element name="DESCRIPCION" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="respuestaType">
+		<xs:sequence>
+			<xs:element name="CUENTA" type="xs:string" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	
+	
+</xs:schema>

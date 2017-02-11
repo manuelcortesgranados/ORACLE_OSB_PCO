@@ -1,0 +1,18 @@
+
+/subscriptions/retrieve – All Subscriptions by subscriber identifier
+
+{
+"RetrieveSubscriptionRequest": {
+"authentication": {
+"user": "ITEL",
+"sourceApplicationId": "ITEL",
+"transactionId": "1"
+},
+"subscriberIdentifier": {
+"identifierType": "0",
+"identifierValue": "573708888005"
+},
+"target": "INDIVIDUAL",
+"findBy": "SUBSCRIBER"
+}
+}

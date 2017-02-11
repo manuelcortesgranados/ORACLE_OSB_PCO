@@ -1,0 +1,1709 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:ns1="http://org.apache.axis2/xsd" xmlns:ns="http://axis.brms.hp.com"
+	xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+	xmlns:ax23="http://data.brms.hp.com/xsd" xmlns:ax21="http://axis.brms.hp.com/xsd"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+	targetNamespace="http://axis.brms.hp.com">
+	<wsdl:documentation>BRMSWebService</wsdl:documentation>
+	<wsdl:types>
+		<xs:schema attributeFormDefault="qualified"
+			elementFormDefault="qualified" targetNamespace="http://axis.brms.hp.com/xsd">
+			<xs:complexType name="GenericResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="billingId" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="0" name="errorCode" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="0" name="errorDescription"
+						nillable="true" type="xs:string" />
+					<xs:element minOccurs="0" name="statusCode" type="xs:int" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="SuscriptionRequest">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="isProgrammed" nillable="true"
+						type="xs:boolean" />
+					<xs:element minOccurs="0" name="maxRecurrenceNum" type="xs:int" />
+					<xs:element minOccurs="0" name="messageId" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="0" name="productId" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="0" name="programmedDate"
+						nillable="true" type="xs:string" />
+					<xs:element minOccurs="0" name="recurrence" type="xs:int" />
+					<xs:element minOccurs="0" name="welcomePackageID"
+						nillable="true" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+		</xs:schema>
+		<xs:schema attributeFormDefault="qualified"
+			elementFormDefault="qualified" targetNamespace="http://data.brms.hp.com/xsd">
+			<xs:complexType name="SubscriberProduct">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="activationDate"
+						nillable="true" type="xs:date" />
+					<xs:element minOccurs="0" name="activationMethod"
+						nillable="true" type="xs:string" />
+					<xs:element minOccurs="0" name="chargeflag" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="0" name="expirationDate"
+						nillable="true" type="xs:date" />
+					<xs:element minOccurs="0" name="expirationNotice"
+						nillable="true" type="xs:string" />
+					<xs:element minOccurs="0" name="imsi" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="0" name="mail" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="0" name="productBalance" type="xs:long" />
+					<xs:element minOccurs="0" name="productGroup" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="0" name="productId" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="0" name="programmedFlag"
+						nillable="true" type="xs:string" />
+					<xs:element minOccurs="0" name="qosBalance" type="xs:long" />
+					<xs:element minOccurs="0" name="qosDate" nillable="true"
+						type="xs:date" />
+					<xs:element minOccurs="0" name="qosLimit" type="xs:long" />
+					<xs:element minOccurs="0" name="qosPeriod" type="xs:int" />
+					<xs:element minOccurs="0" name="recurrenceNotice"
+						nillable="true" type="xs:string" />
+					<xs:element minOccurs="0" name="recurrenceNoticeDate"
+						nillable="true" type="xs:date" />
+					<xs:element minOccurs="0" name="recurrenceNumber" type="xs:int" />
+					<xs:element minOccurs="0" name="recurrentFlag" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="0" name="region" type="xs:int" />
+					<xs:element minOccurs="0" name="requestActivationDate"
+						nillable="true" type="xs:date" />
+					<xs:element minOccurs="0" name="requestCancelationDate"
+						nillable="true" type="xs:date" />
+					<xs:element minOccurs="0" name="restrictedFlag"
+						nillable="true" type="xs:string" />
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="services"
+						nillable="true" type="ax23:Service" />
+					<xs:element minOccurs="0" name="statusId" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="0" name="subscriberId" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="0" name="subscriberProductId"
+						nillable="true" type="xs:string" />
+					<xs:element minOccurs="0" name="subscriberType" type="xs:int" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="Service">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="blockSize" type="xs:int" />
+					<xs:element minOccurs="0" name="blockSizeFour" type="xs:int" />
+					<xs:element minOccurs="0" name="blockSizeThree" type="xs:int" />
+					<xs:element minOccurs="0" name="blockSizeTwo" type="xs:int" />
+					<xs:element minOccurs="0" name="initia_credit" type="xs:long" />
+					<xs:element minOccurs="0" name="metadata" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="0" name="min_charge" type="xs:long" />
+					<xs:element minOccurs="0" name="serviceCode" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="0" name="serviceId" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="0" name="serviceName" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="0" name="statusId" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="0" name="subscriptionType" type="xs:int" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="SubscriberProductHistory">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="activationDate"
+						nillable="true" type="xs:date" />
+					<xs:element minOccurs="0" name="activationMethod"
+						nillable="true" type="xs:string" />
+					<xs:element minOccurs="0" name="chargeflag" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="0" name="email" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="0" name="expirationDate"
+						nillable="true" type="xs:date" />
+					<xs:element minOccurs="0" name="expirationNotice"
+						nillable="true" type="xs:string" />
+					<xs:element minOccurs="0" name="imsi" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="0" name="productBalance" type="xs:long" />
+					<xs:element minOccurs="0" name="productGroup" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="0" name="productId" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="0" name="programmedFlag"
+						nillable="true" type="xs:string" />
+					<xs:element minOccurs="0" name="qosBalance" type="xs:long" />
+					<xs:element minOccurs="0" name="qosDate" nillable="true"
+						type="xs:date" />
+					<xs:element minOccurs="0" name="qosLimit" type="xs:long" />
+					<xs:element minOccurs="0" name="qosPeriod" type="xs:int" />
+					<xs:element minOccurs="0" name="recurrentFlag" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="0" name="region" type="xs:int" />
+					<xs:element minOccurs="0" name="requestActivationDate"
+						nillable="true" type="xs:date" />
+					<xs:element minOccurs="0" name="requestCancelationDate"
+						nillable="true" type="xs:date" />
+					<xs:element minOccurs="0" name="restrictedFlag"
+						nillable="true" type="xs:string" />
+					<xs:element minOccurs="0" name="statusId" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="0" name="subscriberId" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="0" name="subscriberProductId"
+						nillable="true" type="xs:string" />
+					<xs:element minOccurs="0" name="subscriberType" type="xs:int" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ServicePriceRel">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="blockPriceFor2G" type="xs:double" />
+					<xs:element minOccurs="0" name="blockPriceFor3G" type="xs:double" />
+					<xs:element minOccurs="0" name="blockSizeFor2G" type="xs:long" />
+					<xs:element minOccurs="0" name="blockSizeFor3G" type="xs:long" />
+					<xs:element minOccurs="0" name="initialCredit" type="xs:long" />
+					<xs:element minOccurs="0" name="minimalCharge" type="xs:long" />
+					<xs:element minOccurs="0" name="roamingBlockPriceFor2G"
+						type="xs:double" />
+					<xs:element minOccurs="0" name="roamingBlockPriceFor3G"
+						type="xs:double" />
+					<xs:element minOccurs="0" name="roamingBlockSizeFor2G"
+						type="xs:long" />
+					<xs:element minOccurs="0" name="roamingBlockSizeFor3G"
+						type="xs:long" />
+					<xs:element minOccurs="0" name="serviceCode" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="0" name="serviceName" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="0" name="subscriberType" type="xs:int" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="Product">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="activationDate"
+						nillable="true" type="xs:date" />
+					<xs:element minOccurs="0" name="activationPrice" type="xs:double" />
+					<xs:element minOccurs="0" name="altNameOne" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="0" name="altNameTwo" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="0" name="bandwidth" type="xs:int" />
+					<xs:element minOccurs="0" name="bandwidthLimited" type="xs:int" />
+					<xs:element minOccurs="0" name="canBeProgrammed"
+						nillable="true" type="xs:string" />
+					<xs:element minOccurs="0" name="canBeRecurrent"
+						nillable="true" type="xs:string" />
+					<xs:element minOccurs="0" name="creationDate" nillable="true"
+						type="xs:date" />
+					<xs:element minOccurs="0" name="duration" type="xs:int" />
+					<xs:element minOccurs="0" name="expirationDate"
+						nillable="true" type="xs:date" />
+					<xs:element minOccurs="0" name="externalProductId"
+						nillable="true" type="xs:string" />
+					<xs:element minOccurs="0" name="futureActivation"
+						nillable="true" type="xs:string" />
+					<xs:element minOccurs="0" name="includedBytes" type="xs:long" />
+					<xs:element minOccurs="0" name="metadata" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="0" name="numberOfRecurrences"
+						type="xs:int" />
+					<xs:element minOccurs="0" name="productGroup" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="0" name="productId" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="0" name="productLabel" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="0" name="productName" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="0" name="productPrice" type="xs:double" />
+					<xs:element minOccurs="0" name="productType" type="xs:int" />
+					<xs:element minOccurs="0" name="qosLimit" type="xs:long" />
+					<xs:element minOccurs="0" name="qosPeriod" type="xs:int" />
+					<xs:element minOccurs="0" name="region" type="xs:int" />
+					<xs:element minOccurs="0" name="roamingFlag" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="0" name="statusId" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="0" name="subscriptionSubtype"
+						type="xs:int" />
+					<xs:element minOccurs="0" name="subscriptionType" type="xs:int" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="PostpaidSubscriberProduct">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="activationDate"
+						nillable="true" type="xs:date" />
+					<xs:element minOccurs="0" name="activationMethod"
+						nillable="true" type="xs:string" />
+					<xs:element minOccurs="0" name="eventBalance" type="xs:long" />
+					<xs:element minOccurs="0" name="expirationDate"
+						nillable="true" type="xs:date" />
+					<xs:element minOccurs="0" name="expirationNotice"
+						nillable="true" type="xs:string" />
+					<xs:element minOccurs="0" name="graceBalance" type="xs:long" />
+					<xs:element minOccurs="0" name="imsi" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="0" name="localCreditBalance"
+						type="xs:double" />
+					<xs:element minOccurs="0" name="mail" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="0" name="maxQosLevel" type="xs:long" />
+					<xs:element minOccurs="0" name="product" nillable="true"
+						type="ax23:PostpaidProduct" />
+					<xs:element minOccurs="0" name="productBalance" type="xs:long" />
+					<xs:element minOccurs="0" name="productGroup" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="0" name="productId" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="0" name="qosBalance" type="xs:long" />
+					<xs:element minOccurs="0" name="qosDate" nillable="true"
+						type="xs:date" />
+					<xs:element minOccurs="0" name="qosFlag" type="xs:long" />
+					<xs:element minOccurs="0" name="qosLimit" type="xs:long" />
+					<xs:element minOccurs="0" name="recurrenceNotice"
+						nillable="true" type="xs:string" />
+					<xs:element minOccurs="0" name="requestActivationDate"
+						nillable="true" type="xs:date" />
+					<xs:element minOccurs="0" name="requestCancelationDate"
+						nillable="true" type="xs:date" />
+					<xs:element minOccurs="0" name="restrictedFlag"
+						nillable="true" type="xs:string" />
+					<xs:element minOccurs="0" name="roamingCreditBalance"
+						type="xs:double" />
+					<xs:element minOccurs="0" name="roamingFlag" type="xs:int" />
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="services"
+						nillable="true" type="ax23:Service" />
+					<xs:element minOccurs="0" name="statusId" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="0" name="subscriberId" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="0" name="subscriberProductId"
+						nillable="true" type="xs:string" />
+					<xs:element minOccurs="0" name="subscriberType" type="xs:int" />
+					<xs:element minOccurs="0" name="usageLimit" type="xs:long" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="PostpaidProduct">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="activationDate"
+						nillable="true" type="xs:date" />
+					<xs:element minOccurs="0" name="additionalBytes" type="xs:long" />
+					<xs:element minOccurs="0" name="altNameOne" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="0" name="altNameTwo" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="0" name="apportionFlag" type="xs:boolean" />
+					<xs:element minOccurs="0" name="creationDate" nillable="true"
+						type="xs:date" />
+					<xs:element minOccurs="0" name="duration" type="xs:int" />
+					<xs:element minOccurs="0" name="expirationDate"
+						nillable="true" type="xs:date" />
+					<xs:element minOccurs="0" name="externalProductId"
+						nillable="true" type="xs:string" />
+					<xs:element minOccurs="0" name="includedBytes" type="xs:long" />
+					<xs:element minOccurs="0" name="includedEvents" type="xs:long" />
+					<xs:element minOccurs="0" name="metadata" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="0" name="productGroup" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="0" name="productId" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="0" name="productName" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="0" name="productPrice" type="xs:double" />
+					<xs:element minOccurs="0" name="productType" type="xs:int" />
+					<xs:element minOccurs="0" name="qosInitValue" type="xs:long" />
+					<xs:element minOccurs="0" name="qosLimit1" type="xs:long" />
+					<xs:element minOccurs="0" name="qosLimit2" type="xs:long" />
+					<xs:element minOccurs="0" name="qosLimit3" type="xs:long" />
+					<xs:element minOccurs="0" name="qosValue1" type="xs:long" />
+					<xs:element minOccurs="0" name="qosValue2" type="xs:long" />
+					<xs:element minOccurs="0" name="qosValue3" type="xs:long" />
+					<xs:element minOccurs="0" name="roamingFlag" type="xs:int" />
+					<xs:element minOccurs="0" name="roundLimit" type="xs:long" />
+					<xs:element minOccurs="0" name="roundUnit" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="0" name="statusId" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="0" name="subscriptionType" type="xs:int" />
+					<xs:element minOccurs="0" name="tarifAdditionalUsage"
+						type="xs:double" />
+					<xs:element minOccurs="0" name="tariffRoundLimit" type="xs:double" />
+					<xs:element minOccurs="0" name="unitOfMeasure" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="0" name="urlRedirect" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="0" name="usageAlerts" nillable="true"
+						type="xs:string" />
+					<xs:element maxOccurs="unbounded" minOccurs="0"
+						name="usageAlertsArray" nillable="true" type="xs:string" />
+					<xs:element maxOccurs="unbounded" minOccurs="0"
+						name="usageAlertsArrayInBytes" nillable="true" type="xs:long" />
+					<xs:element minOccurs="0" name="usageLimit" type="xs:long" />
+					<xs:element minOccurs="0" name="versionDate" nillable="true"
+						type="xs:date" />
+					<xs:element minOccurs="0" name="versionId" type="xs:long" />
+					<xs:element minOccurs="0" name="versionUser" nillable="true"
+						type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ProductGroup">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="description" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="0" name="groupName" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="0" name="productGroupId"
+						nillable="true" type="xs:string" />
+					<xs:element minOccurs="0" name="statusId" nillable="true"
+						type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+		</xs:schema>
+		<xs:schema xmlns:ax24="http://data.brms.hp.com/xsd"
+			xmlns:ax22="http://axis.brms.hp.com/xsd" attributeFormDefault="qualified"
+			elementFormDefault="qualified" targetNamespace="http://axis.brms.hp.com">
+			<xs:import namespace="http://axis.brms.hp.com/xsd" />
+			<xs:import namespace="http://data.brms.hp.com/xsd" />
+			<xs:complexType name="Exception">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="Exception" nillable="true"
+						type="xs:anyType" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="updateUsageLimit">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" name="msisdn" nillable="true"
+							type="xs:string" />
+						<xs:element minOccurs="0" name="usageLimit" type="xs:long" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="updateUsageLimitResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" name="return" nillable="true"
+							type="ax22:GenericResponse" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="updateRecurrence">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" name="suscriptionBill"
+							nillable="true" type="xs:string" />
+						<xs:element minOccurs="0" name="isRecurrence" type="xs:boolean" />
+						<xs:element minOccurs="0" name="applicationId"
+							nillable="true" type="xs:string" />
+						<xs:element minOccurs="0" name="mail" nillable="true"
+							type="xs:string" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="updateRecurrenceResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" name="return" nillable="true"
+							type="ax22:GenericResponse" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="suspendSubscription">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" name="subscriptionBill"
+							nillable="true" type="xs:string" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="suspendSubscriptionResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" name="return" nillable="true"
+							type="ax22:GenericResponse" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="subscriptionMsisdnChange">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" name="oldMsisdn" nillable="true"
+							type="xs:string" />
+						<xs:element minOccurs="0" name="newMsisdn" nillable="true"
+							type="xs:string" />
+						<xs:element minOccurs="0" name="imsi" nillable="true"
+							type="xs:string" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="subscriptionMsisdnChangeResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" name="return" type="xs:boolean" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="subscriberCycleChange">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" name="msisdn" nillable="true"
+							type="xs:string" />
+						<xs:element minOccurs="0" name="newCutOffDate"
+							nillable="true" type="xs:string" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="subscriberCycleChangeResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" name="return" type="xs:boolean" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="sendSmsSubscriberInformation">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" name="msisdn" nillable="true"
+							type="xs:string" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="sendSmsSubscriberInformationResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" name="return" nillable="true"
+							type="ax22:GenericResponse" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="reactivateSubscription">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" name="subscriptionBill"
+							nillable="true" type="xs:string" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="reactivateSubscriptionResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" name="return" nillable="true"
+							type="ax22:GenericResponse" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getSubscriptionStatus">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" name="suscriptionBill"
+							nillable="true" type="xs:string" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getSubscriptionStatusResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" name="return" nillable="true"
+							type="ax24:SubscriberProduct" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getSubscriberProductsByMSISDN">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" name="msisdn" nillable="true"
+							type="xs:string" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getSubscriberProductsByMSISDNResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element maxOccurs="unbounded" minOccurs="0" name="return"
+							nillable="true" type="ax24:SubscriberProduct" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getSubscriberProductsByIMSI">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" name="imsi" nillable="true"
+							type="xs:string" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getSubscriberProductsByIMSIResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element maxOccurs="unbounded" minOccurs="0" name="return"
+							nillable="true" type="ax24:SubscriberProduct" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getSubscriberProductHistoryByMSISDN">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" name="msisdn" nillable="true"
+							type="xs:string" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getSubscriberProductHistoryByMSISDNResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element maxOccurs="unbounded" minOccurs="0" name="return"
+							nillable="true" type="ax24:SubscriberProductHistory" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getSubscriberProductHistoryByIMSI">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" name="imsi" nillable="true"
+							type="xs:string" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getSubscriberProductHistoryByIMSIResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element maxOccurs="unbounded" minOccurs="0" name="return"
+							nillable="true" type="ax24:SubscriberProductHistory" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getServiceInformationForSubscriber">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" name="msisdn" nillable="true"
+							type="xs:string" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getServiceInformationForSubscriberResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element maxOccurs="unbounded" minOccurs="0" name="return"
+							nillable="true" type="ax24:ServicePriceRel" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getProductsByGroup">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" name="groupName" nillable="true"
+							type="xs:string" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getProductsByGroupResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element maxOccurs="unbounded" minOccurs="0" name="return"
+							nillable="true" type="ax24:Product" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getProducts">
+				<xs:complexType>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getProductsResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element maxOccurs="unbounded" minOccurs="0" name="return"
+							nillable="true" type="ax24:Product" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getPostpaidSubscriptionStatus">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" name="suscriptionBill"
+							nillable="true" type="xs:string" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getPostpaidSubscriptionStatusResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" name="return" nillable="true"
+							type="ax24:PostpaidSubscriberProduct" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getPostpaidSubscriberProductsByMSISDN">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" name="msisdn" nillable="true"
+							type="xs:string" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getPostpaidSubscriberProductsByMSISDNResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element maxOccurs="unbounded" minOccurs="0" name="return"
+							nillable="true" type="ax24:PostpaidSubscriberProduct" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getPostpaidSubscriberProductsByIMSI">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" name="imsi" nillable="true"
+							type="xs:string" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getPostpaidSubscriberProductsByIMSIResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element maxOccurs="unbounded" minOccurs="0" name="return"
+							nillable="true" type="ax24:PostpaidSubscriberProduct" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getPostpaidSubscriberProductHistoryByMSISDN">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" name="msisdn" nillable="true"
+							type="xs:string" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getPostpaidSubscriberProductHistoryByMSISDNResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element maxOccurs="unbounded" minOccurs="0" name="return"
+							nillable="true" type="ax24:PostpaidSubscriberProduct" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getPostpaidSubscriberProductHistoryByIMSI">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" name="imsi" nillable="true"
+							type="xs:string" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getPostpaidSubscriberProductHistoryByIMSIResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element maxOccurs="unbounded" minOccurs="0" name="return"
+							nillable="true" type="ax24:PostpaidSubscriberProduct" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getPostpaidProductsByGroup">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" name="groupName" nillable="true"
+							type="xs:string" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getPostpaidProducts">
+				<xs:complexType>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getPostpaidProductsByGroupResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element maxOccurs="unbounded" minOccurs="0" name="return"
+							nillable="true" type="ax24:PostpaidProduct" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getPostpaidProductsResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element maxOccurs="unbounded" minOccurs="0" name="return"
+							nillable="true" type="ax24:PostpaidProduct" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getGroups">
+				<xs:complexType>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getGroupsResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element maxOccurs="unbounded" minOccurs="0" name="return"
+							nillable="true" type="ax24:ProductGroup" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getActiveSubscriberProductsByMSISDN">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" name="msisdn" nillable="true"
+							type="xs:string" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getActiveSubscriberProductsByMSISDNResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element maxOccurs="unbounded" minOccurs="0" name="return"
+							nillable="true" type="ax24:SubscriberProduct" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getActivePostpaidSubscriberProductsByMSISDN">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" name="msisdn" nillable="true"
+							type="xs:string" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getActivePostpaidSubscriberProductsByMSISDNResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element maxOccurs="unbounded" minOccurs="0" name="return"
+							nillable="true" type="ax24:PostpaidSubscriberProduct" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="cancelSubscriptionForSubscriber">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" name="suscriptionBill"
+							nillable="true" type="xs:string" />
+						<xs:element minOccurs="0" name="subscriberId"
+							nillable="true" type="xs:string" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="cancelSubscriptionForSubscriberResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" name="return" nillable="true"
+							type="ax22:GenericResponse" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="addSubscriptionToSubscriber">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" name="msisdn" nillable="true"
+							type="xs:string" />
+						<xs:element minOccurs="0" name="activationRequest"
+							nillable="true" type="ax22:SuscriptionRequest" />
+						<xs:element minOccurs="0" name="applicationId"
+							nillable="true" type="xs:string" />
+						<xs:element minOccurs="0" name="mail" nillable="true"
+							type="xs:string" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="addSubscriptionToSubscriberResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" name="return" nillable="true"
+							type="ax22:GenericResponse" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="getActiveSubscriberProductsByMSISDNRequest">
+		<wsdl:part name="parameters" element="ns:getActiveSubscriberProductsByMSISDN" />
+	</wsdl:message>
+	<wsdl:message name="getActiveSubscriberProductsByMSISDNResponse">
+		<wsdl:part name="parameters"
+			element="ns:getActiveSubscriberProductsByMSISDNResponse" />
+	</wsdl:message>	<!-- <wsdl:message name="getProductsRequest"/> -->
+	<wsdl:message name="getProductsRequest">
+		<wsdl:part name="parameters" element="ns:getProducts" />
+	</wsdl:message>
+	<wsdl:message name="getProductsResponse">
+		<wsdl:part name="parameters" element="ns:getProductsResponse" />
+	</wsdl:message>
+	<wsdl:message name="subscriberCycleChangeRequest">
+		<wsdl:part name="parameters" element="ns:subscriberCycleChange" />
+	</wsdl:message>
+	<wsdl:message name="subscriberCycleChangeResponse">
+		<wsdl:part name="parameters" element="ns:subscriberCycleChangeResponse" />
+	</wsdl:message>
+	<wsdl:message name="updateRecurrenceRequest">
+		<wsdl:part name="parameters" element="ns:updateRecurrence" />
+	</wsdl:message>
+	<wsdl:message name="updateRecurrenceResponse">
+		<wsdl:part name="parameters" element="ns:updateRecurrenceResponse" />
+	</wsdl:message>
+	<wsdl:message name="getSubscriberProductsByIMSIRequest">
+		<wsdl:part name="parameters" element="ns:getSubscriberProductsByIMSI" />
+	</wsdl:message>
+	<wsdl:message name="getSubscriberProductsByIMSIResponse">
+		<wsdl:part name="parameters" element="ns:getSubscriberProductsByIMSIResponse" />
+	</wsdl:message>
+	<wsdl:message name="sendSmsSubscriberInformationRequest">
+		<wsdl:part name="parameters" element="ns:sendSmsSubscriberInformation" />
+	</wsdl:message>
+	<wsdl:message name="sendSmsSubscriberInformationResponse">
+		<wsdl:part name="parameters" element="ns:sendSmsSubscriberInformationResponse" />
+	</wsdl:message>
+	<wsdl:message name="getPostpaidSubscriberProductHistoryByIMSIRequest">
+		<wsdl:part name="parameters"
+			element="ns:getPostpaidSubscriberProductHistoryByIMSI" />
+	</wsdl:message>
+	<wsdl:message name="getPostpaidSubscriberProductHistoryByIMSIResponse">
+		<wsdl:part name="parameters"
+			element="ns:getPostpaidSubscriberProductHistoryByIMSIResponse" />
+	</wsdl:message>
+	<wsdl:message name="getSubscriberProductHistoryByMSISDNRequest">
+		<wsdl:part name="parameters" element="ns:getSubscriberProductHistoryByMSISDN" />
+	</wsdl:message>
+	<wsdl:message name="getSubscriberProductHistoryByMSISDNResponse">
+		<wsdl:part name="parameters"
+			element="ns:getSubscriberProductHistoryByMSISDNResponse" />
+	</wsdl:message>
+	<wsdl:message name="getSubscriptionStatusRequest">
+		<wsdl:part name="parameters" element="ns:getSubscriptionStatus" />
+	</wsdl:message>
+	<wsdl:message name="getSubscriptionStatusResponse">
+		<wsdl:part name="parameters" element="ns:getSubscriptionStatusResponse" />
+	</wsdl:message>
+	<wsdl:message name="addSubscriptionToSubscriberRequest">
+		<wsdl:part name="parameters" element="ns:addSubscriptionToSubscriber" />
+	</wsdl:message>
+	<wsdl:message name="addSubscriptionToSubscriberResponse">
+		<wsdl:part name="parameters" element="ns:addSubscriptionToSubscriberResponse" />
+	</wsdl:message>	<!-- <wsdl:message name="getGroupsRequest"/> -->
+	<wsdl:message name="getGroupsRequest">
+		<wsdl:part name="parameters" element="ns:getGroups" />
+	</wsdl:message>
+	<wsdl:message name="getGroupsResponse">
+		<wsdl:part name="parameters" element="ns:getGroupsResponse" />
+	</wsdl:message>
+	<wsdl:message name="getProductsByGroupRequest">
+		<wsdl:part name="parameters" element="ns:getProductsByGroup" />
+	</wsdl:message>
+	<wsdl:message name="getProductsByGroupResponse">
+		<wsdl:part name="parameters" element="ns:getProductsByGroupResponse" />
+	</wsdl:message>
+	<wsdl:message name="getSubscriberProductHistoryByIMSIRequest">
+		<wsdl:part name="parameters" element="ns:getSubscriberProductHistoryByIMSI" />
+	</wsdl:message>
+	<wsdl:message name="getSubscriberProductHistoryByIMSIResponse">
+		<wsdl:part name="parameters"
+			element="ns:getSubscriberProductHistoryByIMSIResponse" />
+	</wsdl:message>
+	<wsdl:message name="getPostpaidSubscriberProductsByMSISDNRequest">
+		<wsdl:part name="parameters" element="ns:getPostpaidSubscriberProductsByMSISDN" />
+	</wsdl:message>
+	<wsdl:message name="getPostpaidSubscriberProductsByMSISDNResponse">
+		<wsdl:part name="parameters"
+			element="ns:getPostpaidSubscriberProductsByMSISDNResponse" />
+	</wsdl:message>	<!-- <wsdl:message name="getPostpaidProductsRequest"/> -->
+	<wsdl:message name="getPostpaidProductsRequest">
+		<wsdl:part name="parameters" element="ns:getPostpaidProducts" />
+	</wsdl:message>
+	<wsdl:message name="getPostpaidProductsResponse">
+		<wsdl:part name="parameters" element="ns:getPostpaidProductsResponse" />
+	</wsdl:message>
+	<wsdl:message name="suspendSubscriptionRequest">
+		<wsdl:part name="parameters" element="ns:suspendSubscription" />
+	</wsdl:message>
+	<wsdl:message name="suspendSubscriptionResponse">
+		<wsdl:part name="parameters" element="ns:suspendSubscriptionResponse" />
+	</wsdl:message>
+	<wsdl:message name="getSubscriberProductsByMSISDNRequest">
+		<wsdl:part name="parameters" element="ns:getSubscriberProductsByMSISDN" />
+	</wsdl:message>
+	<wsdl:message name="getSubscriberProductsByMSISDNResponse">
+		<wsdl:part name="parameters" element="ns:getSubscriberProductsByMSISDNResponse" />
+	</wsdl:message>
+	<wsdl:message name="getPostpaidSubscriptionStatusRequest">
+		<wsdl:part name="parameters" element="ns:getPostpaidSubscriptionStatus" />
+	</wsdl:message>
+	<wsdl:message name="getPostpaidSubscriptionStatusResponse">
+		<wsdl:part name="parameters" element="ns:getPostpaidSubscriptionStatusResponse" />
+	</wsdl:message>
+	<wsdl:message name="getPostpaidSubscriberProductHistoryByMSISDNRequest">
+		<wsdl:part name="parameters"
+			element="ns:getPostpaidSubscriberProductHistoryByMSISDN" />
+	</wsdl:message>
+	<wsdl:message name="getPostpaidSubscriberProductHistoryByMSISDNResponse">
+		<wsdl:part name="parameters"
+			element="ns:getPostpaidSubscriberProductHistoryByMSISDNResponse" />
+	</wsdl:message>
+	<wsdl:message name="getPostpaidSubscriberProductsByIMSIRequest">
+		<wsdl:part name="parameters" element="ns:getPostpaidSubscriberProductsByIMSI" />
+	</wsdl:message>
+	<wsdl:message name="getPostpaidSubscriberProductsByIMSIResponse">
+		<wsdl:part name="parameters"
+			element="ns:getPostpaidSubscriberProductsByIMSIResponse" />
+	</wsdl:message>
+	<wsdl:message name="getPostpaidProductsByGroupRequest">
+		<wsdl:part name="parameters" element="ns:getPostpaidProductsByGroup" />
+	</wsdl:message>
+	<wsdl:message name="getPostpaidProductsByGroupResponse">
+		<wsdl:part name="parameters" element="ns:getPostpaidProductsByGroupResponse" />
+	</wsdl:message>
+	<wsdl:message name="reactivateSubscriptionRequest">
+		<wsdl:part name="parameters" element="ns:reactivateSubscription" />
+	</wsdl:message>
+	<wsdl:message name="reactivateSubscriptionResponse">
+		<wsdl:part name="parameters" element="ns:reactivateSubscriptionResponse" />
+	</wsdl:message>
+	<wsdl:message name="subscriptionMsisdnChangeRequest">
+		<wsdl:part name="parameters" element="ns:subscriptionMsisdnChange" />
+	</wsdl:message>
+	<wsdl:message name="subscriptionMsisdnChangeResponse">
+		<wsdl:part name="parameters" element="ns:subscriptionMsisdnChangeResponse" />
+	</wsdl:message>
+	<wsdl:message name="getActivePostpaidSubscriberProductsByMSISDNRequest">
+		<wsdl:part name="parameters"
+			element="ns:getActivePostpaidSubscriberProductsByMSISDN" />
+	</wsdl:message>
+	<wsdl:message name="getActivePostpaidSubscriberProductsByMSISDNResponse">
+		<wsdl:part name="parameters"
+			element="ns:getActivePostpaidSubscriberProductsByMSISDNResponse" />
+	</wsdl:message>
+	<wsdl:message name="cancelSubscriptionForSubscriberRequest">
+		<wsdl:part name="parameters" element="ns:cancelSubscriptionForSubscriber" />
+	</wsdl:message>
+	<wsdl:message name="cancelSubscriptionForSubscriberResponse">
+		<wsdl:part name="parameters" element="ns:cancelSubscriptionForSubscriberResponse" />
+	</wsdl:message>
+	<wsdl:message name="getServiceInformationForSubscriberRequest">
+		<wsdl:part name="parameters" element="ns:getServiceInformationForSubscriber" />
+	</wsdl:message>
+	<wsdl:message name="getServiceInformationForSubscriberResponse">
+		<wsdl:part name="parameters"
+			element="ns:getServiceInformationForSubscriberResponse" />
+	</wsdl:message>
+	<wsdl:message name="updateUsageLimitRequest">
+		<wsdl:part name="parameters" element="ns:updateUsageLimit" />
+	</wsdl:message>
+	<wsdl:message name="updateUsageLimitResponse">
+		<wsdl:part name="parameters" element="ns:updateUsageLimitResponse" />
+	</wsdl:message>
+	<wsdl:portType name="BRMSWebServicePortType">
+		<wsdl:operation name="getActiveSubscriberProductsByMSISDN">
+			<wsdl:input message="ns:getActiveSubscriberProductsByMSISDNRequest"
+				wsaw:Action="urn:getActiveSubscriberProductsByMSISDN" />
+			<wsdl:output message="ns:getActiveSubscriberProductsByMSISDNResponse"
+				wsaw:Action="urn:getActiveSubscriberProductsByMSISDNResponse" />
+		</wsdl:operation>
+		<wsdl:operation name="getProducts">
+			<wsdl:input message="ns:getProductsRequest" wsaw:Action="urn:getProducts" />
+			<wsdl:output message="ns:getProductsResponse"
+				wsaw:Action="urn:getProductsResponse" />
+		</wsdl:operation>
+		<wsdl:operation name="subscriberCycleChange">
+			<wsdl:input message="ns:subscriberCycleChangeRequest"
+				wsaw:Action="urn:subscriberCycleChange" />
+			<wsdl:output message="ns:subscriberCycleChangeResponse"
+				wsaw:Action="urn:subscriberCycleChangeResponse" />
+		</wsdl:operation>
+		<wsdl:operation name="updateRecurrence">
+			<wsdl:input message="ns:updateRecurrenceRequest"
+				wsaw:Action="urn:updateRecurrence" />
+			<wsdl:output message="ns:updateRecurrenceResponse"
+				wsaw:Action="urn:updateRecurrenceResponse" />
+		</wsdl:operation>
+		<wsdl:operation name="getSubscriberProductsByIMSI">
+			<wsdl:input message="ns:getSubscriberProductsByIMSIRequest"
+				wsaw:Action="urn:getSubscriberProductsByIMSI" />
+			<wsdl:output message="ns:getSubscriberProductsByIMSIResponse"
+				wsaw:Action="urn:getSubscriberProductsByIMSIResponse" />
+		</wsdl:operation>
+		<wsdl:operation name="sendSmsSubscriberInformation">
+			<wsdl:input message="ns:sendSmsSubscriberInformationRequest"
+				wsaw:Action="urn:sendSmsSubscriberInformation" />
+			<wsdl:output message="ns:sendSmsSubscriberInformationResponse"
+				wsaw:Action="urn:sendSmsSubscriberInformationResponse" />
+		</wsdl:operation>
+		<wsdl:operation name="getPostpaidSubscriberProductHistoryByIMSI">
+			<wsdl:input message="ns:getPostpaidSubscriberProductHistoryByIMSIRequest"
+				wsaw:Action="urn:getPostpaidSubscriberProductHistoryByIMSI" />
+			<wsdl:output message="ns:getPostpaidSubscriberProductHistoryByIMSIResponse"
+				wsaw:Action="urn:getPostpaidSubscriberProductHistoryByIMSIResponse" />
+		</wsdl:operation>
+		<wsdl:operation name="getSubscriberProductHistoryByMSISDN">
+			<wsdl:input message="ns:getSubscriberProductHistoryByMSISDNRequest"
+				wsaw:Action="urn:getSubscriberProductHistoryByMSISDN" />
+			<wsdl:output message="ns:getSubscriberProductHistoryByMSISDNResponse"
+				wsaw:Action="urn:getSubscriberProductHistoryByMSISDNResponse" />
+		</wsdl:operation>
+		<wsdl:operation name="getSubscriptionStatus">
+			<wsdl:input message="ns:getSubscriptionStatusRequest"
+				wsaw:Action="urn:getSubscriptionStatus" />
+			<wsdl:output message="ns:getSubscriptionStatusResponse"
+				wsaw:Action="urn:getSubscriptionStatusResponse" />
+		</wsdl:operation>
+		<wsdl:operation name="addSubscriptionToSubscriber">
+			<wsdl:input message="ns:addSubscriptionToSubscriberRequest"
+				wsaw:Action="urn:addSubscriptionToSubscriber" />
+			<wsdl:output message="ns:addSubscriptionToSubscriberResponse"
+				wsaw:Action="urn:addSubscriptionToSubscriberResponse" />
+		</wsdl:operation>
+		<wsdl:operation name="getGroups">
+			<wsdl:input message="ns:getGroupsRequest" wsaw:Action="urn:getGroups" />
+			<wsdl:output message="ns:getGroupsResponse" wsaw:Action="urn:getGroupsResponse" />
+		</wsdl:operation>
+		<wsdl:operation name="getProductsByGroup">
+			<wsdl:input message="ns:getProductsByGroupRequest"
+				wsaw:Action="urn:getProductsByGroup" />
+			<wsdl:output message="ns:getProductsByGroupResponse"
+				wsaw:Action="urn:getProductsByGroupResponse" />
+		</wsdl:operation>
+		<wsdl:operation name="getSubscriberProductHistoryByIMSI">
+			<wsdl:input message="ns:getSubscriberProductHistoryByIMSIRequest"
+				wsaw:Action="urn:getSubscriberProductHistoryByIMSI" />
+			<wsdl:output message="ns:getSubscriberProductHistoryByIMSIResponse"
+				wsaw:Action="urn:getSubscriberProductHistoryByIMSIResponse" />
+		</wsdl:operation>
+		<wsdl:operation name="getPostpaidSubscriberProductsByMSISDN">
+			<wsdl:input message="ns:getPostpaidSubscriberProductsByMSISDNRequest"
+				wsaw:Action="urn:getPostpaidSubscriberProductsByMSISDN" />
+			<wsdl:output message="ns:getPostpaidSubscriberProductsByMSISDNResponse"
+				wsaw:Action="urn:getPostpaidSubscriberProductsByMSISDNResponse" />
+		</wsdl:operation>
+		<wsdl:operation name="getPostpaidProducts">
+			<wsdl:input message="ns:getPostpaidProductsRequest"
+				wsaw:Action="urn:getPostpaidProducts" />
+			<wsdl:output message="ns:getPostpaidProductsResponse"
+				wsaw:Action="urn:getPostpaidProductsResponse" />
+		</wsdl:operation>
+		<wsdl:operation name="suspendSubscription">
+			<wsdl:input message="ns:suspendSubscriptionRequest"
+				wsaw:Action="urn:suspendSubscription" />
+			<wsdl:output message="ns:suspendSubscriptionResponse"
+				wsaw:Action="urn:suspendSubscriptionResponse" />
+		</wsdl:operation>
+		<wsdl:operation name="getSubscriberProductsByMSISDN">
+			<wsdl:input message="ns:getSubscriberProductsByMSISDNRequest"
+				wsaw:Action="urn:getSubscriberProductsByMSISDN" />
+			<wsdl:output message="ns:getSubscriberProductsByMSISDNResponse"
+				wsaw:Action="urn:getSubscriberProductsByMSISDNResponse" />
+		</wsdl:operation>
+		<wsdl:operation name="getPostpaidSubscriptionStatus">
+			<wsdl:input message="ns:getPostpaidSubscriptionStatusRequest"
+				wsaw:Action="urn:getPostpaidSubscriptionStatus" />
+			<wsdl:output message="ns:getPostpaidSubscriptionStatusResponse"
+				wsaw:Action="urn:getPostpaidSubscriptionStatusResponse" />
+		</wsdl:operation>
+		<wsdl:operation name="getPostpaidSubscriberProductHistoryByMSISDN">
+			<wsdl:input message="ns:getPostpaidSubscriberProductHistoryByMSISDNRequest"
+				wsaw:Action="urn:getPostpaidSubscriberProductHistoryByMSISDN" />
+			<wsdl:output message="ns:getPostpaidSubscriberProductHistoryByMSISDNResponse"
+				wsaw:Action="urn:getPostpaidSubscriberProductHistoryByMSISDNResponse" />
+		</wsdl:operation>
+		<wsdl:operation name="getPostpaidSubscriberProductsByIMSI">
+			<wsdl:input message="ns:getPostpaidSubscriberProductsByIMSIRequest"
+				wsaw:Action="urn:getPostpaidSubscriberProductsByIMSI" />
+			<wsdl:output message="ns:getPostpaidSubscriberProductsByIMSIResponse"
+				wsaw:Action="urn:getPostpaidSubscriberProductsByIMSIResponse" />
+		</wsdl:operation>
+		<wsdl:operation name="getPostpaidProductsByGroup">
+			<wsdl:input message="ns:getPostpaidProductsByGroupRequest"
+				wsaw:Action="urn:getPostpaidProductsByGroup" />
+			<wsdl:output message="ns:getPostpaidProductsByGroupResponse"
+				wsaw:Action="urn:getPostpaidProductsByGroupResponse" />
+		</wsdl:operation>
+		<wsdl:operation name="reactivateSubscription">
+			<wsdl:input message="ns:reactivateSubscriptionRequest"
+				wsaw:Action="urn:reactivateSubscription" />
+			<wsdl:output message="ns:reactivateSubscriptionResponse"
+				wsaw:Action="urn:reactivateSubscriptionResponse" />
+		</wsdl:operation>
+		<wsdl:operation name="subscriptionMsisdnChange">
+			<wsdl:input message="ns:subscriptionMsisdnChangeRequest"
+				wsaw:Action="urn:subscriptionMsisdnChange" />
+			<wsdl:output message="ns:subscriptionMsisdnChangeResponse"
+				wsaw:Action="urn:subscriptionMsisdnChangeResponse" />
+		</wsdl:operation>
+		<wsdl:operation name="getActivePostpaidSubscriberProductsByMSISDN">
+			<wsdl:input message="ns:getActivePostpaidSubscriberProductsByMSISDNRequest"
+				wsaw:Action="urn:getActivePostpaidSubscriberProductsByMSISDN" />
+			<wsdl:output message="ns:getActivePostpaidSubscriberProductsByMSISDNResponse"
+				wsaw:Action="urn:getActivePostpaidSubscriberProductsByMSISDNResponse" />
+		</wsdl:operation>
+		<wsdl:operation name="cancelSubscriptionForSubscriber">
+			<wsdl:input message="ns:cancelSubscriptionForSubscriberRequest"
+				wsaw:Action="urn:cancelSubscriptionForSubscriber" />
+			<wsdl:output message="ns:cancelSubscriptionForSubscriberResponse"
+				wsaw:Action="urn:cancelSubscriptionForSubscriberResponse" />
+		</wsdl:operation>
+		<wsdl:operation name="getServiceInformationForSubscriber">
+			<wsdl:input message="ns:getServiceInformationForSubscriberRequest"
+				wsaw:Action="urn:getServiceInformationForSubscriber" />
+			<wsdl:output message="ns:getServiceInformationForSubscriberResponse"
+				wsaw:Action="urn:getServiceInformationForSubscriberResponse" />
+		</wsdl:operation>
+		<wsdl:operation name="updateUsageLimit">
+			<wsdl:input message="ns:updateUsageLimitRequest"
+				wsaw:Action="urn:updateUsageLimit" />
+			<wsdl:output message="ns:updateUsageLimitResponse"
+				wsaw:Action="urn:updateUsageLimitResponse" />
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="BRMSWebServiceSoap11Binding" type="ns:BRMSWebServicePortType">
+		<soap:binding transport="http://schemas.xmlsoap.org/soap/http"
+			style="document" />
+		<wsdl:operation name="getActiveSubscriberProductsByMSISDN">
+			<soap:operation soapAction="urn:getActiveSubscriberProductsByMSISDN"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getProducts">
+			<soap:operation soapAction="urn:getProducts" style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="subscriberCycleChange">
+			<soap:operation soapAction="urn:subscriberCycleChange"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="sendSmsSubscriberInformation">
+			<soap:operation soapAction="urn:sendSmsSubscriberInformation"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="updateRecurrence">
+			<soap:operation soapAction="urn:updateRecurrence"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getPostpaidSubscriberProductHistoryByIMSI">
+			<soap:operation soapAction="urn:getPostpaidSubscriberProductHistoryByIMSI"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getSubscriberProductsByIMSI">
+			<soap:operation soapAction="urn:getSubscriberProductsByIMSI"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getSubscriberProductHistoryByMSISDN">
+			<soap:operation soapAction="urn:getSubscriberProductHistoryByMSISDN"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getSubscriptionStatus">
+			<soap:operation soapAction="urn:getSubscriptionStatus"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getGroups">
+			<soap:operation soapAction="urn:getGroups" style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="addSubscriptionToSubscriber">
+			<soap:operation soapAction="urn:addSubscriptionToSubscriber"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getSubscriberProductHistoryByIMSI">
+			<soap:operation soapAction="urn:getSubscriberProductHistoryByIMSI"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getProductsByGroup">
+			<soap:operation soapAction="urn:getProductsByGroup"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getPostpaidProducts">
+			<soap:operation soapAction="urn:getPostpaidProducts"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getPostpaidSubscriberProductsByMSISDN">
+			<soap:operation soapAction="urn:getPostpaidSubscriberProductsByMSISDN"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="suspendSubscription">
+			<soap:operation soapAction="urn:suspendSubscription"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getSubscriberProductsByMSISDN">
+			<soap:operation soapAction="urn:getSubscriberProductsByMSISDN"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getPostpaidSubscriptionStatus">
+			<soap:operation soapAction="urn:getPostpaidSubscriptionStatus"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getPostpaidSubscriberProductHistoryByMSISDN">
+			<soap:operation soapAction="urn:getPostpaidSubscriberProductHistoryByMSISDN"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getPostpaidSubscriberProductsByIMSI">
+			<soap:operation soapAction="urn:getPostpaidSubscriberProductsByIMSI"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getPostpaidProductsByGroup">
+			<soap:operation soapAction="urn:getPostpaidProductsByGroup"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="subscriptionMsisdnChange">
+			<soap:operation soapAction="urn:subscriptionMsisdnChange"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="reactivateSubscription">
+			<soap:operation soapAction="urn:reactivateSubscription"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getActivePostpaidSubscriberProductsByMSISDN">
+			<soap:operation soapAction="urn:getActivePostpaidSubscriberProductsByMSISDN"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getServiceInformationForSubscriber">
+			<soap:operation soapAction="urn:getServiceInformationForSubscriber"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="cancelSubscriptionForSubscriber">
+			<soap:operation soapAction="urn:cancelSubscriptionForSubscriber"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="updateUsageLimit">
+			<soap:operation soapAction="urn:updateUsageLimit"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:binding name="BRMSWebServiceSoap12Binding" type="ns:BRMSWebServicePortType">
+		<soap12:binding transport="http://schemas.xmlsoap.org/soap/http"
+			style="document" />
+		<wsdl:operation name="getActiveSubscriberProductsByMSISDN">
+			<soap12:operation soapAction="urn:getActiveSubscriberProductsByMSISDN"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getProducts">
+			<soap12:operation soapAction="urn:getProducts"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="subscriberCycleChange">
+			<soap12:operation soapAction="urn:subscriberCycleChange"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="sendSmsSubscriberInformation">
+			<soap12:operation soapAction="urn:sendSmsSubscriberInformation"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="updateRecurrence">
+			<soap12:operation soapAction="urn:updateRecurrence"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getPostpaidSubscriberProductHistoryByIMSI">
+			<soap12:operation soapAction="urn:getPostpaidSubscriberProductHistoryByIMSI"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getSubscriberProductsByIMSI">
+			<soap12:operation soapAction="urn:getSubscriberProductsByIMSI"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getSubscriberProductHistoryByMSISDN">
+			<soap12:operation soapAction="urn:getSubscriberProductHistoryByMSISDN"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getSubscriptionStatus">
+			<soap12:operation soapAction="urn:getSubscriptionStatus"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getGroups">
+			<soap12:operation soapAction="urn:getGroups" style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="addSubscriptionToSubscriber">
+			<soap12:operation soapAction="urn:addSubscriptionToSubscriber"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getSubscriberProductHistoryByIMSI">
+			<soap12:operation soapAction="urn:getSubscriberProductHistoryByIMSI"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getProductsByGroup">
+			<soap12:operation soapAction="urn:getProductsByGroup"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getPostpaidProducts">
+			<soap12:operation soapAction="urn:getPostpaidProducts"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getPostpaidSubscriberProductsByMSISDN">
+			<soap12:operation soapAction="urn:getPostpaidSubscriberProductsByMSISDN"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="suspendSubscription">
+			<soap12:operation soapAction="urn:suspendSubscription"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getSubscriberProductsByMSISDN">
+			<soap12:operation soapAction="urn:getSubscriberProductsByMSISDN"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getPostpaidSubscriptionStatus">
+			<soap12:operation soapAction="urn:getPostpaidSubscriptionStatus"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getPostpaidSubscriberProductHistoryByMSISDN">
+			<soap12:operation soapAction="urn:getPostpaidSubscriberProductHistoryByMSISDN"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getPostpaidSubscriberProductsByIMSI">
+			<soap12:operation soapAction="urn:getPostpaidSubscriberProductsByIMSI"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getPostpaidProductsByGroup">
+			<soap12:operation soapAction="urn:getPostpaidProductsByGroup"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="subscriptionMsisdnChange">
+			<soap12:operation soapAction="urn:subscriptionMsisdnChange"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="reactivateSubscription">
+			<soap12:operation soapAction="urn:reactivateSubscription"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getActivePostpaidSubscriberProductsByMSISDN">
+			<soap12:operation soapAction="urn:getActivePostpaidSubscriberProductsByMSISDN"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getServiceInformationForSubscriber">
+			<soap12:operation soapAction="urn:getServiceInformationForSubscriber"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="cancelSubscriptionForSubscriber">
+			<soap12:operation soapAction="urn:cancelSubscriptionForSubscriber"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="updateUsageLimit">
+			<soap12:operation soapAction="urn:updateUsageLimit"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+
+	<wsdl:service name="BRMSWebService">
+		<wsdl:port name="BRMSWebServiceHttpSoap11Endpoint" binding="ns:BRMSWebServiceSoap11Binding">
+			<soap:address location="http://172.24.38.126:8085/ium-brms/servlet/IUMServlet" />
+		</wsdl:port>
+		<wsdl:port name="BRMSWebServiceHttpSoap12Endpoint" binding="ns:BRMSWebServiceSoap12Binding">
+			<soap12:address
+				location="http://172.24.38.126:8085/ium-brms/servlet/IUMServlet" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

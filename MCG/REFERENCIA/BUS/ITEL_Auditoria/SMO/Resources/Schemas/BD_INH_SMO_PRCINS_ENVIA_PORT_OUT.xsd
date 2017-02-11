@@ -1,0 +1,29 @@
+<schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/INH_SMO/PRCINS_ENVIA_PORT_OUT/" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/INH_SMO/PRCINS_ENVIA_PORT_OUT/" elementFormDefault="qualified">
+   <element name="InputParameters">
+      <complexType>
+         <sequence>
+            <element name="V_PUERTOIN" type="decimal" db:index="1" db:type="NUMBER" minOccurs="0" nillable="true"/>
+            <element name="V_TECNOLOGIA" type="decimal" db:index="2" db:type="NUMBER" minOccurs="0" nillable="true"/>
+            <element name="V_ORIGEN" type="string" db:index="3" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+            <element name="V_DESTINO" type="string" db:index="4" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+            <element name="V_MSG" type="string" db:index="5" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+            <element name="V_HORAEXP" type="decimal" db:index="6" db:type="NUMBER" minOccurs="0" nillable="true"/>
+            <element name="V_MINUTOEXP" type="decimal" db:index="7" db:type="NUMBER" minOccurs="0" nillable="true"/>
+            <element name="V_ANUALENTREGA" type="decimal" db:index="8" db:type="NUMBER" minOccurs="0" nillable="true"/>
+            <element name="V_MES_ENTREGA" type="decimal" db:index="9" db:type="NUMBER" minOccurs="0" nillable="true"/>
+            <element name="V_DIA_ENTREGA" type="decimal" db:index="10" db:type="NUMBER" minOccurs="0" nillable="true"/>
+            <element name="V_HORA_ENTREGA" type="decimal" db:index="11" db:type="NUMBER" minOccurs="0" nillable="true"/>
+            <element name="V_MINUTO_ENTREGA" type="decimal" db:index="12" db:type="NUMBER" minOccurs="0" nillable="true"/>
+            <element name="V_PUERTO_OUT" type="decimal" db:index="13" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="OutputParameters">
+      <complexType>
+         <sequence>
+            <element name="V_SQLCODE" type="decimal" db:index="14" db:type="NUMBER" minOccurs="0" nillable="true"/>
+            <element name="V_SQLERRDESC" type="string" db:index="15" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+         </sequence>
+      </complexType>
+   </element>
+</schema>

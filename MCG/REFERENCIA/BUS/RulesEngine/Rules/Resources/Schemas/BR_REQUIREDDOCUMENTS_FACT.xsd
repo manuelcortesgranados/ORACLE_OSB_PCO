@@ -1,0 +1,29 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://www.claro.com.co/rulesEngine/RequiredDocumentsFact"
+	targetNamespace="http://www.claro.com.co/rulesEngine/RequiredDocumentsFact"
+	xmlns:cd="http://www.claro.com.co/rulesEngine/canonicalModel/CustomerDomain"
+	xmlns:cbe="http://www.claro.com.co/rulesEngine/canonicalModel/CommonBusinessEntities"
+	xmlns:pd="http://www.claro.com.co/rulesEngine/canonicalModel/ProductDomain"
+	xmlns:msd="http://www.claro.com.co/rulesEngine/canonicalModel/MarketSalesDomain">
+	<xs:import
+		namespace="http://www.claro.com.co/rulesEngine/canonicalModel/CustomerDomain"
+		schemaLocation="../../../Core/Resources/Schemas/CanonicalModel/CustomerDomain.xsd" />
+	<xs:import
+		namespace="http://www.claro.com.co/rulesEngine/canonicalModel/MarketSalesDomain"
+		schemaLocation="../../../Core/Resources/Schemas/CanonicalModel/MarketSalesDomain.xsd" />
+	<xs:element name="RequiredDocumentsFactRequest" type="tns:RequiredDocumentsFactRequestType" />
+	<xs:element name="RequiredDocumentsFactResponse" type="tns:RequiredDocumentsFactResponseType" />
+	<xs:complexType name="RequiredDocumentsFactRequestType">
+		<xs:sequence>
+			<xs:element name="Zone" type="cbe:Zone" />
+			<xs:element name="Customer" type="cd:Customer" />
+			<xs:element name="SalesChannel" type="msd:SalesChannel" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RequiredDocumentsFactResponseType">
+		<xs:sequence>
+			<xs:element name="RequiredDocuments" type="pd:RequiredDocuments"
+				minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

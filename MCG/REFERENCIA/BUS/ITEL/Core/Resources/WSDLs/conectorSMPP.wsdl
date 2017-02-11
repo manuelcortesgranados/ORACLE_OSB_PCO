@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://ws.conectorSMPP.claro.com.co/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://ws.conectorSMPP.claro.com.co/" name="EnviarSMSEndpoint">
+<wsdl:types>
+<xsd:schema>
+<xsd:import namespace="http://ws.conectorSMPP.claro.com.co/" schemaLocation="../Schemas/conectorSMPP.xsd"/>
+</xsd:schema>
+</wsdl:types>
+<wsdl:message name="enviarSMS">
+<wsdl:part name="parameters" element="tns:enviarSMS"/>
+</wsdl:message>
+<wsdl:message name="enviarSMSResponse">
+<wsdl:part name="parameters" element="tns:enviarSMSResponse"/>
+</wsdl:message>
+<wsdl:portType name="EnviarSMSEndpoint">
+<wsdl:operation name="enviarSMS">
+<wsdl:input message="tns:enviarSMS"/>
+<wsdl:output message="tns:enviarSMSResponse"/>
+</wsdl:operation>
+</wsdl:portType>
+<wsdl:binding name="EnviarSMSEndpointPortBinding" type="tns:EnviarSMSEndpoint">
+<soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+<wsdl:operation name="enviarSMS">
+<soap:operation soapAction=""/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+</wsdl:binding>
+<wsdl:service name="EnviarSMSEndpoint">
+<wsdl:port name="EnviarSMSEndpointPort" binding="tns:EnviarSMSEndpointPortBinding">
+<soap:address location="http://localhost:3306/ConectorSMPP/EnviarSMSEndpoint"/>
+</wsdl:port>
+</wsdl:service>
+</wsdl:definitions>

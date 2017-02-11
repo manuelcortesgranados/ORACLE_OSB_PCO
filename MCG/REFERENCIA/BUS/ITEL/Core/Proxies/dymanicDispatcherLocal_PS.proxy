@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+  <ser:coreEntry isProxy="true" isEnabled="true" isAutoPublish="false" isTracingEnabled="false">
+    <ser:binding type="SOAP" isSoap12="false" xsi:type="con4:SoapBindingType" xmlns:con4="http://www.bea.com/wli/sb/services/bindings/config">
+      <con4:wsdl ref="ITEL/Core/Resources/WSDLs/dynamicDispatcher_PS"/>
+      <con4:binding>
+        <con4:name>DynamicDispatcherSOAP</con4:name>
+        <con4:namespace>http://www.comcel.com.co/DynamicDispatcher/</con4:namespace>
+      </con4:binding>
+      <con4:selector type="SOAP body"/>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+    <ser:ws-policy>
+      <ser:binding-mode>wsdl-policy-attachments</ser:binding-mode>
+    </ser:ws-policy>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>local</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:inbound-properties/>
+    <tran:all-headers>true</tran:all-headers>
+  </ser:endpointConfig>
+  <ser:router>
+    <con:pipeline type="request" name="PipelinePairNode1_request">
+      <con:stage name="ValidarEntrada" errorHandler="_onErrorHandler-3563183025141133166-5ae24540.12b5f2cae7a.-76c6">
+        <con:context>
+          <con2:varNsDecl namespace="http://www.comcel.com.co/DynamicDispatcher/" prefix="dyn"/>
+        </con:context>
+        <con:actions>
+          <con3:validate>
+            <con2:id>_ActionId-3563183025141133166-5ae24540.12b5f2cae7a.-777c</con2:id>
+            <con3:schema ref="ITEL/Core/Resources/Schemas/PS_ITEL_DYNAMICDISPATCHER"/>
+            <con3:schemaElement xmlns:dyn="http://www.comcel.com.co/DynamicDispatcher/">dyn:Input_Parameters</con3:schemaElement>
+            <con3:varName>body</con3:varName>
+            <con3:location>
+              <con2:xpathText>./dyn:Input_Parameters</con2:xpathText>
+            </con3:location>
+          </con3:validate>
+        </con:actions>
+      </con:stage>
+      <con:stage name="Asignaciones" errorHandler="_onErrorHandler-6326680066577104064--54f5fb26.130277d3481.-8000">
+        <con:context>
+          <con2:varNsDecl namespace="http://www.comcel.com.co/DynamicDispatcher/" prefix="dyn"/>
+        </con:context>
+        <con:actions>
+          <con3:assign varName="servicio">
+            <con2:id>_ActionId-3563183025141133166-5ae24540.12b5f2cae7a.-7881</con2:id>
+            <con3:expr>
+              <con2:xqueryText>$body/dyn:Input_Parameters/servicio/nombre_servicio/text()</con2:xqueryText>
+            </con3:expr>
+          </con3:assign>
+          <con3:assign varName="parametros">
+            <con2:id>_ActionId-3563183025141133166-5ae24540.12b5f2cae7a.-7837</con2:id>
+            <con3:expr>
+              <con2:xqueryText>$body/dyn:Input_Parameters/servicio/parametros</con2:xqueryText>
+            </con3:expr>
+          </con3:assign>
+        </con:actions>
+      </con:stage>
+      <con:stage name="Transformacion" errorHandler="_onErrorHandler-3563183025141133166-5ae24540.12b5f2cae7a.-755d">
+        <con:context/>
+        <con:actions>
+          <con3:replace varName="body" contents-only="true">
+            <con2:id>_ActionId-3563183025141133166-5ae24540.12b5f2cae7a.-76f0</con2:id>
+            <con3:expr>
+              <con2:xqueryTransform>
+                <con2:resource ref="ITEL/Core/Resources/XQueries/dynamicDispatcher_req_Enrutador"/>
+                <con2:param name="servicio">
+                  <con2:path>$servicio</con2:path>
+                </con2:param>
+                <con2:param name="parametros1">
+                  <con2:path>$parametros</con2:path>
+                </con2:param>
+              </con2:xqueryTransform>
+            </con3:expr>
+          </con3:replace>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="PipelinePairNode1_response"/>
+    <con:pipeline type="error" name="_onErrorHandler-3563183025141133166-5ae24540.12b5f2cae7a.-76c6">
+      <con:stage name="ManejoError">
+        <con:context/>
+        <con:actions>
+          <con3:replace contents-only="true" varName="body">
+            <con2:id>_ActionId-3563183025141133166-5ae24540.12b5f2cae7a.-75eb</con2:id>
+            <con3:expr>
+              <con2:xqueryTransform>
+                <con2:resource ref="ITEL/Core/Resources/XQueries/dynamicDispatcher_Error"/>
+                <con2:param name="mensaje">
+                  <con2:path>$fault/ctx:reason/text()</con2:path>
+                </con2:param>
+                <con2:param name="descripcion">
+                  <con2:path>$fault/ctx:details/text()</con2:path>
+                </con2:param>
+                <con2:param name="codigo">
+                  <con2:path>'ERROR'</con2:path>
+                </con2:param>
+              </con2:xqueryTransform>
+            </con3:expr>
+          </con3:replace>
+          <con2:reply>
+            <con2:id>_ActionId-3563183025141133166-5ae24540.12b5f2cae7a.-75ce</con2:id>
+          </con2:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="error" name="_onErrorHandler-3563183025141133166-5ae24540.12b5f2cae7a.-755d">
+      <con:stage name="ManejoError1">
+        <con:context/>
+        <con:actions>
+          <con3:replace contents-only="true" varName="body">
+            <con2:id>_ActionId-3563183025141133166-5ae24540.12b5f2cae7a.-7524</con2:id>
+            <con3:expr>
+              <con2:xqueryTransform>
+                <con2:resource ref="ITEL/Core/Resources/XQueries/dynamicDispatcher_Error"/>
+                <con2:param name="mensaje">
+                  <con2:path>$fault/ctx:reason/text()</con2:path>
+                </con2:param>
+                <con2:param name="descripcion">
+                  <con2:path>$fault/ctx:reason/text()</con2:path>
+                </con2:param>
+                <con2:param name="codigo">
+                  <con2:path>'ERROR'</con2:path>
+                </con2:param>
+              </con2:xqueryTransform>
+            </con3:expr>
+          </con3:replace>
+          <con2:reply>
+            <con2:id>_ActionId-3563183025141133166-5ae24540.12b5f2cae7a.-7523</con2:id>
+          </con2:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="error" name="_onErrorHandler-9107314375572919530-73931530.12bc0aaac9f.-7cde">
+      <con:stage name="ManejoError2">
+        <con:context/>
+        <con:actions>
+          <con3:replace contents-only="true" varName="body">
+            <con2:id>_ActionId-9107314375572919530-73931530.12bc0aaac9f.-7c6d</con2:id>
+            <con3:expr>
+              <con2:xqueryTransform>
+                <con2:resource ref="ITEL/Core/Resources/XQueries/dynamicDispatcher_Error"/>
+                <con2:param name="mensaje">
+                  <con2:path>$fault/ctx:reason/text()</con2:path>
+                </con2:param>
+                <con2:param name="descripcion">
+                  <con2:path>$fault/ctx:reason/text()</con2:path>
+                </con2:param>
+                <con2:param name="codigo">
+                  <con2:path>'ERROR'</con2:path>
+                </con2:param>
+              </con2:xqueryTransform>
+            </con3:expr>
+          </con3:replace>
+          <con2:reply>
+            <con2:id>_ActionId-9107314375572919530-73931530.12bc0aaac9f.-7c6c</con2:id>
+          </con2:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="error" name="_onErrorHandler-6326680066577104064--54f5fb26.130277d3481.-8000">
+      <con:stage name="ManejoError11">
+        <con:context/>
+        <con:actions>
+          <con3:replace contents-only="true" varName="body">
+            <con2:id>_ActionId-6326680066577104064--54f5fb26.130277d3481.-7f8f</con2:id>
+            <con3:expr>
+              <con2:xqueryTransform>
+                <con2:resource ref="ITEL/Core/Resources/XQueries/dynamicDispatcher_Error"/>
+                <con2:param name="mensaje">
+                  <con2:path>$fault/ctx:reason/text()</con2:path>
+                </con2:param>
+                <con2:param name="descripcion">
+                  <con2:path>$fault/ctx:reason/text()</con2:path>
+                </con2:param>
+                <con2:param name="codigo">
+                  <con2:path>'ERROR'</con2:path>
+                </con2:param>
+              </con2:xqueryTransform>
+            </con3:expr>
+          </con3:replace>
+          <con2:reply>
+            <con2:id>_ActionId-6326680066577104064--54f5fb26.130277d3481.-7f8e</con2:id>
+          </con2:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:flow>
+      <con:pipeline-node name="PipelinePairNode1">
+        <con:request>PipelinePairNode1_request</con:request>
+        <con:response>PipelinePairNode1_response</con:response>
+      </con:pipeline-node>
+      <con:route-node name="Llamada enrutador dinamico" error-handler="_onErrorHandler-9107314375572919530-73931530.12bc0aaac9f.-7cde">
+        <con:context>
+          <con2:varNsDecl namespace="http://www.comcel.com.co/DynamicDispatcher/" prefix="dyn"/>
+        </con:context>
+        <con:actions>
+          <con1:route>
+            <con2:id>_ActionId-3563183025141133166-5ae24540.12b5f2cae7a.-78e6</con2:id>
+            <con1:service ref="ITEL/Core/Proxies/enrutadorDinamicoLocal_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con1:operation>enrutadorDinamico</con1:operation>
+            <con1:outboundTransform>
+              <con3:routing-options>
+                <con2:id>_ActionId-63816620309119120-5b3a4880.12d85d41592.-7fa9</con2:id>
+                <con3:retryInterval>1</con3:retryInterval>
+                <con3:retryCount>1</con3:retryCount>
+              </con3:routing-options>
+            </con1:outboundTransform>
+            <con1:responseTransform>
+              <con3:replace contents-only="true" varName="body">
+                <con2:id>_ActionId-3563183025141133166-5ae24540.12b5f2cae7a.-74e8</con2:id>
+                <con3:expr>
+                  <con2:xqueryTransform>
+                    <con2:resource ref="ITEL/Core/Resources/XQueries/dynamicDispatcher_Res"/>
+                    <con2:param name="descripcion">
+                      <con2:path>'Informacion del servicio invocado'</con2:path>
+                    </con2:param>
+                    <con2:param name="mensaje">
+                      <con2:path>$body/*:WS_Result/Mensaje/*</con2:path>
+                    </con2:param>
+                    <con2:param name="codigo">
+                      <con2:path>$body/*:WS_Result/Codigo/text()</con2:path>
+                    </con2:param>
+                  </con2:xqueryTransform>
+                </con3:expr>
+              </con3:replace>
+            </con1:responseTransform>
+          </con1:route>
+        </con:actions>
+      </con:route-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

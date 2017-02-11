@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.firmaEmpl.org"
+            targetNamespace="http://www.firmaEmpl.org" elementFormDefault="qualified">
+  <xsd:complexType name="EmpleadosRequestType">
+    <xsd:sequence>
+      <xsd:element name="codigoEmpleadoInicial" type="xsd:integer"/>
+      <xsd:element name="codigoEmpleadoFinal" type="xsd:integer"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="EmpleadosResponseType">
+    <xsd:sequence maxOccurs="unbounded">
+      <xsd:element name="Empleados" type="EmpleadoType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="EmpleadoType">
+    <xsd:sequence>
+      <xsd:element name="idEmpleado" type="xsd:integer"/>
+      <xsd:element name="nombreEmpleado" type="xsd:string"/>
+      <xsd:element name="apellidoEmpleado" type="xsd:string"/>
+      <xsd:element name="emailEmpleado" type="xsd:string"/>
+      <xsd:element name="telefonoEmpleado" type="xsd:integer"/>
+      <xsd:element name="fechaContratacion" type="xsd:date"/>
+      <xsd:element name="idEmpleo" type="xsd:string"/>
+      <xsd:element name="salarioEmpleado" type="xsd:integer"/>
+      <xsd:element name="comisionEmpleado" type="xsd:integer"/>
+      <xsd:element name="idJefe" type="xsd:integer"/>
+      <xsd:element name="idDepartamento" type="xsd:integer"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="empleadoRequest" type="EmpleadosRequestType"/>
+  <xsd:element name="empleadoResponse" type="EmpleadosResponseType"/>
+</xsd:schema>

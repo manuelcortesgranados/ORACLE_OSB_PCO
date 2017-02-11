@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:env="http://www.bea.com/wli/config/env" xmlns:soa="http://www.bea.com/wli/sb/transports/soa">
+  <ser:coreEntry isProxy="false" isEnabled="true" isTracingEnabled="false">
+    <ser:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config">
+      <con:wsdl ref="ITEL/Trama602/Resources/WSDLs/trama602Provision_DB"/>
+      <con:binding>
+        <con:name>IDirectDecisionServiceBinding</con:name>
+        <con:namespace>http://xmlns.oracle.com/Trama602Provision/Trama602Provision_DF_Trama602Provision</con:namespace>
+      </con:binding>
+      <con:WSI-compliant>false</con:WSI-compliant>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:ws-policy>
+      <ser:binding-mode>wsdl-policy-attachments</ser:binding-mode>
+    </ser:ws-policy>
+    <ser:throttling enabled="false">
+      <ser:capacity>0</ser:capacity>
+      <ser:maxQueueLength>0</ser:maxQueueLength>
+      <ser:timeToLive>0</ser:timeToLive>
+    </ser:throttling>
+    <ser:messageTracing enabled="false">
+      <ser:detailsLevel>Terse</ser:detailsLevel>
+      <ser:maxSize>8192</ser:maxSize>
+    </ser:messageTracing>
+    <ser:result-caching isSupported="false" isEnabled="true"/>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>soa-direct</tran:provider-id>
+    <tran:inbound>false</tran:inbound>
+    <tran:URI weight="1">
+      <env:value>t3://SOAG1:8003/ITEL/Trama602Provision/DS_CalcularProvision</env:value>
+    </tran:URI>
+    <tran:URI weight="0">
+      <env:value>t3://SOAG2:8003/ITEL/Trama602Provision/DS_CalcularProvision</env:value>
+    </tran:URI>
+    <tran:URI weight="0">
+      <env:value>t3://SOAG3:8003/ITEL/Trama602Provision/DS_CalcularProvision</env:value>
+    </tran:URI>
+    <tran:URI weight="0">
+      <env:value>t3://SOAG4:8003/ITEL/Trama602Provision/DS_CalcularProvision</env:value>
+    </tran:URI>
+    <tran:URI weight="0">
+      <env:value>t3://SOAG5:8003/ITEL/Trama602Provision/DS_CalcularProvision</env:value>
+    </tran:URI>
+    <tran:URI weight="0">
+      <env:value>t3://SOAG6:8003/ITEL/Trama602Provision/DS_CalcularProvision</env:value>
+    </tran:URI>
+    <tran:URI weight="0">
+      <env:value>t3://SOAG7:8003/ITEL/Trama602Provision/DS_CalcularProvision</env:value>
+    </tran:URI>
+    <tran:URI weight="0">
+      <env:value>t3://SOAG8:8003/ITEL/Trama602Provision/DS_CalcularProvision</env:value>
+    </tran:URI>
+    <tran:URI weight="0">
+      <env:value>t3://SOAG9:8003/ITEL/Trama602Provision/DS_CalcularProvision</env:value>
+    </tran:URI>
+    <tran:URI weight="0">
+      <env:value>t3://SOAG10:8003/ITEL/Trama602Provision/DS_CalcularProvision</env:value>
+    </tran:URI>
+    <tran:URI weight="0">
+      <env:value>t3://SOAG11:8003/ITEL/Trama602Provision/DS_CalcularProvision</env:value>
+    </tran:URI>
+    <tran:URI weight="0">
+      <env:value>t3://SOAG12:8003/ITEL/Trama602Provision/DS_CalcularProvision</env:value>
+    </tran:URI>
+    <tran:URI weight="0">
+      <env:value>t3://SOAG13:8003/ITEL/Trama602Provision/DS_CalcularProvision</env:value>
+    </tran:URI>
+    <tran:URI weight="0">
+      <env:value>t3://SOAG14:8003/ITEL/Trama602Provision/DS_CalcularProvision</env:value>
+    </tran:URI>
+    <tran:URI weight="0">
+      <env:value>t3://SOAG15:8003/ITEL/Trama602Provision/DS_CalcularProvision</env:value>
+    </tran:URI>
+    <tran:URI weight="0">
+      <env:value>t3://SOAG16:8003/ITEL/Trama602Provision/DS_CalcularProvision</env:value>
+    </tran:URI>
+    <tran:URI weight="0">
+      <env:value>t3://SOAG17:8003/ITEL/Trama602Provision/DS_CalcularProvision</env:value>
+    </tran:URI>
+    <tran:URI weight="0">
+      <env:value>t3://SOAG18:8003/ITEL/Trama602Provision/DS_CalcularProvision</env:value>
+    </tran:URI>
+    <tran:URI weight="0">
+      <env:value>t3://SOAG19:8003/ITEL/Trama602Provision/DS_CalcularProvision</env:value>
+    </tran:URI>
+    <tran:URI weight="0">
+      <env:value>t3://SOAG20:8003/ITEL/Trama602Provision/DS_CalcularProvision</env:value>
+    </tran:URI>
+    <tran:URI weight="0">
+      <env:value>t3://SOAG21:8003/ITEL/Trama602Provision/DS_CalcularProvision</env:value>
+    </tran:URI>
+    <tran:URI weight="0">
+      <env:value>t3://SOAG22:8003/ITEL/Trama602Provision/DS_CalcularProvision</env:value>
+    </tran:URI>
+    <tran:URI weight="0">
+      <env:value>t3://SOAG23:8003/ITEL/Trama602Provision/DS_CalcularProvision</env:value>
+    </tran:URI>
+    <tran:URI weight="0">
+      <env:value>t3://SOAG24:8003/ITEL/Trama602Provision/DS_CalcularProvision</env:value>
+    </tran:URI>
+    <tran:outbound-properties>
+      <tran:load-balancing-algorithm>round-robin</tran:load-balancing-algorithm>
+      <tran:retry-count>0</tran:retry-count>
+      <tran:retry-interval>30</tran:retry-interval>
+      <tran:retry-application-errors>true</tran:retry-application-errors>
+      <tran:delay-interval-configuration isEnabled="false">
+        <tran:delay-interval>0</tran:delay-interval>
+      </tran:delay-interval-configuration>
+    </tran:outbound-properties>
+    <tran:provider-specific>
+      <soa:role>SYNCHRONOUS_CLIENT</soa:role>
+      <soa:wsaVersion>DEFAULT</soa:wsaVersion>
+    </tran:provider-specific>
+  </ser:endpointConfig>
+</xml-fragment>

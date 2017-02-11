@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+  <ser:coreEntry isProxy="true" isEnabled="true" isAutoPublish="false" isTracingEnabled="false">
+    <ser:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config">
+      <con:wsdl ref="ITEL/OCS/OLM/Resources/WSDLs/eliminarElegidosOCS_PS"/>
+      <con:port>
+        <con:name>EliminarElegidosOCSSOAP</con:name>
+        <con:namespace>http://www.comcel.com.co/EliminarElegidosOCS/</con:namespace>
+      </con:port>
+      <con:selector type="SOAP body"/>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+    <ser:ws-policy>
+      <ser:binding-mode>wsdl-policy-attachments</ser:binding-mode>
+    </ser:ws-policy>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>http</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:URI>
+      <env:value>/ITEL/OCS/OLM/Proxies/eliminarElegidosOCSLocal_PS</env:value>
+    </tran:URI>
+    <tran:inbound-properties/>
+    <tran:all-headers>false</tran:all-headers>
+    <tran:provider-specific>
+      <http:inbound-properties/>
+    </tran:provider-specific>
+  </ser:endpointConfig>
+  <ser:router>
+    <con:pipeline type="request" name="PipelinePairNode1_request">
+      <con:stage name="validacion" errorHandler="_onErrorHandler-3454680542170866960--1160e501.139eacf127f.-7ddd">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/EliminarElegidosOCS/" prefix="elim"/>
+        </con:context>
+        <con:actions>
+          <con2:validate>
+            <con1:id>_ActionId-3454680542170866960--1160e501.139eacf127f.-7dde</con1:id>
+            <con2:schema ref="ITEL/OCS/OLM/Resources/Schemas/PS_ITEL_ELIMINAR_ELEGIDOS"/>
+            <con2:schemaElement xmlns:elim="http://www.comcel.com.co/EliminarElegidosOCS/">elim:Input_Parameters</con2:schemaElement>
+            <con2:varName>body</con2:varName>
+            <con2:location>
+              <con1:xpathText>./elim:Input_Parameters</con1:xpathText>
+            </con2:location>
+          </con2:validate>
+        </con:actions>
+      </con:stage>
+      <con:stage name="stageEliminaElegido">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/EliminarElegidosOCS/" prefix="elim"/>
+          <con1:varNsDecl namespace="http://webapps.online.ericsson.com" prefix="web"/>
+        </con:context>
+        <con:actions>
+          <con2:foreach>
+            <con1:id>_ActionId-3454680542170866960--1160e501.139eacf127f.-79f7</con1:id>
+            <con2:variable>body</con2:variable>
+            <con2:expression>
+              <con1:xpathText>./elim:Input_Parameters/MSISDNELEGIDOTOUNREGISTER/*:Detail</con1:xpathText>
+            </con2:expression>
+            <con2:value-variable>elegido</con2:value-variable>
+            <con2:index-variable>indice</con2:index-variable>
+            <con2:total-variable>total</con2:total-variable>
+            <con2:actions>
+              <con2:wsCallout>
+                <con1:id>_ActionId-3454680542170866960--1160e501.139eacf127f.-79d0</con1:id>
+                <con2:service xsi:type="ref:ProxyRef" ref="ITEL/OCS/OLM/Proxies/eliminarElegidoOCSLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                <con2:operation>eliminarElegidoOCS</con2:operation>
+                <con2:request>
+                  <con2:body>$eliminarElegidoRequest</con2:body>
+                </con2:request>
+                <con2:response>
+                  <con2:body>eliminarElegidoResponse</con2:body>
+                </con2:response>
+                <con2:requestTransform>
+                  <con2:assign varName="eliminarElegidoRequest">
+                    <con1:id>_ActionId-3454680542170866960--1160e501.139eacf127f.-7973</con1:id>
+                    <con2:expr>
+                      <con1:xqueryText><![CDATA[<elim:Input_Parameters xmlns:elim="http://www.comcel.com.co/EliminarElegidoOCS/">
+    <REQUESTID>{ data($body/*:Input_Parameters/REQUESTID)}</REQUESTID>
+    <OPERATION>{"unregisterElegido"}</OPERATION>
+    <PRODUCTNAME>{ data($body/*:Input_Parameters/PRODUCTNAME)}</PRODUCTNAME>
+    <SUBSCRIBERID>{data($body/*:Input_Parameters/SUBSCRIBERID)}</SUBSCRIBERID>
+    <MSISDN>{ data($body/*:Input_Parameters/MSISDN)}</MSISDN>
+    <ORIGINATINGNODEINFO>{data($body/*:Input_Parameters/ORIGINATINGNODEINFO)}</ORIGINATINGNODEINFO>
+    <EXTERNALDATA>{data($body/*:Input_Parameters/EXTERNALDATA)}</EXTERNALDATA>
+    <CHARGED>{data($body/*:Input_Parameters/CHARGED)}</CHARGED>
+    <FAFIDLIST>{data($body/*:Input_Parameters/FAFIDLIST)}</FAFIDLIST>
+    <MSISDNELEGIDOTOUNREGISTER>{ data($elegido) }</MSISDNELEGIDOTOUNREGISTER>
+</elim:Input_Parameters>]]></con1:xqueryText>
+                    </con2:expr>
+                  </con2:assign>
+                </con2:requestTransform>
+                <con2:responseTransform/>
+              </con2:wsCallout>
+              <con2:ifThenElse>
+                <con1:id>_ActionId-3454680542170866960--1160e501.139eacf127f.-7763</con1:id>
+                <con2:case>
+                  <con2:condition>
+                    <con1:xqueryText>data($eliminarElegidoResponse/CODIGO) = "1"</con1:xqueryText>
+                  </con2:condition>
+                  <con2:actions>
+                    <con2:assign varName="codigo">
+                      <con1:id>_ActionId-3454680542170866960--1160e501.139eacf127f.-7762</con1:id>
+                      <con2:expr>
+                        <con1:xqueryText>"1"</con1:xqueryText>
+                      </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="descripcion">
+                      <con1:id>_ActionId-3454680542170866960--1160e501.139eacf127f.-7761</con1:id>
+                      <con2:expr>
+                        <con1:xqueryText>"Ejecucion Exitosa"</con1:xqueryText>
+                      </con2:expr>
+                    </con2:assign>
+                  </con2:actions>
+                </con2:case>
+                <con2:default>
+                  <con2:assign varName="codigo">
+                    <con1:id>_ActionId-3454680542170866960--1160e501.139eacf127f.-7760</con1:id>
+                    <con2:expr>
+                      <con1:xqueryTransform>
+                        <con1:resource ref="ITEL/OCS/OLM/Resources/XQueries/obtenerCodigoError"/>
+                        <con1:param name="codigoDESC">
+                          <con1:path>data($eliminarElegidoResponse/DESCRIPCION)</con1:path>
+                        </con1:param>
+                        <con1:param name="codigoOCS">
+                          <con1:path>data($eliminarElegidoResponse/CODIGO)</con1:path>
+                        </con1:param>
+                      </con1:xqueryTransform>
+                    </con2:expr>
+                  </con2:assign>
+                  <con2:assign varName="descripcion">
+                    <con1:id>_ActionId-3454680542170866960--1160e501.139eacf127f.-775f</con1:id>
+                    <con2:expr>
+                      <con1:xqueryText>concat("Ejecucion fallida. Codigo: ", data($eliminarElegidoResponse/DESCRIPCION) )</con1:xqueryText>
+                    </con2:expr>
+                  </con2:assign>
+                  <con1:skip>
+                    <con1:id>_ActionId-3454680542170866960--1160e501.139eacf127f.-775e</con1:id>
+                  </con1:skip>
+                </con2:default>
+              </con2:ifThenElse>
+            </con2:actions>
+          </con2:foreach>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="PipelinePairNode1_response">
+      <con:stage name="resultado">
+        <con:context/>
+        <con:actions>
+          <con2:replace contents-only="true" varName="body">
+            <con1:id>_ActionId-5938258762724550598--5615c36b.13a0e950e4b.-7e28</con1:id>
+            <con2:expr>
+              <con1:xqueryTransform>
+                <con1:resource ref="ITEL/OCS/OLM/Resources/XQueries/eliminarElegidosOCS_Res"/>
+                <con1:param name="descripcion">
+                  <con1:path>$descripcion</con1:path>
+                </con1:param>
+                <con1:param name="codigo">
+                  <con1:path>$codigo</con1:path>
+                </con1:param>
+              </con1:xqueryTransform>
+            </con2:expr>
+          </con2:replace>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="error" name="_onErrorHandler-3454680542170866960--1160e501.139eacf127f.-7ddd">
+      <con:stage name="error">
+        <con:context xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config"/>
+        <con:actions xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config">
+          <con2:replace varName="body" contents-only="true">
+            <con1:id>_ActionId-3454680542170866960--1160e501.139eacf127f.-7d6c</con1:id>
+            <con2:expr>
+              <con1:xqueryTransform>
+                <con1:resource ref="ITEL/OCS/OLM/Resources/XQueries/eliminarElegidosOCSOLM_Error"/>
+                <con1:param name="mensaje">
+                  <con1:path>$fault/ctx:reason/text()</con1:path>
+                </con1:param>
+                <con1:param name="descripcion">
+                  <con1:path>"Error etapa de validacion"</con1:path>
+                </con1:param>
+                <con1:param name="codigo">
+                  <con1:path>"30"</con1:path>
+                </con1:param>
+              </con1:xqueryTransform>
+            </con2:expr>
+          </con2:replace>
+          <con1:reply>
+            <con1:id>_ActionId-3454680542170866960--1160e501.139eacf127f.-7d6b</con1:id>
+          </con1:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:flow>
+      <con:pipeline-node name="PipelinePairNode1">
+        <con:request>PipelinePairNode1_request</con:request>
+        <con:response>PipelinePairNode1_response</con:response>
+      </con:pipeline-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

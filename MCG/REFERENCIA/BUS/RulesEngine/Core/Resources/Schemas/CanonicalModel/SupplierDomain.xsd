@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.claro.com.co/rulesEngine/canonicalModel/SupplierDomain"
+	xmlns:cbe="http://www.claro.com.co/rulesEngine/canonicalModel/CommonBusinessEntities">
+	<import
+		namespace="http://www.claro.com.co/rulesEngine/canonicalModel/CommonBusinessEntities"
+		schemaLocation="CommonBusinessEntities.xsd" />
+
+	<annotation>
+		<documentation>
+			<![CDATA[
+			Canonical representation of the Supplier
+			]]>
+		</documentation>
+	</annotation>
+
+	<complexType name="Supplier">
+		<sequence>
+			<element name="id" type="integer" minOccurs="0" />
+			<element name="code" type="string" minOccurs="0"/>
+			<element name="description" type="string" minOccurs="0"/>
+			<element name="lastName" type="string" minOccurs="0"/>
+			<element name="firstName" type="string" minOccurs="0"/>
+			<element name="documentNumber" type="string" minOccurs="0"/>
+			<element name="documentType" type="cbe:DocumentType" minOccurs="0"/>
+		</sequence>
+	</complexType>
+</schema>

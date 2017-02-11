@@ -1,0 +1,18 @@
+<adapter-config name="bd_registroPaquetesBB" adapter="Database Adapter"
+	wsdlLocation="../WSDLs/registroPaquetesBB_BD.wsdl"
+	xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+
+	<connection-factory location="eis/DB/ITEL_SOA"
+		UIConnectionName="ITEL_SOA" adapterRef="" />
+	<endpoint-interaction portType="bd_registroPaquetesBB_ptt"
+		operation="bd_registroPaquetesBB">
+		<interaction-spec
+			className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
+			<property name="PackageName" value="PKG_SOA_ITEL" />
+			<property name="ProcedureName" value="PRC_REGISTRO_PAQUETE_BB" />
+			<property name="GetActiveUnitOfWork" value="false" />
+		</interaction-spec>
+		<output />
+	</endpoint-interaction>
+
+</adapter-config>

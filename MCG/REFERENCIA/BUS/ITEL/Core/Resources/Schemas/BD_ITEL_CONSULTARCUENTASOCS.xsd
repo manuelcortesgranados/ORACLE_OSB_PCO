@@ -1,0 +1,30 @@
+<schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/sp/bd_consultarCuentasOCS" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/sp/bd_consultarCuentasOCS" elementFormDefault="qualified">
+   <element name="InputParameters">
+      <!--Empty Parameter List-->
+      <complexType/>
+   </element>
+   <element name="OutputParameters">
+      <complexType>
+         <sequence>
+            <element name="P_CUENTAS" type="db:P_CUENTAS_RowSet" db:index="1" db:type="RowSet" minOccurs="0" nillable="true"/>
+         </sequence>
+      </complexType>
+   </element>
+   <complexType name="P_CUENTAS_RowSet">
+      <sequence>
+         <element name="P_CUENTA_Row" minOccurs="0" maxOccurs="unbounded">
+            <complexType>
+               <sequence>
+                  <element name="CUENTA" db:type="VARCHAR2" minOccurs="0" nillable="true">
+                    <simpleType>
+                        <restriction base="string">
+                           <maxLength value="60"/>
+                        </restriction>
+                     </simpleType>
+                  </element>
+               </sequence>
+            </complexType>
+         </element>
+      </sequence>
+   </complexType>
+</schema>

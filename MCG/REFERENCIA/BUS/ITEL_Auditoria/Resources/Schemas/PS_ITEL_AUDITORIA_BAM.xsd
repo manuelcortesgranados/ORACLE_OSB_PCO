@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.comcel.com.co/AuditoriaBAM/" xmlns:tns="http://www.comcel.com.co/AuditoriaBAM/">
+	
+	<xs:element name="_etapaDOCollection" type="tns:_etapaDOCollection" />
+
+	<xs:complexType name="_etapaDOCollection">
+		<xs:sequence>
+			<xs:element name="_etapaDO" minOccurs="0" type="tns:_etapaDO" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="_etapaDO">
+	    <xs:sequence>
+			<xs:element name="_idTransaccion"  minOccurs="0" type="xs:string"/>
+			<xs:element name="_proceso" minOccurs="0" type="xs:string"/>
+			<xs:element name="_codRespuesta" minOccurs="0" type="xs:string"/>
+			<xs:element name="_respuesta" minOccurs="0" type="xs:string"/>
+			<xs:element name="_tiempoTotal"  minOccurs="0" type="xs:decimal"/>
+			<xs:element name="_monto"  minOccurs="0" type="xs:decimal"/>
+			<xs:element name="_codigoINDestino"  minOccurs="0" type="xs:string"/>
+			<xs:element name="_codigoINOrigen"  minOccurs="0" type="xs:string"/>
+			<xs:element name="_tramaEntrada"  minOccurs="0" type="xs:string"/>
+			<xs:element name="_duracion1"  minOccurs="0" type="xs:integer"/>
+			<xs:element name="_duracion2"  minOccurs="0" type="xs:integer"/>
+			<xs:element name="_duracion3"  minOccurs="0" type="xs:integer"/>
+			<xs:element name="_duracion4"  minOccurs="0" type="xs:integer"/>
+			<xs:element name="_duracion5"  minOccurs="0" type="xs:integer"/>
+			<xs:element name="_duracion6"  minOccurs="0" type="xs:integer"/>
+			<xs:element name="_duracion7"  minOccurs="0" type="xs:integer"/>
+			<xs:element name="_durSuscriptor"  minOccurs="0" type="xs:integer"/>
+			<xs:element name="_durTransaccion"  minOccurs="0" type="xs:integer"/>
+			<xs:element name="_usuario" minOccurs="0" type="xs:string"/>
+	    </xs:sequence>
+	</xs:complexType>
+	
+</xs:schema>

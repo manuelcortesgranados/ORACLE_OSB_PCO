@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://events.redirect.hp.com"
+	xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://events.redirect.hp.com"
+	xmlns:intf="http://events.redirect.hp.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><!--WSDL 
+		created by Apache Axis version: 1.4Built on Apr 22, 2006 (06:55:48 PDT) -->
+	<wsdl:types>
+		<schema elementFormDefault="qualified" targetNamespace="http://events.redirect.hp.com"
+			xmlns="http://www.w3.org/2001/XMLSchema">
+			<element name="GSIEventRequest">
+				<complexType>
+					<sequence>
+						<element name="msisdn" type="xsd:string" />
+					</sequence>
+				</complexType>
+			</element>
+			<element name="GSIEventRequestResponse">
+				<complexType>
+					<sequence>
+						<element name="GSIEventRequestReturn" type="impl:GSIEventResponse" />
+					</sequence>
+				</complexType>
+			</element>
+			<complexType name="GSIEventResponse">
+				<sequence>
+					<element name="navegacion" nillable="true" type="xsd:string" />
+					<element name="op_status" nillable="true" type="xsd:string" />
+					<element name="rating_group" nillable="true" type="xsd:string" />
+				</sequence>
+			</complexType>
+			<element name="ReAuthorizationRequest">
+				<complexType>
+					<sequence>
+						<element name="msisdn" type="xsd:string" />
+					</sequence>
+				</complexType>
+			</element>
+			<element name="ReAuthorizationRequestResponse">
+				<complexType>
+					<sequence>
+						<element name="ReAuthorizationRequestReturn" type="xsd:string" />
+					</sequence>
+				</complexType>
+			</element>
+		</schema>
+	</wsdl:types>
+	<wsdl:message name="GSIEventRequestRequest">
+		<wsdl:part element="impl:GSIEventRequest" name="parameters" />
+	</wsdl:message>
+	<wsdl:message name="ReAuthorizationRequestResponse">
+		<wsdl:part element="impl:ReAuthorizationRequestResponse"
+			name="parameters" />
+	</wsdl:message>
+	<wsdl:message name="GSIEventRequestResponse">
+		<wsdl:part element="impl:GSIEventRequestResponse" name="parameters" />
+	</wsdl:message>
+	<wsdl:message name="ReAuthorizationRequestRequest">
+		<wsdl:part element="impl:ReAuthorizationRequest" name="parameters" />
+	</wsdl:message>
+	<wsdl:portType name="GSIEvents">
+		<wsdl:operation name="GSIEventRequest">
+			<wsdl:input message="impl:GSIEventRequestRequest" name="GSIEventRequestRequest" />
+			<wsdl:output message="impl:GSIEventRequestResponse" name="GSIEventRequestResponse" />
+		</wsdl:operation>
+		<wsdl:operation name="ReAuthorizationRequest">
+			<wsdl:input message="impl:ReAuthorizationRequestRequest"
+				name="ReAuthorizationRequestRequest" />
+			<wsdl:output message="impl:ReAuthorizationRequestResponse"
+				name="ReAuthorizationRequestResponse" />
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="GSIEventsSoapBinding" type="impl:GSIEvents">
+		<wsdlsoap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="GSIEventRequest">
+			<wsdlsoap:operation soapAction="" />
+			<wsdl:input name="GSIEventRequestRequest">
+				<wsdlsoap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="GSIEventRequestResponse">
+				<wsdlsoap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="ReAuthorizationRequest">
+			<wsdlsoap:operation soapAction="" />
+			<wsdl:input name="ReAuthorizationRequestRequest">
+				<wsdlsoap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="ReAuthorizationRequestResponse">
+				<wsdlsoap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="GSIEventsService">
+		<wsdl:port binding="impl:GSIEventsSoapBinding" name="GSIEvents">
+			<wsdlsoap:address
+				location="http://192.168.228.182:8090/ium-redirect/servlet/IUMServlet?wsdl" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

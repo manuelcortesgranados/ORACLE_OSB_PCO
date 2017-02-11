@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.claro.com.co/rulesEngine/HasCreditReferenceNumberMAACFact/"
+     xmlns:cbe="http://www.claro.com.co/rulesEngine/canonicalModel/CommonBusinessEntities"
+     xmlns:fd="http://www.claro.com.co/rulesEngine/canonicalModel/FrameworkDomain" xmlns:tns="http://www.claro.com.co/rulesEngine/HasCreditReferenceNumberMAACFact/">
+    <xs:import namespace="http://www.claro.com.co/rulesEngine/canonicalModel/CommonBusinessEntities"
+         schemaLocation="../../../Core/Resources/Schemas/CanonicalModel/CommonBusinessEntities.xsd"/>
+    <xs:import namespace="http://www.claro.com.co/rulesEngine/canonicalModel/FrameworkDomain"
+         schemaLocation="../../../Core/Resources/Schemas/CanonicalModel/FrameworkDomain.xsd"/>
+    <xs:element name="HasCreditReferenceNumberMAACFactRequest" type="tns:HasCreditReferenceNumberMAACFactRequestType"/>
+    <xs:element name="HasCreditReferenceNumberMAACFactResponse" type="tns:HasCreditReferenceNumberMAACFactResponseType"/>
+    <xs:complexType name="HasCreditReferenceNumberMAACFactRequestType">
+        <xs:sequence>
+            <xs:element name="CreditReference" type="cbe:CreditReference"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="HasCreditReferenceNumberMAACFactResponseType">
+        <xs:sequence>
+            <xs:element name="Plan" type="fd:Plan"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

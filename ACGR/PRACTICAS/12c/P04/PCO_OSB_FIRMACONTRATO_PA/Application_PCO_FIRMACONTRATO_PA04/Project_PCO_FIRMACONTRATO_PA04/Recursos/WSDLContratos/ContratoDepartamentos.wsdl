@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<definitions targetNamespace="urn:ContratoDepartamentos" xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:tns="urn:ContratoDepartamentos" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+             xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:firdepart="http://www.firdepart.org">
+  <types>
+    <xsd:schema>
+      <xsd:import schemaLocation="../XMLFirmas/FirmaDepartamentos.xsd" namespace="http://www.firdepart.org"/>
+    </xsd:schema>
+  </types>
+  <message name="mensajeEntradaDepartamentos">
+    <part name="partMensajeEntradaDep" element="firdepart:departamentosRequest"/>
+  </message>
+  <message name="mensaajeSalidaDepartamentos">
+    <part name="partMensajeSalidaDep" element="firdepart:departamentosResponse"/>
+  </message>
+  <portType name="puertoTipoDepartamentos">
+    <operation name="operacionDepartamentos">
+      <input message="tns:mensajeEntradaDepartamentos"/>
+      <output message="tns:mensaajeSalidaDepartamentos"/>
+    </operation>
+  </portType>
+  <binding name="puertoTipoDepartamentosSOAP11Binding" type="tns:puertoTipoDepartamentos">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="operacionDepartamentos">
+      <soap:operation style="document" soapAction="urn:ContratoDepartamentos/operacionDepartamentos"/>
+      <input>
+        <soap:body use="literal" parts="partMensajeEntradaDep"/>
+      </input>
+      <output>
+        <soap:body use="literal" parts="partMensajeSalidaDep"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="servicioDepartamentos">
+    <port name="puertoTipoDepartamentos" binding="tns:puertoTipoDepartamentosSOAP11Binding">
+      <soap:address location="http://www.example.com"/>
+    </port>
+  </service>
+</definitions>

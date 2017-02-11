@@ -1,0 +1,877 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/stages/logging/config">
+  <ser:coreEntry isProxy="true" isEnabled="true" isTracingEnabled="false">
+    <ser:binding type="Mixed" xsi:type="con:MixedBindingType" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config">
+      <con:request type="Text"/>
+      <con:response type="Text"/>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>http</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:URI>
+      <env:value>/ITEL/Core/Proxies/ODMJson_PS</env:value>
+    </tran:URI>
+    <tran:inbound-properties/>
+    <tran:all-headers>false</tran:all-headers>
+    <tran:provider-specific>
+      <http:inbound-properties/>
+    </tran:provider-specific>
+  </ser:endpointConfig>
+  <ser:router>
+    <con:pipeline type="request" name="PipelinePairNode1_request">
+      <con:stage name="STG_JavaCallOutToXML">
+        <con:context/>
+        <con:actions>
+          <con3:log>
+            <con2:id>_ActionId-5539756764240179818--40579788.158462f41a3.-7c89</con2:id>
+            <con3:logLevel>error</con3:logLevel>
+            <con3:expr>
+              <con2:xqueryText>concat('MANOLITO NO LLEGA EL BODY =>',$body)</con2:xqueryText>
+            </con3:expr>
+          </con3:log>
+          <con1:javaCallout varName="v_resultadoJSONToXML">
+            <con2:id>_ActionId-5539756764240179818--40579788.158462f41a3.-7e66</con2:id>
+            <con1:archive ref="ITEL/Core/Resources/JARs/Conversor"/>
+            <con1:className>co.com.claro.procesadorjson.conversion.Conversor</con1:className>
+            <con1:method>public static java.lang.String toXML(java.lang.String)</con1:method>
+            <con1:expr>
+              <con2:xqueryText>data($body)</con2:xqueryText>
+            </con1:expr>
+          </con1:javaCallout>
+          <con1:assign varName="respuestaXML">
+            <con2:id>_ActionId-5539756764240179818--40579788.158462f41a3.-7e65</con2:id>
+            <con1:expr>
+              <con2:xqueryText>fn-bea:inlinedXML($v_resultadoJSONToXML)</con2:xqueryText>
+            </con1:expr>
+          </con1:assign>
+        </con:actions>
+      </con:stage>
+      <con:stage name="STG_SP_VerificarPermisosUsuario">
+        <con:context/>
+        <con:actions>
+          <con1:wsCallout>
+            <con2:id>_ActionId-5539756764240179818--40579788.158462f41a3.-7e63</con2:id>
+            <con1:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/verificarPermisoUsuarioLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con1:operation>db_VerificarPermisoUsuario</con1:operation>
+            <con1:request>
+              <con1:body>$variableRequestPermisosUsuario</con1:body>
+            </con1:request>
+            <con1:response>
+              <con1:body>variableResponsePermisosUsuario</con1:body>
+            </con1:response>
+            <con1:requestTransform>
+              <con1:assign varName="variableRequestPermisosUsuario">
+                <con2:id>_ActionId-5539756764240179818--40579788.158462f41a3.-7e64</con2:id>
+                <con1:expr>
+                  <con2:xqueryTransform>
+                    <con2:resource ref="ITEL/Core/Resources/XQueries/verificarPermisosUsuarioRq"/>
+                    <con2:param name="METHOD">
+                      <con2:path>'AddSubscriptionRequest'</con2:path>
+                    </con2:param>
+                    <con2:param name="SOURCE_APPLICATION_ID">
+                      <con2:path>data($respuestaXML/authentication/sourceApplicationId)</con2:path>
+                    </con2:param>
+                    <con2:param name="ITEL_USER">
+                      <con2:path>data($respuestaXML/authentication/user)</con2:path>
+                    </con2:param>
+                  </con2:xqueryTransform>
+                </con1:expr>
+              </con1:assign>
+            </con1:requestTransform>
+            <con1:responseTransform>
+              <con1:assign varName="spCodigo">
+                <con2:id>_ActionId-2423933393035945360--7c007c6.158d5ca7163.-7db9</con2:id>
+                <con1:expr>
+                  <con2:xqueryText>data($variableResponsePermisosUsuario/*:P_OUT_CODIGO)</con2:xqueryText>
+                </con1:expr>
+              </con1:assign>
+              <con1:assign varName="spDescripcion">
+                <con2:id>_ActionId-2423933393035945360--7c007c6.158d5ca7163.-7da0</con2:id>
+                <con1:expr>
+                  <con2:xqueryText>data($variableResponsePermisosUsuario/*:P_OUT_DESCRIPCION)</con2:xqueryText>
+                </con1:expr>
+              </con1:assign>
+              <con1:assign varName="spCanal">
+                <con2:id>_ActionId-775247398126171396-4fb6a48e.158e4685204.-64ab</con2:id>
+                <con1:expr>
+                  <con2:xqueryText>data($variableResponsePermisosUsuario/*:P_OUT_CANAL)</con2:xqueryText>
+                </con1:expr>
+              </con1:assign>
+            </con1:responseTransform>
+          </con1:wsCallout>
+        </con:actions>
+      </con:stage>
+      <con:stage name="STG_EjecucionTramas">
+        <con:context/>
+        <con:actions>
+          <con1:assign varName="config">
+            <con2:id>_ActionId-6295644906465174354-67f3365d.158cf681242.-62a8</con2:id>
+            <con1:expr>
+              <con2:xqueryTransform>
+                <con2:resource ref="ITEL/Core/Resources/XQueries/ODM_BRMS_Config"/>
+              </con2:xqueryTransform>
+            </con1:expr>
+          </con1:assign>
+          <con1:assign varName="v_relativeURI">
+            <con2:id>_ActionId-775247398126171396-4fb6a48e.158e4685204.-5589</con2:id>
+            <con1:expr>
+              <con2:xqueryText>data($inbound/ctx:transport/ctx:request/http:relative-URI)</con2:xqueryText>
+            </con1:expr>
+          </con1:assign>
+          <con1:ifThenElse>
+            <con2:id>_ActionId-6295644906465174354-67f3365d.158cf681242.-645e</con2:id>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText>$variableResponsePermisosUsuario/*:P_OUT_CODIGO='1'</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con1:ifThenElse>
+                  <con2:id>_ActionId-6295644906465174354-67f3365d.158cf681242.-6267</con2:id>
+                  <con1:case>
+                    <con1:condition>
+                      <con2:xqueryText>$v_relativeURI='/subscriptions/add'</con2:xqueryText>
+                    </con1:condition>
+                    <con1:actions>
+                      <con1:assign varName="v_min">
+                        <con2:id>_ActionId-6295644906465174354-67f3365d.158cf681242.-6265</con2:id>
+                        <con1:expr>
+                          <con2:xqueryText>substring(data($respuestaXML/subscriberIdentifier/identifierValue),3)</con2:xqueryText>
+                        </con1:expr>
+                      </con1:assign>
+                      <con1:assign varName="v_paquete">
+                        <con2:id>_ActionId-6295644906465174354-67f3365d.158cf681242.-6263</con2:id>
+                        <con1:expr>
+                          <con2:xqueryText>data($respuestaXML/productId)</con2:xqueryText>
+                        </con1:expr>
+                      </con1:assign>
+                      <con1:wsCallout>
+                        <con2:id>_ActionId-6295644906465174354-67f3365d.158cf681242.-625d</con2:id>
+                        <con1:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/ejecutarTramaLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:operation>ejecutarTrama</con1:operation>
+                        <con1:request>
+                          <con1:body>$ejecutarTramaRequest</con1:body>
+                        </con1:request>
+                        <con1:response>
+                          <con1:body>ejecutarTramaResponse</con1:body>
+                        </con1:response>
+                        <con1:requestTransform>
+                          <con1:assign varName="ejecutarTramaRequest">
+                            <con2:id>_ActionId-6295644906465174354-67f3365d.158cf681242.-625f</con2:id>
+                            <con1:expr>
+                              <con2:xqueryTransform>
+                                <con2:resource ref="ITEL/Core/Resources/XQueries/ODM_BRMS_Req_ejecutarTrama_415"/>
+                                <con2:param name="min">
+                                  <con2:path>data($v_min)</con2:path>
+                                </con2:param>
+                                <con2:param name="usuario">
+                                  <con2:path>data($config//usuario)</con2:path>
+                                </con2:param>
+                                <con2:param name="cobro">
+                                  <con2:path>data($config//cobro)</con2:path>
+                                </con2:param>
+                                <con2:param name="canal">
+                                  <con2:path>data($spCanal)</con2:path>
+                                </con2:param>
+                                <con2:param name="clave">
+                                  <con2:path>data($config//clave)</con2:path>
+                                </con2:param>
+                                <con2:param name="paquete">
+                                  <con2:path>data($v_paquete)</con2:path>
+                                </con2:param>
+                              </con2:xqueryTransform>
+                            </con1:expr>
+                          </con1:assign>
+                        </con1:requestTransform>
+                        <con1:responseTransform>
+                          <con1:assign varName="codRespuestaTrama">
+                            <con2:id>_ActionId-6295644906465174354-67f3365d.158cf681242.-625e</con2:id>
+                            <con1:expr>
+                              <con2:xqueryText>data($ejecutarTramaResponse/CODIGO)</con2:xqueryText>
+                            </con1:expr>
+                          </con1:assign>
+                          <con1:assign varName="descripcionRespuestaTrama">
+                            <con2:id>_ActionId-775247398126171396-4fb6a48e.158e4685204.-6444</con2:id>
+                            <con1:expr>
+                              <con2:xqueryText>data($ejecutarTramaResponse/DESCRIPCION)</con2:xqueryText>
+                            </con1:expr>
+                          </con1:assign>
+                        </con1:responseTransform>
+                      </con1:wsCallout>
+                    </con1:actions>
+                  </con1:case>
+                  <con1:case>
+                    <con1:condition>
+                      <con2:xqueryText>$v_relativeURI='/subscriptions/retrieve'</con2:xqueryText>
+                    </con1:condition>
+                    <con1:actions>
+                      <con1:assign varName="config">
+                        <con2:id>_ActionId-6687196340960822521-bffb463.159049cd3cc.-6e17</con2:id>
+                        <con1:expr>
+                          <con2:xqueryTransform>
+                            <con2:resource ref="ITEL/Core/Resources/XQueries/ODM_BRMS_Config"/>
+                          </con2:xqueryTransform>
+                        </con1:expr>
+                      </con1:assign>
+                      <con1:assign varName="v_min">
+                        <con2:id>_ActionId-6687196340960822521-bffb463.159049cd3cc.-6d72</con2:id>
+                        <con1:expr>
+                          <con2:xqueryText>substring(data($respuestaXML/subscriberIdentifier/identifierValue),3)</con2:xqueryText>
+                        </con1:expr>
+                      </con1:assign>
+                      <con1:ifThenElse>
+                        <con2:id>_ActionId-6687196340960822521-bffb463.159049cd3cc.-6ebf</con2:id>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText>boolean($respuestaXML/parameter[name='subscriptionId'])=true()</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con1:assign varName="v_condicional">
+                              <con2:id>_ActionId-8797625412634070103-53788e71.1591caee350.-622d</con2:id>
+                              <con1:expr>
+                                <con2:xqueryText>'PASO PRIMER CONDICIONAL'</con2:xqueryText>
+                              </con1:expr>
+                            </con1:assign>
+                            <con1:assign varName="v_min">
+                              <con2:id>_ActionId-8797625412634070103-53788e71.1591caee350.-6381</con2:id>
+                              <con1:expr>
+                                <con2:xqueryText>substring(data($respuestaXML/parameter[name='subscriptionId']/value),3)</con2:xqueryText>
+                              </con1:expr>
+                            </con1:assign>
+                            <con1:wsCallout>
+                              <con2:id>_ActionId-6687196340960822521-bffb463.159049cd3cc.-6d4d</con2:id>
+                              <con1:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/ejecutarTramaEspecificaLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                              <con1:operation>ejecutarTrama</con1:operation>
+                              <con1:request>
+                                <con1:body>$ejecutarTramaEspecificaRequest</con1:body>
+                              </con1:request>
+                              <con1:response>
+                                <con1:body>ejecutarTramaEspecificaResponse</con1:body>
+                              </con1:response>
+                              <con1:requestTransform>
+                                <con1:assign varName="ejecutarTramaEspecificaRequest">
+                                  <con2:id>_ActionId-8797625412634070103-53788e71.1591caee350.-5387</con2:id>
+                                  <con1:expr>
+                                    <con2:xqueryTransform>
+                                      <con2:resource ref="ITEL/Core/Resources/XQueries/ODM_BRMS_Req_ejecutarTrama_215"/>
+                                      <con2:param name="min">
+                                        <con2:path>data($v_min)</con2:path>
+                                      </con2:param>
+                                      <con2:param name="usuario">
+                                        <con2:path>data($config//usuario)</con2:path>
+                                      </con2:param>
+                                      <con2:param name="contrasena">
+                                        <con2:path>data($config//clave)</con2:path>
+                                      </con2:param>
+                                      <con2:param name="estado">
+                                        <con2:path>'0'</con2:path>
+                                      </con2:param>
+                                      <con2:param name="canal">
+                                        <con2:path>data($config//canal)</con2:path>
+                                      </con2:param>
+                                    </con2:xqueryTransform>
+                                  </con1:expr>
+                                </con1:assign>
+                              </con1:requestTransform>
+                              <con1:responseTransform/>
+                            </con1:wsCallout>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:default>
+                          <con1:ifThenElse>
+                            <con2:id>_ActionId-6687196340960822521-bffb463.159049cd3cc.-6e3a</con2:id>
+                            <con1:case>
+                              <con1:condition>
+                                <con2:xqueryText>boolean($respuestaXML/subscriberIdentifier)=true() and boolean($respuestaXML/subscriberIdentifier/identifierType)=true() and boolean($respuestaXML/subscriberIdentifier/identifierValue)=true() and boolean($respuestaXML/filter)=true()
+and boolean($respuestaXML/parameter[name='status'])=true() and boolean($respuestaXML/parameter[name='status']/value)=true() and data($respuestaXML/parameter[name='status']/value)='3'</con2:xqueryText>
+                              </con1:condition>
+                              <con1:actions>
+                                <con1:assign varName="v_condicional">
+                                  <con2:id>_ActionId-8797625412634070103-53788e71.1591caee350.-62e8</con2:id>
+                                  <con1:expr>
+                                    <con2:xqueryText>'PASO SEGUNDO CONDICIONAL'</con2:xqueryText>
+                                  </con1:expr>
+                                </con1:assign>
+                                <con1:assign varName="v_min">
+                                  <con2:id>_ActionId-8797625412634070103-53788e71.1591caee350.-6364</con2:id>
+                                  <con1:expr>
+                                    <con2:xqueryText>data(substring(data($respuestaXML/subscriberIdentifier/identifierValue),3))</con2:xqueryText>
+                                  </con1:expr>
+                                </con1:assign>
+                                <con1:ifThenElse>
+                                  <con2:id>_ActionId-8797625412634070103-53788e71.1591caee350.-51d2</con2:id>
+                                  <con1:case>
+                                    <con1:condition>
+                                      <con2:xqueryText>data($respuestaXML/target)='INDIVIDUAL'</con2:xqueryText>
+                                    </con1:condition>
+                                    <con1:actions>
+                                      <con1:assign varName="v_estado">
+                                        <con2:id>_ActionId-8797625412634070103-53788e71.1591caee350.-519b</con2:id>
+                                        <con1:expr>
+                                          <con2:xqueryText>'1'</con2:xqueryText>
+                                        </con1:expr>
+                                      </con1:assign>
+                                    </con1:actions>
+                                  </con1:case>
+                                  <con1:case>
+                                    <con1:condition>
+                                      <con2:xqueryText>data($respuestaXML/target)='CASCADE'</con2:xqueryText>
+                                    </con1:condition>
+                                    <con1:actions>
+                                      <con1:assign varName="v_estado">
+                                        <con2:id>_ActionId-8797625412634070103-53788e71.1591caee350.-5072</con2:id>
+                                        <con1:expr>
+                                          <con2:xqueryText>'0'</con2:xqueryText>
+                                        </con1:expr>
+                                      </con1:assign>
+                                    </con1:actions>
+                                  </con1:case>
+                                  <con1:default/>
+                                </con1:ifThenElse>
+                                <con1:wsCallout>
+                                  <con2:id>_ActionId-6687196340960822521-bffb463.159049cd3cc.-6c4e</con2:id>
+                                  <con1:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/ejecutarTramaEspecificaLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                  <con1:operation>ejecutarTrama</con1:operation>
+                                  <con1:request>
+                                    <con1:body>$ejecutarTramaEspecificaRequest</con1:body>
+                                  </con1:request>
+                                  <con1:response>
+                                    <con1:body>ejecutarTramaEspecificaResponse</con1:body>
+                                  </con1:response>
+                                  <con1:requestTransform>
+                                    <con1:assign varName="ejecutarTramaEspecificaRequest">
+                                      <con2:id>_ActionId-8797625412634070103-53788e71.1591caee350.-52c7</con2:id>
+                                      <con1:expr>
+                                        <con2:xqueryTransform>
+                                          <con2:resource ref="ITEL/Core/Resources/XQueries/ODM_BRMS_Req_ejecutarTrama_215"/>
+                                          <con2:param name="min">
+                                            <con2:path>data($v_min)</con2:path>
+                                          </con2:param>
+                                          <con2:param name="usuario">
+                                            <con2:path>data($config//usuario)</con2:path>
+                                          </con2:param>
+                                          <con2:param name="contrasena">
+                                            <con2:path>data($config//clave)</con2:path>
+                                          </con2:param>
+                                          <con2:param name="estado">
+                                            <con2:path>$v_estado</con2:path>
+                                          </con2:param>
+                                          <con2:param name="canal">
+                                            <con2:path>data($config//canal)</con2:path>
+                                          </con2:param>
+                                        </con2:xqueryTransform>
+                                      </con1:expr>
+                                    </con1:assign>
+                                  </con1:requestTransform>
+                                  <con1:responseTransform/>
+                                </con1:wsCallout>
+                              </con1:actions>
+                            </con1:case>
+                            <con1:default>
+                              <con1:ifThenElse>
+                                <con2:id>_ActionId-6687196340960822521-bffb463.159049cd3cc.-6e35</con2:id>
+                                <con1:case>
+                                  <con1:condition>
+                                    <con2:xqueryText>boolean($respuestaXML/subscriberIdentifier)=true() and boolean($respuestaXML/subscriberIdentifier/identifierType)=true() and boolean($respuestaXML/subscriberIdentifier/identifierValue)=true() and boolean($respuestaXML/filter)=false()
+and boolean($respuestaXML/parameter[name='status'])=false()</con2:xqueryText>
+                                  </con1:condition>
+                                  <con1:actions>
+                                    <con1:assign varName="v_condicional">
+                                      <con2:id>_ActionId-8797625412634070103-53788e71.1591caee350.-620d</con2:id>
+                                      <con1:expr>
+                                        <con2:xqueryText>'PASO TERCER CONDICIONAL'</con2:xqueryText>
+                                      </con1:expr>
+                                    </con1:assign>
+                                    <con1:assign varName="v_min">
+                                      <con2:id>_ActionId-8797625412634070103-53788e71.1591caee350.-634a</con2:id>
+                                      <con1:expr>
+                                        <con2:xqueryText>data(substring(data($respuestaXML/subscriberIdentifier/identifierValue),3))</con2:xqueryText>
+                                      </con1:expr>
+                                    </con1:assign>
+                                    <con1:ifThenElse>
+                                      <con2:id>_ActionId-8797625412634070103-53788e71.1591caee350.-5103</con2:id>
+                                      <con1:case>
+                                        <con1:condition>
+                                          <con2:xqueryText>data($respuestaXML/target)='INDIVIDUAL'</con2:xqueryText>
+                                        </con1:condition>
+                                        <con1:actions>
+                                          <con1:assign varName="v_estado">
+                                            <con2:id>_ActionId-8797625412634070103-53788e71.1591caee350.-508f</con2:id>
+                                            <con1:expr>
+                                              <con2:xqueryText>'1'</con2:xqueryText>
+                                            </con1:expr>
+                                          </con1:assign>
+                                        </con1:actions>
+                                      </con1:case>
+                                      <con1:case>
+                                        <con1:condition>
+                                          <con2:xqueryText>data($respuestaXML/target)='CASCADE'</con2:xqueryText>
+                                        </con1:condition>
+                                        <con1:actions>
+                                          <con1:assign varName="v_estado">
+                                            <con2:id>_ActionId-8797625412634070103-53788e71.1591caee350.-5070</con2:id>
+                                            <con1:expr>
+                                              <con2:xqueryText>'0'</con2:xqueryText>
+                                            </con1:expr>
+                                          </con1:assign>
+                                        </con1:actions>
+                                      </con1:case>
+                                      <con1:default/>
+                                    </con1:ifThenElse>
+                                    <con1:wsCallout>
+                                      <con2:id>_ActionId-6687196340960822521-bffb463.159049cd3cc.-6c11</con2:id>
+                                      <con1:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/ejecutarTramaEspecificaLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                      <con1:operation>ejecutarTrama</con1:operation>
+                                      <con1:request>
+                                        <con1:body>$ejecutarTramaEspecificaRequest</con1:body>
+                                      </con1:request>
+                                      <con1:response>
+                                        <con1:body>ejecutarTramaEspecificaResponse</con1:body>
+                                      </con1:response>
+                                      <con1:requestTransform>
+                                        <con1:assign varName="ejecutarTramaEspecificaRequest">
+                                          <con2:id>_ActionId-8797625412634070103-53788e71.1591caee350.-528f</con2:id>
+                                          <con1:expr>
+                                            <con2:xqueryTransform>
+                                              <con2:resource ref="ITEL/Core/Resources/XQueries/ODM_BRMS_Req_ejecutarTrama_215"/>
+                                              <con2:param name="min">
+                                                <con2:path>data($v_min)</con2:path>
+                                              </con2:param>
+                                              <con2:param name="usuario">
+                                                <con2:path>data($config//usuario)</con2:path>
+                                              </con2:param>
+                                              <con2:param name="contrasena">
+                                                <con2:path>data($config//clave)</con2:path>
+                                              </con2:param>
+                                              <con2:param name="estado">
+                                                <con2:path>$v_estado</con2:path>
+                                              </con2:param>
+                                              <con2:param name="canal">
+                                                <con2:path>data($config//canal)</con2:path>
+                                              </con2:param>
+                                            </con2:xqueryTransform>
+                                          </con1:expr>
+                                        </con1:assign>
+                                      </con1:requestTransform>
+                                      <con1:responseTransform/>
+                                    </con1:wsCallout>
+                                  </con1:actions>
+                                </con1:case>
+                                <con1:default>
+                                  <con1:ifThenElse>
+                                    <con2:id>_ActionId-6687196340960822521-bffb463.159049cd3cc.-6e32</con2:id>
+                                    <con1:case>
+                                      <con1:condition>
+                                        <con2:xqueryText>boolean($respuestaXML/subscriberIdentifier)=true() and boolean($respuestaXML/subscriberIdentifier/identifierType)=true() and boolean($respuestaXML/subscriberIdentifier/identifierValue)=true() and boolean($respuestaXML/filter)=true()
+and boolean($respuestaXML/parameter[name='status'])=true() and boolean($respuestaXML/parameter[name='status']/value)=true() and data($respuestaXML/parameter[name='status']/value)='7'</con2:xqueryText>
+                                      </con1:condition>
+                                      <con1:actions>
+                                        <con1:assign varName="v_condicional">
+                                          <con2:id>_ActionId-8797625412634070103-53788e71.1591caee350.-61f2</con2:id>
+                                          <con1:expr>
+                                            <con2:xqueryText>'PASO CUARTO CONDICIONAL'</con2:xqueryText>
+                                          </con1:expr>
+                                        </con1:assign>
+                                        <con1:assign varName="v_min">
+                                          <con2:id>_ActionId-8797625412634070103-53788e71.1591caee350.-6330</con2:id>
+                                          <con1:expr>
+                                            <con2:xqueryText>data(substring(data($respuestaXML/subscriberIdentifier/identifierValue),3))</con2:xqueryText>
+                                          </con1:expr>
+                                        </con1:assign>
+                                        <con1:ifThenElse>
+                                          <con2:id>_ActionId-8797625412634070103-53788e71.1591caee350.-5058</con2:id>
+                                          <con1:case>
+                                            <con1:condition>
+                                              <con2:xqueryText>data($respuestaXML/target)='INDIVIDUAL'</con2:xqueryText>
+                                            </con1:condition>
+                                            <con1:actions>
+                                              <con1:assign varName="v_estado">
+                                                <con2:id>_ActionId-8797625412634070103-53788e71.1591caee350.-5026</con2:id>
+                                                <con1:expr>
+                                                  <con2:xqueryText>'1'</con2:xqueryText>
+                                                </con1:expr>
+                                              </con1:assign>
+                                            </con1:actions>
+                                          </con1:case>
+                                          <con1:case>
+                                            <con1:condition>
+                                              <con2:xqueryText>data($respuestaXML/target)='CASCADE'</con2:xqueryText>
+                                            </con1:condition>
+                                            <con1:actions>
+                                              <con1:assign varName="v_estado">
+                                                <con2:id>_ActionId-8797625412634070103-53788e71.1591caee350.-5005</con2:id>
+                                                <con1:expr>
+                                                  <con2:xqueryText>'0'</con2:xqueryText>
+                                                </con1:expr>
+                                              </con1:assign>
+                                            </con1:actions>
+                                          </con1:case>
+                                          <con1:default/>
+                                        </con1:ifThenElse>
+                                        <con1:wsCallout>
+                                          <con2:id>_ActionId-6687196340960822521-bffb463.159049cd3cc.-6ba2</con2:id>
+                                          <con1:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/ejecutarTramaEspecificaLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                          <con1:operation>ejecutarTrama</con1:operation>
+                                          <con1:request>
+                                            <con1:body>$ejecutarTramaEspecificaRequest</con1:body>
+                                          </con1:request>
+                                          <con1:response>
+                                            <con1:body>ejecutarTramaEspecificaResponse</con1:body>
+                                          </con1:response>
+                                          <con1:requestTransform>
+                                            <con1:assign varName="ejecutarTramaEspecificaRequest">
+                                              <con2:id>_ActionId-8797625412634070103-53788e71.1591caee350.-5257</con2:id>
+                                              <con1:expr>
+                                                <con2:xqueryTransform>
+                                                  <con2:resource ref="ITEL/Core/Resources/XQueries/ODM_BRMS_Req_ejecutarTrama_215"/>
+                                                  <con2:param name="min">
+                                                    <con2:path>data($v_min)</con2:path>
+                                                  </con2:param>
+                                                  <con2:param name="usuario">
+                                                    <con2:path>data($config//usuario)</con2:path>
+                                                  </con2:param>
+                                                  <con2:param name="contrasena">
+                                                    <con2:path>data($config//clave)</con2:path>
+                                                  </con2:param>
+                                                  <con2:param name="estado">
+                                                    <con2:path>$v_estado</con2:path>
+                                                  </con2:param>
+                                                  <con2:param name="canal">
+                                                    <con2:path>data($config//canal)</con2:path>
+                                                  </con2:param>
+                                                </con2:xqueryTransform>
+                                              </con1:expr>
+                                            </con1:assign>
+                                          </con1:requestTransform>
+                                          <con1:responseTransform/>
+                                        </con1:wsCallout>
+                                      </con1:actions>
+                                    </con1:case>
+                                    <con1:default>
+                                      <con1:assign varName="v_condicional">
+                                        <con2:id>_ActionId-8797625412634070103-53788e71.1591caee350.-61d9</con2:id>
+                                        <con1:expr>
+                                          <con2:xqueryText>'NO TUVO EN CUENTA NINGUN CONDICIONAL'</con2:xqueryText>
+                                        </con1:expr>
+                                      </con1:assign>
+                                    </con1:default>
+                                  </con1:ifThenElse>
+                                </con1:default>
+                              </con1:ifThenElse>
+                            </con1:default>
+                          </con1:ifThenElse>
+                        </con1:default>
+                      </con1:ifThenElse>
+                    </con1:actions>
+                  </con1:case>
+                  <con1:case>
+                    <con1:condition>
+                      <con2:xqueryText>$v_relativeURI='/action/manage'</con2:xqueryText>
+                    </con1:condition>
+                    <con1:actions>
+                      <con1:assign varName="accionARealizar">
+                        <con2:id>_ActionId-2423933393035945360--7c007c6.158d5ca7163.-7fa9</con2:id>
+                        <con1:expr>
+                          <con2:xqueryText>data($respuestaXML/action)</con2:xqueryText>
+                        </con1:expr>
+                      </con1:assign>
+                      <con1:ifThenElse>
+                        <con2:id>_ActionId-2423933393035945360--7c007c6.158d5ca7163.-7f80</con2:id>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText>$accionARealizar='cancelSubscriptionForSubscriber'</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con1:assign varName="offerName">
+                              <con2:id>_ActionId-2423933393035945360--7c007c6.158d5ca7163.-7f6e</con2:id>
+                              <con1:expr>
+                                <con2:xqueryText>data($respuestaXML/parameters[name='subscriptionId']/value)</con2:xqueryText>
+                              </con1:expr>
+                            </con1:assign>
+                            <con1:assign varName="msisdn">
+                              <con2:id>_ActionId-2423933393035945360--7c007c6.158d5ca7163.-7eb6</con2:id>
+                              <con1:expr>
+                                <con2:xqueryText>substring(data($respuestaXML/parameters[name='subscriberID']/value),3)</con2:xqueryText>
+                              </con1:expr>
+                            </con1:assign>
+                            <con1:wsCallout>
+                              <con2:id>_ActionId-2423933393035945360--7c007c6.158d5ca7163.-7e78</con2:id>
+                              <con1:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/ejecutarTramaLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                              <con1:operation>ejecutarTrama</con1:operation>
+                              <con1:request>
+                                <con1:body>$ejecutarTramaRequest</con1:body>
+                              </con1:request>
+                              <con1:response>
+                                <con1:body>ejecutarTramaResponse</con1:body>
+                              </con1:response>
+                              <con1:requestTransform>
+                                <con1:assign varName="ejecutarTramaRequest">
+                                  <con2:id>_ActionId-2423933393035945360--7c007c6.158d5ca7163.-7e23</con2:id>
+                                  <con1:expr>
+                                    <con2:xqueryTransform>
+                                      <con2:resource ref="ITEL/Core/Resources/XQueries/ODM_BRMS_Req_ejecutarTrama_503"/>
+                                      <con2:param name="usuario">
+                                        <con2:path>data($config//usuario)</con2:path>
+                                      </con2:param>
+                                      <con2:param name="msisdn">
+                                        <con2:path>$msisdn</con2:path>
+                                      </con2:param>
+                                      <con2:param name="clave">
+                                        <con2:path>data($config//clave)</con2:path>
+                                      </con2:param>
+                                      <con2:param name="offerName">
+                                        <con2:path>$offerName</con2:path>
+                                      </con2:param>
+                                    </con2:xqueryTransform>
+                                  </con1:expr>
+                                </con1:assign>
+                              </con1:requestTransform>
+                              <con1:responseTransform>
+                                <con1:assign varName="codRespuestaTrama">
+                                  <con2:id>_ActionId-2423933393035945360--7c007c6.158d5ca7163.-7dcf</con2:id>
+                                  <con1:expr>
+                                    <con2:xqueryText>data($ejecutarTramaResponse/CODIGO)</con2:xqueryText>
+                                  </con1:expr>
+                                </con1:assign>
+                              </con1:responseTransform>
+                            </con1:wsCallout>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:default>
+                          <con1:assign varName="codRespuesta">
+                            <con2:id>_ActionId-775247398126171396-4fb6a48e.158e4685204.-5618</con2:id>
+                            <con1:expr>
+                              <con2:xqueryText>'-1'</con2:xqueryText>
+                            </con1:expr>
+                          </con1:assign>
+                        </con1:default>
+                      </con1:ifThenElse>
+                    </con1:actions>
+                  </con1:case>
+                  <con1:default>
+                    <con1:assign varName="codRespuesta">
+                      <con2:id>_ActionId-775247398126171396-4fb6a48e.158e4685204.-55a9</con2:id>
+                      <con1:expr>
+                        <con2:xqueryText>'-2'</con2:xqueryText>
+                      </con1:expr>
+                    </con1:assign>
+                  </con1:default>
+                </con1:ifThenElse>
+              </con1:actions>
+            </con1:case>
+            <con1:default>
+              <con1:assign varName="codRespuestaBaseDatos">
+                <con2:id>_ActionId-2423933393035945360--7c007c6.158d5ca7163.-7feb</con2:id>
+                <con1:expr>
+                  <con2:xqueryText>'11'</con2:xqueryText>
+                </con1:expr>
+              </con1:assign>
+              <con1:assign varName="descripcionResultado">
+                <con2:id>_ActionId-2423933393035945360--7c007c6.158d5ca7163.-7fda</con2:id>
+                <con1:expr>
+                  <con2:xqueryText>'USUARIO INVALIDO.  NO SE ENCONTRO REGISTRO EN BASE DE DATOS'</con2:xqueryText>
+                </con1:expr>
+              </con1:assign>
+            </con1:default>
+          </con1:ifThenElse>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="PipelinePairNode1_response">
+      <con:stage name="ValidacionUsuarioBaseDatos">
+        <con:context/>
+        <con:actions>
+          <con1:ifThenElse>
+            <con2:id>_ActionId-6511444320466141513-24c1b4ac.158ff7888b3.-7198</con2:id>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText>$variableResponsePermisosUsuario/*:P_OUT_CODIGO='0'</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con1:assign varName="v_debug">
+                  <con2:id>_ActionId-8797625412634070103-53788e71.1591caee350.-4fda</con2:id>
+                  <con1:expr>
+                    <con2:xqueryText>'USUARIO INVALIDO'</con2:xqueryText>
+                  </con1:expr>
+                </con1:assign>
+                <con1:replace varName="body" contents-only="true">
+                  <con2:id>_ActionId-8797625412634070103-53788e71.1591caee350.-624c</con2:id>
+                  <con1:expr>
+                    <con2:xqueryTransform>
+                      <con2:resource ref="ITEL/Core/Resources/XQueries/ODMJson_Res_UserUnauthorized"/>
+                    </con2:xqueryTransform>
+                  </con1:expr>
+                </con1:replace>
+              </con1:actions>
+            </con1:case>
+            <con1:default>
+              <con1:ifThenElse>
+                <con2:id>_ActionId-8797625412634070103-53788e71.1591caee350.-626d</con2:id>
+                <con1:case>
+                  <con1:condition>
+                    <con2:xqueryText>$v_relativeURI='/subscriptions/add'</con2:xqueryText>
+                  </con1:condition>
+                  <con1:actions>
+                    <con1:assign varName="v_debug">
+                      <con2:id>_ActionId-8797625412634070103-53788e71.1591caee350.-4fbd</con2:id>
+                      <con1:expr>
+                        <con2:xqueryText>'/subscriptions/add'</con2:xqueryText>
+                      </con1:expr>
+                    </con1:assign>
+                    <con1:replace varName="body" contents-only="true">
+                      <con2:id>_ActionId-8797625412634070103-53788e71.1591caee350.-626c</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/ODMJson_Res_opAdd"/>
+                          <con2:param name="resultCode">
+                            <con2:path>$codRespuestaTrama</con2:path>
+                          </con2:param>
+                          <con2:param name="subscriptionId">
+                            <con2:path>$v_min</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                  </con1:actions>
+                </con1:case>
+                <con1:case>
+                  <con1:condition>
+                    <con2:xqueryText>$v_relativeURI='/action/manage'</con2:xqueryText>
+                  </con1:condition>
+                  <con1:actions>
+                    <con1:assign varName="v_debug">
+                      <con2:id>_ActionId-8797625412634070103-53788e71.1591caee350.-4f90</con2:id>
+                      <con1:expr>
+                        <con2:xqueryText>'/action/manage'</con2:xqueryText>
+                      </con1:expr>
+                    </con1:assign>
+                    <con1:assign varName="accionARealizar">
+                      <con2:id>_ActionId-8797625412634070103-53788e71.1591caee350.-626b</con2:id>
+                      <con1:expr>
+                        <con2:xqueryText>data($respuestaXML/action)</con2:xqueryText>
+                      </con1:expr>
+                    </con1:assign>
+                    <con1:ifThenElse>
+                      <con2:id>_ActionId-8797625412634070103-53788e71.1591caee350.-626a</con2:id>
+                      <con1:case>
+                        <con1:condition>
+                          <con2:xqueryText>$accionARealizar='cancelSubscriptionForSubscriber'</con2:xqueryText>
+                        </con1:condition>
+                        <con1:actions>
+                          <con1:replace varName="body" contents-only="true">
+                            <con2:id>_ActionId-8797625412634070103-53788e71.1591caee350.-6269</con2:id>
+                            <con1:expr>
+                              <con2:xqueryTransform>
+                                <con2:resource ref="ITEL/Core/Resources/XQueries/ODMJson_Res_opCancel"/>
+                                <con2:param name="resultCode">
+                                  <con2:path>$codRespuestaTrama</con2:path>
+                                </con2:param>
+                              </con2:xqueryTransform>
+                            </con1:expr>
+                          </con1:replace>
+                        </con1:actions>
+                      </con1:case>
+                      <con1:default/>
+                    </con1:ifThenElse>
+                  </con1:actions>
+                </con1:case>
+                <con1:case>
+                  <con1:condition>
+                    <con2:xqueryText>$v_relativeURI='/subscriptions/retrieve'</con2:xqueryText>
+                  </con1:condition>
+                  <con1:actions>
+                    <con1:assign varName="v_debug">
+                      <con2:id>_ActionId-8797625412634070103-53788e71.1591caee350.-4f75</con2:id>
+                      <con1:expr>
+                        <con2:xqueryText>'/subscriptions/retrieve'</con2:xqueryText>
+                      </con1:expr>
+                    </con1:assign>
+                    <con1:replace varName="body" contents-only="true">
+                      <con2:id>_ActionId-8797625412634070103-53788e71.1591caee350.-6268</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/ODMJson_Res_RetrieveSubscriptionResponse"/>
+                          <con2:param name="min">
+                            <con2:path>$v_min</con2:path>
+                          </con2:param>
+                          <con2:param name="wS_Result1">
+                            <con2:path>$ejecutarTramaEspecificaResponse</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:replace>
+                  </con1:actions>
+                </con1:case>
+                <con1:default/>
+              </con1:ifThenElse>
+            </con1:default>
+          </con1:ifThenElse>
+        </con:actions>
+      </con:stage>
+      <con:stage name="STG_Respuesta">
+        <con:context/>
+        <con:actions>
+          <con1:transport-headers>
+            <con2:id>_ActionId-775247398126171396-4fb6a48e.158e4685204.-532d</con2:id>
+            <con1:header-set>inbound-response</con1:header-set>
+            <con1:header name="Content-Type" value="expression">
+              <con2:xqueryText>'text/xml; charset=utf-8'</con2:xqueryText>
+            </con1:header>
+            <con1:header name="Content-Length" value="expression">
+              <con2:xqueryText>string-length($body)</con2:xqueryText>
+            </con1:header>
+            <con1:header value="expression" name="Date">
+              <con2:xqueryText>fn-bea:dateTime-to-string-with-format("E, dd MMM yyyy hh:mm:ss",fn:current-dateTime())</con2:xqueryText>
+            </con1:header>
+            <con1:header name="Content-Encoding" value="expression">
+              <con2:xqueryText>'UTF-8'</con2:xqueryText>
+            </con1:header>
+            <con1:header name="Allow" value="expression">
+              <con2:xqueryText>'GET, HEAD, POST, PUT, DELETE, OPTIONS'</con2:xqueryText>
+            </con1:header>
+          </con1:transport-headers>
+          <con2:reply>
+            <con2:id>_ActionId-5330553106954390440--398cdf5b.158f322e311.-7fd5</con2:id>
+          </con2:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:flow>
+      <con:branch-node type="condition" name="BranchNode1">
+        <con:context/>
+        <con:branch-table variable="inbound">
+          <con:xpath>
+            <con2:xpathText>./ctx:transport/ctx:request/http:http-method/text()</con2:xpathText>
+          </con:xpath>
+          <con:branch name="POST">
+            <con:operator>equals</con:operator>
+            <con:value>'POST'</con:value>
+            <con:flow>
+              <con:pipeline-node name="PipelinePairNode1">
+                <con:request>PipelinePairNode1_request</con:request>
+                <con:response>PipelinePairNode1_response</con:response>
+              </con:pipeline-node>
+            </con:flow>
+          </con:branch>
+          <con:default-branch>
+            <con:flow/>
+          </con:default-branch>
+        </con:branch-table>
+      </con:branch-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

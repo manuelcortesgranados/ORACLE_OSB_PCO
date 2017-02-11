@@ -1,0 +1,27 @@
+<definitions
+	targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_Project_PCO_005_JDEV/OSB_Project_PCO_005_JDEV/db_VerificarPermisoUsuario"
+	name="db_VerificarPermisoUsuario-concrete" xmlns="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_Project_PCO_005_JDEV/OSB_Project_PCO_005_JDEV/db_VerificarPermisoUsuario"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+	<import
+		namespace="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_Project_PCO_005_JDEV/OSB_Project_PCO_005_JDEV/db_VerificarPermisoUsuario"
+		location="../Resources/WSDLs/verificarPermisoUsuario_BD.wsdl" />
+	<binding name="db_VerificarPermisoUsuario_ptt-binding" type="tns:db_VerificarPermisoUsuario_ptt">
+		<soap:binding style="document"
+			transport="http://www.bea.com/wli/sb/transports/jca" />
+		<operation name="db_VerificarPermisoUsuario">
+			<soap:operation soapAction="db_VerificarPermisoUsuario" />
+			<input>
+				<soap:body use="literal" />
+			</input>
+			<output>
+				<soap:body use="literal" />
+			</output>
+		</operation>
+	</binding>
+	<service name="db_VerificarPermisoUsuario-service">
+		<port name="db_VerificarPermisoUsuario-port" binding="tns:db_VerificarPermisoUsuario_ptt-binding">
+			<soap:address location="jca://eis/DB/ITEL_SOA" />
+		</port>
+	</service>
+</definitions>

@@ -1,0 +1,411 @@
+<schema targetNamespace="http://www.comcel.com.co/OCS/OperacionOCS_AIR" elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.comcel.com.co/OCS/OperacionOCS_AIR" xmlns:pref="http://www.comcel.com.co/OCS/OperacionTypes">
+
+	<import schemaLocation="DA_ITEL_OPERACION_OCS_TYPES.xsd" namespace="http://www.comcel.com.co/OCS/OperacionTypes"/>
+
+	<element name="ConsultarBalancesRequest" type="tns:ConsultarBalancesRequest"/>
+	<element name="ConsultarBalancesResponse" type="tns:ConsultarBalancesResponse"/>
+
+	<element name="ConsultarDetalleCuentaRequest" type="tns:ConsultarDetalleCuentaRequest"/>
+	<element name="ConsultarDetalleCuentaResponse" type="tns:ConsultarDetalleCuentaResponse"/>
+	
+	<element name="ActualizarDetalleCuentaRequest" type="tns:ActualizarDetalleCuentaRequest"/>
+	<element name="ActualizarDetalleCuentaResponse" type="tns:ActualizarDetalleCuentaResponse"/>
+	
+	<element name="EliminarDetalleCuentaRequest" type="tns:EliminarDetalleCuentaRequest"/>
+	<element name="EliminarDetalleCuentaResponse" type="tns:EliminarDetalleCuentaResponse"/>
+
+	<element name="RecargarRequest" type="tns:RecargarRequest"/>
+	<element name="RecargarResponse" type="tns:RecargarResponse"/>
+
+	<element name="ActualizarBalanceFechaRequest" type="tns:ActualizarBalanceFechaRequest"/>
+	<element name="ActualizarBalanceFechaResponse" type="tns:ActualizarBalanceFechaResponse"/>
+
+	<element name="ActualizarOfferRequest" type="tns:ActualizarOfferRequest"/>
+	<element name="ActualizarOfferResponse" type="tns:ActualizarOfferResponse"/>
+	
+	<element name="ActualizarAccumulatorRequest" type="tns:ActualizarAccumulatorRequest"/>
+	<element name="ActualizarAccumulatorResponse" type="tns:ActualizarAccumulatorResponse"/>
+	
+	<element name="ActualizarGeneralRequest" type="tns:ActualizarGeneralRequest"/>
+	<element name="ActualizarGeneralResponse" type="tns:ActualizarGeneralResponse"/>
+	
+	<element name="ActualizarBloqueoTemporalRequest" type="tns:ActualizarBloqueoTemporalRequest"/>
+	<element name="ActualizarBloqueoTemporalResponse" type="tns:ActualizarBloqueoTemporalResponse"/>
+	
+	<element name="ActualizarBloqueoRecargaRequest" type="tns:ActualizarBloqueoRecargaRequest"/>
+	<element name="ActualizarBloqueoRecargaResponse" type="tns:ActualizarBloqueoRecargaResponse"/>
+	
+	<element name="ActualizarSegmentacionRequest" type="tns:ActualizarSegmentacionRequest"/>
+	<element name="ActualizarSegmentacionResponse" type="tns:ActualizarSegmentacionResponse"/>
+
+	<element name="EliminarOfferRequest" type="tns:EliminarOfferRequest"/>
+	<element name="EliminarOfferResponse" type="tns:EliminarOfferResponse"/>
+
+	<element name="ConsultarFaFListRequest" type="tns:ConsultarFaFListRequest"/>
+	<element name="ConsultarFaFListResponse" type="tns:ConsultarFaFListResponse"/>
+
+	<element name="ConsultarOfferRequest" type="tns:ConsultarOfferRequest"/>
+	<element name="ConsultarOfferResponse" type="tns:ConsultarOfferResponse"/>
+	
+	<element name="ConsultarUCyUTRequest" type="tns:ConsultarUCyUTRequest"/>
+	<element name="ConsultarUCyUTResponse" type="tns:ConsultarUCyUTResponse"/>
+	
+	<element name="ActualizarUTyCRequest" type="tns:ActualizarUTyCRequest"/>
+	<element name="ActualizarUTyCResponse" type="tns:ActualizarUTyCResponse"/>
+
+	<complexType name="ActualizarUTyCRequest">
+		<sequence>
+			<element name="methodCall" type="pref:methodCall"/>
+		</sequence>
+	</complexType>
+	
+	<complexType name="ConsultarUCyUTRequest">
+		<sequence>
+			<element name="methodCall" type="pref:methodCall"/>
+		</sequence>
+	</complexType>
+	
+	<complexType name="ConsultarBalancesRequest">
+		<sequence>
+			<element name="methodCall" type="pref:methodCall"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="ConsultarDetalleCuentaRequest">
+		<sequence>
+			<element name="methodCall" type="pref:methodCall"/>
+		</sequence>
+	</complexType>
+	
+	<complexType name="ActualizarDetalleCuentaRequest">
+		<sequence>
+			<element name="methodCall" type="pref:methodCall"/>
+		</sequence>
+	</complexType>
+	
+	<complexType name="EliminarDetalleCuentaRequest">
+		<sequence>
+			<element name="methodCall" type="pref:methodCall"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="RecargarRequest">
+		<sequence>
+			<element name="methodCall" type="pref:methodCall"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="ConsultarFaFListRequest">
+		<sequence>
+			<element name="methodCall" type="pref:methodCall"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="ConsultarOfferRequest">
+		<sequence>
+			<element name="methodCall" type="pref:methodCall"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="ActualizarBalanceFechaRequest">
+		<sequence>
+			<element name="methodCall" type="pref:methodCall"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="ActualizarOfferRequest">
+		<sequence>
+			<element name="methodCall" type="pref:methodCall"/>
+		</sequence>
+	</complexType>
+	
+	<complexType name="ActualizarAccumulatorRequest">
+		<sequence>
+			<element name="methodCall" type="pref:methodCall"/>
+		</sequence>
+	</complexType>
+	
+	<complexType name="ActualizarGeneralRequest">
+		<sequence>
+			<element name="methodCall" type="pref:methodCall"/>
+		</sequence>
+	</complexType>
+	
+	<complexType name="ActualizarBloqueoTemporalRequest">
+		<sequence>
+			<element name="methodCall" type="pref:methodCall"/>
+		</sequence>
+	</complexType>
+	
+	<complexType name="ActualizarBloqueoRecargaRequest">
+		<sequence>
+			<element name="methodCall" type="pref:methodCall"/>
+		</sequence>
+	</complexType>
+	
+	<complexType name="ActualizarSegmentacionRequest">
+		<sequence>
+			<element name="methodCall" type="pref:methodCall"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="EliminarOfferRequest">
+		<sequence>
+			<element name="methodCall" type="pref:methodCall"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="ConsultarBalancesResponse">
+		<sequence>
+			<element name="MethodResponse" type="tns:AccountsData" minOccurs="0"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="ConsultarDetalleCuentaResponse">
+		<sequence>
+			<element name="activationDate" type="string" minOccurs="0"/>
+			<element name="accountGroupID" type="string" minOccurs="0"/>
+			<element name="creditClearanceDate" type="string" minOccurs="0"/>
+			<element name="creditClearancePeriod" type="string" minOccurs="0"/>
+			<element name="serviceClassCurrent" type="string" minOccurs="0"/>
+			<element name="serviceFeeExpiryDate" type="string" minOccurs="0"/>
+			<element name="serviceFeePeriod" type="string" minOccurs="0"/>
+			<element name="serviceRemovalDate" type="string" minOccurs="0"/>
+			<element name="serviceRemovalPeriod" type="string" minOccurs="0"/>
+			<element name="supervisionExpiryDate" type="string" minOccurs="0"/>
+			<element name="supervisionPeriod" type="string" minOccurs="0"/>
+			<element name="ussdEndOfCallNotificationID" type="string" minOccurs="0"/>
+			<element name="SubscriberSegmentationAdelantaSaldo" type="string" minOccurs="0"/>
+			<element name="accountPrepaidEmptyLimit1" type="string" minOccurs="0"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="ActualizarDetalleCuentaResponse">
+		<sequence>
+			<element name="originTransactionID" type="string" minOccurs="0"/>
+			<element name="responseCode" type="int" minOccurs="0"/>
+		</sequence>
+	</complexType>
+	
+	<complexType name="ActualizarUTyCResponse">
+		<sequence>
+			<element name="originTransactionID" type="string" minOccurs="0"/>
+			<element name="responseCode" type="int" minOccurs="0"/>
+		</sequence>
+	</complexType>
+	
+	<complexType name="EliminarDetalleCuentaResponse">
+		<sequence>
+			<element name="originTransactionID" type="string" minOccurs="0"/>
+			<element name="responseCode" type="int" minOccurs="0"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="ConsultarFaFListResponse">
+		<sequence>
+			<element name="originTransactionID" type="string" minOccurs="0"/>
+			<element name="responseCode" type="int" minOccurs="0"/>
+			<element name="fafInformationList" type="tns:fafInformationListDetail" maxOccurs="unbounded"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="ConsultarOfferResponse">
+		<sequence>
+			<element name="originTransactionID" type="string" minOccurs="0"/>
+			<element name="responseCode" type="int" minOccurs="0"/>
+			<element name="offerInformationList" type="tns:offerInformationListDetail" maxOccurs="unbounded"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="RecargarResponse">
+		<sequence>
+			<element name="MethodResponse" type="tns:AccountsData" minOccurs="0"/>
+		</sequence>
+	</complexType>
+	
+	<complexType name="ConsultarUCyUTResponse">
+		<sequence>
+		    <element name="originTransactionID" type="string" minOccurs="0"/>
+			<element name="responseCode" type="int" minOccurs="0"/>
+			<element name="usageCounterUsageThresholdInformation" type="tns:usageCounterUsageThresholdInformationDetail" minOccurs="0"/>
+		</sequence>
+	</complexType> 
+	
+	<complexType name="usageCounterUsageThresholdInformationDetail">
+		<sequence>
+			<element name="usageCounterID" type="int" minOccurs="0"/>
+			<element name="usageCounterValue" type="string" minOccurs="0"/>			 
+			<element name="usageThresholdInformation" type="tns:usageThresholdInformationDetail" maxOccurs="unbounded"/> 
+		</sequence>
+	</complexType>
+	
+	<complexType name="usageThresholdInformationDetail">
+		<sequence>
+			<element name="usageThresholdID" type="int"/>
+			<element name="usageThresholdSource" type="int"/>
+			<element name="usageThresholdValue" type="string"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="Subscriber">
+		<sequence>
+			<element name="CUSTOMERID" type="string"/>
+			<element name="Cgpa" type="string"/>
+			<element name="Contract" type="string"/>
+			<element name="IsLocked" type="string"/>
+			<element name="IsFraudLocked" type="string"/>
+			<element name="IsFirstCallPassed" type="string"/>
+			<element name="IsGPRSUsed" type="string"/>
+			<element name="IsWelcomeBackPromoDone" type="string"/>
+			<element name="IsFnFPossible" type="string"/>
+			<element name="IsMLCPossible" type="string"/>
+			<element name="FnF_Numbers" type="tns:DataArray"/>
+			<element name="IsBestFnFPossible" type="string"/>
+			<element name="BestFnF_Numbers" type="tns:DataArray"/>
+			<element name="SMSOnNet_Numbers" type="tns:DataArray" minOccurs="0"/>
+			<element name="SMSOnNet_ExpirationDate" type="string" minOccurs="0"/>
+			<element name="SMSOffNet_Numbers" type="tns:DataArray" minOccurs="0"/>
+			<element name="SMSOffNet_ExpirationDate" type="string" minOccurs="0"/>
+			<element name="SMSAny_Numbers" type="tns:DataArray" minOccurs="0"/>
+			<element name="SMSAny_ExpirationDate" type="string" minOccurs="0"/>
+			<element name="OnPeakAccountID" type="tns:AccountID"/>
+			<element name="OffPeakAccountID" type="tns:AccountID"/>
+			<element name="FreeSMSAccountID" type="tns:AccountID"/>
+			<element name="BonusAccountID" type="tns:AccountID"/>
+			<element name="MinutesAccountID2" type="tns:AccountID"/>
+			<element name="MinutesAccountID3" type="tns:AccountID"/>
+			<element name="MinutesAccountID4" type="tns:AccountID"/>
+			<element name="MonetaryAccountID2" type="tns:AccountID"/>
+			<element name="MonetaryAccountID3" type="tns:AccountID"/>
+			<element name="PreActiveEndDate" type="string"/>
+			<element name="LastKnownPeriod" type="string"/>
+			<element name="ActiveEndDate" type="string"/>
+			<element name="GraceEndDate" type="string"/>
+			<element name="BestFnF_ActivationEndTime" type="string"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="ActualizarBalanceFechaResponse">
+		<sequence>
+			<element name="MethodResponse" type="tns:AccountsData" minOccurs="0"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="ActualizarOfferResponse">
+		<sequence>
+			<element name="originTransactionID" type="string" minOccurs="0"/>
+			<element name="responseCode" type="int" minOccurs="0"/>
+		</sequence>
+	</complexType>
+	
+	<complexType name="ActualizarAccumulatorResponse">
+		<sequence>
+			<element name="originTransactionID" type="string" minOccurs="0"/>
+			<element name="responseCode" type="int" minOccurs="0"/>
+		</sequence>
+	</complexType>
+	
+	<complexType name="ActualizarGeneralResponse">
+		<sequence>
+			<element name="originTransactionID" type="string" minOccurs="0"/>
+			<element name="responseCode" type="int" minOccurs="0"/>
+		</sequence>
+	</complexType>
+	
+	<complexType name="ActualizarBloqueoTemporalResponse">
+		<sequence>
+			<element name="originTransactionID" type="string" minOccurs="0"/>
+			<element name="responseCode" type="int" minOccurs="0"/>
+		</sequence>
+	</complexType>
+	
+	<complexType name="ActualizarBloqueoRecargaResponse">
+		<sequence>
+			<element name="originTransactionID" type="string" minOccurs="0"/>
+			<element name="responseCode" type="int" minOccurs="0"/>
+		</sequence>
+	</complexType>
+	
+	<complexType name="ActualizarSegmentacionResponse">
+		<sequence>
+			<element name="originTransactionID" type="string" minOccurs="0"/>
+			<element name="responseCode" type="int" minOccurs="0"/>
+		</sequence>
+	</complexType>
+	
+	<complexType name="EliminarOfferResponse">
+		<sequence>
+			<element name="originTransactionID" type="string" minOccurs="0"/>
+			<element name="responseCode" type="int" minOccurs="0"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="DataArray">
+		<sequence>
+			<element name="Detail" type="string" minOccurs="0" maxOccurs="unbounded"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="AccountsData">
+		<sequence>
+			<element name="accountValue" type="string" minOccurs="0"/>
+			<element name="expiryDate" type="string" minOccurs="0"/>
+			<element name="serviceClass" type="string" minOccurs="0"/>
+			<element name="DedicatedAccounts" type="tns:AccountDetail" maxOccurs="unbounded"/>
+			<element name="OfferInformationList" type="tns:offerInformationListDetail" minOccurs="0" maxOccurs="unbounded"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="AccountDetail">
+		<sequence>
+			<element name="Detail" type="tns:AccountID"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="fafInformationListDetail">
+		<sequence>
+			<element name="Detail" type="tns:fafListID"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="offerInformationListDetail">
+		<sequence>
+			<element name="Detail" type="tns:offerListID"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="fafListID">
+		<sequence>
+			<element name="exactMatch" type="string"/>
+			<element name="expiryDate" type="string"/>
+			<element name="owner" type="string"/>
+			<element name="fafIndicator" type="string"/>
+			<element name="DetailNumber" type="tns:DetailNumber"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="offerListID">
+		<sequence>
+			<element name="startDate" type="string"/>
+			<element name="expiryDate" type="string"/>
+			<element name="offerID" type="string"/>
+			<element name="offerType" type="string"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="DetailNumber">
+		<sequence>
+			<element name="fafNumber" type="string"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="AccountID">
+		<sequence>
+			<element name="Name" type="string"/>
+			<element name="Balance" type="string"/>
+			<element name="ExpiryDate" type="string"/>
+			<element name="UnitType" type="string"/>
+		</sequence>
+	</complexType>
+	
+</schema>

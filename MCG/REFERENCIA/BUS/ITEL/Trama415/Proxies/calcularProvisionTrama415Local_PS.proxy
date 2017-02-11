@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con2="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+  <ser:coreEntry isProxy="true" isEnabled="true" isAutoPublish="false" isTracingEnabled="false">
+    <ser:binding type="SOAP" isSoap12="false" xsi:type="con4:SoapBindingType" xmlns:con4="http://www.bea.com/wli/sb/services/bindings/config">
+      <con4:wsdl ref="ITEL/Trama415/Resources/WSDLs/calcularProvisionTrama415_PS"/>
+      <con4:port>
+        <con4:name>calcularProvisionTrama415_PSSOAP</con4:name>
+        <con4:namespace>http://www.comcel.com.co/calcularProvisionTrama415_PS/</con4:namespace>
+      </con4:port>
+      <con4:selector type="SOAP body"/>
+      <con4:WSI-compliant>false</con4:WSI-compliant>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+    <ser:ws-policy>
+      <ser:binding-mode>wsdl-policy-attachments</ser:binding-mode>
+    </ser:ws-policy>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>http</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:URI>
+      <env:value>/ITEL/Trama415/Proxies/calcularProvisionTrama415Local_PS</env:value>
+    </tran:URI>
+    <tran:inbound-properties/>
+    <tran:all-headers>false</tran:all-headers>
+    <tran:provider-specific>
+      <http:inbound-properties/>
+    </tran:provider-specific>
+  </ser:endpointConfig>
+  <ser:router>
+    <con:pipeline type="error" name="_onErrorHandler-3738246199404536167--3fed7bd5.13f7be9077c.-5f03">
+      <con:stage name="error">
+        <con:context xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config"/>
+        <con:actions xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+          <con1:replace varName="body" contents-only="true">
+            <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-3738246199404536167--3fed7bd5.13f7be9077c.-5e5c</con4:id>
+            <con1:expr>
+              <con4:xqueryTransform xmlns:con4="http://www.bea.com/wli/sb/stages/config">
+                <con4:resource ref="ITEL/Trama409/Resources/Xqueries/calcularProvisionTrama409_Error"/>
+                <con4:param name="descripcion">
+                  <con4:path>$fault/ctx:reason/text()</con4:path>
+                </con4:param>
+                <con4:param name="codigo">
+                  <con4:path>"6"</con4:path>
+                </con4:param>
+              </con4:xqueryTransform>
+            </con1:expr>
+          </con1:replace>
+          <con4:reply xmlns:con4="http://www.bea.com/wli/sb/stages/config">
+            <con4:id>_ActionId-3738246199404536167--3fed7bd5.13f7be9077c.-5e5b</con4:id>
+          </con4:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:flow>
+      <con:route-node name="CalcularProvision" error-handler="_onErrorHandler-3738246199404536167--3fed7bd5.13f7be9077c.-5f03">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/CalcularProvisionTrama409/" prefix="cal"/>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/CalcularProvisionTrama415/" prefix="cal1"/>
+        </con:context>
+        <con:actions>
+          <con2:route>
+            <con1:id>_ActionId-3738246199404536167--3fed7bd5.13f7be9077c.-61b2</con1:id>
+            <con2:service ref="ITEL/Trama415/Business Services/calcularProvisionTrama415_BS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con2:operation>callFunctionStateless</con2:operation>
+            <con2:outboundTransform>
+              <con3:replace contents-only="true" varName="body">
+                <con1:id>_ActionId-3738246199404536167--3fed7bd5.13f7be9077c.-617a</con1:id>
+                <con3:expr>
+                  <con1:xqueryTransform>
+                    <con1:resource ref="ITEL/Trama415/Resources/XQueries/calcularProvisionTrama415_Req_calcularProvTrama415BS"/>
+                    <con1:param name="input_Parameters">
+                      <con1:path>$body/cal1:Input_Parameters</con1:path>
+                    </con1:param>
+                  </con1:xqueryTransform>
+                </con3:expr>
+              </con3:replace>
+            </con2:outboundTransform>
+            <con2:responseTransform>
+              <con3:replace varName="body" contents-only="true">
+                <con1:id>_ActionId-3738246199404536167--3fed7bd5.13f7be9077c.-6142</con1:id>
+                <con3:expr>
+                  <con1:xqueryTransform>
+                    <con1:resource ref="ITEL/Trama415/Resources/XQueries/calcularProvisionTrama415_Res"/>
+                    <con1:param name="callFunctionStatelessDecision">
+                      <con1:path>$body/*:callFunctionStatelessDecision</con1:path>
+                    </con1:param>
+                  </con1:xqueryTransform>
+                </con3:expr>
+              </con3:replace>
+            </con2:responseTransform>
+          </con2:route>
+        </con:actions>
+      </con:route-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

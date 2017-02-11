@@ -1,0 +1,14 @@
+<adapter-config name="bd_insertarAuditoriaPromoCine" adapter="Database Adapter" wsdlLocation="../WSDLs/insertarAuditoriaPromoCine_BD.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/DB/SOADES" UIConnectionName="SOADES" adapterRef=""/>
+  <endpoint-interaction portType="bd_insertarAuditoriaPromoCine_ptt" operation="bd_insertarAuditoriaPromoCine">
+    <interaction-spec className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
+      <property name="SchemaName" value="ITELSOA"/>
+      <property name="PackageName" value="PKG_PROMO_VAL"/>
+      <property name="ProcedureName" value="PRC_REGISTRAR_AUDITORIA_BONIF"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+    <output/>
+  </endpoint-interaction>
+
+</adapter-config>

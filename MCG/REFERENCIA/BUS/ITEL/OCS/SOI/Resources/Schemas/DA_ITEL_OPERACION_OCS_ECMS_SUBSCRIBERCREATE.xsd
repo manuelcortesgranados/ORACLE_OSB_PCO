@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://ericsson.com/services/ws_cma3/ccapisubscribercreate"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://ericsson.com/services/ws_cma3/ccapisubscribercreate"
+	xmlns:sessionchange="http://ericsson.com/services/ws_cma3/sessionchange"
+	xmlns:customernew="http://ericsson.com/services/ws_cma3/customernew"
+	xmlns:addresswrite="http://ericsson.com/services/ws_cma3/addresswrite"
+	xmlns:customerwrite="http://ericsson.com/services/ws_cma3/customerwrite"
+	xmlns:customerread="http://ericsson.com/services/ws_cma3/customerread"
+	xmlns:contractnew="http://ericsson.com/services/ws_cma3/contractnew"
+	
+	elementFormDefault="qualified">
+	<xs:import schemaLocation="DA_ITEL_OPERACION_OCS_ECMS_SESSION.xsd" namespace="http://ericsson.com/services/ws_cma3/sessionchange"/>
+	<xs:import schemaLocation="DA_ITEL_OPERACION_OCS_ECMS_CUSTOMERN.xsd" namespace="http://ericsson.com/services/ws_cma3/customernew"/>
+	<xs:import schemaLocation="DA_ITEL_OPERACION_OCS_ECMS_ADDRESS.xsd" namespace="http://ericsson.com/services/ws_cma3/addresswrite"/>
+	<xs:import schemaLocation="DA_ITEL_OPERACION_OCS_ECMS_CUSTOMERW.xsd" namespace="http://ericsson.com/services/ws_cma3/customerwrite"/>
+	<xs:import schemaLocation="DA_ITEL_OPERACION_OCS_ECMS_CUSTOMERR.xsd" namespace="http://ericsson.com/services/ws_cma3/customerread"/>
+	<xs:import schemaLocation="DA_ITEL_OPERACION_OCS_ECMS_CONTRACT.xsd" namespace="http://ericsson.com/services/ws_cma3/contractnew"/>
+	<xs:element name="ccapiSubscriberCreateRequest" type="tns:ccapiSubscriberCreateRequest"/>
+	<xs:element name="ccapiSubscriberCreateResponse" type="tns:ccapiSubscriberCreateResponse"/>
+	<xs:complexType name="ccapiSubscriberCreateResponse">
+		<xs:all>
+			<xs:element name="contractNew" type="contractnew:contractNewResponse" minOccurs="0"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="inputAttributes">
+		<xs:all>
+			<xs:element name="customerNew" type="customernew:customerNewRequest" minOccurs="0"/>
+			<xs:element name="addressWrite" type="addresswrite:addressWriteRequest" minOccurs="0"/>
+			<xs:element name="customerWrite" type="customerwrite:customerWriteRequest" minOccurs="0"/>
+			<xs:element name="customerRead" type="customerread:customerReadRequest" minOccurs="0"/>
+			<xs:element name="contractNew" type="contractnew:contractNewRequest" minOccurs="0"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="ccapiSubscriberCreateRequest">
+		<xs:all>
+			<xs:element name="inputAttributes" type="tns:inputAttributes" minOccurs="0"/>
+			<xs:element name="sessionChangeRequest" type="sessionchange:sessionChangeRequest" minOccurs="0"/>
+		</xs:all>
+	</xs:complexType>
+</schema>

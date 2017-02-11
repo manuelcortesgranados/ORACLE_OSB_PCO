@@ -1,0 +1,20 @@
+<definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/ITEL/Adaptadores/bd_enviarSMS" name="bd_enviarSMS-concrete" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/ITEL/Adaptadores/bd_enviarSMS" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/ITEL/Adaptadores/bd_enviarSMS" location="../Resources/WSDLs/enviarSMS_BD.wsdl"/>
+  <binding name="bd_enviarSMS_ptt-binding" type="tns:bd_enviarSMS_ptt">
+    <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+    <operation name="bd_enviarSMS">
+      <soap:operation soapAction="bd_enviarSMS"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="bd_enviarSMS-service">
+    <port name="bd_enviarSMS-port" binding="tns:bd_enviarSMS_ptt-binding">
+      <soap:address location="jca://eis/DB/SMSSERV"/>
+    </port>
+  </service>
+</definitions>

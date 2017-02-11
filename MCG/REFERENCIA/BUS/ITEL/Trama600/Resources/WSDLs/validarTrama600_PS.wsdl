@@ -1,0 +1,51 @@
+<wsdl:definitions name="validarTrama600" targetNamespace="http://www.comcel.com.co/validarTrama600/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.comcel.com.co/validarTrama600/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsd1="http://www.comcel.com.co/ValidarTrama600/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://www.comcel.com.co/validarTrama600/">
+      <xsd:element name="validarTrama600">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="in" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="validarTrama600Response">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="out" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+    <xsd:schema>
+    	<xsd:import namespace="http://www.comcel.com.co/ValidarTrama600/" schemaLocation="../Schemas/PS_ITEL_VALIDARTRAMA600.xsd">
+    	</xsd:import></xsd:schema></wsdl:types>
+  <wsdl:message name="validarTrama600Request">
+    <wsdl:part element="xsd1:Input_Parameters" name="Input_Parameters"/>
+  </wsdl:message>
+  <wsdl:message name="validarTrama600Response">
+    <wsdl:part element="xsd1:WS_Result" name="WS_Result"/>
+  </wsdl:message>
+  <wsdl:portType name="validarTrama600">
+    <wsdl:operation name="validarTrama600">
+      <wsdl:input message="tns:validarTrama600Request"/>
+      <wsdl:output message="tns:validarTrama600Response"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="validarTrama600SOAP" type="tns:validarTrama600">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="validarTrama600">
+      <soap:operation soapAction="http://www.comcel.com.co/validarTrama600/validarTrama600"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="validarTrama600">
+    <wsdl:port binding="tns:validarTrama600SOAP" name="validarTrama600SOAP">
+      <soap:address location="http://www.comcel.com.co/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

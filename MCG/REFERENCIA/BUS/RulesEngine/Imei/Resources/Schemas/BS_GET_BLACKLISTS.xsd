@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. 
+	RI's version is Oracle JAX-WS 2.1.5. -->
+<xs:schema xmlns:tns="http://consultaNegativa.ws.imei.iecisa.co/"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0"
+	targetNamespace="http://consultaNegativa.ws.imei.iecisa.co/">
+
+	<xs:element name="ConsultaNegativaException" type="tns:ConsultaNegativaException" />
+
+	<xs:element name="consulta" type="tns:consulta" />
+
+	<xs:element name="consultaResponse" type="tns:consultaResponse" />
+
+	<xs:complexType name="consulta">
+		<xs:sequence>
+			<xs:element name="imei">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:length value="15" />
+						<xs:pattern value="[0-9]*" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="consultaResponse">
+		<xs:sequence>
+			<xs:element name="consultaResponse" type="xs:boolean" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="ConsultaNegativaException">
+		<xs:sequence>
+			<xs:element name="codigo" type="xs:string" minOccurs="0" />
+			<xs:element name="descripcion" type="xs:string" minOccurs="0" />
+			<xs:element name="message" type="xs:string" minOccurs="0" />
+			<xs:element name="tipo" type="xs:string" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+  <ser:coreEntry isProxy="true" isEnabled="true">
+    <ser:binding type="SOAP" isSoap12="false" xsi:type="con3:SoapBindingType" xmlns:con3="http://www.bea.com/wli/sb/services/bindings/config">
+      <con3:wsdl ref="ITEL/OCS/SOI/Resources/WSDLs/actualizarPKGContratoOCSECMS_PS"/>
+      <con3:port>
+        <con3:name>ActualizarPKGContratoECMSSOAP</con3:name>
+        <con3:namespace>http://www.comcel.com.co/ActualizarPKGContratoOCS/</con3:namespace>
+      </con3:port>
+      <con3:selector type="SOAP body"/>
+      <con3:WSI-compliant>false</con3:WSI-compliant>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+    <ser:ws-policy>
+      <ser:binding-mode>wsdl-policy-attachments</ser:binding-mode>
+    </ser:ws-policy>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>local</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:inbound-properties/>
+    <tran:all-headers>true</tran:all-headers>
+  </ser:endpointConfig>
+  <ser:router>
+    <con:pipeline type="request" name="PipelinePairNode1_request">
+      <con:stage name="validacion" errorHandler="_onErrorHandler-1170875640507673724-627e208e.154e862f107.-73ff">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/ConsultarPKGContratoOCS/" prefix="con"/>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/ActualizarPKGContratoOCS/" prefix="act"/>
+        </con:context>
+        <con:actions>
+          <con2:validate>
+            <con1:id>_ActionId-1170875640507673724-627e208e.154e862f107.-73e7</con1:id>
+            <con2:schema ref="ITEL/OCS/SOI/Resources/Schemas/PS_ITEL_ACTUALIZAR_PKG_CONTRACT"/>
+            <con2:schemaElement xmlns:con="http://www.comcel.com.co/ConsultarPKGContratoOCS/" xmlns:act="http://www.comcel.com.co/ActualizarPKGContratoOCS/">act:Input_Parameters</con2:schemaElement>
+            <con2:varName>body</con2:varName>
+            <con2:location>
+              <con1:xpathText>./act:Input_Parameters</con1:xpathText>
+            </con2:location>
+          </con2:validate>
+        </con:actions>
+      </con:stage>
+      <con:stage name="enrutamiento" errorHandler="_onErrorHandler-1170875640507673724-627e208e.154e862f107.-7280">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/ConsultarPKGContratoOCS/" prefix="con"/>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/ActualizarPKGContratoOCS/" prefix="act"/>
+        </con:context>
+        <con:actions>
+          <con2:wsCallout>
+            <con1:id>_ActionId-1170875640507673724-627e208e.154e862f107.-7394</con1:id>
+            <con2:service xsi:type="ref:ProxyRef" ref="ITEL/OCS/SOI/Proxies/ejecutarOperacionECMSLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con2:request>
+              <con2:payload>$enrutamientoRequest</con2:payload>
+            </con2:request>
+            <con2:response>
+              <con2:payload>enrutamientoResponse</con2:payload>
+            </con2:response>
+            <con2:requestTransform>
+              <con2:assign varName="enrutamientoRequest">
+                <con1:id>_ActionId-1170875640507673724-627e208e.154e862f107.-7373</con1:id>
+                <con2:expr>
+                  <con1:xqueryTransform>
+                    <con1:resource ref="ITEL/OCS/SOI/Resources/XQueries/actualizarPKGContratoECMS_Req"/>
+                    <con1:param name="input_Parameters1">
+                      <con1:path>$body/act:Input_Parameters</con1:path>
+                    </con1:param>
+                  </con1:xqueryTransform>
+                </con2:expr>
+              </con2:assign>
+            </con2:requestTransform>
+            <con2:responseTransform>
+              <con2:ifThenElse>
+                <con1:id>_ActionId-1170875640507673724-627e208e.154e862f107.-735a</con1:id>
+                <con2:case>
+                  <con2:condition>
+                    <con1:xqueryText>fn:exists( $enrutamientoResponse//*:contractPamPackageWriteResponse/*:contractPAMPackageWriteOutput/*:pamPackages/*:pamPackage/*:pamServiceId )</con1:xqueryText>
+                  </con2:condition>
+                  <con2:actions>
+                    <con2:assign varName="codigo">
+                      <con1:id>_ActionId-1170875640507673724-627e208e.154e862f107.-7343</con1:id>
+                      <con2:expr>
+                        <con1:xqueryText>"1"</con1:xqueryText>
+                      </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="descripcion">
+                      <con1:id>_ActionId-1170875640507673724-627e208e.154e862f107.-72eb</con1:id>
+                      <con2:expr>
+                        <con1:xqueryText>"Ejecucion exitosa"</con1:xqueryText>
+                      </con2:expr>
+                    </con2:assign>
+                  </con2:actions>
+                </con2:case>
+                <con2:case>
+                  <con2:condition>
+                    <con1:xqueryText>fn:exists( $enrutamientoResponse//*:faultcode)</con1:xqueryText>
+                  </con2:condition>
+                  <con2:actions>
+                    <con2:assign varName="codigo">
+                      <con1:id>_ActionId-5429436496356940486-ae968d6.1552b8c8808.-68f9</con1:id>
+                      <con2:expr>
+                        <con1:xqueryTransform>
+                          <con1:resource ref="ITEL/OCS/SOI/Resources/XQueries/obtenerCodigoError"/>
+                          <con1:param name="codigoOCS">
+                            <con1:path>fn:exists( $enrutamientoResponse//*:faultcode)</con1:path>
+                          </con1:param>
+                        </con1:xqueryTransform>
+                      </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="descripcion">
+                      <con1:id>_ActionId-1170875640507673724-627e208e.154e862f107.-72cd</con1:id>
+                      <con2:expr>
+                        <con1:xqueryText>data( $enrutamientoResponse//*:faultstring)</con1:xqueryText>
+                      </con2:expr>
+                    </con2:assign>
+                  </con2:actions>
+                </con2:case>
+                <con2:default>
+                  <con2:assign varName="codigo">
+                    <con1:id>_ActionId-5429436496356940486-ae968d6.1552b8c8808.-68fb</con1:id>
+                    <con2:expr>
+                      <con1:xqueryText>"901"</con1:xqueryText>
+                    </con2:expr>
+                  </con2:assign>
+                  <con2:assign varName="descripcion">
+                    <con1:id>_ActionId-1170875640507673724-627e208e.154e862f107.-72a9</con1:id>
+                    <con2:expr>
+                      <con1:xqueryText>"Ejecucion fallida"</con1:xqueryText>
+                    </con2:expr>
+                  </con2:assign>
+                </con2:default>
+              </con2:ifThenElse>
+              <con2:replace contents-only="true" varName="body">
+                <con1:id>_ActionId-1170875640507673724-627e208e.154e862f107.-7281</con1:id>
+                <con2:expr>
+                  <con1:xqueryTransform>
+                    <con1:resource ref="ITEL/OCS/SOI/Resources/XQueries/actualizarPKGContratoECMS_Res"/>
+                    <con1:param name="contract">
+                      <con1:path>$enrutamientoResponse</con1:path>
+                    </con1:param>
+                    <con1:param name="codigo">
+                      <con1:path>$codigo</con1:path>
+                    </con1:param>
+                    <con1:param name="descripcion">
+                      <con1:path>$descripcion</con1:path>
+                    </con1:param>
+                  </con1:xqueryTransform>
+                </con2:expr>
+              </con2:replace>
+            </con2:responseTransform>
+          </con2:wsCallout>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="PipelinePairNode1_response"/>
+    <con:pipeline type="error" name="_onErrorHandler-1170875640507673724-627e208e.154e862f107.-73ff">
+      <con:stage name="error">
+        <con:context/>
+        <con:actions>
+          <con2:replace varName="body" contents-only="true">
+            <con1:id>_ActionId-1170875640507673724-627e208e.154e862f107.-73d0</con1:id>
+            <con2:expr>
+              <con1:xqueryTransform>
+                <con1:resource ref="ITEL/OCS/SOI/Resources/XQueries/actualizarPKGContratoECMS_Error"/>
+                <con1:param name="codigo">
+                  <con1:path>"40"</con1:path>
+                </con1:param>
+                <con1:param name="descripcion">
+                  <con1:path>"Error etapa de validacion"</con1:path>
+                </con1:param>
+                <con1:param name="mensaje">
+                  <con1:path>$fault/faultstring/text()</con1:path>
+                </con1:param>
+              </con1:xqueryTransform>
+            </con2:expr>
+          </con2:replace>
+          <con1:reply>
+            <con1:id>_ActionId-1170875640507673724-627e208e.154e862f107.-73b5</con1:id>
+          </con1:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="error" name="_onErrorHandler-1170875640507673724-627e208e.154e862f107.-7280">
+      <con:stage name="error">
+        <con:context/>
+        <con:actions>
+          <con2:replace contents-only="true" varName="body">
+            <con1:id>_ActionId-1170875640507673724-627e208e.154e862f107.-726c</con1:id>
+            <con2:expr>
+              <con1:xqueryTransform>
+                <con1:resource ref="ITEL/OCS/SOI/Resources/XQueries/actualizarPKGContratoECMS_Error"/>
+                <con1:param name="codigo">
+                  <con1:path>"20"</con1:path>
+                </con1:param>
+                <con1:param name="descripcion">
+                  <con1:path>"Error etapa de routing"</con1:path>
+                </con1:param>
+                <con1:param name="mensaje">
+                  <con1:path>$fault/ctx:reason/text()</con1:path>
+                </con1:param>
+              </con1:xqueryTransform>
+            </con2:expr>
+          </con2:replace>
+          <con1:reply>
+            <con1:id>_ActionId-1170875640507673724-627e208e.154e862f107.-7252</con1:id>
+          </con1:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:flow>
+      <con:pipeline-node name="PipelinePairNode1">
+        <con:request>PipelinePairNode1_request</con:request>
+        <con:response>PipelinePairNode1_response</con:response>
+      </con:pipeline-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

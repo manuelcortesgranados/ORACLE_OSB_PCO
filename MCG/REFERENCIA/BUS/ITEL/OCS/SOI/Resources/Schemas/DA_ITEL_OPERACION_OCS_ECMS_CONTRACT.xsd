@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://ericsson.com/services/ws_cma3/contractnew"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://ericsson.com/services/ws_cma3/contractnew"
+	elementFormDefault="qualified">
+
+		<xs:complexType name="serviceDTO">
+		<xs:all>
+			<xs:annotation>
+				<xs:documentation>
+															&lt;p&gt;
+															Identifies a service by the public or private
+															key.
+															&lt;/p&gt;
+													</xs:documentation>
+			</xs:annotation>
+			<xs:element name="spcode" type="xs:long" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+																&lt;p&gt;Service package code (SimpleProduct)&lt;/p&gt;
+														</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="spcodePub" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+																&lt;p&gt;Public key of the service package&lt;/p&gt;
+														</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="sncode" type="xs:long" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+																&lt;p&gt;Service code (ProductElement)&lt;/p&gt;
+														</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="sncodePub" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+																&lt;p&gt;Public key of the service&lt;/p&gt;
+														</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="assignedcoreservicesResponse">
+		<xs:sequence>
+			<xs:element name="assignedService" type="tns:serviceDTO" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="createContractOutputDTO">
+		<xs:all>
+			<xs:annotation>
+				<xs:documentation>
+									&lt;p&gt;Public key of the contract&lt;/p&gt;
+							</xs:documentation>
+			</xs:annotation>
+			<xs:element name="contract" type="tns:referenceDTO" minOccurs="0"/>
+			<xs:element name="assignedCoreServices" type="tns:assignedcoreservicesResponse" minOccurs="0"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="contractNewResponse">
+		<xs:all>
+			<xs:annotation>
+				<xs:documentation>
+						&lt;p&gt;
+						New private and public key of newly created contract and
+						services from contract template.
+						&lt;/p&gt;
+				</xs:documentation>
+			</xs:annotation>
+			<xs:element name="createContractOutput" type="tns:createContractOutputDTO" minOccurs="0"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="referenceDTO">
+		<xs:all>
+			<xs:annotation>
+				<xs:documentation>
+												&lt;p&gt;
+												Identifies the customer by the public and private key.
+												&lt;/p&gt;
+										</xs:documentation>
+			</xs:annotation>
+			<xs:element name="privateKey" type="xs:long" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+													&lt;p&gt;customer ID&lt;/p&gt;
+											</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="publicKey" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+													&lt;p&gt;Public key of the customer&lt;/p&gt;
+											</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="createContractInputDTO">
+		<xs:all>
+			<xs:annotation>
+				<xs:documentation>
+									&lt;p&gt;Public key of the contract&lt;/p&gt;
+							</xs:documentation>
+			</xs:annotation>
+			<xs:element name="contractTypeId" type="xs:long" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+										&lt;p&gt;contract type&lt;/p&gt;
+								</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="contractHolder" type="tns:referenceDTO" minOccurs="0"/>
+			<xs:element name="contractTemplate" type="tns:referenceDTO" minOccurs="0"/>
+			<xs:element name="description" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+										&lt;p&gt;Description of the contract template. Mandatory for contract template creation.&lt;/p&gt;
+								</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="contractPublicKey" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+										&lt;p&gt;public key of the contract.&lt;/p&gt;
+								</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="HLRProfileId" type="xs:long" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+										&lt;p&gt;HLR profile ID&lt;/p&gt;
+								</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CAMELProfileId" type="xs:long" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+										&lt;p&gt;CAMEL profile ID&lt;/p&gt;
+								</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="temporaryBlockingStatus" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+										&lt;p&gt;Temporary Blocking Status&lt;/p&gt;
+								</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="technology" type="tns:referenceDTO" minOccurs="0"/>
+			<xs:element name="technologyFlavour" type="tns:referenceDTO" minOccurs="0"/>
+			<xs:element name="network" type="tns:referenceDTO" minOccurs="0"/>
+			<xs:element name="mappingCompositeProductHandle" type="tns:referenceDTO" minOccurs="0"/>
+			<xs:element name="language" type="tns:referenceDTO" minOccurs="0"/>
+			<xs:element name="dirNum" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+										&lt;p&gt;Directory Number&lt;/p&gt;
+								</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="storMedNum" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+										&lt;p&gt;Storage medium serial number&lt;/p&gt;
+								</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="portNum" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+										&lt;p&gt;Port number&lt;/p&gt;
+								</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="puk1" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+										&lt;p&gt;PUK1&lt;/p&gt;
+								</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="puk2" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+										&lt;p&gt;PUK2&lt;/p&gt;
+								</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="sdpId" type="xs:long" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+										&lt;p&gt;The SDP instance the subscription will be located. If not provided the default SDP will be used.&lt;/p&gt;
+								</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="accountGroup" type="xs:long" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+										&lt;p&gt;Account group identifier of the account group the account belongs to.On Contract Template Creation this parameter is mandatory when triggered from external clients.&lt;/p&gt;
+								</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="accountGroupPublicKey" type="xs:integer" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+										&lt;p&gt;Account group external key&lt;/p&gt;
+								</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="mainContract" type="tns:referenceDTO" minOccurs="0"/>
+			<xs:element name="portingRequestId" type="xs:long" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+										&lt;p&gt;Identifies the porting request. Used in case the specified directory number is an imported number.&lt;/p&gt;
+								</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="afProvisioned" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+										&lt;p&gt;Flag indicating whether we should provision the subscriber to AF.&lt;/p&gt;
+								</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="contractNewRequest">
+		<xs:all>
+			<xs:annotation>
+				<xs:documentation>
+						&lt;p&gt;Data of the new contract or contract template.&lt;/p&gt;
+				</xs:documentation>
+			</xs:annotation>
+			<xs:element name="createContractInput" type="tns:createContractInputDTO" minOccurs="0"/>
+		</xs:all>
+	</xs:complexType>
+
+</schema>

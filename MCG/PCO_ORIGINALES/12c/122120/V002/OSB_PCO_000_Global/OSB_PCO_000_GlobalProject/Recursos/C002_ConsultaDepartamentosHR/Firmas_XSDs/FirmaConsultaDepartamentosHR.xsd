@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.departamentos.org"
+            targetNamespace="http://www.departamentos.org" elementFormDefault="qualified">
+  <xsd:complexType name="ConsultarDepartamentosRequestType">
+    <xsd:sequence>
+      <xsd:element name="idDepartamento" type="xsd:integer"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="ConsultarDepartamentosResponseType">
+    <xsd:sequence>
+      <xsd:element name="nombreDepartamento" type="xsd:string"/>
+      <xsd:element name="idManager" type="xsd:integer"/>
+      <xsd:element name="idLocacion" type="xsd:integer"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="cadenaDepartamentoRequest" type="ConsultarDepartamentosRequestType"/>
+  <xsd:element name="cadenaDepartamentoResponse" type="ConsultarDepartamentosResponseType"/>
+</xsd:schema>

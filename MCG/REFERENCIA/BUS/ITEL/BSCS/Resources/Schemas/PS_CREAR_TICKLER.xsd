@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.claro.com.co/Elegidos/crearTickler/" 
+	xmlns:tns="http://www.claro.com.co/Elegidos/crearTickler/">
+	<xs:element name="Input_Parameters" type="tns:Input_Paramaters" />
+	<xs:element name="WS_Result" type="tns:WS_Result" />
+
+	<xs:complexType name="Input_Paramaters">
+		<xs:sequence>
+		    <xs:element name="NMCUSTOMER" type="xs:decimal" />
+		    <xs:element name="NMCOID" type="xs:decimal" />
+		    <xs:element name="VCTICCODE" type="xs:string" />
+		    <xs:element name="VCX" type="xs:string" />
+		    <xs:element name="VCY" type="xs:string" />
+		    <xs:element name="VCSH" type="xs:string" />
+		    <xs:element name="VCLONGD" type="xs:string" />
+		    <xs:element name="VCUSER" type="xs:string" />
+		    <xs:element name="VCUPDATE" type="xs:string" />		
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="WS_Result">
+		<xs:sequence>
+			<xs:element name="CODIGO" type="xs:string" />		
+			<xs:element name="MENSAJE" type="tns:MensajeType" />
+			<xs:element name="DESCRIPCION" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="MensajeType">
+		<xs:sequence>
+         	   <xs:element name="NMSALIDA" type="xs:decimal" />
+		</xs:sequence>
+	</xs:complexType>	
+	
+</xs:schema>

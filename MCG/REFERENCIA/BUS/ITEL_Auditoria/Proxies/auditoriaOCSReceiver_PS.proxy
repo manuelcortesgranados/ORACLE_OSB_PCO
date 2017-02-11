@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:jms="http://www.bea.com/wli/sb/transports/jms" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con3="http://www.bea.com/wli/sb/stages/logging/config">
+  <ser:coreEntry isProxy="true" isEnabled="true" isTracingEnabled="false">
+    <ser:binding type="abstract XML"/>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>jms</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:URI>
+      <env:value>jms://osbhost13vhn1:8012,osbhost14vhn1:8012,osbhost15vhn1:8012,osbhost16vhn1:8012,osbhost13vhn1:8014,osbhost14vhn1:8014,osbhost15vhn1:8014,osbhost16vhn1:8014,osbhost13vhn1:8016,osbhost14vhn1:8016,osbhost15vhn1:8016,osbhost16vhn1:8016/weblogic.jms.ConnectionFactory/jms/auditoriaOCSQueue</env:value>
+    </tran:URI>
+    <tran:inbound-properties/>
+    <tran:all-headers>false</tran:all-headers>
+    <tran:provider-specific>
+      <jms:is-queue>true</jms:is-queue>
+      <jms:is-secure>false</jms:is-secure>
+      <jms:inbound-properties>
+        <jms:response-required>false</jms:response-required>
+        <jms:XA-required>false</jms:XA-required>
+      </jms:inbound-properties>
+      <jms:request-encoding>UTF-8</jms:request-encoding>
+      <jms:jndi-timeout>0</jms:jndi-timeout>
+    </tran:provider-specific>
+  </ser:endpointConfig>
+  <ser:router>
+    <con:pipeline type="request" name="PipelinePairNode1_request">
+      <con:stage name="auditoria" errorHandler="_onErrorHandler-3082248009990666177-3cec9abd.140a6510ca0.-79a3">
+        <con:context/>
+        <con:actions>
+          <con1:wsCallout>
+            <con2:id>_ActionId-3082248009990666177-3cec9abd.140a6510ca0.-79ff</con2:id>
+            <con1:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/ejecutarTrama_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con1:operation>ejecutarTrama</con1:operation>
+            <con1:request>
+              <con1:body>$ejecutarTramaRequest</con1:body>
+            </con1:request>
+            <con1:response>
+              <con1:body>ejecutarTramaResponse</con1:body>
+            </con1:response>
+            <con1:requestTransform>
+              <con1:assign varName="ejecutarTramaRequest">
+                <con2:id>_ActionId-3082248009990666177-3cec9abd.140a6510ca0.-79e5</con2:id>
+                <con1:expr>
+                  <con2:xqueryTransform>
+                    <con2:resource ref="ITEL_Auditoria/Resources/XQueries/consumirAuditoria_Req_ejecutarTramaDRPOCS"/>
+                    <con2:param name="trama">
+                      <con2:path>data($body/TRAMA_IN)</con2:path>
+                    </con2:param>
+                  </con2:xqueryTransform>
+                </con1:expr>
+              </con1:assign>
+            </con1:requestTransform>
+            <con1:responseTransform/>
+          </con1:wsCallout>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="PipelinePairNode1_response"/>
+    <con:pipeline type="error" name="_onErrorHandler-3082248009990666177-3cec9abd.140a6510ca0.-79a3">
+      <con:stage name="error">
+        <con:context/>
+        <con:actions>
+          <con3:log>
+            <con2:id>_ActionId-3082248009990666177-3cec9abd.140a6510ca0.-796e</con2:id>
+            <con3:logLevel>error</con3:logLevel>
+            <con3:expr>
+              <con2:xqueryText>$fault/ctx:reason</con2:xqueryText>
+            </con3:expr>
+          </con3:log>
+          <con2:reply>
+            <con2:id>_ActionId-3082248009990666177-3cec9abd.140a6510ca0.-7946</con2:id>
+          </con2:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:flow>
+      <con:pipeline-node name="PipelinePairNode1">
+        <con:request>PipelinePairNode1_request</con:request>
+        <con:response>PipelinePairNode1_response</con:response>
+      </con:pipeline-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

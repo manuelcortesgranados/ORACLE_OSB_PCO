@@ -1,0 +1,14 @@
+<adapter-config name="bd_consultarPaquetesCan" adapter="Database Adapter" wsdlLocation="../WSDLs/consultarPaquetesCanBB_BD.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/DB/ITEL_SOA_CENT" UIConnectionName="ITEL_SOA" adapterRef=""/>
+  <endpoint-interaction portType="bd_consultarPaquetesCan_ptt" operation="bd_consultarPaquetesCan">
+    <interaction-spec className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
+      <property name="PackageName" value="PKG_SOA_ITEL"/>
+      <property name="ProcedureName" value="PRC_CONSULTAR_PAQUETECAN_BB"/>
+      <property name="QueryTimeout" value="1"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+    <output/>
+  </endpoint-interaction>
+
+</adapter-config>

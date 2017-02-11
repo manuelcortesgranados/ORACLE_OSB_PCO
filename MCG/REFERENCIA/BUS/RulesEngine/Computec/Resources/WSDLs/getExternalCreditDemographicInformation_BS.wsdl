@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://www.datacredito.com.co/services/ServicioHistoriaCredito" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://www.datacredito.com.co/services/ServicioHistoriaCredito" xmlns:intf="http://www.datacredito.com.co/services/ServicioHistoriaCredito" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<!--WSDL created by Apache Axis version: 1.3
+Built on Oct 05, 2005 (05:23:37 EDT)-->
+
+	<wsdl:message name="customConsultarHCResponse">
+
+		<wsdl:part name="customConsultarHCReturn" type="soapenc:string"/>
+
+	</wsdl:message>
+
+	<wsdl:message name="customConsultarResponse">
+
+		<wsdl:part name="customConsultarReturn" type="soapenc:string"/>
+
+	</wsdl:message>
+
+	<wsdl:message name="consultarHCResponse1">
+
+		<wsdl:part name="consultarHCReturn" type="soapenc:string"/>
+
+	</wsdl:message>
+
+	<wsdl:message name="consultarHCRequest1">
+
+		<wsdl:part name="idsus" type="soapenc:string"/>
+
+		<wsdl:part name="clasus" type="soapenc:string"/>
+
+		<wsdl:part name="tipoid" type="soapenc:string"/>
+
+		<wsdl:part name="id" type="soapenc:string"/>
+
+		<wsdl:part name="papellido" type="soapenc:string"/>
+
+		<wsdl:part name="paramFormulario" type="soapenc:string"/>
+
+	</wsdl:message>
+
+	<wsdl:message name="consultarHCRequest">
+
+		<wsdl:part name="idsus" type="soapenc:string"/>
+
+		<wsdl:part name="clasus" type="soapenc:string"/>
+
+		<wsdl:part name="tipoid" type="soapenc:string"/>
+
+		<wsdl:part name="id" type="soapenc:string"/>
+
+		<wsdl:part name="papellido" type="soapenc:string"/>
+
+	</wsdl:message>
+
+	<wsdl:message name="consultarResponse">
+
+		<wsdl:part name="consultarReturn" type="soapenc:string"/>
+
+	</wsdl:message>
+
+	<wsdl:message name="consultarResponse1">
+
+		<wsdl:part name="consultarReturn" type="soapenc:string"/>
+
+	</wsdl:message>
+
+	<wsdl:message name="consultarHCResponse">
+
+		<wsdl:part name="consultarHCReturn" type="soapenc:string"/>
+
+	</wsdl:message>
+
+	<wsdl:message name="consultarRequest1">
+
+		<wsdl:part name="idsus" type="soapenc:string"/>
+
+		<wsdl:part name="clasus" type="soapenc:string"/>
+
+		<wsdl:part name="tipoid" type="soapenc:string"/>
+
+		<wsdl:part name="id" type="soapenc:string"/>
+
+		<wsdl:part name="papellido" type="soapenc:string"/>
+
+		<wsdl:part name="paramFormulario" type="soapenc:string"/>
+
+	</wsdl:message>
+
+	<wsdl:message name="consultarRequest">
+
+		<wsdl:part name="idsus" type="soapenc:string"/>
+
+		<wsdl:part name="clasus" type="soapenc:string"/>
+
+		<wsdl:part name="tipoid" type="soapenc:string"/>
+
+		<wsdl:part name="id" type="soapenc:string"/>
+
+		<wsdl:part name="papellido" type="soapenc:string"/>
+
+	</wsdl:message>
+
+	<wsdl:message name="customConsultarRequest">
+
+		<wsdl:part name="idsus" type="soapenc:string"/>
+
+		<wsdl:part name="clasus" type="soapenc:string"/>
+
+		<wsdl:part name="tipoid" type="soapenc:string"/>
+
+		<wsdl:part name="id" type="soapenc:string"/>
+
+		<wsdl:part name="papellido" type="soapenc:string"/>
+
+		<wsdl:part name="conf" type="soapenc:string"/>
+
+	</wsdl:message>
+
+	<wsdl:message name="customConsultarHCRequest">
+
+		<wsdl:part name="idsus" type="soapenc:string"/>
+
+		<wsdl:part name="clasus" type="soapenc:string"/>
+
+		<wsdl:part name="tipoid" type="soapenc:string"/>
+
+		<wsdl:part name="id" type="soapenc:string"/>
+
+		<wsdl:part name="papellido" type="soapenc:string"/>
+
+		<wsdl:part name="conf" type="soapenc:string"/>
+
+	</wsdl:message>
+
+	<wsdl:portType name="HCServiceImpl">
+
+		<wsdl:operation name="consultar" parameterOrder="idsus clasus tipoid id papellido">
+
+			<wsdl:input message="impl:consultarRequest" name="consultarRequest"/>
+
+			<wsdl:output message="impl:consultarResponse" name="consultarResponse"/>
+
+		</wsdl:operation>
+
+		<wsdl:operation name="consultar" parameterOrder="idsus clasus tipoid id papellido paramFormulario">
+
+			<wsdl:input message="impl:consultarRequest1" name="consultarRequest1"/>
+
+			<wsdl:output message="impl:consultarResponse1" name="consultarResponse1"/>
+
+		</wsdl:operation>
+
+		<wsdl:operation name="consultarHC" parameterOrder="idsus clasus tipoid id papellido">
+
+			<wsdl:input message="impl:consultarHCRequest" name="consultarHCRequest"/>
+
+			<wsdl:output message="impl:consultarHCResponse" name="consultarHCResponse"/>
+
+		</wsdl:operation>
+
+		<wsdl:operation name="consultarHC" parameterOrder="idsus clasus tipoid id papellido paramFormulario">
+
+			<wsdl:input message="impl:consultarHCRequest1" name="consultarHCRequest1"/>
+
+			<wsdl:output message="impl:consultarHCResponse1" name="consultarHCResponse1"/>
+
+		</wsdl:operation>
+
+		<wsdl:operation name="customConsultar" parameterOrder="idsus clasus tipoid id papellido conf">
+
+			<wsdl:input message="impl:customConsultarRequest" name="customConsultarRequest"/>
+
+			<wsdl:output message="impl:customConsultarResponse" name="customConsultarResponse"/>
+
+		</wsdl:operation>
+
+		<wsdl:operation name="customConsultarHC" parameterOrder="idsus clasus tipoid id papellido conf">
+
+			<wsdl:input message="impl:customConsultarHCRequest" name="customConsultarHCRequest"/>
+
+			<wsdl:output message="impl:customConsultarHCResponse" name="customConsultarHCResponse"/>
+
+		</wsdl:operation>
+
+	</wsdl:portType>
+
+	<wsdl:binding name="ServicioHistoriaCreditoSoapBinding" type="impl:HCServiceImpl">
+
+		<wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+		<wsdl:operation name="consultar">
+
+			<wsdlsoap:operation soapAction=""/>
+
+			<wsdl:input name="consultarRequest">
+
+				<wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://ws.hc.dc.com" use="encoded"/>
+
+			</wsdl:input>
+
+			<wsdl:output name="consultarResponse">
+
+				<wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.datacredito.com.co/services/ServicioHistoriaCredito" use="encoded"/>
+
+			</wsdl:output>
+
+		</wsdl:operation>
+
+		<wsdl:operation name="consultar">
+
+			<wsdlsoap:operation soapAction=""/>
+
+			<wsdl:input name="consultarRequest1">
+
+				<wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://ws.hc.dc.com" use="encoded"/>
+
+			</wsdl:input>
+
+			<wsdl:output name="consultarResponse1">
+
+				<wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.datacredito.com.co/services/ServicioHistoriaCredito" use="encoded"/>
+
+			</wsdl:output>
+
+		</wsdl:operation>
+
+		<wsdl:operation name="consultarHC">
+
+			<wsdlsoap:operation soapAction=""/>
+
+			<wsdl:input name="consultarHCRequest">
+
+				<wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://ws.hc.dc.com" use="encoded"/>
+
+			</wsdl:input>
+
+			<wsdl:output name="consultarHCResponse">
+
+				<wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.datacredito.com.co/services/ServicioHistoriaCredito" use="encoded"/>
+
+			</wsdl:output>
+
+		</wsdl:operation>
+
+		<wsdl:operation name="consultarHC">
+
+			<wsdlsoap:operation soapAction=""/>
+
+			<wsdl:input name="consultarHCRequest1">
+
+				<wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://ws.hc.dc.com" use="encoded"/>
+
+			</wsdl:input>
+
+			<wsdl:output name="consultarHCResponse1">
+
+				<wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.datacredito.com.co/services/ServicioHistoriaCredito" use="encoded"/>
+
+			</wsdl:output>
+
+		</wsdl:operation>
+
+		<wsdl:operation name="customConsultar">
+
+			<wsdlsoap:operation soapAction=""/>
+
+			<wsdl:input name="customConsultarRequest">
+
+				<wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://ws.hc.dc.com" use="encoded"/>
+
+			</wsdl:input>
+
+			<wsdl:output name="customConsultarResponse">
+
+				<wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.datacredito.com.co/services/ServicioHistoriaCredito" use="encoded"/>
+
+			</wsdl:output>
+
+		</wsdl:operation>
+
+		<wsdl:operation name="customConsultarHC">
+
+			<wsdlsoap:operation soapAction=""/>
+
+			<wsdl:input name="customConsultarHCRequest">
+
+				<wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://ws.hc.dc.com" use="encoded"/>
+
+			</wsdl:input>
+
+			<wsdl:output name="customConsultarHCResponse">
+
+				<wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.datacredito.com.co/services/ServicioHistoriaCredito" use="encoded"/>
+
+			</wsdl:output>
+
+		</wsdl:operation>
+
+	</wsdl:binding>
+
+	<wsdl:service name="ServicioHistoriaCredito">
+
+		<wsdl:port binding="impl:ServicioHistoriaCreditoSoapBinding" name="ServicioHistoriaCredito">
+
+			<wsdlsoap:address location="http://172.24.14.29:8080/dhws.demo/services/DHService"/>
+
+		</wsdl:port>
+
+	</wsdl:service>
+
+</wsdl:definitions>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://www.claro.com.co/rulesEngine/BroughtEquipmentValidationFact"
+	targetNamespace="http://www.claro.com.co/rulesEngine/BroughtEquipmentValidationFact"
+	xmlns:pd="http://www.claro.com.co/rulesEngine/canonicalModel/ProductDomain"
+	xmlns:cd="http://www.claro.com.co/rulesEngine/canonicalModel/CustomerDomain">
+	<xs:import
+		namespace="http://www.claro.com.co/rulesEngine/canonicalModel/CustomerDomain"
+		schemaLocation="../../../Core/Resources/Schemas/CanonicalModel/CustomerDomain.xsd" />
+	
+
+	<xs:element name="BroughtEquipmentValidationFactRequest"
+		type="tns:BroughtEquipmentValidationFactRequestType" />
+	<xs:element name="BroughtEquipmentValidationFactResponse"
+		type="tns:BroughtEquipmentValidationFactResponseType" />
+
+	<xs:complexType name="BroughtEquipmentValidationFactRequestType">
+		<xs:sequence>
+			<xs:element name="Product" type="pd:Product" />
+			<xs:element name="CustomerBillingBehavior" type="cd:CustomerBillingBehavior" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BroughtEquipmentValidationFactResponseType">
+		<xs:sequence>
+			<xs:element name="Product" type="pd:Product" />
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config">
+  <ser:coreEntry isProxy="true" isEnabled="true">
+    <ser:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config">
+      <con:wsdl ref="ITEL/SM/Resources/WSDLs/subscriptionManager_PS"/>
+      <con:port>
+        <con:name>SubscriptionManagerPort</con:name>
+        <con:namespace>http://www.comcel.com.co/ITEL/subscriptionManager</con:namespace>
+      </con:port>
+      <con:selector type="SOAP body"/>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+    <ser:ws-policy>
+      <ser:binding-mode>wsdl-policy-attachments</ser:binding-mode>
+    </ser:ws-policy>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>local</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:inbound-properties/>
+    <tran:all-headers>true</tran:all-headers>
+  </ser:endpointConfig>
+  <ser:router>
+    <con:pipeline type="request" name="PipelinePairNodeSM_request">
+      <con:stage name="validacion">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/ITEL/subscriptionManager" prefix="sub"/>
+        </con:context>
+        <con:actions>
+          <con2:validate>
+            <con1:id>_ActionId-3710403453576019927-c4eb73a.1557f696dde.-7f97</con1:id>
+            <con2:schema ref="ITEL/SM/Resources/Schemas/PS_SUBSCRIPTION_MANAGER"/>
+            <con2:schemaElement xmlns:sub="http://www.comcel.com.co/ITEL/subscriptionManager">sub:SubscriptionManagerRequest</con2:schemaElement>
+            <con2:varName>body</con2:varName>
+            <con2:location>
+              <con1:xpathText>./*:SubscriptionManagerRequest</con1:xpathText>
+            </con2:location>
+          </con2:validate>
+        </con:actions>
+      </con:stage>
+      <con:stage name="parametrosEntrada">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/ITEL/subscriptionManager" prefix="sub"/>
+        </con:context>
+        <con:actions>
+          <con2:assign varName="nombreOperacion">
+            <con1:id>_ActionId-3710403453576019927-c4eb73a.1557f696dde.-7f83</con1:id>
+            <con2:expr>
+              <con1:xqueryText>data($body/*:SubscriptionManagerRequest/operacionSM)</con1:xqueryText>
+            </con2:expr>
+          </con2:assign>
+          <con2:assign varName="requestSM">
+            <con1:id>_ActionId-3710403453576019927-c4eb73a.1557f696dde.-7f6f</con1:id>
+            <con2:expr>
+              <con1:xqueryText>data($body/*:SubscriptionManagerRequest/requestSM)</con1:xqueryText>
+            </con2:expr>
+          </con2:assign>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="PipelinePairNodeSM_response">
+      <con:stage name="JsonToXml" errorHandler="_onErrorHandler-4532117060554235905--6c14d537.155933bc2a9.-7fcb">
+        <con:context/>
+        <con:actions>
+          <con2:javaCallout varName="resultadoSM">
+            <con1:id>_ActionId-4532117060554235905--6c14d537.155933bc2a9.-7fe7</con1:id>
+            <con2:archive ref="ITEL/SM/Resources/JARs/Conversor"/>
+            <con2:className>co.com.claro.procesadorjson.conversion.Conversor</con2:className>
+            <con2:method>public static java.lang.String toXML(java.lang.String)</con2:method>
+            <con2:expr>
+              <con1:xqueryText>data($body)</con1:xqueryText>
+            </con2:expr>
+          </con2:javaCallout>
+        </con:actions>
+      </con:stage>
+      <con:stage name="respuesta">
+        <con:context/>
+        <con:actions>
+          <con2:replace varName="body" contents-only="true">
+            <con1:id>_ActionId-1770695083720660773--5fcc9010.15583dc3704.-7f50</con1:id>
+            <con2:expr>
+              <con1:xqueryTransform>
+                <con1:resource ref="ITEL/SM/Resources/XQueries/subscriptionManager_Res"/>
+                <con1:param name="resultadoSM">
+                  <con1:path>fn-bea:inlinedXML($resultadoSM)</con1:path>
+                </con1:param>
+              </con1:xqueryTransform>
+            </con2:expr>
+          </con2:replace>
+          <con1:reply>
+            <con1:id>_ActionId-1770695083720660773--5fcc9010.15583dc3704.-7f3c</con1:id>
+          </con1:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="error" name="_onErrorHandler-1770695083720660773--5fcc9010.15583dc3704.-7f3b">
+      <con:stage name="errorRoute">
+        <con:context/>
+        <con:actions>
+          <con2:replace varName="body" contents-only="true">
+            <con1:id>_ActionId-1770695083720660773--5fcc9010.15583dc3704.-7f1c</con1:id>
+            <con2:expr>
+              <con1:xqueryTransform>
+                <con1:resource ref="ITEL/SM/Resources/XQueries/subscriptionManager_Error"/>
+                <con1:param name="codigoError">
+                  <con1:path>"ERROR"</con1:path>
+                </con1:param>
+                <con1:param name="descripcionError">
+                  <con1:path>$fault/ctx:reason/text()</con1:path>
+                </con1:param>
+              </con1:xqueryTransform>
+            </con2:expr>
+          </con2:replace>
+          <con1:reply>
+            <con1:id>_ActionId-1770695083720660773--5fcc9010.15583dc3704.-7f03</con1:id>
+          </con1:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="error" name="_onErrorHandler-4532117060554235905--6c14d537.155933bc2a9.-7fcb">
+      <con:stage name="errorConversor">
+        <con:context/>
+        <con:actions>
+          <con2:replace varName="body" contents-only="true">
+            <con1:id>_ActionId-4532117060554235905--6c14d537.155933bc2a9.-7f5a</con1:id>
+            <con2:expr>
+              <con1:xqueryTransform>
+                <con1:resource ref="ITEL/SM/Resources/XQueries/subscriptionManager_Error"/>
+                <con1:param name="codigoError">
+                  <con1:path>"ERROR"</con1:path>
+                </con1:param>
+                <con1:param name="descripcionError">
+                  <con1:path>$fault/ctx:reason/text()</con1:path>
+                </con1:param>
+              </con1:xqueryTransform>
+            </con2:expr>
+          </con2:replace>
+          <con1:reply>
+            <con1:id>_ActionId-4532117060554235905--6c14d537.155933bc2a9.-7f59</con1:id>
+          </con1:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:flow>
+      <con:pipeline-node name="PipelinePairNodeSM">
+        <con:request>PipelinePairNodeSM_request</con:request>
+        <con:response>PipelinePairNodeSM_response</con:response>
+      </con:pipeline-node>
+      <con:route-node name="RouteNodeSM" error-handler="_onErrorHandler-1770695083720660773--5fcc9010.15583dc3704.-7f3b">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/ITEL/subscriptionManager" prefix="sub"/>
+        </con:context>
+        <con:actions>
+          <con3:route>
+            <con1:id>_ActionId-3710403453576019927-c4eb73a.1557f696dde.-7ee0</con1:id>
+            <con3:service ref="ITEL/SM/Business Services/subscriptionManager_BS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con3:outboundTransform>
+              <con4:insert varName="outbound" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config">
+                <con2:id>_ActionId-1770695083720660773--5fcc9010.15583dc3704.-7fad</con2:id>
+                <con4:location>
+                  <con2:xpathText>./ctx:transport/ctx:request</con2:xpathText>
+                </con4:location>
+                <con4:where>last-child</con4:where>
+                <con4:expr>
+                  <con2:xqueryText>&lt;http:relative-URI>{$nombreOperacion}&lt;/http:relative-URI></con2:xqueryText>
+                </con4:expr>
+              </con4:insert>
+              <con2:replace contents-only="true" varName="body">
+                <con1:id>_ActionId-3710403453576019927-c4eb73a.1557f696dde.-7ebc</con1:id>
+                <con2:expr>
+                  <con1:xqueryTransform>
+                    <con1:resource ref="ITEL/SM/Resources/XQueries/requestSM"/>
+                    <con1:param name="requestSM">
+                      <con1:path>$requestSM</con1:path>
+                    </con1:param>
+                    <con1:param name="operacion">
+                      <con1:path>data($nombreOperacion)</con1:path>
+                    </con1:param>
+                  </con1:xqueryTransform>
+                </con2:expr>
+              </con2:replace>
+            </con3:outboundTransform>
+            <con3:responseTransform/>
+          </con3:route>
+        </con:actions>
+      </con:route-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

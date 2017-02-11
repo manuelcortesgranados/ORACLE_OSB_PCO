@@ -1,0 +1,29 @@
+<schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/ITELSOA/PKG_SOA_ITEL/PRC_CONSULTAR_FAFTIPO/" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/ITELSOA/PKG_SOA_ITEL/PRC_CONSULTAR_FAFTIPO/" elementFormDefault="qualified">
+   <element name="InputParameters">
+      <complexType>
+         <sequence>
+            <element name="P_FAFLIST" type="string" db:index="1" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="OutputParameters">
+      <complexType>
+         <sequence>
+            <element name="P_FAFTIPO" type="db:FAFTipo_RowSet" db:index="2" db:type="RowSet" minOccurs="0" nillable="true"/>
+         </sequence>
+      </complexType>
+   </element>
+   <complexType name="FAFTipo_RowSet">
+      <sequence>
+         <element name="FAFTipo_Row" minOccurs="0" maxOccurs="unbounded">
+            <complexType>
+               <sequence>
+                  <element name="FAFID" type="decimal" db:index="3" db:type="NUMBER" minOccurs="0" nillable="true"/>                 
+                  <element name="FAF_TIPO" type="string" db:index="4" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+                  <element name="OFFERID" type="decimal" db:index="5" db:type="NUMBER" minOccurs="0" nillable="true"/>
+               </sequence>
+            </complexType>
+         </element>
+      </sequence>
+   </complexType>
+</schema>

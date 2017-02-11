@@ -1,0 +1,20 @@
+<definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/ITEL/Adaptadores/bd_consultarCuentasOCS" name="bd_consultarCuentasOCS-concrete" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/ITEL/Adaptadores/bd_consultarCuentasOCS" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/ITEL/Adaptadores/bd_consultarCuentasOCS" location="../Resources/WSDLs/consultarCuentasOCS_BD.wsdl"/>
+  <binding name="bd_consultarCuentasOCS_ptt-binding" type="tns:bd_consultarCuentasOCS_ptt">
+    <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+    <operation name="bd_consultarCuentasOCS">
+      <soap:operation soapAction="bd_consultarCuentasOCS"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="bd_consultarCuentasOCS-service">
+    <port name="bd_consultarCuentasOCS-port" binding="tns:bd_consultarCuentasOCS_ptt-binding">
+      <soap:address location="jca://eis/DB/ITEL_SOA"/>
+    </port>
+  </service>
+</definitions>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.comcel.com.co/CargarWSUN/" xmlns:tns="http://www.comcel.com.co/CargarWSUN/">
+	<xs:element name="Input_Parameters" type="tns:Input_Parameters" />
+	<xs:element name="WS_Result" type="tns:WS_Result" />
+
+	<xs:complexType name="Input_Parameters">
+		<xs:sequence>
+			<xs:element name="PREFIJO" type="xs:string" />
+			<xs:element name="MIN" type="xs:string" />
+			<xs:element name="DIAS_EXTENSION" type="xs:long" />
+			<xs:element name="CUENTA" type="xs:long" />
+			<xs:element name="VALOR" type="xs:long" />
+			<xs:element name="USUARIO" type="xs:string" />
+			<xs:element name="TIQUETE" type="xs:string" />
+			<xs:element name="REQUESTOR_ID" type="xs:long" />
+			<xs:element name="IN" type="xs:string" />
+			<xs:element name="TIMEOUT" type="xs:long" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="WS_Result">
+		<xs:sequence>
+			<xs:element name="CODIGO" type="xs:string" />
+			<xs:element name="MENSAJE" type="tns:MensajeType" />
+			<xs:element name="DESCRIPCION" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="MensajeType">
+		<xs:sequence>
+			<xs:element name="Charge" type="tns:ChargeType" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="ChargeType">
+		<xs:sequence>
+			<xs:element name="messageCode" type="xs:long" />
+			<xs:element name="resultCode" type="xs:long" />
+			<xs:element name="account" type="xs:long" minOccurs="0" />
+			<xs:element name="resultingBalance" type="xs:long"
+				minOccurs="0" />
+			<xs:element name="resultingExpirationDate" type="xs:string"
+				minOccurs="0" />
+			<xs:element name="resultingCurrencyCode" type="xs:string"
+				minOccurs="0" />
+			<xs:element name="resultingMTCExpDate" type="xs:string"
+				minOccurs="0" />
+			<xs:element name="language" type="xs:long" minOccurs="0" />
+			<xs:element name="resultText" type="xs:string" minOccurs="0" />
+			<xs:element name="additionalResults" type="xs:string"
+				minOccurs="0" />
+		</xs:sequence>
+		<xs:attribute name="exito" type="xs:boolean" />
+		<xs:attribute name="mensaje" type="xs:string" />
+	</xs:complexType>
+
+</xs:schema>

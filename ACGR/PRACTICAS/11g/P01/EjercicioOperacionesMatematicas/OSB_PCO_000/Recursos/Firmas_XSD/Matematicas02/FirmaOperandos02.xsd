@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema targetNamespace="http://www.firmaMatematicas02.org/FirmaOperandos02"
+	elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:mat="http://www.firmaMatematicas02.org/FirmaOperandos02">
+
+	<complexType name="OperacionSumaRequestType">
+		<sequence>
+			<element name="operando1" type="double"></element>
+			<element name="operando2" type="double"></element>
+		</sequence>
+	</complexType>
+
+	<complexType name="OperacionSumaResponseType">
+		<sequence>
+			<element name="respuesta" type="double"></element>
+		</sequence>
+	</complexType>
+
+	<complexType name="OperacionMultiplicacionRequestType">
+		<sequence>
+			<element name="operando1" type="double"></element>
+			<element name="operando2" type="double"></element>
+		</sequence>
+	</complexType>
+
+	<complexType name="OperacionMultiplicacionResponseType">
+		<sequence>
+			<element name="respuesta" type="double"></element>
+		</sequence>
+	</complexType>
+
+    <element name="operacionSumaRequest" type="mat:OperacionSumaRequestType"></element>
+
+
+
+
+    <element name="operacionSumaResponse" type="mat:OperacionSumaResponseType"></element>
+
+    <element name="operacionMultiplicacionRequest" type="mat:OperacionMultiplicacionRequestType"></element>
+
+    <element name="operacionMultiplicacionResponse" type="mat:OperacionMultiplicacionResponseType"></element>
+</schema>

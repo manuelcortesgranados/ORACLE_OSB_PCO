@@ -1,0 +1,17 @@
+<definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/ITEL/Adaptadores/bd_liberarMsisdnECMS" name="bd_liberarMsisdnECMS-concrete" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/ITEL/Adaptadores/bd_liberarMsisdnECMS" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/ITEL/Adaptadores/bd_liberarMsisdnECMS" location="../Resources/WSDLs/liberarMsisdnECMS_BD.wsdl"/>
+  <binding name="bd_liberarMsisdnECMS_ptt-binding" type="tns:bd_liberarMsisdnECMS_ptt">
+    <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+    <operation name="bd_liberarMsisdnECMS">
+      <soap:operation soapAction="bd_liberarMsisdnECMS"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+    </operation>
+  </binding>
+  <service name="bd_liberarMsisdnECMS-service">
+    <port name="bd_liberarMsisdnECMS-port" binding="tns:bd_liberarMsisdnECMS_ptt-binding">
+      <soap:address location="jca://eis/DB/ECMSDB"/>
+    </port>
+  </service>
+</definitions>

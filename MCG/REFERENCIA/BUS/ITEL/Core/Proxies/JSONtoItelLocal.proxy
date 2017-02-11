@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <ser:coreEntry isProxy="true" isEnabled="true">
+    <ser:binding type="Mixed" xsi:type="con3:MixedBindingType" xmlns:con3="http://www.bea.com/wli/sb/services/bindings/config">
+      <con3:request type="Text"/>
+      <con3:response type="Text"/>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>local</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:inbound-properties/>
+    <tran:all-headers>true</tran:all-headers>
+  </ser:endpointConfig>
+  <ser:router>
+    <con:pipeline type="request" name="PipelinePairNode1_request">
+      <con:stage name="JsonToXml">
+        <con:context xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config"/>
+        <con:actions xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config">
+          <con2:javaCallout varName="resultadoSM">
+            <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-9188228383962501673-386fac59.155a389f76d.-72eb</con4:id>
+            <con2:archive ref="ITEL/SM/Resources/JARs/Conversor"/>
+            <con2:className>co.com.claro.procesadorjson.conversion.Conversor</con2:className>
+            <con2:method>public static java.lang.String toXML(java.lang.String)</con2:method>
+            <con2:expr>
+              <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config">data($body)</con4:xqueryText>
+            </con2:expr>
+          </con2:javaCallout>
+          <con2:assign varName="peticion">
+            <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-9188228383962501673-386fac59.155a389f76d.-72ea</con4:id>
+            <con2:expr>
+              <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config">fn-bea:inlinedXML($resultadoSM)</con4:xqueryText>
+            </con2:expr>
+          </con2:assign>
+          <con2:assign varName="codRespuesta">
+            <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-9188228383962501673-386fac59.155a389f76d.-70fc</con4:id>
+            <con2:expr>
+              <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config">"12"</con4:xqueryText>
+            </con2:expr>
+          </con2:assign>
+        </con:actions>
+      </con:stage>
+      <con:stage name="init" errorHandler="_onErrorHandler-9188228383962501673-386fac59.155a389f76d.-715d">
+        <con:context/>
+        <con:actions>
+          <con1:assign varName="min">
+            <con2:id>_ActionId-9188228383962501673-386fac59.155a389f76d.-72c0</con2:id>
+            <con1:expr>
+              <con2:xqueryText>substring(data($peticion/subscriberIdentifier/identifierValue),3)</con2:xqueryText>
+            </con1:expr>
+          </con1:assign>
+          <con1:assign varName="paquete">
+            <con2:id>_ActionId-9188228383962501673-386fac59.155a389f76d.-72a0</con2:id>
+            <con1:expr>
+              <con2:xqueryText>data($peticion/productId)</con2:xqueryText>
+            </con1:expr>
+          </con1:assign>
+        </con:actions>
+      </con:stage>
+      <con:stage name="ejecutarTrama" errorHandler="_onErrorHandler-9188228383962501673-386fac59.155a389f76d.-7188">
+        <con:context/>
+        <con:actions>
+          <con1:ifThenElse>
+            <con2:id>_ActionId-9188228383962501673-386fac59.155a389f76d.-70e2</con2:id>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText>$codRespuesta = '12'</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con1:wsCallout>
+                  <con2:id>_ActionId-9188228383962501673-386fac59.155a389f76d.-70dc</con2:id>
+                  <con1:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/ejecutarTramaLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con1:operation>ejecutarTrama</con1:operation>
+                  <con1:request>
+                    <con1:body>$ejecutarTramaRequest</con1:body>
+                  </con1:request>
+                  <con1:response>
+                    <con1:body>ejecutarTramaResponse</con1:body>
+                  </con1:response>
+                  <con1:requestTransform>
+                    <con1:assign varName="ejecutarTramaRequest">
+                      <con2:id>_ActionId-9188228383962501673-386fac59.155a389f76d.-70de</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/JSONtoItel_Req_ejecutarTrama_414"/>
+                          <con2:param name="min">
+                            <con2:path>$min</con2:path>
+                          </con2:param>
+                          <con2:param name="cobro">
+                            <con2:path>$cobro</con2:path>
+                          </con2:param>
+                          <con2:param name="paquete">
+                            <con2:path>$paquete</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:assign>
+                  </con1:requestTransform>
+                  <con1:responseTransform>
+                    <con1:assign varName="codRespuesta">
+                      <con2:id>_ActionId-9188228383962501673-386fac59.155a389f76d.-70dd</con2:id>
+                      <con1:expr>
+                        <con2:xqueryText>data($ejecutarTramaResponse/CODIGO)</con2:xqueryText>
+                      </con1:expr>
+                    </con1:assign>
+                  </con1:responseTransform>
+                </con1:wsCallout>
+              </con1:actions>
+            </con1:case>
+            <con1:default/>
+          </con1:ifThenElse>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="PipelinePairNode1_response">
+      <con:stage name="respuesta">
+        <con:context/>
+        <con:actions>
+          <con1:replace varName="body" contents-only="true">
+            <con2:id>_ActionId-9188228383962501673-386fac59.155a389f76d.-7246</con2:id>
+            <con1:expr>
+              <con2:xqueryTransform>
+                <con2:resource ref="ITEL/Core/Resources/XQueries/JSONtoItel_Res"/>
+                <con2:param name="codigo">
+                  <con2:path>$codRespuesta</con2:path>
+                </con2:param>
+              </con2:xqueryTransform>
+            </con1:expr>
+          </con1:replace>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="error" name="_onErrorHandler-9188228383962501673-386fac59.155a389f76d.-7188">
+      <con:stage name="ErrorTrama">
+        <con:context/>
+        <con:actions>
+          <con1:assign varName="codRespuesta">
+            <con2:id>_ActionId-9188228383962501673-386fac59.155a389f76d.-7173</con2:id>
+            <con1:expr>
+              <con2:xqueryText>"10"</con2:xqueryText>
+            </con1:expr>
+          </con1:assign>
+          <con2:reply>
+            <con2:id>_ActionId-9188228383962501673-386fac59.155a389f76d.-715e</con2:id>
+          </con2:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="error" name="_onErrorHandler-9188228383962501673-386fac59.155a389f76d.-715d">
+      <con:stage name="errorParametros">
+        <con:context/>
+        <con:actions>
+          <con1:assign varName="codRespuesta">
+            <con2:id>_ActionId-9188228383962501673-386fac59.155a389f76d.-713a</con2:id>
+            <con1:expr>
+              <con2:xqueryText>"11"</con2:xqueryText>
+            </con1:expr>
+          </con1:assign>
+          <con2:reply>
+            <con2:id>_ActionId-9188228383962501673-386fac59.155a389f76d.-710f</con2:id>
+          </con2:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:flow>
+      <con:pipeline-node name="PipelinePairNode1">
+        <con:request>PipelinePairNode1_request</con:request>
+        <con:response>PipelinePairNode1_response</con:response>
+      </con:pipeline-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

@@ -1,0 +1,19 @@
+<adapter-config name="getImeiStatus" adapter="Database Adapter"
+	wsdlLocation="../WSDLs/getImeiStatus.wsdl"
+	xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+
+	<connection-factory location="eis/DB/Bscs"
+		UIConnectionName="BscsDataSource" adapterRef="" />
+	<endpoint-interaction portType="getImeiStatus_ptt"
+		operation="getImeiStatus">
+		<interaction-spec
+			className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
+			<property name="SchemaName" value="SYSADM" />
+			<property name="PackageName" value="PKG_RULESENGINE_BSCS" />
+			<property name="ProcedureName" value="PRC_GET_IMEI_BSCS" />
+			<property name="QueryTimeout" value="1" />
+			<property name="GetActiveUnitOfWork" value="false" />
+		</interaction-spec>
+		<output />
+	</endpoint-interaction>
+</adapter-config>

@@ -1,0 +1,28 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://www.claro.com.co/rulesEngine/ValidatePrePayStocksFact"
+	xmlns:cbe="http://www.claro.com.co/rulesEngine/canonicalModel/CommonBusinessEntities"
+	xmlns:pd="http://www.claro.com.co/rulesEngine/canonicalModel/ProductDomain"
+	xmlns:msd="http://www.claro.com.co/rulesEngine/canonicalModel/MarketSalesDomain"
+	targetNamespace="http://www.claro.com.co/rulesEngine/ValidatePrePayStocksFact">
+	
+	<xs:import
+		schemaLocation="../../../Core/Resources/Schemas/CanonicalModel/ProductDomain.xsd"
+		namespace="http://www.claro.com.co/rulesEngine/canonicalModel/ProductDomain" />
+    <xs:import
+		schemaLocation="../../../Core/Resources/Schemas/CanonicalModel/MarketSalesDomain.xsd"
+		namespace="http://www.claro.com.co/rulesEngine/canonicalModel/MarketSalesDomain" />
+		
+	<xs:element name="ValidatePrePayStocksFactRequest" type="tns:ValidatePrePayStocksFactRequestType" />
+	<xs:element name="ValidatePrePayStocksFactResponse" type="tns:ValidatePrePayStocksFactResponseType" />
+	<xs:complexType name="ValidatePrePayStocksFactRequestType">
+		<xs:sequence>
+			<xs:element name="Product" type="pd:Product" />
+			<xs:element name="SalesChannel" type="msd:SalesChannel" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ValidatePrePayStocksFactResponseType">
+		<xs:sequence>
+			<xs:element name="Product" type="pd:Product" />
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

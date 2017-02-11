@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config">
+  <ser:coreEntry isProxy="true" isEnabled="true" isAutoPublish="false" isTracingEnabled="false">
+    <ser:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config">
+      <con:wsdl ref="ITEL/Trama601/Resources/WSDLs/calcularProvisionTrama601_PS"/>
+      <con:port>
+        <con:name>calcularProvisionTrama601_PSSOAP</con:name>
+        <con:namespace>http://www.comcel.com.co/calcularProvisionTrama601_PS/</con:namespace>
+      </con:port>
+      <con:selector type="SOAP body"/>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+    <ser:ws-policy>
+      <ser:binding-mode>wsdl-policy-attachments</ser:binding-mode>
+    </ser:ws-policy>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>local</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:inbound-properties/>
+    <tran:all-headers>true</tran:all-headers>
+  </ser:endpointConfig>
+  <ser:router>
+    <con:pipeline type="error" name="_onErrorHandler-3514267977901353834--730dd9bb.13422f7d832.-7111">
+      <con:stage name="error">
+        <con:context/>
+        <con:actions>
+          <con1:replace varName="body" contents-only="true">
+            <con2:id>_ActionId-3514267977901353834--730dd9bb.13422f7d832.-7103</con2:id>
+            <con1:expr>
+              <con2:xqueryTransform>
+                <con2:resource ref="ITEL/Trama601/Resources/XQueries/calcularProvisionTrama601_Error"/>
+                <con2:param name="descripcion">
+                  <con2:path>$fault/ctx:reason/text()</con2:path>
+                </con2:param>
+                <con2:param name="codigo">
+                  <con2:path>"6"</con2:path>
+                </con2:param>
+              </con2:xqueryTransform>
+            </con1:expr>
+          </con1:replace>
+          <con2:reply>
+            <con2:id>_ActionId-3514267977901353834--730dd9bb.13422f7d832.-70ed</con2:id>
+          </con2:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:flow>
+      <con:route-node name="RouteCalcularProvision_BS" error-handler="_onErrorHandler-3514267977901353834--730dd9bb.13422f7d832.-7111">
+        <con:context>
+          <con2:varNsDecl namespace="http://www.comcel.com.co/CalcularProvisionTrama601/" prefix="cal"/>
+        </con:context>
+        <con:actions>
+          <con3:route>
+            <con2:id>_ActionId-3514267977901353834--730dd9bb.13422f7d832.-7147</con2:id>
+            <con3:service ref="ITEL/Trama601/Business Services/calcularProvisionTrama601_BS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con3:operation>callFunctionStateless</con3:operation>
+            <con3:outboundTransform>
+              <con1:replace varName="body" contents-only="true">
+                <con2:id>_ActionId-2883392505362787646-655285cc.1347ad8d12c.-7f66</con2:id>
+                <con1:expr>
+                  <con2:xqueryTransform>
+                    <con2:resource ref="ITEL/Trama601/Resources/XQueries/calcularProvisionTrama601_Req"/>
+                    <con2:param name="input_Parameters1">
+                      <con2:path>$body/cal:Input_Parameters</con2:path>
+                    </con2:param>
+                  </con2:xqueryTransform>
+                </con1:expr>
+              </con1:replace>
+            </con3:outboundTransform>
+            <con3:responseTransform>
+              <con1:replace varName="body" contents-only="true">
+                <con2:id>_ActionId-3514267977901353834--730dd9bb.13422f7d832.-7112</con2:id>
+                <con1:expr>
+                  <con2:xqueryTransform>
+                    <con2:resource ref="ITEL/Trama601/Resources/XQueries/calcularProvisionTrama601_Res"/>
+                    <con2:param name="callFunctionStatelessDecision">
+                      <con2:path>$body/*:callFunctionStatelessDecision</con2:path>
+                    </con2:param>
+                  </con2:xqueryTransform>
+                </con1:expr>
+              </con1:replace>
+              <con4:assign varName="carga" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config">
+                <con2:id>_ActionId-1878665716819449626-7558ccc5.1346cac300e.-7f90</con2:id>
+                <con4:expr>
+                  <con2:xqueryText>let $paramCarga := $body/cal:WS_Result/MENSAJE/SERVICIO/PARAMETROS/PARAMETRO[NOMBRE='CARGA']
+return 
+  if ($paramCarga != "" ) then
+      fn-bea:inlinedXML( $paramCarga/VALOR/text() ) else ""</con2:xqueryText>
+                </con4:expr>
+              </con4:assign>
+              <con1:replace varName="body" contents-only="true">
+                <con2:id>_ActionId-2883392505362787646-655285cc.1347ad8d12c.-7f90</con2:id>
+                <con1:location>
+                  <con2:xpathText>./cal:WS_Result/MENSAJE/SERVICIO/PARAMETROS/PARAMETRO[NOMBRE='CARGA']/VALOR</con2:xpathText>
+                </con1:location>
+                <con1:expr>
+                  <con2:xqueryText>$carga/*</con2:xqueryText>
+                </con1:expr>
+              </con1:replace>
+            </con3:responseTransform>
+          </con3:route>
+        </con:actions>
+      </con:route-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:sock="http://www.bea.com/alsb/transports/sock" xmlns:con="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+  <ser:coreEntry isProxy="true" isEnabled="true" isAutoPublish="false" isTracingEnabled="false">
+    <ser:description/>
+    <ser:binding type="Mixed" xsi:type="con:MixedBindingType" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config">
+      <con:request type="Text"/>
+      <con:response type="Text"/>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+    <ser:transactions isRequired="false" sameTxForResponse="false"/>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>socket</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:URI>
+      <env:value>7146</env:value>
+    </tran:URI>
+    <tran:inbound-properties/>
+    <tran:all-headers>true</tran:all-headers>
+    <tran:provider-specific xsi:type="sock:SocketEndpointConfiguration">
+      <sock:inbound-properties>
+        <sock:backlog>5</sock:backlog>
+        <sock:timeout>300</sock:timeout>
+        <sock:enable-nagle-algorithm>true</sock:enable-nagle-algorithm>
+      </sock:inbound-properties>
+      <sock:request-response>true</sock:request-response>
+      <sock:dispatch-policy>default</sock:dispatch-policy>
+    </tran:provider-specific>
+  </ser:endpointConfig>
+  <ser:router>
+    <con:flow xmlns:con="http://www.bea.com/wli/sb/pipeline/config">
+      <con:route-node name="RouteNode1">
+        <con:context/>
+        <con:actions>
+          <con3:route xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config">
+            <con1:id>_ActionId-5762350964032973251-56db5c9.137b81d3c40.-7f58</con1:id>
+            <con3:service ref="ITEL/Core/Proxies/ejecutarTramaLocal_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con3:operation>ejecutarTrama</con3:operation>
+            <con3:outboundTransform>
+              <con2:replace varName="body" contents-only="true">
+                <con1:id>_ActionId-5762350964032973251-56db5c9.137b81d3c40.-7f57</con1:id>
+                <con2:expr>
+                  <con1:xqueryTransform>
+                    <con1:resource ref="ITEL/Core/Resources/XQueries/ejecutarTramaSocketTransport_Req_ejecutarTramaLocal"/>
+                    <con1:param name="trama">
+                      <con1:path>$body/text()</con1:path>
+                    </con1:param>
+                    <con1:param name="ipOrigen">
+                      <con1:path>$inbound/ctx:transport/ctx:request/sock:client-host/text()</con1:path>
+                    </con1:param>
+                  </con1:xqueryTransform>
+                </con2:expr>
+              </con2:replace>
+            </con3:outboundTransform>
+            <con3:responseTransform>
+              <con2:replace varName="body" contents-only="true">
+                <con1:id>_ActionId-5762350964032973251-56db5c9.137b81d3c40.-7f56</con1:id>
+                <con2:expr>
+                  <con:xqueryTransform xmlns:con="http://www.bea.com/wli/sb/stages/config">
+                    <con:resource ref="ITEL/Core/Resources/XQueries/ejecutarTramaSocketTransport_Res"/>
+                    <con:param name="tramaSalida">
+                      <con:path>$body/*</con:path>
+                    </con:param>
+                  </con:xqueryTransform>
+                </con2:expr>
+              </con2:replace>
+            </con3:responseTransform>
+          </con3:route>
+        </con:actions>
+      </con:route-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

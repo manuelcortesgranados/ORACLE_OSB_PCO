@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions targetNamespace="http://xmlns.oracle.com/pcbpel/iWay/wsdl/MySAP/SAP_SERVER/ZMM_VALIDAR_SERIAL" name="ZMM_VALIDAR_SERIAL-concrete" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.oracle.com/pcbpel/iWay/wsdl/MySAP/SAP_SERVER/ZMM_VALIDAR_SERIAL" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <import namespace="http://xmlns.oracle.com/pcbpel/iWay/wsdl/MySAP/SAP_SERVER/ZMM_VALIDAR_SERIAL" location="../Resources/WSDLs/validateSerial_SAP.wsdl"/>
+  <binding name="ZMM_VALIDAR_SERIALPortType-binding" type="tns:ZMM_VALIDAR_SERIALPortType">
+    <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+    <operation name="ZMM_VALIDAR_SERIAL">
+      <soap:operation soapAction="ZMM_VALIDAR_SERIAL"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="ZMM_VALIDAR_SERIAL-service">
+    <port name="ZMM_VALIDAR_SERIAL-port" binding="tns:ZMM_VALIDAR_SERIALPortType-binding">
+      <soap:address location="jca://eis/OracleJCAAdapter/RulesEngine_SAPAdapter"/>
+    </port>
+  </service>
+</definitions>

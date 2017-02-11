@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/FirmaFormRegistroAutomotor02" xmlns:tns="http://www.example.org/FirmaFormRegistroAutomotor02" elementFormDefault="qualified">
+
+    <complexType name="FomularioEntradaTipo">
+    	<sequence>
+    		<element name="tramiteSolicitado"
+    			type="tns:TramiteSolicitadoTipo">
+    		</element>
+    		<element name="claseVehiculo" type="tns:ClaseVehiculoTipo"></element>
+    	</sequence>
+    </complexType>
+    
+    <complexType name="FormularioRetornoTipo">
+    	<sequence>
+    		<element name="respuesta" type="string"></element>
+    	</sequence>
+    </complexType>
+    
+    
+    <complexType name="ClaseVehiculoTipo">
+    	<sequence>
+    		<element name="claseVehiculo">
+    			<simpleType>
+    				<restriction base="string">
+    					<enumeration value="AUTOMOVIL"></enumeration>
+    					<enumeration value="BUS"></enumeration>
+    					<enumeration value="BUSETA"></enumeration>
+    					<enumeration value="CAMION"></enumeration>
+    					<enumeration value="CAMIONETA"></enumeration>
+    					<enumeration value="CAMPERO"></enumeration>
+    					<enumeration value="MICROBUS"></enumeration>
+    					<enumeration value="TRACTOCAMION"></enumeration>
+    					<enumeration value="MOTOCICLETA"></enumeration>
+    					<enumeration value="MOTOCARRO"></enumeration>
+    					<enumeration value="MOTROTRICICLO"></enumeration>
+    					<enumeration value="CUATRIMOTO"></enumeration>
+    					<enumeration value="VOLQUETA"></enumeration>
+    					<enumeration value="OTRO"></enumeration>
+    				</restriction>
+    			</simpleType>
+    		</element>
+    	</sequence>
+    </complexType>
+    
+
+    <complexType name="TramiteSolicitadoTipo">
+    	<sequence>
+    		<element name="tramiteSolicitado">
+    			<simpleType>
+    				<restriction base="string">
+    					<enumeration value="MATRICULA REGISTRO"></enumeration>
+    					<enumeration value="TRASPASO"></enumeration>
+    					<enumeration value="TRASALADO MATRICULA"></enumeration>
+    					<enumeration value="RADICACO MATRICULA"></enumeration>
+    					<enumeration value="CAMBIO COLOR"></enumeration>
+    					<enumeration value="CAMBIO SERVICIO"></enumeration>
+    					<enumeration value="REGRABAR MOTOR"></enumeration>
+    					<enumeration value="REGRABAR CHASIS"></enumeration>
+    					<enumeration value="DUPLICADO LIC TRANSITO"></enumeration>
+    					<enumeration value="INSC PRENDA"></enumeration>
+    					<enumeration value="LEVANTA PRENDA"></enumeration>
+    					<enumeration value="CANCELACION MATRICULA"></enumeration>
+    					<enumeration value="CAMBIO PLACAS"></enumeration>
+    					<enumeration value="DUPLICADO PLACAS"></enumeration>
+    					<enumeration value="REMATRICULA"></enumeration>
+    					<enumeration value="REMATRICULA"></enumeration>
+    					<enumeration value="CAMBIO CARROCERIA"></enumeration>
+    					<enumeration value="OTROS"></enumeration>
+    				</restriction>
+    			</simpleType>
+    		</element>
+    	</sequence>
+    </complexType>
+
+    <element name="formularioEntrada" type="tns:FomularioEntradaTipo"></element>
+
+    <element name="formularioRetorno" type="tns:FormularioRetornoTipo"></element>
+</schema>

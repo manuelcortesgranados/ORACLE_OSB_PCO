@@ -1,0 +1,12 @@
+<adapter-config name="bd_bbPrepago" adapter="Database Adapter" wsdlLocation="../WSDLs/bbPrepago_BD.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+
+	<connection-factory location="eis/DB/BSCS" UIConnectionName="ITELSOA_BSCSQA" adapterRef=""/>
+	<endpoint-interaction portType="bd_bbPrepago_ptt" operation="bd_bbPrepago">
+		<interaction-spec className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
+			<property name="SchemaName" value="SYSADM"/>
+			<property name="ProcedureName" value="PROC_BBPREPAGO"/>
+			<property name="GetActiveUnitOfWork" value="false"/>
+		</interaction-spec>
+		<output/>
+	</endpoint-interaction>
+</adapter-config>

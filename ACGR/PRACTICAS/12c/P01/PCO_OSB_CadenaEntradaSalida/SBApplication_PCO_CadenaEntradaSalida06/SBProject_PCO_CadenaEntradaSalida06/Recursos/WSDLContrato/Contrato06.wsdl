@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<definitions targetNamespace="urn:Contrato06" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="urn:Contrato06"
+             xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:bebe06="http://www.bebe06.org">
+  <types>
+    <xsd:schema>
+      <xsd:import schemaLocation="../XMLSchema/Firma06.xsd" namespace="http://www.bebe06.org"/>
+    </xsd:schema>
+  </types>
+  <message name="mensajeEntrada06">
+    <part name="parteVariableEntrada" element="bebe06:requestType"/>
+  </message>
+  <message name="mensajeSalida06">
+    <part name="parteVariableSalida" element="bebe06:responseType"/>
+  </message>
+  <portType name="puertoTipo06">
+    <operation name="miOperacion">
+      <input message="tns:mensajeEntrada06"/>
+      <output message="tns:mensajeSalida06"/>
+    </operation>
+  </portType>
+  <binding name="puertoTipo06SOAP11Binding" type="tns:puertoTipo06">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="miOperacion">
+      <soap:operation style="document" soapAction="urn:Contrato06/miOperacion"/>
+      <input>
+        <soap:body use="literal" parts="parteVariableEntrada"/>
+      </input>
+      <output>
+        <soap:body use="literal" parts="parteVariableSalida"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="servicio06">
+    <port name="puertoTipo06" binding="tns:puertoTipo06SOAP11Binding">
+      <soap:address location="http://www.example.com"/>
+    </port>
+  </service>
+</definitions>

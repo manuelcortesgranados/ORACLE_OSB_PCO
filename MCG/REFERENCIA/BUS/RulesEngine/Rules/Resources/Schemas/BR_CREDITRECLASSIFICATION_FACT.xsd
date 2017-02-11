@@ -1,0 +1,24 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:cd="http://www.claro.com.co/rulesEngine/canonicalModel/CustomerDomain"
+	xmlns:tns="http://www.claro.com.co/rulesEngine/CreditReclassifcationFact/"
+	targetNamespace="http://www.claro.com.co/rulesEngine/CreditReclassifcationFact/">
+	<xs:import
+
+		schemaLocation="../../../Core/Resources/Schemas/CanonicalModel/CustomerDomain.xsd"
+		namespace="http://www.claro.com.co/rulesEngine/canonicalModel/CustomerDomain" />
+
+	<xs:element name="CreditReclassifcationFactRequest" type="tns:CreditReclassifcationFactRequestType" />
+	<xs:element name="CreditReclassifcationFactResponse" type="tns:CreditReclassifcationFactResponseType" />
+	<xs:complexType name="CreditReclassifcationFactRequestType">
+		<xs:sequence>
+			<xs:element name="CustomerBillingBehavior" type="cd:CustomerBillingBehavior" />
+			<xs:element name="InternalAccountBehavior" type="cd:InternalAccountBehavior"
+				minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CreditReclassifcationFactResponseType">
+		<xs:sequence>
+			<xs:element name="CustomerBillingBehavior" type="cd:CustomerBillingBehavior" />
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

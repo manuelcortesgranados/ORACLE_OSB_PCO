@@ -1,0 +1,36 @@
+<wsdl:definitions name="ConsultarPaquetesTAT" targetNamespace="http://www.comcel.com.co/ConsultarPaquetesTAT/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.comcel.com.co/ConsultarPaquetesTAT/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<wsdl:types>
+			<schema xmlns="http://www.w3.org/2001/XMLSchema">
+				<import namespace="http://www.comcel.com.co/ConsultarPaquetesTAT/" schemaLocation="../Schemas/PS_ITEL_CONSULTARPAQUETES_TAT.xsd"/>
+			</schema>
+	</wsdl:types>
+	<wsdl:message name="Input_Parameters">
+		<wsdl:part element="tns:Input_Parameters" name="Input_Parameters"/>
+	</wsdl:message>
+	<wsdl:message name="WS_Result">
+		<wsdl:part element="tns:WS_Result" name="WS_Result"/>
+	</wsdl:message>
+	<wsdl:portType name="ConsultarPaquetesTAT">
+		<wsdl:operation name="ConsultarPaquetesTAT">
+			<wsdl:input message="tns:Input_Parameters"/>
+			<wsdl:output message="tns:WS_Result"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="ConsultarPaquetesTATSOAP" type="tns:ConsultarPaquetesTAT">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="ConsultarPaquetesTAT">
+			<soap:operation soapAction="http://www.comcel.com.co/ConsultarPaquetesTAT/ConsultarPaquetesTAT"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="ConsultarPaquetesTAT">
+		<wsdl:port binding="tns:ConsultarPaquetesTATSOAP" name="ConsultarPaquetesTATSOAP">
+			<soap:address location="http://www.comcel.com.co/"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

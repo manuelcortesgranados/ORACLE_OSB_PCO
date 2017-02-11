@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.comcel.com.co/EjecutarTrama/" 
+	xmlns:tns="http://www.comcel.com.co/EjecutarTrama/">
+	
+	<xs:element name="Input_Parameters" type="tns:Input_Paramaters" />
+	<xs:element name="WS_Result" type="tns:WS_Result" />
+
+	<xs:complexType name="Input_Paramaters">
+		<xs:sequence>
+			<xs:element name="TRAMA" type="xs:string" />
+			<xs:element name="IP_ORIGEN" type="xs:string" minOccurs="0" default="0" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="WS_Result">
+		<xs:sequence>
+			<xs:element name="CODIGO" type="xs:string" />
+			<xs:element name="MENSAJE" type="tns:respuestaType" />
+			<xs:element name="DESCRIPCION" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="respuestaType">
+		<xs:sequence>
+			<xs:element name="USUARIO" type="xs:string" />
+			<xs:element name="METODO" type="xs:string" />
+			<xs:element name="CODIGO_RESPUESTA" type="xs:string" />
+			<xs:element name="DESCRIPCION" type="xs:string" />
+		    <xs:element name="PARAMETROS" type="tns:parametrosType"/>					
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="parametrosType">
+		<xs:sequence>
+			<xs:element name="PARAMETRO" type="tns:parametroType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="parametroType">
+		<xs:sequence>
+			<xs:element name="NOMBRE" type="xs:string"/>
+			<xs:element name="TIPO" type="xs:string"/>
+			<xs:element name="VALOR" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+</xs:schema>

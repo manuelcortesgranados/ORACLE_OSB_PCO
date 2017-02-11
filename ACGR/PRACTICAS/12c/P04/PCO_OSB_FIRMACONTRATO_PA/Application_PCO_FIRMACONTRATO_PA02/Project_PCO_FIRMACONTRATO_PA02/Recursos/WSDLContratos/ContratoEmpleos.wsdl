@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<definitions targetNamespace="urn:ContratoEmpleos" xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:tns="urn:ContratoEmpleos" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+             xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:firEmpleo ="http://www.firEmpleo.org">
+  <types>
+    <xsd:schema>
+      <xsd:import schemaLocation="../XMLFirmas/FirmaEmpleos.xsd" namespace="http://www.firEmpleo.org"/>
+    </xsd:schema>
+  </types>
+  <message name="mensajeEntradaEmpleo">
+    <part name="partMensajeEntradaEmpleado" element="firEmpleo:empleoRequest"/>
+  </message>
+  <message name="mensajeSalidaEmpleo">
+    <part name="partMensajeSalidaEmpleo" element="firEmpleo:empleoResponse"/>
+  </message>
+  <portType name="puertoTipoEmpleo">
+    <operation name="operacionEmpleo">
+      <input message="tns:mensajeEntradaEmpleo"/>
+      <output message="tns:mensajeSalidaEmpleo"/>
+    </operation>
+  </portType>
+  <binding name="puertoTipoEmpleoSOAP11Binding" type="tns:puertoTipoEmpleo">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="operacionEmpleo">
+      <soap:operation style="document" soapAction="urn:ContratoEmpleos/operacionEmpleo"/>
+      <input>
+        <soap:body use="literal" parts="partMensajeEntradaEmpleado"/>
+      </input>
+      <output>
+        <soap:body use="literal" parts="partMensajeSalidaEmpleo"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="servicioEmpleo">
+    <port name="puertoTipoEmpleo" binding="tns:puertoTipoEmpleoSOAP11Binding">
+      <soap:address location="http://www.example.com"/>
+    </port>
+  </service>
+</definitions>

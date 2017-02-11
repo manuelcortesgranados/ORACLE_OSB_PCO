@@ -1,0 +1,51 @@
+<wsdl:definitions name="consultarDatosMercadeo_PS" targetNamespace="http://www.comcel.com.co/consultarDatosMercadeo_PS/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.comcel.com.co/consultarDatosMercadeo_PS/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsd1="http://www.comcel.com.co/ConsultarDatosMercadeo">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://www.comcel.com.co/consultarDatosMercadeo_PS/">
+      <xsd:element name="consultarDatosMercadeo">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="in" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="consultarDatosMercadeoResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="out" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+    <xsd:schema>
+    	<xsd:import namespace="http://www.comcel.com.co/ConsultarDatosMercadeo" schemaLocation="../Schemas/PS_ITEL_CONSULTARDATOSMERCADEO.xsd">
+    	</xsd:import></xsd:schema></wsdl:types>
+  <wsdl:message name="consultarDatosMercadeoRequest">
+    <wsdl:part element="xsd1:Input_Parameters" name="Input_Parameters"/>
+  </wsdl:message>
+  <wsdl:message name="consultarDatosMercadeoResponse">
+    <wsdl:part element="xsd1:WS_Result" name="WS_Result"/>
+  </wsdl:message>
+  <wsdl:portType name="consultarDatosMercadeo_PS">
+    <wsdl:operation name="consultarDatosMercadeo">
+      <wsdl:input message="tns:consultarDatosMercadeoRequest"/>
+      <wsdl:output message="tns:consultarDatosMercadeoResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="consultarDatosMercadeo_PSSOAP" type="tns:consultarDatosMercadeo_PS">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="consultarDatosMercadeo">
+      <soap:operation soapAction="http://www.comcel.com.co/consultarDatosMercadeo_PS/consultarDatosMercadeo"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="consultarDatosMercadeo_PS">
+    <wsdl:port binding="tns:consultarDatosMercadeo_PSSOAP" name="consultarDatosMercadeo_PSSOAP">
+      <soap:address location="http://www.comcel.com.co/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

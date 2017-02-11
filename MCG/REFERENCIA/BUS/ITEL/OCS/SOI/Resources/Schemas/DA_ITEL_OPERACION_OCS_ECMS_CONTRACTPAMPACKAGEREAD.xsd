@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://ericsson.com/services/ws_cma3/contractpampackageread"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:sessionchange="http://ericsson.com/services/ws_cma3/sessionchange"
+	xmlns:tns="http://ericsson.com/services/ws_cma3/contractpampackageread"
+	elementFormDefault="qualified">
+	
+	<xs:import schemaLocation="DA_ITEL_OPERACION_OCS_ECMS_SESSION.xsd" namespace="http://ericsson.com/services/ws_cma3/sessionchange" />
+	<xs:element name="contractPamPackageReadRequest" type="tns:contractPamPackageReadRequest"/>
+	<xs:element name="contractPamPackageReadResponse" type="tns:contractPamPackageReadResponse"/>
+
+	<xs:complexType name="pAMEntity">
+		<xs:all>
+			<xs:element name="privateKey" type="xs:long" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+																			&lt;p&gt;Identifier of a PAM Class.&lt;/p&gt;
+																	</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="publicKey" type="xs:integer" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+																			&lt;p&gt;External identifier of a PAM Class.&lt;/p&gt;
+																	</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="contractPAMPackageDTO">
+		<xs:all>
+			<xs:annotation>
+				<xs:documentation>
+															&lt;p&gt;External identifier of a PAM Schedule.&lt;/p&gt;
+													</xs:documentation>
+			</xs:annotation>
+			<xs:element name="pamServiceId" type="xs:long" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+																&lt;p&gt;The id of the contracted PAM service.&lt;/p&gt;
+														</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="pamClass" type="tns:pAMEntity" minOccurs="0"/>
+			<xs:element name="billCycleFlag" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+																&lt;p&gt;Billing cycle flag of a PAM Class.&lt;/p&gt;
+														</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="pamSchedule" type="tns:pAMEntity" minOccurs="0"/>
+			<xs:element name="currentPamPeriod" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+																&lt;p&gt;Current PAM Period.&lt;/p&gt;
+														</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="lastEvaluationDate" type="xs:date" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+																&lt;p&gt;The date at which the PAM Package was last evaluated for the
+																given contract.&lt;/p&gt;
+														</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="deferredToDate" type="xs:date" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+																&lt;p&gt;A date to which the PAM Package evaluation will be deferred.&lt;/p&gt;
+														</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="pamServicePriority" type="xs:long" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+																&lt;p&gt;The priority of the contracted PAM service.&lt;/p&gt;
+														</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="pampackagesResponse">
+		<xs:sequence>
+			<xs:element name="pamPackage" type="tns:contractPAMPackageDTO" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="referenceDTO">
+		<xs:all>
+			<xs:annotation>
+				<xs:documentation>
+												&lt;p&gt;Identifies a contract with the public or private key.&lt;/p&gt;
+										</xs:documentation>
+			</xs:annotation>
+			<xs:element name="privateKey" type="xs:long" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+													&lt;p&gt;Contract id &lt;/p&gt;
+											</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="publicKey" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+													&lt;p&gt;Public key of the contract&lt;/p&gt;
+											</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="getContractPAMPackageDTO">
+		<xs:all>
+			<xs:element name="contract" type="tns:referenceDTO" minOccurs="0"/>
+			<xs:element name="pamPackages" type="tns:pampackagesResponse" minOccurs="0"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="contractPamPackageReadResponse">
+		<xs:all>
+			<xs:annotation>
+				<xs:documentation>
+						&lt;p&gt;Output of the command&lt;/p&gt;
+				</xs:documentation>
+			</xs:annotation>
+			<xs:element name="contractPAMPackageOutput" type="tns:getContractPAMPackageDTO" minOccurs="0"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="inputAttributes">
+		<xs:all>
+			<xs:annotation>
+				<xs:documentation>
+						&lt;p&gt;Input of the command&lt;/p&gt;
+				</xs:documentation>
+			</xs:annotation>
+			<xs:element name="coId" type="xs:long" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;Contract id &lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="coIdPub" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;Public key of the contract&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="contractPamPackageReadRequest">
+		<xs:all>
+			<xs:element name="inputAttributes" type="tns:inputAttributes" minOccurs="0"/>
+			<xs:element name="sessionChangeRequest" type="sessionchange:sessionChangeRequest" minOccurs="0"/>
+		</xs:all>
+	</xs:complexType>
+
+</schema>

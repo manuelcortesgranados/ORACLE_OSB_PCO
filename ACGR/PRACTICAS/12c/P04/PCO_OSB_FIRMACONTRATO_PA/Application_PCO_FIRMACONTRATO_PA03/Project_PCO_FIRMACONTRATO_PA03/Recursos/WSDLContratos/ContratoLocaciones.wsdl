@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<definitions targetNamespace="urn:ContratoLocaciones" xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:tns="urn:ContratoLocaciones" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+             xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:firLoc="http://www.firLoc.org">
+  <types>
+    <xsd:schema>
+      <xsd:import schemaLocation="../XMLFirmas/FirmaLocaciones.xsd" namespace="http://www.firLoc.org"/>
+    </xsd:schema>
+  </types>
+  <message name="mensajeEntradaLocaciones">
+    <part name="partMensajeEntrada" element="firLoc:locacionesRequest"/>
+  </message>
+  <message name="mensajeSalidaLocaciones">
+    <part name="partMensajeSalida" element="firLoc:locacionesResponse"/>
+  </message>
+  <portType name="puertoTipoLocaciones">
+    <operation name="operacionLocaciones">
+      <input message="tns:mensajeEntradaLocaciones"/>
+      <output message="tns:mensajeSalidaLocaciones"/>
+    </operation>
+  </portType>
+  <binding name="puertoTipoLocacionesSOAP11Binding" type="tns:puertoTipoLocaciones">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="operacionLocaciones">
+      <soap:operation style="document" soapAction="urn:ContratoLocaciones/operacionLocaciones"/>
+      <input>
+        <soap:body use="literal" parts="partMensajeEntrada"/>
+      </input>
+      <output>
+        <soap:body use="literal" parts="partMensajeSalida"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="servicioLocaciones">
+    <port name="puertoTipoLocaciones" binding="tns:puertoTipoLocacionesSOAP11Binding">
+      <soap:address location="http://www.example.com"/>
+    </port>
+  </service>
+</definitions>

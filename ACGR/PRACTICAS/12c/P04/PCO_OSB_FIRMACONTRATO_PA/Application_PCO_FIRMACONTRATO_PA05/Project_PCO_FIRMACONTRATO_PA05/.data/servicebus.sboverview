@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ns:composite xmlns:ns="http://xmlns.oracle.com/sca/1.0">
+    <ns:reference>
+        <ns:interface src="BusinessService:Project_PCO_FIRMACONTRATO_PA05/Recursos/BussinessServices/BSReferenceRegiones"/>
+    </ns:reference>
+</ns:composite>

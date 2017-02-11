@@ -1,0 +1,17 @@
+<definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/jms/Comcel/ITEL/enviarAuditoriaRecargaEscaleraJMS" name="enviarAuditoriaRecargaEscaleraJMS-concrete" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/jms/Comcel/ITEL/enviarAuditoriaRecargaEscaleraJMS" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/jms/Comcel/ITEL/enviarAuditoriaRecargaEscaleraJMS" location="../Resources/WSDLs/enviarAuditoriaRecargaEscaleraJMS.wsdl"/>
+  <binding name="enviarAuditoriaRecargaEscalera_ptt-binding" type="tns:enviarAuditoriaRecargaEscalera_ptt">
+    <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+    <operation name="enviarAuditoriaRecargaEscalera">
+      <soap:operation soapAction="enviarAuditoriaRecargaEscalera"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+    </operation>
+  </binding>
+  <service name="enviarAuditoriaRecargaEscaleraJMS-service">
+    <port name="enviarAuditoriaRecargaEscaleraJMS-port" binding="tns:enviarAuditoriaRecargaEscalera_ptt-binding">
+      <soap:address location="jca://eis/wls/Queue"/>
+    </port>
+  </service>
+</definitions>

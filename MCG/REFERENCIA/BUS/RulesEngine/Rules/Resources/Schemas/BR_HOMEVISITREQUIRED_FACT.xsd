@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://www.claro.com.co/rulesEngine/HomeVisitRequiredFact"
+	targetNamespace="http://www.claro.com.co/rulesEngine/HomeVisitRequiredFact"
+	xmlns:cd="http://www.claro.com.co/rulesEngine/canonicalModel/CustomerDomain"
+	xmlns:cbe="http://www.claro.com.co/rulesEngine/canonicalModel/CommonBusinessEntities"
+	xmlns:pd="http://www.claro.com.co/rulesEngine/canonicalModel/ProductDomain">
+
+	<xs:import namespace="http://www.claro.com.co/rulesEngine/canonicalModel/CustomerDomain" 
+    	schemaLocation="../../../Core/Resources/Schemas/CanonicalModel/CustomerDomain.xsd"/>
+		
+	<xs:element name="HomeVisitRequiredFactRequest" type="tns:HomeVisitRequiredFactRequestType" />
+	<xs:element name="HomeVisitRequiredFactResponse" type="tns:HomeVisitRequiredFactResponseType" />
+
+	<xs:complexType name="HomeVisitRequiredFactRequestType">
+		<xs:sequence>
+			<xs:element name="Zone" type="cbe:Zone" />
+			<xs:element name="Customer" type="cd:Customer" />
+			<xs:element name="ProductClassification" type="pd:ProductClassification" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HomeVisitRequiredFactResponseType">
+		<xs:sequence>
+			<xs:element name="HomeVisitRequired" type="cd:CustomerOrder" />
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

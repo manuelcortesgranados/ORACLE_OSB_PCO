@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://www.comcel.com.co/EnviarRecargasSATSM/"
+	elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://www.comcel.com.co/EnviarRecargasSATSM/">
+
+    <xs:complexType name="Input_Parameters">
+    	<xs:sequence>
+    		<xs:element name='EVEMIN' type="xs:decimal"></xs:element>
+    		<xs:element name="EVERECARGA" type="xs:decimal"></xs:element>
+    		<xs:element name="EVECONSECUTIVO" type="xs:string"></xs:element>
+    		<xs:element name="EVEFECHARECARGA" type="xs:dateTime"></xs:element>
+    		<xs:element name="EVEHOSTID" type="xs:decimal"></xs:element>
+    	</xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="MensajeType">
+    	<xs:sequence>
+    		<xs:element name="resultCode" type="xs:string" maxOccurs="1" minOccurs="0"></xs:element>
+    		<xs:element name="resultDescription" type="xs:string" maxOccurs="1" minOccurs="0"></xs:element>
+    		<xs:element name="subscriptionId" type="xs:string" maxOccurs="1" minOccurs="0"></xs:element>
+    	</xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="WS_Result">
+    	<xs:sequence>
+    		<xs:element name="CODIGO" type="xs:string"></xs:element>
+    		<xs:element name="MENSAJE" type="tns:MensajeType"></xs:element>
+    		<xs:element name="DESCRIPCION" type="xs:string"></xs:element>
+    	</xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="Input_Parameter" type="tns:Input_Parameters"></xs:element>
+
+    <xs:element name="WS_Result" type="tns:WS_Result"></xs:element>
+</xs:schema>

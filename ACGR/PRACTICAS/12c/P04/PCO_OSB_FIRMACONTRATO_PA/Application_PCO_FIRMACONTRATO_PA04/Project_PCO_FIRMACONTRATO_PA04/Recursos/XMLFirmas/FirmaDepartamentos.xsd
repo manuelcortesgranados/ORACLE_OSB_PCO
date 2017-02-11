@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.firdepart.org"
+            targetNamespace="http://www.firdepart.org" elementFormDefault="qualified">
+  <xsd:complexType name="DepartamentoRequestType">
+    <xsd:sequence>
+      <xsd:element name="idDepartamentoInicial" type="xsd:integer"/>
+      <xsd:element name="idDepartamentoFinal" type="xsd:integer"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="DepartamentoResponseType">
+    <xsd:sequence>
+      <xsd:element name="departamentos" type="DepartamentosType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="DepartamentosType">
+    <xsd:sequence>
+      <xsd:element name="departamentoId" type="xsd:integer"/>
+      <xsd:element name="nombreDepartamento" type="xsd:string"/>
+      <xsd:element name="idJefeArea" type="xsd:integer"/>
+      <xsd:element name="idLocacion" type="xsd:integer"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="departamentosRequest" type="DepartamentoRequestType"/>
+  <xsd:element name="departamentosResponse" type="DepartamentoResponseType"/>
+</xsd:schema>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.comcel.com.co/AuditoriaITEL/"
+	xmlns:tns="http://www.comcel.com.co/AuditoriaITEL/">
+	
+	<xs:element name="Input_Parameters" type="tns:Input_Paramaters" />
+	
+	<xs:complexType name="Input_Paramaters">
+		<xs:sequence>
+			<xs:element name="EVEMIN" type="xs:decimal" />							
+		</xs:sequence>
+	</xs:complexType>
+
+</xs:schema>

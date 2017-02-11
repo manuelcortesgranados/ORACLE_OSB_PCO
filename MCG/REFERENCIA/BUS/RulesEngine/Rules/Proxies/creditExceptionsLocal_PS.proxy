@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config">
+  <ser:coreEntry isProxy="true" isEnabled="true">
+    <ser:binding type="SOAP" isSoap12="false" xsi:type="con4:SoapBindingType" xmlns:con4="http://www.bea.com/wli/sb/services/bindings/config">
+      <con4:wsdl ref="RulesEngine/Rules/Resources/WSDLs/creditExceptions_PS"/>
+      <con4:port>
+        <con4:name>CreditExceptionssSOAP</con4:name>
+        <con4:namespace>http://www.claro.com.co/rulesEngine/creditExceptions</con4:namespace>
+      </con4:port>
+      <con4:selector type="SOAP body"/>
+      <con4:WSI-compliant>false</con4:WSI-compliant>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+    <ser:ws-policy>
+      <ser:binding-mode>wsdl-policy-attachments</ser:binding-mode>
+    </ser:ws-policy>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>http</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:URI>
+      <env:value>/RulesEngine/Rules/Proxies/creditExceptionsLocal_PS</env:value>
+    </tran:URI>
+    <tran:inbound-properties/>
+    <tran:all-headers>false</tran:all-headers>
+    <tran:provider-specific>
+      <http:inbound-properties/>
+    </tran:provider-specific>
+  </ser:endpointConfig>
+  <ser:router errorHandler="_onErrorHandler-5330351957158531357-237fbed0.13ff292ccca.-7f4e">
+    <con:pipeline type="request" name="PipelinePairNode1_request">
+      <con:stage name="rules">
+        <con:context>
+          <con2:varNsDecl namespace="http://www.claro.com.co/rulesEngine/creditExceptions" prefix="cred"/>
+        </con:context>
+        <con:actions>
+          <con1:assign varName="namespace">
+            <con2:id>_ActionId-5330351957158531357-237fbed0.13ff292ccca.-7f8b</con2:id>
+            <con1:expr>
+              <con2:xqueryText>fn:namespace-uri($body/*:Input_Parameters)</con2:xqueryText>
+            </con1:expr>
+          </con1:assign>
+          <con1:wsCallout>
+            <con2:id>_ActionId-5330351957158531357-237fbed0.13ff292ccca.-7f8d</con2:id>
+            <con1:service xsi:type="ref:BusinessServiceRef" ref="RulesEngine/Rules/Business Services/creditExceptions_BS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con1:operation>callFunctionStateless</con1:operation>
+            <con1:request>
+              <con1:body>$callFunctionStatelessRequest</con1:body>
+            </con1:request>
+            <con1:response>
+              <con1:body>callFunctionStatelessResponse</con1:body>
+            </con1:response>
+            <con1:requestTransform>
+              <con1:assign varName="callFunctionStatelessRequest">
+                <con2:id>_ActionId-5330351957158531357-237fbed0.13ff292ccca.-7f53</con2:id>
+                <con1:expr>
+                  <con2:xqueryTransform>
+                    <con2:resource ref="RulesEngine/Rules/Resources/XQueries/creditExceptions_Req"/>
+                    <con2:param name="input_Parameters1">
+                      <con2:path>$body/cred:Input_Parameters</con2:path>
+                    </con2:param>
+                  </con2:xqueryTransform>
+                </con1:expr>
+              </con1:assign>
+            </con1:requestTransform>
+            <con1:responseTransform>
+              <con1:replace contents-only="true" varName="body">
+                <con2:id>_ActionId-5330351957158531357-237fbed0.13ff292ccca.-7f51</con2:id>
+                <con1:expr>
+                  <con2:xqueryTransform>
+                    <con2:resource ref="RulesEngine/Rules/Resources/XQueries/creditExceptions_Res"/>
+                    <con2:param name="callFunctionStatelessDecision1">
+                      <con2:path>$callFunctionStatelessResponse</con2:path>
+                    </con2:param>
+                  </con2:xqueryTransform>
+                </con1:expr>
+              </con1:replace>
+            </con1:responseTransform>
+          </con1:wsCallout>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="PipelinePairNode1_response"/>
+    <con:pipeline type="error" name="_onErrorHandler-5330351957158531357-237fbed0.13ff292ccca.-7f4e">
+      <con:stage name="BusinessRulesError">
+        <con:context/>
+        <con:actions>
+          <con1:replace varName="body" contents-only="true">
+            <con2:id>_ActionId-5330351957158531357-237fbed0.13ff292ccca.-7f4d</con2:id>
+            <con1:expr>
+              <con2:xqueryTransform>
+                <con2:resource ref="RulesEngine/Util/Resources/XQueries/genericError"/>
+                <con2:param name="targetNamespace">
+                  <con2:path>$namespace</con2:path>
+                </con2:param>
+                <con2:param name="fault">
+                  <con2:path>$fault</con2:path>
+                </con2:param>
+                <con2:param name="code">
+                  <con2:path>"26"</con2:path>
+                </con2:param>
+              </con2:xqueryTransform>
+            </con1:expr>
+          </con1:replace>
+          <con2:reply isError="false">
+            <con2:id>_ActionId-5330351957158531357-237fbed0.13ff292ccca.-7f4c</con2:id>
+          </con2:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:flow>
+      <con:pipeline-node name="PipelinePairNode1">
+        <con:request>PipelinePairNode1_request</con:request>
+        <con:response>PipelinePairNode1_response</con:response>
+      </con:pipeline-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

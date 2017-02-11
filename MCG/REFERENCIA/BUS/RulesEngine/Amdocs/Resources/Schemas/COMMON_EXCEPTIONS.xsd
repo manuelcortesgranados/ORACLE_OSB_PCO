@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+            xmlns:tns="http://commonsexceptions.schema.amx.com"
+            targetNamespace="http://commonsexceptions.schema.amx.com"
+            elementFormDefault="qualified">
+  
+  <xs:element name="DataNotFoundException" type="tns:DataNotFoundException"/>
+
+  <xs:element name="ExternalSystemNotAvailableException" type="tns:ExternalSystemNotAvailableException"/>
+
+  <xs:element name="IllegalUsageException" type="tns:IllegalUsageException"/>
+
+  <xs:element name="InternalSystemErrorException" type="tns:InternalSystemErrorException"/>
+
+  <xs:element name="MandatoryDataMissingException" type="tns:MandatoryDataMissingException"/>
+
+  <xs:element name="ReferenceDataMissingException" type="tns:ReferenceDataMissingException"/>
+  
+  <xs:element name="ErrorApplicationException" type="tns:ErrorApplicationException"/>
+  
+  <xs:element name="TimeOutException" type="tns:TimeOutException"/>
+  
+  <xs:element name="TokenizationException" type="tns:TokenizationException"/>
+  
+	<xs:element name="RemoteException" type="tns:RemoteException"/>
+  
+  <xs:element name="NetworkException" type="tns:NetworkException"/>
+  
+  <xs:element name="BusinessExceptionFault" type="tns:BusinessExceptionFault"/>
+  
+  <xs:element name="TooManyAttemptsException" type="tns:TooManyAttemptsException"/>
+  
+  <xs:complexType name="NetworkException">
+    <xs:sequence>
+      <xs:element name="errorCode" type="xs:string" minOccurs="0"/>
+      <xs:element name="errorMsg" type="xs:string" minOccurs="0"/>
+      <xs:element name="message" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="TokenizationException">
+    <xs:sequence>
+      <xs:element name="errorCode" type="xs:string" minOccurs="0"/>
+      <xs:element name="errorMsg" type="xs:string" minOccurs="0"/>
+      <xs:element name="message" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="TimeOutException">
+    <xs:sequence>
+      <xs:element name="errorCode" type="xs:string" minOccurs="0"/>
+      <xs:element name="errorMsg" type="xs:string" minOccurs="0"/>
+      <xs:element name="message" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+<xs:complexType name="BusinessExceptionFault">
+    <xs:sequence>
+      <xs:element name="errorCode" type="xs:string" minOccurs="0"/>
+      <xs:element name="errorMsg" type="xs:string" minOccurs="0"/>
+      <xs:element name="message" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType> 
+
+  <xs:complexType name="RemoteException">
+    <xs:sequence>
+      <xs:element name="errorCode" type="xs:string" minOccurs="0"/>
+      <xs:element name="errorMsg" type="xs:string" minOccurs="0"/>
+      <xs:element name="message" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>    
+
+  <xs:complexType name="DataNotFoundException">
+    <xs:sequence>
+      <xs:element name="errorCode" type="xs:string" minOccurs="0"/>
+      <xs:element name="errorMsg" type="xs:string" minOccurs="0"/>
+      <xs:element name="message" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>    
+      
+  <xs:complexType name="ExternalSystemNotAvailableException">
+    <xs:sequence>
+      <xs:element name="errorCode" type="xs:string" minOccurs="0"/>
+      <xs:element name="errorMsg" type="xs:string" minOccurs="0"/>
+      <xs:element name="message" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="IllegalUsageException">
+    <xs:sequence>
+      <xs:element name="errorCode" type="xs:string" minOccurs="0"/>
+      <xs:element name="errorMsg" type="xs:string" minOccurs="0"/>
+      <xs:element name="message" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="InternalSystemErrorException">
+    <xs:sequence>
+      <xs:element name="errorCode" type="xs:string" minOccurs="0"/>
+      <xs:element name="errorMsg" type="xs:string" minOccurs="0"/>
+      <xs:element name="message" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="MandatoryDataMissingException">
+    <xs:sequence>
+      <xs:element name="errorCode" type="xs:string" minOccurs="0"/>
+      <xs:element name="errorMsg" type="xs:string" minOccurs="0"/>
+      <xs:element name="message" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ReferenceDataMissingException">
+    <xs:sequence>
+      <xs:element name="errorCode" type="xs:string" minOccurs="0"/>
+      <xs:element name="errorMsg" type="xs:string" minOccurs="0"/>
+      <xs:element name="message" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="ErrorApplicationException">
+    <xs:sequence>
+      <xs:element name="errorCode" type="xs:string" minOccurs="0"/>
+      <xs:element name="errorMsg" type="xs:string" minOccurs="0"/>
+      <xs:element name="message" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>  
+  
+  <xs:complexType name="TooManyAttemptsException">
+    <xs:sequence>
+      <xs:element name="errorCode" type="xs:string" minOccurs="0"/>
+      <xs:element name="errorMsg" type="xs:string" minOccurs="0"/>
+      <xs:element name="message" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType> 
+
+</xs:schema>

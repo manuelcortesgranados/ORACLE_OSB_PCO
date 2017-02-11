@@ -1,0 +1,99 @@
+<wsdl:definitions targetNamespace="http://closeceexceptioncase.performancemanagement.amx.com" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://closeceexceptioncase.performancemanagement.amx.com" xmlns:cle="http://closeceexceptioncase.performancemanagement.schema.amx.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:commonexception="http://commonsexceptions.schema.amx.com" xmlns:apachesoap="http://xml.apache.org/xml-soap">
+
+	<wsdl:documentation>
+		Author: Jorge Enrique Garrido
+		email: 	jorge.garridovergara@tcs.com
+		Date: 	22/04/2013
+		Version: 1.0
+		Objective: Notify Credit Evaluation Engine on credit exception case closure.
+        Capabilities: CloseExceptionCase
+        Changes: CR Post signed off
+	</wsdl:documentation>
+	<wsdl:types>
+		<xs:schema>
+			<xs:import namespace="http://closeceexceptioncase.performancemanagement.schema.amx.com" schemaLocation="../Schemas/PS_CLOSECEEXCEPTIONCASE.xsd"/>
+			<xs:import namespace="http://commonsexceptions.schema.amx.com" schemaLocation="../../../Amdocs/Resources/Schemas/COMMON_EXCEPTIONS.xsd"/>
+		</xs:schema>
+	</wsdl:types>
+
+	<wsdl:message name="CloseCEExceptionCaseRequest">
+		<wsdl:part element="cle:CloseCEExceptionCaseRequest" name="body"/>
+	</wsdl:message>
+	<wsdl:message name="CloseCEExceptionCaseResponse">
+		<wsdl:part element="cle:CloseCEExceptionCaseResponse" name="body"/>
+	</wsdl:message>
+	
+	  <wsdl:message name="ExternalSystemNotAvailableException">
+	    <wsdl:part name="fault" element="commonexception:ExternalSystemNotAvailableException"/>
+	  </wsdl:message>
+
+	  <wsdl:message name="MandatoryDataMissingException">
+	    <wsdl:part name="fault" element="commonexception:MandatoryDataMissingException"/>
+	  </wsdl:message>
+
+	  <wsdl:message name="ReferenceDataMissingException">
+	    <wsdl:part name="fault" element="commonexception:ReferenceDataMissingException"/>
+	  </wsdl:message>
+
+	  <wsdl:message name="InternalSystemErrorException">
+	    <wsdl:part name="fault" element="commonexception:InternalSystemErrorException"/>
+	  </wsdl:message>
+	
+	<wsdl:message name="BusinessExceptionFault">
+		<wsdl:part name="fault" element="commonexception:BusinessExceptionFault"/>
+	</wsdl:message>
+
+	<wsdl:portType name="CloseCEExceptionCase">
+		<wsdl:operation name="CloseCEExceptionCase">
+			<wsdl:documentation>
+				When credit exception case is closed (the case is identified as credit exception by the case type), CRM will ESB to notify Credit Evaluation Engine on the case closure.
+			</wsdl:documentation>
+			
+			<wsdl:input name="CloseCEExceptionCaseInput" message="tns:CloseCEExceptionCaseRequest"/>
+			<wsdl:output name="CloseCEExceptionCaseOutput" message="tns:CloseCEExceptionCaseResponse"/>
+			<wsdl:fault name="MandatoryDataMissingException" message="tns:MandatoryDataMissingException"/>
+			<wsdl:fault name="ExternalSystemNotAvailableException" message="tns:ExternalSystemNotAvailableException"/>
+			<wsdl:fault name="InternalSystemErrorException" message="tns:InternalSystemErrorException"/>
+			<wsdl:fault name="ReferenceDataMissingException" message="tns:ReferenceDataMissingException"/>
+			<wsdl:fault name="BusinessExceptionFault" message="tns:BusinessExceptionFault"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="CloseCEExceptionCaseSoapBinding" type="tns:CloseCEExceptionCase">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="CloseCEExceptionCase">
+			<soap:operation soapAction="http://closeceexceptioncase.performancemanagement.amx.com/CloseCEExceptionCase"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+
+			<wsdl:fault name="MandatoryDataMissingException">
+				<soap:fault name="MandatoryDataMissingException" use="literal"/>
+			</wsdl:fault>	
+			
+			<wsdl:fault name="ExternalSystemNotAvailableException">
+				<soap:fault name="ExternalSystemNotAvailableException" use="literal"/>
+			</wsdl:fault>
+			
+			<wsdl:fault name="InternalSystemErrorException">
+				<soap:fault name="InternalSystemErrorException" use="literal"/>
+			</wsdl:fault>
+
+			<wsdl:fault name="ReferenceDataMissingException">
+				<soap:fault name="ReferenceDataMissingException" use="literal"/>
+			</wsdl:fault>
+
+			<wsdl:fault name="BusinessExceptionFault">
+				<soap:fault name="BusinessExceptionFault" use="literal"/>
+			</wsdl:fault>
+		
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="CloseCEExceptionCaseService">
+		<wsdl:port binding="tns:CloseCEExceptionCaseSoapBinding" name="CloseCEExceptionCasePort">
+			<soap:address location="http://www.example.org/"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

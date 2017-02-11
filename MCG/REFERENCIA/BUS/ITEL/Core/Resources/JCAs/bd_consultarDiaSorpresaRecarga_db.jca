@@ -1,0 +1,14 @@
+<adapter-config name="bd_consultarDiaSorpresaRecarga" adapter="Database Adapter" wsdlLocation="../WSDLs/consultarDiaSorpresaRecarga_BD.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/DB/SOADES" UIConnectionName="SOADES" adapterRef=""/>
+  <endpoint-interaction portType="bd_consultarDiaSorpresaRecarga_ptt" operation="bd_consultarDiaSorpresaRecarga">
+    <interaction-spec className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">      
+      <property name="PackageName" value="PKG_SOA_ITEL"/>
+      <property name="ProcedureName" value="PRC_CONSULTAR_DIASPR"/>
+      <property name="QueryTimeout" value="1"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+    <output/>
+  </endpoint-interaction>
+
+</adapter-config>

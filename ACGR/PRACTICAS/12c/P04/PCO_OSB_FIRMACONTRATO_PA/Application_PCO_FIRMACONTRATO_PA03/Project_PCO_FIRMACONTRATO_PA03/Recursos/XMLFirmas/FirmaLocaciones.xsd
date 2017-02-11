@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.firLoc.org"
+            targetNamespace="http://www.firLoc.org" elementFormDefault="qualified">
+  <xsd:complexType name="LocacionesRequestType">
+    <xsd:sequence>
+      <xsd:element name="idLocacioInicial" type="xsd:integer"/>
+      <xsd:element name="idLocacionFinal" type="xsd:integer"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="LocacionesResponseType">
+    <xsd:sequence>
+      <xsd:element name="locaciones" type="LocacionesType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="LocacionesType">
+    <xsd:sequence>
+      <xsd:element name="idLocacion" type="xsd:integer"/>
+      <xsd:element name="direccionLocacion" type="xsd:string"/>
+      <xsd:element name="codigoPostal" type="xsd:string"/>
+      <xsd:element name="ciudadLocacion" type="xsd:string"/>
+      <xsd:element name="provinciaEstado" type="xsd:string"/>
+      <xsd:element name="idPais" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="locacionesRequest" type="LocacionesRequestType"/>
+  <xsd:element name="locacionesResponse" type="LocacionesResponseType"/>
+</xsd:schema>

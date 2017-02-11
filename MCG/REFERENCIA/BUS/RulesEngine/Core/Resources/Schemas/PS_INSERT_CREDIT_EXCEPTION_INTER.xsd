@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.claro.com.co/rulesEngine/insertCreditExceptions" 
+	xmlns:tns="http://www.claro.com.co/rulesEngine/insertCreditExceptions"
+	xmlns:cbe="http://www.claro.com.co/rulesEngine/canonicalModel/CommonBusinessEntities">
+
+	<import namespace="http://www.claro.com.co/rulesEngine/canonicalModel/CommonBusinessEntities"
+	schemaLocation="../../../Core/Resources/Schemas/CanonicalModel/CommonBusinessEntities.xsd" />
+
+    <element name="Input_Parameters" type="tns:Input_Parameters" />
+	<element name="WS_Result" type="tns:WS_Result" />
+
+
+	<complexType name="Input_Parameters">
+	<sequence>
+	     <element name="creditException" type="tns:CreditException"/>
+	     </sequence>
+	</complexType>
+	
+	<complexType name="CreditException">
+		<sequence>
+			<element name="orderId" minOccurs="1">
+				<simpleType>
+					<restriction base="string">
+			      		<minLength value="1" />
+			    	</restriction>
+			  	</simpleType>
+			</element>
+			<element name="typeException" minOccurs="1">
+				<simpleType>
+				    <restriction base="string">
+				    	<minLength value="1" />
+				    </restriction>
+				</simpleType>
+			</element>
+			
+			<element name="caseId" type="string" minOccurs="0" />
+			<element name="cBPId" type="string" minOccurs="0" />
+			<element name="caseTypeLevels" type="string" minOccurs="0" maxOccurs="unbounded"/>
+			<element name="resolutionCode1" type="string" minOccurs="0" />
+			<element name="resolutionCode2" type="string" minOccurs="0" />
+			<element name="closeStatus" type="string" minOccurs="0" />
+			<element name="agentId" type="string" minOccurs="0" />
+			<element name="flexibleAttributes" type="cbe:FlexibleAttributes" minOccurs="0" maxOccurs="unbounded" />
+			<element name="closeDate" type="string" minOccurs="0" />
+		</sequence>
+	</complexType>
+	
+   <complexType name="WS_Result">
+		<sequence>
+			<element name="code" type="string" />
+			<element name="message" type="tns:resultType" />
+			<element name="description" type="string" />
+		</sequence>
+	</complexType>
+	<complexType name="resultType">
+		<sequence>
+		</sequence>
+	</complexType>	
+</schema>

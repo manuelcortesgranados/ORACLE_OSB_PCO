@@ -1,0 +1,40 @@
+<xs:schema targetNamespace="http://www.comcel.com.co/RecargarIN/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.comcel.com.co/RecargarIN/" xmlns:oper="http://www.comcel.com.co/IN/OperacionCorba">
+	
+	<xs:import namespace="http://www.comcel.com.co/IN/OperacionCorba" schemaLocation="DA_ITEL_OPERACION_CORBA.xsd"/>
+	
+	<xs:element name="Input_Parameters" type="tns:Input_Paramaters"/>
+	<xs:element name="WS_Result" type="tns:WS_Result"/>
+
+	<xs:complexType name="Input_Paramaters">
+		<xs:sequence>
+			<xs:element name="PREFIJO" type="xs:string"/>
+			<xs:element name="MIN" type="xs:string"/>
+			<xs:element name="POLITICA_EXPIRACION" type="xs:long"/>
+			<xs:element name="DIAS_EXTENSION" type="xs:long"/>
+			<xs:element name="FECHA_ABSOLUTA" type="xs:string"/>
+			<xs:element name="CUENTA" type="xs:long"/>
+			<xs:element name="VALOR" type="xs:long"/>
+			<xs:element name="USUARIO" type="xs:string"/>
+			<xs:element name="TIQUETE" type="xs:string"/>
+			<xs:element name="TIQUETE_COMPENSACION" type="xs:string"/>
+			<xs:element name="REQUESTOR_ID" type="xs:long"/>
+			<xs:element name="IN" type="xs:string"/>
+			<xs:element name="TIMEOUT" type="xs:long"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="WS_Result">
+		<xs:sequence>
+			<xs:element name="CODIGO" type="xs:string"/>
+			<xs:element name="MENSAJE" type="tns:MensajeType"/>
+			<xs:element name="DESCRIPCION" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="MensajeType">
+		<xs:sequence>
+			<xs:element name="Recarga" type="oper:RecargarResponse"/>
+		</xs:sequence>
+	</xs:complexType>
+
+</xs:schema>

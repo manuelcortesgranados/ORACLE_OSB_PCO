@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" 
+		targetNamespace="http://www.comcel.com.co/AuditoriaITEL/" 
+		xmlns:tns="http://www.comcel.com.co/AuditoriaITEL/">
+
+    <element name="Input_Parameters" type="tns:Input_Parameters" />
+    <complexType name="Input_Parameters">
+      <sequence>
+            <element name="PUERTOIN" type="decimal"  minOccurs="0" nillable="true"/>
+            <element name="TECNOLOGIA" type="decimal" minOccurs="0" nillable="true"/>
+            <element name="ORIGEN" type="string"  minOccurs="0" nillable="true"/>
+            <element name="DESTINO" type="string"  minOccurs="0" nillable="true"/>
+            <element name="MSG" type="string"  minOccurs="0" nillable="true"/>
+            <element name="HORAEXP" type="decimal"  minOccurs="0" nillable="true"/>
+            <element name="MINUTOEXP" type="decimal"  minOccurs="0" nillable="true"/>
+            <element name="ANUALENTREGA" type="decimal" minOccurs="0" nillable="true"/>
+            <element name="MES_ENTREGA" type="decimal"  minOccurs="0" nillable="true"/>
+            <element name="DIA_ENTREGA" type="decimal"  minOccurs="0" nillable="true"/>
+            <element name="HORA_ENTREGA" type="decimal"  minOccurs="0" nillable="true"/>
+            <element name="MINUTO_ENTREGA" type="decimal"  minOccurs="0" nillable="true"/>
+            <element name="PUERTO_OUT" type="decimal"  minOccurs="0" nillable="true"/>
+         </sequence>
+    </complexType>
+    
+    <element name="WS_Result" type="tns:WS_Result" />
+    <complexType name="WS_Result">
+      <sequence>
+      <element name="CODIGO" type="string"></element> 
+      <element name="MENSAJE" type="tns:Mensaje_Type"></element>
+      <element name="DESCRIPCION" type="string"></element>
+      </sequence>
+    </complexType>
+    
+    <complexType name="Mensaje_Type">
+      <sequence>
+            <element name="SQLCODE" type="decimal"  minOccurs="0" nillable="true"/>
+            <element name="SQLERRDESC" type="string" minOccurs="0" nillable="true"/>
+         </sequence>
+    </complexType>
+    
+</schema>

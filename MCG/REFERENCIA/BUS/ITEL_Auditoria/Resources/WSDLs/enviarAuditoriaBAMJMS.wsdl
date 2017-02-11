@@ -1,0 +1,20 @@
+<wsdl:definitions name="enviarAuditoriaBAMJMS" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/jms/Comcel/ITEL/enviarAuditoriaBAMJMS" xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/jms/Comcel/ITEL/enviarAuditoriaBAMJMS" xmlns:imp1="http://www.comcel.com.co/AuditoriaBAM/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/">
+	<plt:partnerLinkType name="enviarAuditoriaBAM_plt">
+		<plt:role name="enviarAuditoriaBAM_role">
+			<plt:portType name="tns:enviarAuditoriaBAM_ptt"/>
+		</plt:role>
+	</plt:partnerLinkType>
+	<wsdl:types>
+		<schema xmlns="http://www.w3.org/2001/XMLSchema">
+			<import namespace="http://www.comcel.com.co/AuditoriaBAM/" schemaLocation="../Schemas/PS_ITEL_AUDITORIA_BAM.xsd"/>
+		</schema>
+	</wsdl:types>
+	<wsdl:message name="enviarAuditoriaBAM_msg">
+		<wsdl:part name="body" element="imp1:_etapaDOCollection"/>
+	</wsdl:message>
+	<wsdl:portType name="enviarAuditoriaBAM_ptt">
+		<wsdl:operation name="enviarAuditoriaBAM">
+			<wsdl:input message="tns:enviarAuditoriaBAM_msg"/>
+		</wsdl:operation>
+	</wsdl:portType>
+</wsdl:definitions>

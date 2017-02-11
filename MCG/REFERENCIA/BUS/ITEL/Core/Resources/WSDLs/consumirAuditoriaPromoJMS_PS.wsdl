@@ -1,0 +1,17 @@
+<definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/jms/Comcel/ITEL/consumirAuditoriaPromoJMS" name="consumirAuditoriaPromoJMS-concrete" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/jms/Comcel/ITEL/consumirAuditoriaPromoJMS" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/jms/Comcel/ITEL/consumirAuditoriaPromoJMS" location="consumirAuditoriaPromoJMS.wsdl"/>
+  <binding name="consumirAuditoriaPromo_ptt-binding" type="tns:consumirAuditoriaPromo_ptt">
+    <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+    <operation name="consumirAuditoriaPromo">
+      <soap:operation soapAction="consumirAuditoriaPromo"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+    </operation>
+  </binding>
+  <service name="consumirAuditoriaPromoJMS-service">
+    <port name="consumirAuditoriaPromoJMS-port" binding="tns:consumirAuditoriaPromo_ptt-binding">
+      <soap:address location="jca://eis/wls/Queue"/>
+    </port>
+  </service>
+</definitions>

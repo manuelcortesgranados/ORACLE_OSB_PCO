@@ -1,0 +1,14 @@
+<adapter-config name="bd_consultarNRN" adapter="Database Adapter" wsdlLocation="../WSDLs/consultarNRN_BD.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/DB/COMCORPQA" UIConnectionName="SOADES" adapterRef=""/>
+  <endpoint-interaction portType="bd_consultarNRN_ptt" operation="bd_consultarNRN">
+    <interaction-spec className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
+      <property name="PackageName" value="PKG_SOA_ITEL"/>
+      <property name="ProcedureName" value="PRC_CONSULTAR_NRN"/>
+      <property name="QueryTimeout" value="1"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+    <output/>
+  </endpoint-interaction>
+
+</adapter-config>

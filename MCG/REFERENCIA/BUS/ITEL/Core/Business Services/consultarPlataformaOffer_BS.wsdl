@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/ITEL/Adaptadores/db_consultarPlataformaOffer" name="db_consultarPlataformaOffer-concrete" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/ITEL/Adaptadores/db_consultarPlataformaOffer" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/ITEL/Adaptadores/db_consultarPlataformaOffer" location="../Resources/WSDLs/consultarPlataformaOffer_BD.wsdl"/>
+  <binding name="db_consultarPlataformaOffer_ptt-binding" type="tns:db_consultarPlataformaOffer_ptt">
+    <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+    <operation name="db_consultarPlataformaOffer">
+      <soap:operation soapAction="db_consultarPlataformaOffer"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="db_consultarPlataformaOffer-service">
+    <port name="db_consultarPlataformaOffer-port" binding="tns:db_consultarPlataformaOffer_ptt-binding">
+      <soap:address location="jca://eis/DB/ITEL_SOA_CENT"/>
+    </port>
+  </service>
+</definitions>

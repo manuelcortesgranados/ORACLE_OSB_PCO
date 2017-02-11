@@ -1,0 +1,13 @@
+<adapter-config name="bd_consultarRangoSDP" adapter="Database Adapter" wsdlLocation="../WSDLs/consultarRangoSDP_BD.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/DB/ITEL_SOA" UIConnectionName="Des_Itel" adapterRef=""/>
+  <endpoint-interaction portType="bd_consultarRangoSDP_ptt" operation="bd_consultarRangoSDP">
+    <interaction-spec className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
+      <property name="PackageName" value="PKG_SOA_ITEL"/>
+      <property name="ProcedureName" value="PRC_CONSULTAR_RANGO_SDP"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+    <output/>
+  </endpoint-interaction>
+
+</adapter-config>

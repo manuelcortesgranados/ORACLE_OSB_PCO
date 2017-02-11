@@ -1,0 +1,51 @@
+<wsdl:definitions name="ConsultarFaFList_PS" targetNamespace="http://www.comcel.com.co/consultarFaFList_PS/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.comcel.com.co/consultarFaFList_PS/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsd1="http://www.comcel.com.co/ConsultarFaFListOCS/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://www.comcel.com.co/consultarFaFList_PS/">
+      <xsd:element name="consultarFaFList">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="in" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="consultarFaFListResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="out" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+    <xsd:schema>
+    	<xsd:import namespace="http://www.comcel.com.co/ConsultarFaFListOCS/" schemaLocation="../Schemas/PS_ITEL_CONSULTAR_FAFLIST.xsd">
+    	</xsd:import></xsd:schema></wsdl:types>
+  <wsdl:message name="consultarFaFListRequest">
+    <wsdl:part element="xsd1:Input_Parameters" name="Input_Parameters"/>
+  </wsdl:message>
+  <wsdl:message name="consultarFaFListResponse">
+    <wsdl:part element="xsd1:WS_Result" name="WS_Result"/>
+  </wsdl:message>
+  <wsdl:portType name="consultarFaFList_PS">
+    <wsdl:operation name="consultarFaFList">
+      <wsdl:input message="tns:consultarFaFListRequest"/>
+      <wsdl:output message="tns:consultarFaFListResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="consultarFaFList_PSSOAP" type="tns:consultarFaFList_PS">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="consultarFaFList">
+      <soap:operation soapAction="http://www.comcel.com.co/consultarFaFList_PS/consultarFaFList"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="consultarFaFList_PS">
+    <wsdl:port binding="tns:consultarFaFList_PSSOAP" name="consultarFaFList_PSSOAP">
+      <soap:address location="http://www.comcel.com.co/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

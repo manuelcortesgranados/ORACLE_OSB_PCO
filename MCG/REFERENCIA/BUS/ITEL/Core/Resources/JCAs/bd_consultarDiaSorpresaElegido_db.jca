@@ -1,0 +1,14 @@
+<adapter-config name="bd_consultarDiaSorpresaElegido" adapter="Database Adapter" wsdlLocation="../WSDLs/consultarDiaSorpresaElegido_BD.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/DB/SOADES" UIConnectionName="SOADES" adapterRef=""/>
+  <endpoint-interaction portType="bd_consultarDiaSorpresaElegido_ptt" operation="bd_consultarDiaSorpresaElegido">
+    <interaction-spec className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">      
+      <property name="PackageName" value="PKG_SOA_ITEL"/>
+      <property name="ProcedureName" value="PRC_CONSULTAR_DIASPR_ELEG"/>
+      <property name="QueryTimeout" value="1"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+    <output/>
+  </endpoint-interaction>
+
+</adapter-config>

@@ -1,0 +1,36 @@
+<wsdl:definitions name="ActualizarMinElegidos" targetNamespace="http://www.comcel.com.co/ActualizarMinElegidos/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.comcel.com.co/ActualizarMinElegidos/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<wsdl:types>
+			<schema xmlns="http://www.w3.org/2001/XMLSchema">
+				<import namespace="http://www.comcel.com.co/ActualizarMinElegidos/" schemaLocation="../Schemas/PS_ITEL_ACTUALIZARMINELEGIDOS.xsd"/>
+			</schema>
+	</wsdl:types>
+	<wsdl:message name="Input_Parameters">
+		<wsdl:part element="tns:Input_Parameters" name="Input_Parameters"/>
+	</wsdl:message>
+	<wsdl:message name="WS_Result">
+		<wsdl:part element="tns:WS_Result" name="WS_Result"/>
+	</wsdl:message>
+	<wsdl:portType name="ActualizarMinElegidos">
+		<wsdl:operation name="actualizarMinElegidos">
+			<wsdl:input message="tns:Input_Parameters"/>
+			<wsdl:output message="tns:WS_Result"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="ActualizarMinElegidosSOAP" type="tns:ActualizarMinElegidos">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="actualizarMinElegidos">
+			<soap:operation soapAction="http://www.comcel.com.co/ActualizarMinElegidos/actualizarMinElegidos"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="ActualizarMinElegidos">
+		<wsdl:port binding="tns:ActualizarMinElegidosSOAP" name="ActualizarMinElegidosSOAP">
+			<soap:address location="http://www.comcel.com.co/"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

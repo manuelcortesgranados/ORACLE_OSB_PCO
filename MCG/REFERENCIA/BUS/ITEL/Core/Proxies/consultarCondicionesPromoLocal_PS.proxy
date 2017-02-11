@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config">
+  <ser:coreEntry isProxy="true" isEnabled="true" isAutoPublish="false" isTracingEnabled="false">
+    <ser:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config">
+      <con:wsdl ref="ITEL/Core/Resources/WSDLs/consultarCondicionesPromo_PS"/>
+      <con:binding>
+        <con:name>consultarCondicionesPromoSOAP</con:name>
+        <con:namespace>http://www.comcel.com.co/consultarCondicionesPromo/</con:namespace>
+      </con:binding>
+      <con:selector type="SOAP body"/>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+    <ser:ws-policy>
+      <ser:binding-mode>wsdl-policy-attachments</ser:binding-mode>
+    </ser:ws-policy>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>http</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:URI>
+      <env:value>/ITEL/Core/Proxies/consultarCondicionesPromoLocal_PS</env:value>
+    </tran:URI>
+    <tran:inbound-properties/>
+    <tran:all-headers>false</tran:all-headers>
+    <tran:provider-specific>
+      <http:inbound-properties/>
+    </tran:provider-specific>
+  </ser:endpointConfig>
+  <ser:router>
+    <con:pipeline type="request" name="PipelinePairNode1_request">
+      <con:stage name="validar" errorHandler="_onErrorHandler-6628651941629414469--6a001c58.1578c9c2d57.-7ed4">
+        <con:context/>
+        <con:actions>
+          <con1:validate>
+            <con2:id>_ActionId-6628651941629414469--6a001c58.1578c9c2d57.-7ed5</con2:id>
+            <con1:schema ref="ITEL/Core/Resources/Schemas/PS_ITEL_CONSULTARCONDICIONESPROMO"/>
+            <con1:schemaElement xmlns:con="http://www.comcel.com.co/consultarCondicionesPromo/">con:Input_Parameters</con1:schemaElement>
+            <con1:varName>body</con1:varName>
+            <con1:location>
+              <con2:xpathText>./*:Input_Parameters</con2:xpathText>
+            </con1:location>
+          </con1:validate>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="PipelinePairNode1_response"/>
+    <con:pipeline type="error" name="_onErrorHandler-6628651941629414469--6a001c58.1578c9c2d57.-7ed4">
+      <con:stage name="errores">
+        <con:context xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con4="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+        <con:actions xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con4="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config">
+          <con5:replace varName="body" contents-only="true" xmlns:con5="http://www.bea.com/wli/sb/stages/transform/config">
+            <con1:id>_ActionId-6628651941629414469--6a001c58.1578c9c2d57.-7e63</con1:id>
+            <con5:expr>
+              <con1:xqueryTransform>
+                <con1:resource ref="ITEL/Core/Resources/XQueries/consultarDiaSorpresaRecarga_Error"/>
+                <con1:param name="descripcion">
+                  <con1:path>"Error validando parametros entrada"</con1:path>
+                </con1:param>
+                <con1:param name="mensaje">
+                  <con1:path>$fault/ctx:reason/text()</con1:path>
+                </con1:param>
+                <con1:param name="codigo">
+                  <con1:path>""</con1:path>
+                </con1:param>
+              </con1:xqueryTransform>
+            </con5:expr>
+          </con5:replace>
+          <con1:reply>
+            <con1:id>_ActionId-6628651941629414469--6a001c58.1578c9c2d57.-7e62</con1:id>
+          </con1:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="error" name="_onErrorHandler-6628651941629414469--6a001c58.1578c9c2d57.-7e1e">
+      <con:stage name="errores">
+        <con:context xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con4="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+        <con:actions xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con4="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config">
+          <con5:replace varName="body" contents-only="true" xmlns:con5="http://www.bea.com/wli/sb/stages/transform/config">
+            <con1:id>_ActionId-6628651941629414469--6a001c58.1578c9c2d57.-7dad</con1:id>
+            <con5:expr>
+              <con1:xqueryTransform>
+                <con1:resource ref="ITEL/Core/Resources/XQueries/consultarDiaSorpresaRecarga_Error"/>
+                <con1:param name="descripcion">
+                  <con1:path>"Error consultando BD"</con1:path>
+                </con1:param>
+                <con1:param name="mensaje">
+                  <con1:path>$fault/ctx:reason/text()</con1:path>
+                </con1:param>
+                <con1:param name="codigo">
+                  <con1:path>"909"</con1:path>
+                </con1:param>
+              </con1:xqueryTransform>
+            </con5:expr>
+          </con5:replace>
+          <con1:reply>
+            <con1:id>_ActionId-6628651941629414469--6a001c58.1578c9c2d57.-7dac</con1:id>
+          </con1:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:flow>
+      <con:pipeline-node name="PipelinePairNode1">
+        <con:request>PipelinePairNode1_request</con:request>
+        <con:response>PipelinePairNode1_response</con:response>
+      </con:pipeline-node>
+      <con:route-node name="RouteToConsultarCondicionesPromo_BS" error-handler="_onErrorHandler-6628651941629414469--6a001c58.1578c9c2d57.-7e1e">
+        <con:context/>
+        <con:actions>
+          <con3:route>
+            <con2:id>_ActionId-6628651941629414469--6a001c58.1578c9c2d57.-7e39</con2:id>
+            <con3:service ref="ITEL/Core/Business Services/consultarCondicionesPromo_BS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con3:operation>bd_consultarCondicionesPromo</con3:operation>
+            <con3:outboundTransform>
+              <con1:replace varName="body" contents-only="true">
+                <con2:id>_ActionId-6628651941629414469--6a001c58.1578c9c2d57.-7e1f</con2:id>
+                <con1:expr>
+                  <con2:xqueryTransform>
+                    <con2:resource ref="ITEL/Core/Resources/XQueries/consultarCondicionesPromo_Req"/>
+                    <con2:param name="input_Parameters1">
+                      <con2:path>$body/*:Input_Parameters</con2:path>
+                    </con2:param>
+                  </con2:xqueryTransform>
+                </con1:expr>
+              </con1:replace>
+            </con3:outboundTransform>
+            <con3:responseTransform>
+              <con1:replace varName="body" contents-only="true">
+                <con2:id>_ActionId-6628651941629414469--6a001c58.1578c9c2d57.-7d81</con2:id>
+                <con1:expr>
+                  <con2:xqueryTransform>
+                    <con2:resource ref="ITEL/Core/Resources/XQueries/consultarCondicionesPromo_Res"/>
+                    <con2:param name="outputParameters1">
+                      <con2:path>$body/*:OutputParameters</con2:path>
+                    </con2:param>
+                  </con2:xqueryTransform>
+                </con1:expr>
+              </con1:replace>
+            </con3:responseTransform>
+          </con3:route>
+        </con:actions>
+      </con:route-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

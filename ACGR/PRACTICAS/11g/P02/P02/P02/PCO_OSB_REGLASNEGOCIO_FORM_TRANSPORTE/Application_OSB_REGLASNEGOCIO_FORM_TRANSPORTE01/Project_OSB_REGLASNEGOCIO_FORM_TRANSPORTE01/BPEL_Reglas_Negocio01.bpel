@@ -1,0 +1,116 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Wed Jan 18 10:07:34 COT 2017
+  Author:  User
+  Type: BPEL 2.0 Process
+  Purpose: Synchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="BPEL_Reglas_Negocio01"
+               targetNamespace="http://xmlns.oracle.com/Application_OSB_REGLASNEGOCIO_FORM_TRANSPORTE01/Project_OSB_REGLASNEGOCIO_FORM_TRANSPORTE01/BPEL_Reglas_Negocio01"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://xmlns.oracle.com/Application_OSB_REGLASNEGOCIO_FORM_TRANSPORTE01/Project_OSB_REGLASNEGOCIO_FORM_TRANSPORTE01/BPEL_Reglas_Negocio01"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="http://www.example.org/FirmaFormRegistroAutomotor"
+         xmlns:ns2="http://xmlns.oracle.com/DiccionarioReglasNegocio/DiccionarioReglasNegocio_DecisionService_1"
+         xmlns:ns3="http://xmlns.oracle.com/bpel"
+         xmlns:ns4="http://xmlns.oracle.com/DiccionarioReglasNegocio/DiccionarioReglasNegocio_DecisionFunction01">
+  <import namespace="http://www.example.org/FirmaFormRegistroAutomotor"
+          location="xsd/FirmaFormRegistroAutomotor.xsd"
+          importType="http://www.w3.org/2001/XMLSchema"/>
+  <import namespace="http://xmlns.oracle.com/Application_OSB_REGLASNEGOCIO_FORM_TRANSPORTE01/Project_OSB_REGLASNEGOCIO_FORM_TRANSPORTE01/BPEL_Reglas_Negocio01" location="BPEL_Reglas_Negocio01.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        PARTNERLINKS                                                      
+        List of services participating in this BPEL process               
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    --> 
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="bpel_reglas_negocio01_client" partnerLinkType="client:BPEL_Reglas_Negocio01" myRole="BPEL_Reglas_Negocio01Provider"/>
+    <partnerLink name="DiccionarioReglasNegocio.DiccionarioReglasNegocio_DecisionFunction01"
+                 partnerRole="IDecisionService_Role"
+                 partnerLinkType="ns4:IDecisionService_PL"/>
+  </partnerLinks>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="inputVariable" messageType="client:BPEL_Reglas_Negocio01RequestMessage"/>
+
+    <!-- Reference to the message that will be returned to the requester-->
+    <variable name="outputVariable" messageType="client:BPEL_Reglas_Negocio01ResponseMessage"/>
+    <variable name="VariableEntradaRN01" element="ns1:formularioEntrada"/>
+    <variable name="VariableRetornoRN01" element="ns1:formularioRetorno"/>
+  </variables>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main">
+
+    <!-- Receive input from requestor. (Note: This maps to operation defined in BPEL_Reglas_Negocio01.wsdl) -->
+    <receive name="receiveInput" partnerLink="bpel_reglas_negocio01_client" portType="client:BPEL_Reglas_Negocio01" operation="process" variable="inputVariable" createInstance="yes"/>
+    <scope name="ReglaNegocio01" exitOnStandardFault="no">
+      <bpelx:annotation>
+        <bpelx:pattern patternName="bpelx:decide"/>
+      </bpelx:annotation>
+      <variables>
+        <variable name="dsIn" messageType="ns4:callFunctionStatelessMessage"/>
+        <variable name="dsOut"
+                  messageType="ns4:callFunctionStatelessDecisionMessage"/>
+      </variables>
+      <sequence name="Sequence1">
+        <assign name="Facts_To_Rule_Service">
+          <copy>
+            <from variable="inputVariable" part="payload"/>
+            <to variable="dsIn" part="payload">
+              <query>ns4:parameterList/ns1:formularioEntrada</query>
+            </to>
+          </copy>
+        </assign>
+        <assign name="BPEL_Header">
+          <copy>
+            <from>"DiccionarioReglasNegocio_DecisionFunction01"</from>
+            <to variable="dsIn" part="payload">
+              <query>@name</query>
+            </to>
+          </copy>
+        </assign>
+        <invoke name="Invoke"
+                partnerLink="DiccionarioReglasNegocio.DiccionarioReglasNegocio_DecisionFunction01"
+                portType="ns4:IDecisionService"
+                operation="callFunctionStateless" inputVariable="dsIn"
+                outputVariable="dsOut"/>
+        <assign name="Rule_Service_To_Facts">
+          <copy>
+            <from variable="dsOut" part="payload"><query>ns4:resultList/ns1:formularioRetorno/ns1:respuesta</query></from>
+            <to variable="outputVariable" part="payload">
+              <query>ns1:respuesta</query>
+            </to>
+          </copy>
+        </assign>
+      </sequence>
+    </scope>
+    <!-- Generate reply to synchronous request -->
+    <reply name="replyOutput" partnerLink="bpel_reglas_negocio01_client" portType="client:BPEL_Reglas_Negocio01" operation="process" variable="outputVariable"/>
+  </sequence>
+</process>

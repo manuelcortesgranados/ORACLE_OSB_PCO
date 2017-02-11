@@ -1,0 +1,13 @@
+<adapter-config name="bd_liberarMsisdnECMS" adapter="Database Adapter" wsdlLocation="../WSDLs/liberarMsisdnECMS_BD.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/DB/ECMSDB" UIConnectionName="ECMSDB" adapterRef=""/>
+  <endpoint-interaction portType="bd_liberarMsisdnECMS_ptt" operation="bd_liberarMsisdnECMS">
+    <interaction-spec className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
+      <property name="SchemaName" value="SYSADM"/>
+      <property name="ProcedureName" value="LIBERAR_MSISDN_PARA_CRUCE"/>
+      <property name="QueryTimeout" value="1"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+  </endpoint-interaction>
+
+</adapter-config>

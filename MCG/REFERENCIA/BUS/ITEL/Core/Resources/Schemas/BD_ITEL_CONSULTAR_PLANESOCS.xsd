@@ -1,0 +1,33 @@
+<schema 
+    targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/ITELSOA/PKG_SOA_ITEL/PRC_CONSULTAR_PLANESOCS/" 
+    xmlns="http://www.w3.org/2001/XMLSchema" 
+    xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/ITELSOA/PKG_SOA_ITEL/PRC_CONSULTAR_PLANESOCS/" 
+    elementFormDefault="qualified">
+    <element name="InputParameters">
+      <complexType>
+         <sequence>
+            <element name="P_TMTMCODE" type="decimal" db:index="1" db:type="NUMBER" minOccurs="0" nillable="true"/>
+            <element name="P_TMSPCODE" type="decimal" db:index="2" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         </sequence>
+      </complexType>
+    </element>
+    <element name="OutputParameters">
+      <complexType>
+         <sequence>
+            <element name="P_PLANESOCS" type="db:P_PLANESOCS_RowSet" db:index="3" db:type="RowSet" minOccurs="0" nillable="true"/>
+         </sequence>
+      </complexType>
+   </element>       
+     <complexType name="P_PLANESOCS_RowSet">
+      <sequence>
+         <element name="P_PLANESOCS_Row" minOccurs="0" maxOccurs="unbounded">
+            <complexType>
+               <sequence>
+                  <element name="P_TMSCLASS" type="decimal" db:index="4" db:type="NUMBER" minOccurs="0" nillable="true"/>
+                  <element name="P_TMLIST" type="decimal" db:index="5" db:type="NUMBER" minOccurs="0" nillable="true"/>
+               </sequence>
+            </complexType>
+         </element>
+      </sequence>
+   </complexType>
+</schema>

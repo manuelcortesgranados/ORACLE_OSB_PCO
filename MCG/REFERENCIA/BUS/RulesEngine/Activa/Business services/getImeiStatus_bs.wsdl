@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions
+	targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/Application1/Project1/getImeiStatus"
+	name="getImeiStatus-concrete" xmlns="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/Application1/Project1/getImeiStatus"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+	<import
+		namespace="http://xmlns.oracle.com/pcbpel/adapter/db/Application1/Project1/getImeiStatus"
+		location="../Resources/WSDLs/getImeiStatus_BD.wsdl" />
+	<binding name="getImeiStatus_ptt-binding" type="tns:getImeiStatus_ptt">
+		<soap:binding style="document"
+			transport="http://www.bea.com/wli/sb/transports/jca" />
+		<operation name="getImeiStatus">
+			<soap:operation soapAction="getImeiStatus" />
+			<input>
+				<soap:body use="literal" />
+			</input>
+			<output>
+				<soap:body use="literal" />
+			</output>
+		</operation>
+	</binding>
+	<service name="getImeiStatus-service">
+		<port name="getImeiStatus-port" binding="tns:getImeiStatus_ptt-binding">
+			<soap:address location="jca://eis/DB/Activa" />
+		</port>
+	</service>
+</definitions>

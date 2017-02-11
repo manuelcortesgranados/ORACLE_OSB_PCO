@@ -1,0 +1,36 @@
+<wsdl:definitions name="iphoneMatrix" targetNamespace="http://www.claro.com.co/rulesEngine/iphoneMatrix" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.claro.com.co/rulesEngine/iphoneMatrix" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<wsdl:types>
+		<schema xmlns="http://www.w3.org/2001/XMLSchema">
+			<import namespace="http://www.claro.com.co/rulesEngine/iphoneMatrix" schemaLocation="../Schemas/PS_IPHONEMATRIX.xsd"/>
+		</schema>
+	</wsdl:types>
+	<wsdl:message name="Input_Parameters">
+		<wsdl:part element="tns:Input_Parameters" name="Input_Parameters"/>
+	</wsdl:message>
+	<wsdl:message name="WS_Result">
+		<wsdl:part element="tns:WS_Result" name="WS_Result"/>
+	</wsdl:message>
+	<wsdl:portType name="IphoneMatrixInterface">
+		<wsdl:operation name="iphoneMatrix">
+			<wsdl:input message="tns:Input_Parameters"/>
+			<wsdl:output message="tns:WS_Result"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="IphoneMatrixSOAP" type="tns:IphoneMatrixInterface">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="iphoneMatrix">
+			<soap:operation soapAction="http://www.claro.com.co/IphoneMatrix/iphoneMatrix"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="IphoneMatrix">
+		<wsdl:port binding="tns:IphoneMatrixSOAP" name="IphoneMatrixSOAP">
+			<soap:address location="http://www.claro.com.co/"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

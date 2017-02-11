@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config">
+  <ser:coreEntry isProxy="true" isEnabled="true">
+    <ser:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config">
+      <con:wsdl ref="RulesEngine/Imei/Resources/WSDLs/getBlackLists_PS"/>
+      <con:port>
+        <con:name>GetBlackListsSOAP</con:name>
+        <con:namespace>http://www.claro.com.co/rulesEngine/getBlackLists</con:namespace>
+      </con:port>
+      <con:selector type="SOAP body"/>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+    <ser:ws-policy>
+      <ser:binding-mode>wsdl-policy-attachments</ser:binding-mode>
+    </ser:ws-policy>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>local</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:inbound-properties/>
+    <tran:all-headers>true</tran:all-headers>
+  </ser:endpointConfig>
+  <ser:router>
+    <con:pipeline type="request" name="PipelinePairNode1_request">
+      <con:stage name="validate" errorHandler="_onErrorHandler-4062680135006068377--5e13b495.13e38700156.-7d7d">
+        <con:context>
+          <con2:varNsDecl namespace="http://www.claro.com.co/rulesEngine/getBlackLists" prefix="get"/>
+        </con:context>
+        <con:actions>
+          <con4:assign varName="namespace" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config">
+            <con1:id>_ActionId-3197252195781446094-58c47fa4.13fc36b5b9b.-7871</con1:id>
+            <con4:expr>
+              <con1:xqueryText>fn:namespace-uri($body/*:Input_Parameters)</con1:xqueryText>
+            </con4:expr>
+          </con4:assign>
+          <con1:assign varName="businessRequest">
+            <con2:id>_ActionId-2431741806081816384--7e25ce5c.13fc4f2ca26.-7c2b</con2:id>
+            <con1:expr>
+              <con2:xqueryTransform>
+                <con2:resource ref="RulesEngine/Imei/Resources/XQueries/getBlackLists_Req"/>
+                <con2:param name="input_Parameters1">
+                  <con2:path>$body/get:Input_Parameters</con2:path>
+                </con2:param>
+              </con2:xqueryTransform>
+            </con1:expr>
+          </con1:assign>
+          <con1:assign varName="inputParameters">
+            <con2:id>_ActionId-6749263457969996536-2af0ee6e.13fbeec2034.-7f26</con2:id>
+            <con1:expr>
+              <con2:xqueryText>$body/get:Input_Parameters</con2:xqueryText>
+            </con1:expr>
+          </con1:assign>
+          <con1:validate>
+            <con2:id>_ActionId-2431741806081816384--7e25ce5c.13fc4f2ca26.-7c29</con2:id>
+            <con1:schema ref="RulesEngine/Imei/Resources/Schemas/BS_GET_BLACKLISTS"/>
+            <con1:schemaElement xmlns:get="http://www.claro.com.co/rulesEngine/getBlackLists" xmlns:con4="http://consultaNegativa.ws.imei.iecisa.co/">con4:consulta</con1:schemaElement>
+            <con1:varName>businessRequest</con1:varName>
+          </con1:validate>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="PipelinePairNode1_response"/>
+    <con:pipeline type="error" name="_onErrorHandler-4062680135006068377--5e13b495.13e38700156.-7d7d">
+      <con:stage name="validateError">
+        <con:context>
+          <con2:varNsDecl namespace="http://www.claro.com.co/rulesEngine/getBlackLists" prefix="get"/>
+        </con:context>
+        <con:actions>
+          <con4:replace contents-only="true" varName="body" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config">
+            <con1:id>_ActionId-3197252195781446094-58c47fa4.13fc36b5b9b.-7838</con1:id>
+            <con4:expr>
+              <con1:xqueryTransform>
+                <con1:resource ref="RulesEngine/Util/Resources/XQueries/genericError"/>
+                <con1:param name="targetNamespace">
+                  <con1:path>$namespace</con1:path>
+                </con1:param>
+                <con1:param name="fault">
+                  <con1:path>$fault</con1:path>
+                </con1:param>
+                <con1:param name="code">
+                  <con1:path>"23"</con1:path>
+                </con1:param>
+              </con1:xqueryTransform>
+            </con4:expr>
+          </con4:replace>
+          <con2:reply>
+            <con2:id>_ActionId-4062680135006068377--5e13b495.13e38700156.-7c6b</con2:id>
+          </con2:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="error" name="_onErrorHandler-4062680135006068377--5e13b495.13e38700156.-7b57">
+      <con:stage name="routingError">
+        <con:context/>
+        <con:actions>
+          <con4:replace contents-only="true" varName="body" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config">
+            <con1:id>_ActionId-3197252195781446094-58c47fa4.13fc36b5b9b.-77ff</con1:id>
+            <con4:expr>
+              <con1:xqueryTransform>
+                <con1:resource ref="RulesEngine/Util/Resources/XQueries/genericError"/>
+                <con1:param name="targetNamespace">
+                  <con1:path>$namespace</con1:path>
+                </con1:param>
+                <con1:param name="fault">
+                  <con1:path>$fault</con1:path>
+                </con1:param>
+                <con1:param name="code">
+                  <con1:path>"21"</con1:path>
+                </con1:param>
+              </con1:xqueryTransform>
+            </con4:expr>
+          </con4:replace>
+          <con2:reply>
+            <con2:id>_ActionId-4062680135006068377--5e13b495.13e38700156.-7a95</con2:id>
+          </con2:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:flow>
+      <con:pipeline-node name="PipelinePairNode1">
+        <con:request>PipelinePairNode1_request</con:request>
+        <con:response>PipelinePairNode1_response</con:response>
+      </con:pipeline-node>
+      <con:route-node name="getBlackLists" error-handler="_onErrorHandler-4062680135006068377--5e13b495.13e38700156.-7b57">
+        <con:context>
+          <con2:varNsDecl namespace="http://www.claro.com.co/rulesEngine/getBlackLists" prefix="get"/>
+        </con:context>
+        <con:actions>
+          <con3:route>
+            <con2:id>_ActionId-4062680135006068377--5e13b495.13e38700156.-7bc8</con2:id>
+            <con3:service ref="RulesEngine/Imei/Business services/getBlackLists_BS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con3:operation>consulta</con3:operation>
+            <con3:outboundTransform>
+              <con1:replace varName="body" contents-only="true">
+                <con2:id>_ActionId-4062680135006068377--5e13b495.13e38700156.-7b90</con2:id>
+                <con1:expr>
+                  <con2:xqueryText>$businessRequest</con2:xqueryText>
+                </con1:expr>
+              </con1:replace>
+            </con3:outboundTransform>
+            <con3:responseTransform>
+              <con1:replace varName="body" contents-only="true">
+                <con2:id>_ActionId-4062680135006068377--5e13b495.13e38700156.-7b58</con2:id>
+                <con1:expr>
+                  <con2:xqueryTransform>
+                    <con2:resource ref="RulesEngine/Imei/Resources/XQueries/getBlackLists_Res"/>
+                    <con2:param name="input_Parameters1">
+                      <con2:path>$inputParameters</con2:path>
+                    </con2:param>
+                    <con2:param name="consultaResponse1">
+                      <con2:path>$body/*:consultaResponse</con2:path>
+                    </con2:param>
+                  </con2:xqueryTransform>
+                </con1:expr>
+              </con1:replace>
+            </con3:responseTransform>
+          </con3:route>
+        </con:actions>
+      </con:route-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://www.comcel.com.co"
+           targetNamespace="http://www.comcel.com.co/Ejecutador/"
+           elementFormDefault="qualified"
+           xmlns:tns="http://www.comcel.com.co/Ejecutador/">
+   <xs:element name="TRAMA_EJECUCION" type="tns:tramaEjeType"/>
+   <xs:complexType name="tramaEjeType">
+      <xs:sequence>
+         <xs:element name="MIN" type="xs:decimal"/>
+         <xs:element name="MIN_ELEGIDOS" type="tns:DataArray"/>
+         <xs:element name="MIN_ELEGIDOS_REEMPLAZAR" type="tns:DataArray"/>
+         <xs:element name="PARAMETROSNEGOCIO" type="tns:negocioType"/>
+         <xs:element name="SUSCRIPTOR" type="tns:suscriptorType"/>
+         <xs:element name="CODIGOPLATAFORMA" type="xs:string"/>
+         <xs:element name="SERVICIOSEJECUCION" type="tns:serviciosType"/>
+         <xs:element name="HOSTID" type="xs:string"/>
+         <xs:element name="ERROR" type="xs:string"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="negocioType">
+      <xs:sequence>
+         <xs:element name="ACREDITACUENTA" type="xs:string" nillable="true"/>
+         <xs:element name="CODIGO_CUENTA" type="xs:string"/>
+         <xs:element name="MONTOCUENTA" type="xs:decimal"/>
+         <xs:element name="VIGENCIA_ILIMITADO" type="xs:decimal"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="serviciosType">
+      <xs:sequence>
+         <xs:element name="SERVICIO" type="tns:servicioType" minOccurs="0"
+                     maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="suscriptorType">
+      <xs:sequence>
+         <xs:element name="BALANCEONPEAK" type="xs:decimal"/>
+         <xs:element name="BALANCEBONUS" type="xs:decimal"/>
+         <xs:element name="BALANCEMONETARIA" type="xs:decimal"/>
+         <xs:element name="MONTOONPEAK" type="xs:decimal"/>
+         <xs:element name="MONTOBONUS" type="xs:decimal"/>
+         <xs:element name="MONTOMONETARIA" type="xs:decimal"/>
+         <xs:element name="ISEXPIREDONPEAK" type="xs:boolean"/>
+         <xs:element name="ISEXPIREDBONUS" type="xs:boolean"/>
+         <xs:element name="ISEXPIREDMONETARIA" type="xs:boolean"/>
+         <xs:element name="ISSERVICEACTIVE" type="xs:boolean"/>
+         <xs:element name="CONTRACT" type="xs:string"/>
+         <xs:element name="ELEGIDOS_TOTALES" type="tns:DataArray"/>
+         <xs:element name="ELEGIDOS_CUENTA" type="tns:DataArray"/>
+         <xs:element name="VIGENCIA_ELEGIDO" type="xs:string"/>
+         <xs:element name="FECHA_CREACION_ELEGIDO" type="xs:string"/>
+         <xs:element name="FECHA_EXPIRACION_ELEGIDO" type="xs:string"/>
+         <xs:element name="SUSCRIPCION_ELEGIDO" type="xs:string"/>
+         <xs:element name="FECHA_EXPIRACION_ELEGIDOS" type="xs:string"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="parametroType">
+      <xs:sequence>
+         <xs:element name="NOMBRE" type="xs:string"/>
+         <xs:element name="TIPO" type="xs:string"/>
+         <xs:element name="VALOR" type="xs:string"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="servicioType">
+      <xs:sequence>
+         <xs:element name="NOMBRE" type="xs:string"/>
+         <xs:element name="PARAMETROS" type="tns:parametrosType"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="parametrosType">
+      <xs:sequence>
+         <xs:element name="PARAMETRO" type="tns:parametroType" minOccurs="0"
+                     maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="DataArray">
+      <xs:sequence>
+         <xs:element name="Detail" type="xs:string" minOccurs="0"
+                     maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+
+</xs:schema>

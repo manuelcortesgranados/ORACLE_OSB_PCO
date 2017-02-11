@@ -1,0 +1,20 @@
+<definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/ITEL/Adaptadores/bd_consultarContractTemp_Contract" name="bd_consultarContractTemp_Contract-concrete" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/ITEL/Adaptadores/bd_consultarContractTemp_Contract" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/ITEL/Adaptadores/bd_consultarContractTemp_Contract" location="../Resources/WSDLs/consultarContractTemp_Contract_BD.wsdl"/>
+  <binding name="bd_consultarContractTemp_Contract_ptt-binding" type="tns:bd_consultarContractTemp_Contract_ptt">
+    <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+    <operation name="bd_consultarContractTemp_Contract">
+      <soap:operation soapAction="bd_consultarContractTemp_Contract"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="bd_consultarContractTemp_Contract-service">
+    <port name="bd_consultarContractTemp_Contract-port" binding="tns:bd_consultarContractTemp_Contract_ptt-binding">
+      <soap:address location="jca://eis/DB/ITEL_SOA"/>
+    </port>
+  </service>
+</definitions>

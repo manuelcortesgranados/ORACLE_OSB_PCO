@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <schema xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.claro.com.co/rulesEngine/getInventory" 
+	xmlns:tns="http://www.claro.com.co/rulesEngine/getInventory"
+	xmlns:pd="http://www.claro.com.co/rulesEngine/canonicalModel/ProductDomain"
+	xmlns:msd="http://www.claro.com.co/rulesEngine/canonicalModel/MarketSalesDomain"
+	xmlns:cd="http://www.claro.com.co/rulesEngine/canonicalModel/CustomerDomain"
+	xmlns:sd="http://www.claro.com.co/rulesEngine/canonicalModel/SupplierDomain">
+	
+	
+	<import namespace="http://www.claro.com.co/rulesEngine/canonicalModel/ProductDomain"
+		schemaLocation="../../../Core/Resources/Schemas/CanonicalModel/ProductDomain.xsd" />
+	<import namespace="http://www.claro.com.co/rulesEngine/canonicalModel/MarketSalesDomain"
+		schemaLocation="../../../Core/Resources/Schemas/CanonicalModel/MarketSalesDomain.xsd" />	
+	<import namespace="http://www.claro.com.co/rulesEngine/canonicalModel/CustomerDomain"
+		schemaLocation="../../../Core/Resources/Schemas/CanonicalModel/CustomerDomain.xsd" />	
+	<import namespace="http://www.claro.com.co/rulesEngine/canonicalModel/SupplierDomain"
+		schemaLocation="../../../Core/Resources/Schemas/CanonicalModel/SupplierDomain.xsd" />
+			
+	
+	<element name="Input_Parameters" type="tns:Input_Parameters" />
+	<element name="WS_Result" type="tns:WS_Result" />
+
+	<annotation>
+		<documentation>
+			<![CDATA[
+			Input_Parameters: serial, canal y dealer
+			WS_Result:E_EXISTENCIA,E_MATERIAL,E_MESSAGE,E_PERTENECIA,E_RETURN,E_STATUS,E_TIPO_STOCK,E_VALORACION
+			]]>
+		</documentation>
+	</annotation>
+	<complexType name="Input_Parameters">
+		<sequence>
+			<element name="product" type="pd:Product" />
+			<element name="salesChannel" type="msd:SalesChannel" />
+		</sequence>
+	</complexType>	
+	
+	<complexType name="WS_Result">
+		<sequence>
+			<element name="code" type="string" />
+			<element name="message" type="tns:responseType" />
+			<element name="description" type="string" />
+		</sequence>
+	</complexType>
+	
+	<complexType name="responseType">
+		<sequence>
+			<element name="stockInventory" type="pd:StockInventory" />
+		</sequence>
+	</complexType>
+</schema>

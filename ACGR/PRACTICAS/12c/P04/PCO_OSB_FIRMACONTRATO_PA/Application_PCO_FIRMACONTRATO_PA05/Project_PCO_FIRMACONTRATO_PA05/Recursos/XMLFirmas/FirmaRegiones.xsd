@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.firReg.org"
+            targetNamespace="http://www.firReg.org" elementFormDefault="qualified">
+  <xsd:complexType name="RegionesRequestType">
+    <xsd:sequence>
+      <xsd:element name="idRegionInicial" type="xsd:integer"/>
+      <xsd:element name="idRegionFinal" type="xsd:integer"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="RegionesResponseType">
+    <xsd:sequence>
+      <xsd:element name="regiones" type="RegionesType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="RegionesType">
+    <xsd:sequence>
+      <xsd:element name="idRegion" type="xsd:integer"/>
+      <xsd:element name="nombreRegion" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="regionesRequest" type="RegionesRequestType"/>
+  <xsd:element name="regionesResponse" type="RegionesResponseType"/>
+</xsd:schema>

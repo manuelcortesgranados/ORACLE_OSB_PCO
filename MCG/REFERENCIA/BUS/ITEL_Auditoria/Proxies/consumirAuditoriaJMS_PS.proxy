@@ -1,0 +1,875 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:jca="http://www.bea.com/wli/sb/transports/jca" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jms="http://www.bea.com/wli/sb/transports/jms" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con4="http://www.bea.com/wli/sb/stages/publish/config">
+  <ser:coreEntry isProxy="true" isEnabled="true" isTracingEnabled="false" isAutoPublish="false">
+    <ser:description/>
+    <ser:binding type="SOAP" isSoap12="false" xsi:type="con5:SoapBindingType" xmlns:con5="http://www.bea.com/wli/sb/services/bindings/config">
+      <con5:wsdl ref="ITEL_Auditoria/Resources/WSDLs/consumirAuditoriaJMS_PS"/>
+      <con5:binding>
+        <con5:name>consumirAuditoria_ptt-binding</con5:name>
+        <con5:namespace>http://xmlns.oracle.com/pcbpel/adapter/jms/Comcel/ITEL/consumirAuditoriaJMS</con5:namespace>
+      </con5:binding>
+      <con5:selector type="SOAP action"/>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+    <ser:ws-policy>
+      <ser:binding-mode>wsdl-policy-attachments</ser:binding-mode>
+    </ser:ws-policy>
+    <ser:transactions isRequired="false" sameTxForResponse="false"/>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>jms</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:URI>
+      <env:value>jms://osbhost13vhn1:8012,osbhost14vhn1:8012,osbhost15vhn1:8012,osbhost16vhn1:8012,osbhost13vhn1:8014,osbhost14vhn1:8014,osbhost15vhn1:8014,osbhost16vhn1:8014,osbhost13vhn1:8016,osbhost14vhn1:8016,osbhost15vhn1:8016,osbhost16vhn1:8016/weblogic.jms.ConnectionFactory/jms/auditoriaITELQueue</env:value>
+    </tran:URI>
+    <tran:inbound-properties/>
+    <tran:all-headers>false</tran:all-headers>
+    <tran:provider-specific>
+      <jms:is-queue>true</jms:is-queue>
+      <jms:is-secure>false</jms:is-secure>
+      <jms:inbound-properties>
+        <jms:response-required>false</jms:response-required>
+        <jms:XA-required>false</jms:XA-required>
+        <jms:transaction-timeout>600</jms:transaction-timeout>
+      </jms:inbound-properties>
+      <jms:dispatch-policy>weblogic.wsee.mdb.DispatchPolicy</jms:dispatch-policy>
+      <jms:request-encoding>UTF-8</jms:request-encoding>
+      <jms:jndi-timeout>0</jms:jndi-timeout>
+    </tran:provider-specific>
+  </ser:endpointConfig>
+  <ser:router>
+    <con:pipeline type="request" name="PipelinePairNode2_request">
+      <con:stage name="RetornarMensajeJMS" errorHandler="_onErrorHandler-4087681326348124925-7c236276.1486139c5ee.-777b">
+        <con:context/>
+        <con:actions>
+          <con2:ifThenElse>
+            <con1:id>_ActionId-4087681326348124925-7c236276.1486139c5ee.-777e</con1:id>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>exists($globalResponse)</con1:xqueryText>
+              </con2:condition>
+              <con2:actions/>
+            </con2:case>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>contains($errorInsert, 'ORA-12899')</con1:xqueryText>
+              </con2:condition>
+              <con2:actions/>
+            </con2:case>
+            <con2:default>
+              <con4:route>
+                <con1:id>_ActionId-1547961824955255048--2d3cc3ef.14950538b9a.-7f4f</con1:id>
+                <con4:service ref="ITEL/Core/Business Services/enviarAuditoria_BS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                <con4:operation>enviarAuditoria</con4:operation>
+                <con4:outboundTransform/>
+              </con4:route>
+            </con2:default>
+          </con2:ifThenElse>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="PipelinePairNode1_response"/>
+    <con:pipeline type="error" name="_onErrorHandler-4228383408135898017-56974e5.1338db8796b.-7ab0">
+      <con:stage name="error">
+        <con:context/>
+        <con:actions>
+          <con2:assign varName="errorInsert">
+            <con1:id>_ActionId-1547961824955255048--2d3cc3ef.14950538b9a.-7f51</con1:id>
+            <con2:expr>
+              <con1:xqueryText>$fault</con1:xqueryText>
+            </con2:expr>
+          </con2:assign>
+          <con1:log xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config">
+            <con5:id xmlns:con5="http://www.bea.com/wli/sb/stages/config">_ActionId-4228383408135898017-56974e5.1338db8796b.-7aaa</con5:id>
+            <con1:logLevel>error</con1:logLevel>
+            <con1:expr>
+              <con5:xqueryText xmlns:con5="http://www.bea.com/wli/sb/stages/config">$fault/ctx:reason</con5:xqueryText>
+            </con1:expr>
+          </con1:log>
+          <con1:resume>
+            <con1:id>_ActionId-1221286005379866550-2eef8a52.133dad8f688.-7fb7</con1:id>
+          </con1:resume>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="request" name="PipelinePairNode1_request">
+      <con:stage name="auditoriaNegocio" errorHandler="_onErrorHandler-4228383408135898017-56974e5.1338db8796b.-7ab0">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/AuditoriaITEL/" prefix="aud"/>
+        </con:context>
+        <con:actions>
+          <con2:assign varName="duracion">
+            <con1:id>_ActionId-4228383408135898017-56974e5.1338db8796b.-7b19</con1:id>
+            <con2:expr>
+              <con1:xqueryText>fn:seconds-from-duration(xs:dateTime($body/aud:Input_Parameters/FECHA_OUT) - xs:dateTime($body/aud:Input_Parameters/FECHA_IN)) * 1000</con1:xqueryText>
+            </con2:expr>
+          </con2:assign>
+          <con2:replace varName="body" contents-only="true">
+            <con1:id>_ActionId-296639327340847263--6bd6dc49.14db0eeebd4.-7fd1</con1:id>
+            <con2:location>
+              <con1:xpathText>./aud:Input_Parameters/TRAMA_IN</con1:xpathText>
+            </con2:location>
+            <con2:expr>
+              <con1:xqueryText>let $tramaSplit := fn:tokenize($body/aud:Input_Parameters/TRAMA_IN, "!")
+    let $tramaClave := concat(for $parametro at $pos in $tramaSplit 
+		return if($pos = 2) then "XXXXXXXX!" else (concat($parametro,"!")))
+    return
+		substring($tramaClave, 1, string-length($tramaClave) - 1)</con1:xqueryText>
+            </con2:expr>
+          </con2:replace>
+          <con2:wsCallout>
+            <con1:id>_ActionId-4228383408135898017-56974e5.1338db8796b.-7afa</con1:id>
+            <con2:service xsi:type="ref:BusinessServiceRef" ref="ITEL_Auditoria/Business Services/insertarAuditoriaGlobal_BS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con2:operation>bd_insertarAuditoriaGlobal</con2:operation>
+            <con2:request>
+              <con2:body wrapped="false">$globalRequest</con2:body>
+              <con2:header/>
+            </con2:request>
+            <con2:response>
+              <con2:body wrapped="false">globalResponse</con2:body>
+              <con2:header/>
+            </con2:response>
+            <con2:requestTransform>
+              <con2:assign varName="globalRequest">
+                <con1:id>_ActionId-4228383408135898017-56974e5.1338db8796b.-7ada</con1:id>
+                <con2:expr>
+                  <con1:xqueryTransform>
+                    <con1:resource ref="ITEL_Auditoria/Resources/XQueries/consumirAuditoria_Req_insertarAuditoriaGlobal"/>
+                    <con1:param name="mensajeAuditoria">
+                      <con1:path>$body/aud:Input_Parameters</con1:path>
+                    </con1:param>
+                    <con1:param name="duracion">
+                      <con1:path>$duracion</con1:path>
+                    </con1:param>
+                  </con1:xqueryTransform>
+                </con2:expr>
+              </con2:assign>
+            </con2:requestTransform>
+            <con2:responseTransform/>
+          </con2:wsCallout>
+          <con2:assign varName="uuid">
+            <con1:id>_ActionId-5174370892286694528-6956db40.133a81e5a33.-7f89</con1:id>
+            <con2:expr>
+              <con1:xqueryText>data($globalResponse/*:P_UUID)</con1:xqueryText>
+            </con2:expr>
+          </con2:assign>
+          <con2:ifThenElse>
+            <con1:id>_ActionId-5174370892286694528-6956db40.133a81e5a33.-7c95</con1:id>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>data($body/aud:Input_Parameters/COD_RESPUESTA) = "1"</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:assign varName="metodo">
+                  <con1:id>_ActionId-3663786499127649479--5d5b17b8.1350cb39cb7.-7f37</con1:id>
+                  <con2:expr>
+                    <con1:xqueryText>data($body/aud:Input_Parameters/METODO)</con1:xqueryText>
+                  </con2:expr>
+                </con2:assign>
+                <con2:ifThenElse>
+                  <con1:id>_ActionId-3663786499127649479--5d5b17b8.1350cb39cb7.-7f99</con1:id>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>$metodo = "400" or $metodo = "401" or $metodo = "402" or $metodo = "403" or $metodo = "405" or $metodo = "406" or $metodo = "407" or $metodo = "408" or $metodo = "411"</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:wsCallout>
+                        <con1:id>_ActionId-3663786499127649479--5d5b17b8.1350cb39cb7.-7f93</con1:id>
+                        <con2:service xsi:type="ref:BusinessServiceRef" ref="ITEL_Auditoria/Business Services/insertarAuditoriaRecarga_BS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>bd_insertarAuditoriaRecarga</con2:operation>
+                        <con2:request>
+                          <con2:body wrapped="false">$recargaRequest</con2:body>
+                          <con2:header/>
+                        </con2:request>
+                        <con2:response>
+                          <con2:body wrapped="false">recargaResponse</con2:body>
+                          <con2:header/>
+                        </con2:response>
+                        <con2:requestTransform>
+                          <con2:assign varName="recargaRequest">
+                            <con1:id>_ActionId-3663786499127649479--5d5b17b8.1350cb39cb7.-7f95</con1:id>
+                            <con2:expr>
+                              <con1:xqueryTransform>
+                                <con1:resource ref="ITEL_Auditoria/Resources/XQueries/consumirAuditoria_Req_insertarAuditoriaRecarga"/>
+                                <con1:param name="mensajeAuditoria">
+                                  <con1:path>$body/aud:Input_Parameters</con1:path>
+                                </con1:param>
+                                <con1:param name="uuid">
+                                  <con1:path>$uuid</con1:path>
+                                </con1:param>
+                              </con1:xqueryTransform>
+                            </con2:expr>
+                          </con2:assign>
+                        </con2:requestTransform>
+                        <con2:responseTransform>
+                          <con2:assign varName="uuidRecarga">
+                            <con1:id>_ActionId-3663786499127649479--5d5b17b8.1350cb39cb7.-7f94</con1:id>
+                            <con2:expr>
+                              <con1:xqueryText>data($body/*:OutputParameters/P_UUID)</con1:xqueryText>
+                            </con2:expr>
+                          </con2:assign>
+                        </con2:responseTransform>
+                      </con2:wsCallout>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1684014731205898325-31ea59a0.14d71d54256.-798f</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>not($metodo = ("402", "405" ,"406", "411", "407")) 
+and data($body/aud:Input_Parameters/COD_RESPUESTA) = '1'
+and number(data($body/aud:Input_Parameters/PARAMETROS_TRAMA/PARAMETRO[NOMBRE='MONTORECARGA']/VALOR)) > 0
+and data($body/aud:Input_Parameters/PARAMETROS_TRAMA/PARAMETRO[NOMBRE='BONIFICAR']/VALOR) = '1'</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con4:route>
+                              <con1:id>_ActionId-5112545497487916861-799b44fc.156fc2aa16a.-7fed</con1:id>
+                              <con4:service ref="ITEL_Auditoria/Business Services/enviarAuditoriaRecargaDatos_BS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                              <con4:operation>enviarAuditoriaRecargaDatos</con4:operation>
+                              <con4:outboundTransform>
+                                <con2:replace varName="body" contents-only="true">
+                                  <con1:id>_ActionId-5112545497487916861-799b44fc.156fc2aa16a.-7fec</con1:id>
+                                  <con2:expr>
+                                    <con:xqueryTransform xmlns:con="http://www.bea.com/wli/sb/stages/config">
+                                      <con:resource ref="ITEL_Auditoria/Resources/XQueries/enviarAuditoriaRecargaDatos_Req"/>
+                                      <con:param name="input_Parameters1">
+                                        <con:path>$body/aud:Input_Parameters</con:path>
+                                      </con:param>
+                                    </con:xqueryTransform>
+                                  </con2:expr>
+                                </con2:replace>
+                              </con4:outboundTransform>
+                            </con4:route>
+                            <con4:route>
+                              <con1:id>_ActionId-7000217742587478147--168b2c8b.155077b4f1d.-7d04</con1:id>
+                              <con4:service ref="ITEL_Auditoria/Business Services/enviarAuditoriaDiaSorpresaRecarga_BS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                              <con4:operation>enviarAuditoriaDiaSorpresaRecarga</con4:operation>
+                              <con4:outboundTransform>
+                                <con2:replace varName="body" contents-only="true">
+                                  <con1:id>_ActionId-7000217742587478147--168b2c8b.155077b4f1d.-7d03</con1:id>
+                                  <con2:expr>
+                                    <con1:xqueryTransform>
+                                      <con1:resource ref="ITEL_Auditoria/Resources/XQueries/enviarAuditoriaDiaSorpresaRecarga_Req"/>
+                                      <con1:param name="input_Parameters1">
+                                        <con1:path>$body/aud:Input_Parameters</con1:path>
+                                      </con1:param>
+                                    </con1:xqueryTransform>
+                                  </con2:expr>
+                                </con2:replace>
+                              </con4:outboundTransform>
+                            </con4:route>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default/>
+                      </con2:ifThenElse>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-7123116200865494165--fb024b2.15147215f1c.-7f95</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>$metodo =  "407" or (
+$metodo = ("400", "401" ,"402", "403") 
+and data($body/aud:Input_Parameters/COD_RESPUESTA) = '1'
+and number(data($body/aud:Input_Parameters/PARAMETROS_TRAMA/PARAMETRO[NOMBRE='MONTORECARGA']/VALOR)) >= 1000
+and data($body/aud:Input_Parameters/PARAMETROS_TRAMA/PARAMETRO[NOMBRE='BONIFICAR']/VALOR) = '1'
+)</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con4:route>
+                              <con1:id>_ActionId-7123116200865494165--fb024b2.15147215f1c.-7f92</con1:id>
+                              <con4:service ref="ITEL_Auditoria/Business Services/enviarAuditoriaRecargaEscalera_BS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                              <con4:operation>enviarAuditoriaRecargaEscalera</con4:operation>
+                              <con4:outboundTransform>
+                                <con2:replace varName="body" contents-only="true">
+                                  <con1:id>_ActionId-7123116200865494165--fb024b2.15147215f1c.-7f91</con1:id>
+                                  <con2:expr>
+                                    <con1:xqueryTransform>
+                                      <con1:resource ref="ITEL_Auditoria/Resources/XQueries/enviarAuditoriaRecargaEscalera_Req"/>
+                                      <con1:param name="input_Parameters1">
+                                        <con1:path>$body/aud:Input_Parameters</con1:path>
+                                      </con1:param>
+                                    </con1:xqueryTransform>
+                                  </con2:expr>
+                                </con2:replace>
+                              </con4:outboundTransform>
+                            </con4:route>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default/>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>$metodo="414"</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:assign varName="conCobro">
+                        <con1:id>_ActionId-3470943002047099957--418cceee.158795bf213.-7b30</con1:id>
+                        <con2:expr>
+                          <con1:xqueryText>$body/aud:Input_Parameters/PARAMETROS_TRAMA/PARAMETRO[NOMBRE='DIASVIGENCIA']/VALOR</con1:xqueryText>
+                        </con2:expr>
+                      </con2:assign>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-3470943002047099957--418cceee.158795bf213.-7b50</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>$body/aud:Input_Parameters/COD_RESPUESTA = '1' and $conCobro = '1'</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con4:route>
+                              <con1:id>_ActionId-3470943002047099957--418cceee.158795bf213.-7b4d</con1:id>
+                              <con4:service ref="ITEL_Auditoria/Business Services/enviarAuditoriaPromoPaquetesTAT_BS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                              <con4:operation>enviarAuditoriaPromoPaquetesTAT</con4:operation>
+                              <con4:outboundTransform>
+                                <con2:replace varName="body" contents-only="true">
+                                  <con1:id>_ActionId-3470943002047099957--418cceee.158795bf213.-7b4c</con1:id>
+                                  <con2:expr>
+                                    <con1:xqueryTransform>
+                                      <con1:resource ref="ITEL_Auditoria/Resources/XQueries/enviarAuditoriaPromoPaquetesTAT_Req"/>
+                                      <con1:param name="input_Parameters1">
+                                        <con1:path>$body/aud:Input_Parameters</con1:path>
+                                      </con1:param>
+                                    </con1:xqueryTransform>
+                                  </con2:expr>
+                                </con2:replace>
+                              </con4:outboundTransform>
+                            </con4:route>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default/>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>$metodo = "600"</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:wsCallout>
+                        <con1:id>_ActionId-3663786499127649479--5d5b17b8.1350cb39cb7.-7f2e</con1:id>
+                        <con2:service xsi:type="ref:BusinessServiceRef" ref="ITEL_Auditoria/Business Services/insertarAuditoriaCambioMin_BS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>bd_insertarAuditoriaCambioMin</con2:operation>
+                        <con2:request>
+                          <con2:body wrapped="false">$cambioMinRequest</con2:body>
+                          <con2:header/>
+                        </con2:request>
+                        <con2:response>
+                          <con2:body wrapped="false">cambioMinResponse</con2:body>
+                          <con2:header/>
+                        </con2:response>
+                        <con2:requestTransform>
+                          <con2:assign varName="cambioMinRequest">
+                            <con1:id>_ActionId-3663786499127649479--5d5b17b8.1350cb39cb7.-7f30</con1:id>
+                            <con2:expr>
+                              <con1:xqueryTransform>
+                                <con1:resource ref="ITEL_Auditoria/Resources/XQueries/consumirAuditoria_Req_insertarAuditoriaCambioMin"/>
+                                <con1:param name="mensajeAuditoria">
+                                  <con1:path>$body/aud:Input_Parameters</con1:path>
+                                </con1:param>
+                                <con1:param name="uuid">
+                                  <con1:path>$uuid</con1:path>
+                                </con1:param>
+                              </con1:xqueryTransform>
+                            </con2:expr>
+                          </con2:assign>
+                        </con2:requestTransform>
+                        <con2:responseTransform/>
+                      </con2:wsCallout>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>$metodo = "601" or $metodo = "604"</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:wsCallout>
+                        <con1:id>_ActionId-3663786499127649479--5d5b17b8.1350cb39cb7.-7f1e</con1:id>
+                        <con2:service xsi:type="ref:BusinessServiceRef" ref="ITEL_Auditoria/Business Services/insertarAuditoriaCambioPlan_BS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>bd_insertarAuditoriaCambioPlan</con2:operation>
+                        <con2:request>
+                          <con2:body wrapped="false">$cambioPlanRequest</con2:body>
+                          <con2:header/>
+                        </con2:request>
+                        <con2:response>
+                          <con2:body wrapped="false">cambioPlanResponse</con2:body>
+                          <con2:header/>
+                        </con2:response>
+                        <con2:requestTransform>
+                          <con2:assign varName="cambioPlanRequest">
+                            <con1:id>_ActionId-3663786499127649479--5d5b17b8.1350cb39cb7.-7f1f</con1:id>
+                            <con2:expr>
+                              <con1:xqueryTransform>
+                                <con1:resource ref="ITEL_Auditoria/Resources/XQueries/consumirAuditoria_Req_insertarAuditoriaCambioPlan"/>
+                                <con1:param name="mensajeAuditoria">
+                                  <con1:path>$body/aud:Input_Parameters</con1:path>
+                                </con1:param>
+                                <con1:param name="uuid">
+                                  <con1:path>$uuid</con1:path>
+                                </con1:param>
+                              </con1:xqueryTransform>
+                            </con2:expr>
+                          </con2:assign>
+                        </con2:requestTransform>
+                        <con2:responseTransform/>
+                      </con2:wsCallout>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>$metodo = "100"  or $metodo = "101"</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:wsCallout>
+                        <con1:id>_ActionId-3663786499127649479--5d5b17b8.1350cb39cb7.-7b75</con1:id>
+                        <con2:service xsi:type="ref:BusinessServiceRef" ref="ITEL_Auditoria/Business Services/insertarAuditoriaCrearSuscriptor_BS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>bd_insertarAuditoriaCrearSuscriptor</con2:operation>
+                        <con2:request>
+                          <con2:body wrapped="false">$crearSuscriptorRequest</con2:body>
+                          <con2:header/>
+                        </con2:request>
+                        <con2:response>
+                          <con2:body wrapped="false">crearSuscriptorResponse</con2:body>
+                          <con2:header/>
+                        </con2:response>
+                        <con2:requestTransform>
+                          <con2:assign varName="crearSuscriptorRequest">
+                            <con1:id>_ActionId-3663786499127649479--5d5b17b8.1350cb39cb7.-7b76</con1:id>
+                            <con2:expr>
+                              <con1:xqueryTransform>
+                                <con1:resource ref="ITEL_Auditoria/Resources/XQueries/consumirAuditoria_Req_insertarAuditoriaCrearSuscriptor"/>
+                                <con1:param name="mensajeAuditoria">
+                                  <con1:path>$body/aud:Input_Parameters</con1:path>
+                                </con1:param>
+                                <con1:param name="uuid">
+                                  <con1:path>$uuid</con1:path>
+                                </con1:param>
+                              </con1:xqueryTransform>
+                            </con2:expr>
+                          </con2:assign>
+                        </con2:requestTransform>
+                        <con2:responseTransform/>
+                      </con2:wsCallout>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>$metodo = "602"</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:wsCallout>
+                        <con1:id>_ActionId-4781136180270334792-25a5da1f.135885159cb.-7fcc</con1:id>
+                        <con2:service xsi:type="ref:BusinessServiceRef" ref="ITEL_Auditoria/Business Services/insertarAuditoriaBloqueo_BS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>bd_insertarAuditoriaBloqueo</con2:operation>
+                        <con2:request>
+                          <con2:body wrapped="false">$bloqueoRequest</con2:body>
+                          <con2:header/>
+                        </con2:request>
+                        <con2:response>
+                          <con2:body wrapped="false">bloqueoResponse</con2:body>
+                          <con2:header/>
+                        </con2:response>
+                        <con2:requestTransform>
+                          <con2:assign varName="bloqueoRequest">
+                            <con1:id>_ActionId-4781136180270334792-25a5da1f.135885159cb.-7fcd</con1:id>
+                            <con2:expr>
+                              <con1:xqueryTransform>
+                                <con1:resource ref="ITEL_Auditoria/Resources/XQueries/consumirAuditoria_Req_insertarAuditoriaBloqueo"/>
+                                <con1:param name="mensajeAuditoria">
+                                  <con1:path>$body/aud:Input_Parameters</con1:path>
+                                </con1:param>
+                                <con1:param name="uuid">
+                                  <con1:path>$uuid</con1:path>
+                                </con1:param>
+                              </con1:xqueryTransform>
+                            </con2:expr>
+                          </con2:assign>
+                        </con2:requestTransform>
+                        <con2:responseTransform/>
+                      </con2:wsCallout>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>$metodo = "603"</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:wsCallout>
+                        <con1:id>_ActionId-4781136180270334792-25a5da1f.135885159cb.-7fb4</con1:id>
+                        <con2:service xsi:type="ref:BusinessServiceRef" ref="ITEL_Auditoria/Business Services/insertarBloqueoHotKit_BS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>bd_insertarBloqueoHotKit</con2:operation>
+                        <con2:request>
+                          <con2:body wrapped="false">$bloqueoRequest</con2:body>
+                          <con2:header/>
+                        </con2:request>
+                        <con2:response>
+                          <con2:body wrapped="false">bloqueoResponse</con2:body>
+                          <con2:header/>
+                        </con2:response>
+                        <con2:requestTransform>
+                          <con2:assign varName="bloqueoRequest">
+                            <con1:id>_ActionId-4781136180270334792-25a5da1f.135885159cb.-7fb5</con1:id>
+                            <con2:expr>
+                              <con1:xqueryTransform>
+                                <con1:resource ref="ITEL_Auditoria/Resources/XQueries/consumirAuditoria_Req_insertarBloqueoHotkit"/>
+                                <con1:param name="mensajeAuditoria">
+                                  <con1:path>$body/aud:Input_Parameters</con1:path>
+                                </con1:param>
+                                <con1:param name="uuid">
+                                  <con1:path>$uuid</con1:path>
+                                </con1:param>
+                              </con1:xqueryTransform>
+                            </con2:expr>
+                          </con2:assign>
+                        </con2:requestTransform>
+                        <con2:responseTransform/>
+                      </con2:wsCallout>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>$metodo = "301" or $metodo = "302" or $metodo = "303" or $metodo = "304" or $metodo = "307" or $metodo = "308" or $metodo = "309"</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:wsCallout>
+                        <con1:id>_ActionId-4278807260743534015--3f36aea9.136df5bc0ec.-7e1b</con1:id>
+                        <con2:service xsi:type="ref:BusinessServiceRef" ref="ITEL_Auditoria/Business Services/insertarAuditoriaElegido_BS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>bd_insertarAuditoriaElegido</con2:operation>
+                        <con2:request>
+                          <con2:body wrapped="false">$elegidoRequest</con2:body>
+                          <con2:header/>
+                        </con2:request>
+                        <con2:response>
+                          <con2:body wrapped="false">elegidoResponse</con2:body>
+                          <con2:header/>
+                        </con2:response>
+                        <con2:requestTransform>
+                          <con2:assign varName="elegidoRequest">
+                            <con1:id>_ActionId-4278807260743534015--3f36aea9.136df5bc0ec.-7e1c</con1:id>
+                            <con2:expr>
+                              <con1:xqueryTransform>
+                                <con1:resource ref="ITEL_Auditoria/Resources/XQueries/consumirAuditoria_Req_insertarAuditoriaElegido"/>
+                                <con1:param name="mensajeAuditoria">
+                                  <con1:path>$body/aud:Input_Parameters</con1:path>
+                                </con1:param>
+                                <con1:param name="uuid">
+                                  <con1:path>$uuid</con1:path>
+                                </con1:param>
+                              </con1:xqueryTransform>
+                            </con2:expr>
+                          </con2:assign>
+                        </con2:requestTransform>
+                        <con2:responseTransform/>
+                      </con2:wsCallout>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-5233543819118221112--173bf61d.155eb04e36e.-58e8</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>$metodo = ("301", "302", "307", "308", "309")</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con4:route>
+                              <con1:id>_ActionId-5233543819118221112--173bf61d.155eb04e36e.-58bc</con1:id>
+                              <con4:service ref="ITEL_Auditoria/Business Services/enviarAuditoriaDiaSorpresaElegidos_BS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                              <con4:operation>enviarAuditoriaDiaSorpresaElegidos</con4:operation>
+                              <con4:outboundTransform>
+                                <con2:replace contents-only="true" varName="body">
+                                  <con1:id>_ActionId-4036926239438296272--3f00880.15633a00d71.-7fe2</con1:id>
+                                  <con2:expr>
+                                    <con1:xqueryTransform>
+                                      <con1:resource ref="ITEL_Auditoria/Resources/XQueries/enviarAuditoriaDiaSorpresaElegidos_Req"/>
+                                      <con1:param name="input_Parameters1">
+                                        <con1:path>$body/aud:Input_Parameters</con1:path>
+                                      </con1:param>
+                                    </con1:xqueryTransform>
+                                  </con2:expr>
+                                </con2:replace>
+                              </con4:outboundTransform>
+                            </con4:route>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default/>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>$metodo = "305"</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:wsCallout>
+                        <con1:id>_ActionId-4278807260743534015--3f36aea9.136df5bc0ec.-7d9a</con1:id>
+                        <con2:service xsi:type="ref:BusinessServiceRef" ref="ITEL_Auditoria/Business Services/insertarAuditoriaSegundoElegido_BS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>bd_insertarAuditoriaSegundoElegido</con2:operation>
+                        <con2:request>
+                          <con2:body wrapped="false">$segundoElegidoRequest</con2:body>
+                          <con2:header/>
+                        </con2:request>
+                        <con2:response>
+                          <con2:body wrapped="false">segundoElegidoResponse</con2:body>
+                          <con2:header/>
+                        </con2:response>
+                        <con2:requestTransform>
+                          <con2:assign varName="segundoElegidoRequest">
+                            <con1:id>_ActionId-4278807260743534015--3f36aea9.136df5bc0ec.-7d9b</con1:id>
+                            <con2:expr>
+                              <con1:xqueryTransform>
+                                <con1:resource ref="ITEL_Auditoria/Resources/XQueries/consumirAuditoria_Req_insertarAuditoriaSegundoElegido"/>
+                                <con1:param name="mensajeAuditoria">
+                                  <con1:path>$body/aud:Input_Parameters</con1:path>
+                                </con1:param>
+                                <con1:param name="uuid">
+                                  <con1:path>$uuid</con1:path>
+                                </con1:param>
+                              </con1:xqueryTransform>
+                            </con2:expr>
+                          </con2:assign>
+                        </con2:requestTransform>
+                        <con2:responseTransform/>
+                      </con2:wsCallout>
+                      <con4:route>
+                        <con1:id>_ActionId-5233543819118221112--173bf61d.155eb04e36e.-5895</con1:id>
+                        <con4:service ref="ITEL_Auditoria/Business Services/enviarAuditoriaDiaSorpresaElegidos_BS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con4:operation>enviarAuditoriaDiaSorpresaElegidos</con4:operation>
+                        <con4:outboundTransform>
+                          <con2:replace varName="body" contents-only="true">
+                            <con1:id>_ActionId-4036926239438296272--3f00880.15633a00d71.-7fc6</con1:id>
+                            <con2:expr>
+                              <con1:xqueryTransform>
+                                <con1:resource ref="ITEL_Auditoria/Resources/XQueries/enviarAuditoriaDiaSorpresaElegidos305_Req"/>
+                                <con1:param name="input_Parameters1">
+                                  <con1:path>$body/aud:Input_Parameters</con1:path>
+                                </con1:param>
+                              </con1:xqueryTransform>
+                            </con2:expr>
+                          </con2:replace>
+                        </con4:outboundTransform>
+                      </con4:route>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>$metodo = "306"</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:wsCallout>
+                        <con1:id>_ActionId-4278807260743534015--3f36aea9.136df5bc0ec.-7d55</con1:id>
+                        <con2:service xsi:type="ref:BusinessServiceRef" ref="ITEL_Auditoria/Business Services/insertarAuditoria9Elegido_BS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>bd_insertarAuditoria9Elegido</con2:operation>
+                        <con2:request>
+                          <con2:body wrapped="false">$elegidoRequest</con2:body>
+                          <con2:header/>
+                        </con2:request>
+                        <con2:response>
+                          <con2:body wrapped="false">elegidoResponse</con2:body>
+                          <con2:header/>
+                        </con2:response>
+                        <con2:requestTransform>
+                          <con2:assign varName="elegidoRequest">
+                            <con1:id>_ActionId-4278807260743534015--3f36aea9.136df5bc0ec.-7d56</con1:id>
+                            <con2:expr>
+                              <con1:xqueryTransform>
+                                <con1:resource ref="ITEL_Auditoria/Resources/XQueries/consumirAuditoria_Req_insertarAuditoria9Elegido"/>
+                                <con1:param name="mensajeAuditoria">
+                                  <con1:path>$body/aud:Input_Parameters</con1:path>
+                                </con1:param>
+                                <con1:param name="uuid">
+                                  <con1:path>$uuid</con1:path>
+                                </con1:param>
+                              </con1:xqueryTransform>
+                            </con2:expr>
+                          </con2:assign>
+                        </con2:requestTransform>
+                        <con2:responseTransform/>
+                      </con2:wsCallout>
+                      <con4:route>
+                        <con1:id>_ActionId-5233543819118221112--173bf61d.155eb04e36e.-587e</con1:id>
+                        <con4:service ref="ITEL_Auditoria/Business Services/enviarAuditoriaDiaSorpresaElegidos_BS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con4:operation>enviarAuditoriaDiaSorpresaElegidos</con4:operation>
+                        <con4:outboundTransform>
+                          <con2:replace contents-only="true" varName="body">
+                            <con1:id>_ActionId-4036926239438296272--3f00880.15633a00d71.-7fb3</con1:id>
+                            <con2:expr>
+                              <con1:xqueryTransform>
+                                <con1:resource ref="ITEL_Auditoria/Resources/XQueries/enviarAuditoriaDiaSorpresaAmigos306_Req"/>
+                                <con1:param name="input_Parameters1">
+                                  <con1:path>$body/aud:Input_Parameters</con1:path>
+                                </con1:param>
+                              </con1:xqueryTransform>
+                            </con2:expr>
+                          </con2:replace>
+                        </con4:outboundTransform>
+                      </con4:route>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>$metodo = ("310","311","313","314")</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con4:route>
+                        <con1:id>_ActionId-5233543819118221112--173bf61d.155eb04e36e.-587b</con1:id>
+                        <con4:service ref="ITEL_Auditoria/Business Services/enviarAuditoriaDiaSorpresaElegidos_BS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con4:operation>enviarAuditoriaDiaSorpresaElegidos</con4:operation>
+                        <con4:outboundTransform>
+                          <con2:replace varName="body" contents-only="true">
+                            <con1:id>_ActionId-4036926239438296272--3f00880.15633a00d71.-7f9d</con1:id>
+                            <con2:expr>
+                              <con1:xqueryTransform>
+                                <con1:resource ref="ITEL_Auditoria/Resources/XQueries/enviarAuditoriaDiaSorpresaElegidos31X_Req"/>
+                                <con1:param name="input_Parameters1">
+                                  <con1:path>$body/aud:Input_Parameters</con1:path>
+                                </con1:param>
+                              </con1:xqueryTransform>
+                            </con2:expr>
+                          </con2:replace>
+                        </con4:outboundTransform>
+                      </con4:route>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>$metodo = "701" or $metodo = "702" or $metodo = "703" or $metodo = "704" or $metodo = "705"</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:wsCallout>
+                        <con1:id>_ActionId-4242700229346518817-3201da9e.1389a7756a8.-7f1d</con1:id>
+                        <con2:service xsi:type="ref:BusinessServiceRef" ref="ITEL_Auditoria/Business Services/insertarAuditoriaElegidoSMS_BS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>bd_insertarAuditoriaElegidoSMS</con2:operation>
+                        <con2:request>
+                          <con2:body wrapped="false">$elegidoRequest</con2:body>
+                          <con2:header/>
+                        </con2:request>
+                        <con2:response>
+                          <con2:body wrapped="false">elegidoResponse</con2:body>
+                          <con2:header/>
+                        </con2:response>
+                        <con2:requestTransform>
+                          <con2:assign varName="elegidoRequest">
+                            <con1:id>_ActionId-4242700229346518817-3201da9e.1389a7756a8.-7f1e</con1:id>
+                            <con2:expr>
+                              <con1:xqueryTransform>
+                                <con1:resource ref="ITEL_Auditoria/Resources/XQueries/consumirAuditoria_Req_insertarAuditoriaElegidoSMS"/>
+                                <con1:param name="mensajeAuditoria">
+                                  <con1:path>$body/aud:Input_Parameters</con1:path>
+                                </con1:param>
+                                <con1:param name="uuid">
+                                  <con1:path>$uuid</con1:path>
+                                </con1:param>
+                              </con1:xqueryTransform>
+                            </con2:expr>
+                          </con2:assign>
+                        </con2:requestTransform>
+                        <con2:responseTransform/>
+                      </con2:wsCallout>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:default/>
+                </con2:ifThenElse>
+              </con2:actions>
+            </con2:case>
+            <con2:default/>
+          </con2:ifThenElse>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="PipelinePairNode2_response"/>
+    <con:pipeline type="error" name="_onErrorHandler-4087681326348124925-7c236276.1486139c5ee.-777b">
+      <con:stage name="error">
+        <con:context xmlns:con3="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con5="http://www.bea.com/wli/sb/typesystem/config" xmlns:con4="http://www.bea.com/wli/sb/stages/routing/config" xmlns:http="http://www.bea.com/wli/sb/transports/http"/>
+        <con:actions xmlns:con3="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con5="http://www.bea.com/wli/sb/typesystem/config" xmlns:con4="http://www.bea.com/wli/sb/stages/routing/config" xmlns:http="http://www.bea.com/wli/sb/transports/http">
+          <con3:log>
+            <con1:id>_ActionId-4087681326348124925-7c236276.1486139c5ee.-770a</con1:id>
+            <con3:logLevel>error</con3:logLevel>
+            <con3:expr>
+              <con1:xqueryText>$fault/ctx:reason</con1:xqueryText>
+            </con3:expr>
+          </con3:log>
+          <con1:resume>
+            <con1:id>_ActionId-4087681326348124925-7c236276.1486139c5ee.-76fc</con1:id>
+          </con1:resume>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="error" name="_onErrorHandler-7129840303252530624-5d74583.1339320fcd5.-7f2e">
+      <con:stage name="error">
+        <con:context/>
+        <con:actions>
+          <con1:log xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config">
+            <con5:id xmlns:con5="http://www.bea.com/wli/sb/stages/config">_ActionId-7129840303252530624-5d74583.1339320fcd5.-7f29</con5:id>
+            <con1:logLevel>error</con1:logLevel>
+            <con1:expr>
+              <con5:xqueryText xmlns:con5="http://www.bea.com/wli/sb/stages/config">$fault/ctx:reason</con5:xqueryText>
+            </con1:expr>
+          </con1:log>
+          <con1:reply>
+            <con1:id>_ActionId-7129840303252530624-5d74583.1339320fcd5.-7f0e</con1:id>
+          </con1:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:flow>
+      <con:pipeline-node name="PipelinePairNode1">
+        <con:request>PipelinePairNode1_request</con:request>
+        <con:response>PipelinePairNode1_response</con:response>
+      </con:pipeline-node>
+      <con:pipeline-node name="PipelinePairNode2">
+        <con:request>PipelinePairNode2_request</con:request>
+        <con:response>PipelinePairNode2_response</con:response>
+      </con:pipeline-node>
+      <con:route-node name="RouteToEnviarAuditoriaBAM" error-handler="_onErrorHandler-7129840303252530624-5d74583.1339320fcd5.-7f2e">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/AuditoriaITEL/" prefix="aud"/>
+        </con:context>
+        <con:actions>
+          <con2:ifThenElse>
+            <con1:id>_ActionId-1547961824955255048--2d3cc3ef.14950538b9a.-7fc9</con1:id>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>exists($globalResponse)</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con3:route>
+                  <con1:id>_ActionId-1547961824955255048--2d3cc3ef.14950538b9a.-7fc2</con1:id>
+                  <con3:service ref="ITEL_Auditoria/Business Services/enviarAuditoriaBAM_BS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con3:operation>enviarAuditoria</con3:operation>
+                  <con3:outboundTransform>
+                    <con2:replace varName="body" contents-only="true">
+                      <con1:id>_ActionId-1547961824955255048--2d3cc3ef.14950538b9a.-7fc1</con1:id>
+                      <con2:expr>
+                        <con1:xqueryTransform>
+                          <con1:resource ref="ITEL_Auditoria/Resources/XQueries/consumirAuditoria_Req_enviarAuditoriaBAM"/>
+                          <con1:param name="mensajeAuditoria">
+                            <con1:path>$body/aud:Input_Parameters</con1:path>
+                          </con1:param>
+                          <con1:param name="uuid">
+                            <con1:path>if (fn:empty($uuid)) then "0" else $uuid</con1:path>
+                          </con1:param>
+                          <con1:param name="duracion">
+                            <con1:path>$duracion</con1:path>
+                          </con1:param>
+                        </con1:xqueryTransform>
+                      </con2:expr>
+                    </con2:replace>
+                  </con3:outboundTransform>
+                  <con3:responseTransform/>
+                </con3:route>
+              </con2:actions>
+            </con2:case>
+            <con2:default/>
+          </con2:ifThenElse>
+        </con:actions>
+      </con:route-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

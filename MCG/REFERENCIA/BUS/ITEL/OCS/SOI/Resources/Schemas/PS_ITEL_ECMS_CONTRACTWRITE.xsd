@@ -1,0 +1,249 @@
+<schema targetNamespace="http://ericsson.com/services/ws_cma3/contractwrite"
+	attributeFormDefault="unqualified" elementFormDefault="qualified"
+	xmlns="http://www.w3.org/2001/XMLSchema" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:sessionchange="http://ericsson.com/services/ws_cma3/sessionchange"
+	xmlns:wsi="http://ericsson.com/services/ws_cma3/contractwrite">
+
+	<xs:import namespace="http://ericsson.com/services/ws_cma3/sessionchange"
+		schemaLocation="PS_ITEL_ECMS_SSCHANGE.xsd" />
+
+
+	<xs:element name="contractWriteRequest" type="wsi:contractWriteRequest" />
+	<xs:element name="contractWriteResponse" type="wsi:contractWriteResponse" />
+	<xs:complexType name="contractWriteResponse">
+		<xs:all>
+			<xs:element minOccurs="0" name="responseDateTime" type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>
+						<p>Response date and time.</p>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="referenceDTO">
+		<xs:all>
+			<xs:annotation>
+				<xs:documentation>
+					<p>
+						Identifies a contract or contract template by the public and
+						private key.
+					</p>
+				</xs:documentation>
+			</xs:annotation>
+			<xs:element minOccurs="0" name="privateKey" type="xs:long">
+				<xs:annotation>
+					<xs:documentation>
+						<p>Contract or contract template ID</p>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="publicKey" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>
+						<p>Public key of the contract or contract template</p>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="modifyContractInputDTO">
+		<xs:all>
+			<xs:annotation>
+				<xs:documentation>
+					<p>Dealers public key</p>
+				</xs:documentation>
+			</xs:annotation>
+			<xs:element minOccurs="0" name="contract" type="wsi:referenceDTO" />
+			<xs:element minOccurs="0" name="mainContract" type="wsi:referenceDTO" />
+			<xs:element minOccurs="0" name="HLRProfileId" type="xs:long">
+				<xs:annotation>
+					<xs:documentation>
+						<p>HLR profile ID</p>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="CAMELProfileId" type="xs:long">
+				<xs:annotation>
+					<xs:documentation>
+						<p>CAMEL profile ID</p>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="temporaryBlockingStatus"
+				type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>
+						<p>Temporary Blocking Status</p>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="HLRBarring" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>
+						<p>Flag that indicates that a subscriber should be barred at HLR
+							prior to its deletion. It is used only in case of contract
+							deactivation.</p>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="subscriberDeleteReasonCode"
+				type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>
+						<p>A code for the reason why an account and/or subscriber is
+							deleted. This code will be forwarded to AIR. It is only used in
+							case of contract deactivation (subscriber disconnection).</p>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="accountGroup" type="xs:long">
+				<xs:annotation>
+					<xs:documentation>
+						<p>Account group identifier of the account group the account
+							belongs to.</p>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="accountGroupPublicKey"
+				type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>
+						<p>Account group external key</p>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="requestedBy" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>
+						<p>The requestant identifier (Customer or Network operator)</p>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="tempMappingCompositeProductHandle"
+				type="wsi:referenceDTO" />
+			<xs:element minOccurs="0" name="tempMappingRateplanValidTo"
+				type="xs:date">
+				<xs:annotation>
+					<xs:documentation>
+						<p>The date until the temporaty change of the mapping rate plan
+							is
+							valid.</p>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="language" type="wsi:referenceDTO" />
+			<xs:element minOccurs="0" name="dealer" type="wsi:referenceDTO" />
+			<xs:element minOccurs="0" name="description" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>
+						<p>Description of the contract template.</p>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="status" type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>
+						<p>
+							New status for the contract. The following statuses can be set
+							on
+							the contract level. Note that only the status changes
+							of
+							activation and deactivation are recorded in ECMS database. A
+							contract can be suspended (temporarily blocked) by external
+							systems too and
+							as such no such status change is recorded in
+							ECMS
+							database.
+							<ul>
+								<li>activated = 2</li>
+								<li>temporary blocked = 3</li>
+								<li>deactivated = 4</li>
+							</ul>
+						</p>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="statusChangeReason" type="xs:long">
+				<xs:annotation>
+					<xs:documentation>
+						<p>
+							Reason for the new Status. The reason must fit to the new
+							status,
+							delivered in
+							<code>REASONS.READ RS_STATUS</code>
+							where the contract status maps to the following
+							<code>RS_STATUS</code>
+							values:
+							<ul>
+								<li>1 -> a (activation)</li>
+								<li>3 -> d (deactivation)</li>
+							</ul>
+							Since a status change to suspension (temporarily blocked) is
+							not
+							recorded in ECMS database, there is not a reason for
+							that
+							status
+							change as well.
+						</p>
+						<p>
+							This argument makes only sense if the argument
+							<code>CO_STATUS</code>
+							is given.
+						</p>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="validFrom" type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>
+						<p>Date when the new Status will be valid.</p>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="afProvisioned" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>
+						<p>Flag indicating whether we should provision the subscriber to
+							AF.</p>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="pinCode" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>
+						<p>Subscriber's pin code.</p>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="pinCodeNew" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>
+						<p>New subscriber's pin code.</p>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="inputAttributes">
+		<xs:all>
+			<xs:annotation>
+				<xs:documentation>
+					<p>New data for the existing contract or contract template.</p>
+				</xs:documentation>
+			</xs:annotation>
+			<xs:element minOccurs="0" name="modifyContractInput"
+				type="wsi:modifyContractInputDTO" />
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="contractWriteRequest">
+		<xs:all>
+			<xs:element minOccurs="0" name="inputAttributes" type="wsi:inputAttributes" />
+			<xs:element minOccurs="0" name="sessionChangeRequest"
+				type="sessionchange:sessionChangeRequest" />
+		</xs:all>
+	</xs:complexType>
+
+
+
+</schema>

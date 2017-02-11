@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+  <ser:coreEntry isProxy="true" isEnabled="true">
+    <ser:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config">
+      <con:wsdl ref="ITEL/Core/Resources/WSDLs/consultarPaquetesDatosMin_PS"/>
+      <con:binding>
+        <con:name>consultarPaquetesDatosMinSOAP</con:name>
+        <con:namespace>http://www.comcel.com.co/consultarPaquetesDatosMin/</con:namespace>
+      </con:binding>
+      <con:selector type="SOAP body"/>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+    <ser:ws-policy>
+      <ser:binding-mode>wsdl-policy-attachments</ser:binding-mode>
+    </ser:ws-policy>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>http</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:URI>
+      <env:value>/ITEL/Core/Proxies/consultarPaquetesDatosMinLocal_PS</env:value>
+    </tran:URI>
+    <tran:inbound-properties/>
+    <tran:all-headers>false</tran:all-headers>
+    <tran:provider-specific>
+      <http:inbound-properties/>
+    </tran:provider-specific>
+  </ser:endpointConfig>
+  <ser:router>
+    <con:pipeline type="request" name="PipelinePairNode1_request">
+      <con:stage name="validacion" errorHandler="_onErrorHandler-3645351208375448940--14cfe84a.158f89cfacf.-50d5">
+        <con:context/>
+        <con:actions>
+          <con1:validate>
+            <con2:id>_ActionId-3645351208375448940--14cfe84a.158f89cfacf.-510c</con2:id>
+            <con1:schema ref="ITEL/Core/Resources/Schemas/PS_ITEL_CONSULTAR_DATOS_MIN_PS"/>
+            <con1:schemaElement xmlns:con="http://www.comcel.com.co/consultarPaquetesDatosMin/">con:Input_Parameters</con1:schemaElement>
+            <con1:varName>body</con1:varName>
+            <con1:location>
+              <con2:xpathText>./*:Input_Parameters</con2:xpathText>
+            </con1:location>
+          </con1:validate>
+        </con:actions>
+      </con:stage>
+      <con:stage name="consulta" errorHandler="_onErrorHandler-3645351208375448940--14cfe84a.158f89cfacf.-490b">
+        <con:context>
+          <con2:varNsDecl namespace="http://www.comcel.com.co/consultarPaquetesDatosMin/" prefix="con"/>
+        </con:context>
+        <con:actions>
+          <con1:wsCallout>
+            <con2:id>_ActionId-3645351208375448940--14cfe84a.158f89cfacf.-4f54</con2:id>
+            <con1:service xsi:type="ref:ProxyRef" ref="ITEL/OCS/AIR/Proxies/consultarOfferOCSODMLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con1:operation>consultarOffer</con1:operation>
+            <con1:request>
+              <con1:body>$consultarOfferOCSRequest</con1:body>
+            </con1:request>
+            <con1:response>
+              <con1:body>consultarOfferOCSResponse</con1:body>
+            </con1:response>
+            <con1:requestTransform>
+              <con1:assign varName="consultarOfferOCSRequest">
+                <con2:id>_ActionId-3645351208375448940--14cfe84a.158f89cfacf.-4f55</con2:id>
+                <con1:expr>
+                  <con2:xqueryTransform>
+                    <con2:resource ref="ITEL/Core/Resources/XQueries/consultarPaquetesDatosMin_consultarOfferODM_Req"/>
+                    <con2:param name="input_Parameters1">
+                      <con2:path>$body/con:Input_Parameters</con2:path>
+                    </con2:param>
+                  </con2:xqueryTransform>
+                </con1:expr>
+              </con1:assign>
+            </con1:requestTransform>
+            <con1:responseTransform/>
+          </con1:wsCallout>
+          <con1:assign varName="proceso">
+            <con2:id>_ActionId-3645351208375448940--14cfe84a.158f89cfacf.-4829</con2:id>
+            <con1:expr>
+              <con2:xqueryText>&lt;PAQUETES>&lt;/PAQUETES></con2:xqueryText>
+            </con1:expr>
+          </con1:assign>
+          <con1:foreach>
+            <con2:id>_ActionId-3645351208375448940--14cfe84a.158f89cfacf.-4ea5</con2:id>
+            <con1:variable>consultarOfferOCSResponse</con1:variable>
+            <con1:expression>
+              <con2:xpathText>./MENSAJE//Detail</con2:xpathText>
+            </con1:expression>
+            <con1:value-variable>v_codigos</con1:value-variable>
+            <con1:index-variable>index</con1:index-variable>
+            <con1:total-variable>count</con1:total-variable>
+            <con1:actions>
+              <con1:assign varName="prueba">
+                <con2:id>_ActionId-3645351208375448940--14cfe84a.158f89cfacf.-4db2</con2:id>
+                <con1:expr>
+                  <con2:xqueryText>$v_codigos</con2:xqueryText>
+                </con1:expr>
+              </con1:assign>
+              <con1:wsCallout>
+                <con2:id>_ActionId-3645351208375448940--14cfe84a.158f89cfacf.-4e89</con2:id>
+                <con1:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/consultarPaquetesDatos_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                <con1:operation>ConsultarPaquetesDatos</con1:operation>
+                <con1:request>
+                  <con1:body>$codigosPaquetesRequest</con1:body>
+                </con1:request>
+                <con1:response>
+                  <con1:body>codigosPaquetesResponse</con1:body>
+                </con1:response>
+                <con1:requestTransform>
+                  <con1:assign varName="codigosPaquetesRequest">
+                    <con2:id>_ActionId-3645351208375448940--14cfe84a.158f89cfacf.-4dc5</con2:id>
+                    <con1:expr>
+                      <con2:xqueryTransform>
+                        <con2:resource ref="ITEL/Core/Resources/XQueries/consultarPaquetesDatosOffers_Res"/>
+                        <con2:param name="string3">
+                          <con2:path>data($body/*:Input_Parameters/CANAL)</con2:path>
+                        </con2:param>
+                        <con2:param name="string1">
+                          <con2:path>data($v_codigos/offerID)</con2:path>
+                        </con2:param>
+                        <con2:param name="string2">
+                          <con2:path>"2"</con2:path>
+                        </con2:param>
+                      </con2:xqueryTransform>
+                    </con1:expr>
+                  </con1:assign>
+                </con1:requestTransform>
+                <con1:responseTransform>
+                  <con1:insert varName="proceso">
+                    <con2:id>_ActionId-3645351208375448940--14cfe84a.158f89cfacf.-495d</con2:id>
+                    <con1:location/>
+                    <con1:where>last-child</con1:where>
+                    <con1:expr>
+                      <con2:xqueryText><![CDATA[<PAQUETE>
+                        <PRODUCTID>{ data($codigosPaquetesResponse//*:ID_SM_BRMS) }</PRODUCTID>
+         			   	<FECHAINICIO>{ data($v_codigos//*:startDate) }</FECHAINICIO>
+                        <FECHAFIN>{ data($v_codigos//*:expiryDate) }</FECHAFIN>
+                        <ESTADO>{ data($v_codigos//*:offerState) }</ESTADO>
+                        <SUSCRIPCION>{ data($v_codigos//*:offerID) }</SUSCRIPCION> 
+                        <NOMBRE>{ data($codigosPaquetesResponse//*:COMENTARIO) }</NOMBRE> 
+</PAQUETE>]]></con2:xqueryText>
+                    </con1:expr>
+                  </con1:insert>
+                </con1:responseTransform>
+              </con1:wsCallout>
+            </con1:actions>
+          </con1:foreach>
+          <con1:ifThenElse>
+            <con2:id>_ActionId-3645351208375448940--14cfe84a.158f89cfacf.-480e</con2:id>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText>($body/con:Input_Parameters/ESTADO)=0</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con1:ifThenElse>
+                  <con2:id>_ActionId-3645351208375448940--14cfe84a.158f89cfacf.-47f4</con2:id>
+                  <con1:case>
+                    <con1:condition>
+                      <con2:xqueryText>data($proceso/ESTADO)=0</con2:xqueryText>
+                    </con1:condition>
+                    <con1:actions>
+                      <con1:insert varName="proceso">
+                        <con2:id>_ActionId-3645351208375448940--14cfe84a.158f89cfacf.-47ea</con2:id>
+                        <con1:location/>
+                        <con1:where>last-child</con1:where>
+                        <con1:expr>
+                          <con2:xqueryText><![CDATA[<PAQUETE>
+                        <PRODUCTID>{ data($codigosPaquetesResponse//*:ID_SM_BRMS) }</PRODUCTID>
+         			   	<FECHAINICIO>{ data($v_codigos//*:startDate) }</FECHAINICIO>
+                        <FECHAFIN>{ data($v_codigos//*:expiryDate) }</FECHAFIN>
+                        <ESTADO>{ data($v_codigos//*:offerState) }</ESTADO>
+                        <SUSCRIPCION>{ data($v_codigos//*:offerID) }</SUSCRIPCION> 
+                        <NOMBRE>{ data($codigosPaquetesResponse//*:COMENTARIO) }</NOMBRE> 
+</PAQUETE>]]></con2:xqueryText>
+                        </con1:expr>
+                      </con1:insert>
+                    </con1:actions>
+                  </con1:case>
+                  <con1:default/>
+                </con1:ifThenElse>
+              </con1:actions>
+            </con1:case>
+            <con1:default>
+              <con1:ifThenElse>
+                <con2:id>_ActionId-3645351208375448940--14cfe84a.158f89cfacf.-47d7</con2:id>
+                <con1:case>
+                  <con1:condition>
+                    <con2:xqueryText>data($proceso/ESTADO)=1</con2:xqueryText>
+                  </con1:condition>
+                  <con1:actions>
+                    <con1:insert varName="proceso">
+                      <con2:id>_ActionId-3645351208375448940--14cfe84a.158f89cfacf.-47bd</con2:id>
+                      <con1:location/>
+                      <con1:where>last-child</con1:where>
+                      <con1:expr>
+                        <con2:xqueryText><![CDATA[<PAQUETE>
+                        <PRODUCTID>{ data($codigosPaquetesResponse//*:ID_SM_BRMS) }</PRODUCTID>
+         			   	<FECHAINICIO>{ data($v_codigos//*:startDate) }</FECHAINICIO>
+                        <FECHAFIN>{ data($v_codigos//*:expiryDate) }</FECHAFIN>
+                        <ESTADO>{ data($v_codigos//*:offerState) }</ESTADO>
+                        <SUSCRIPCION>{ data($v_codigos//*:offerID) }</SUSCRIPCION> 
+                        <NOMBRE>{ data($codigosPaquetesResponse//*:COMENTARIO) }</NOMBRE> 
+</PAQUETE>]]></con2:xqueryText>
+                      </con1:expr>
+                    </con1:insert>
+                  </con1:actions>
+                </con1:case>
+                <con1:default/>
+              </con1:ifThenElse>
+            </con1:default>
+          </con1:ifThenElse>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="PipelinePairNode1_response">
+      <con:stage name="response">
+        <con:context/>
+        <con:actions>
+          <con1:assign varName="prueba3">
+            <con2:id>_ActionId-3645351208375448940--14cfe84a.158f89cfacf.-4ad0</con2:id>
+            <con1:expr>
+              <con2:xqueryText>$proceso</con2:xqueryText>
+            </con1:expr>
+          </con1:assign>
+          <con1:replace varName="body" contents-only="true">
+            <con2:id>_ActionId-3645351208375448940--14cfe84a.158f89cfacf.-4d83</con2:id>
+            <con1:expr>
+              <con2:xqueryTransform>
+                <con2:resource ref="ITEL/Core/Resources/XQueries/consultarDatosMin_Res"/>
+                <con2:param name="proceso">
+                  <con2:path>$proceso</con2:path>
+                </con2:param>
+              </con2:xqueryTransform>
+            </con1:expr>
+          </con1:replace>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="error" name="_onErrorHandler-3645351208375448940--14cfe84a.158f89cfacf.-50d5">
+      <con:stage name="error">
+        <con:context/>
+        <con:actions>
+          <con1:replace varName="body" contents-only="true">
+            <con2:id>_ActionId-3645351208375448940--14cfe84a.158f89cfacf.-50be</con2:id>
+            <con1:expr>
+              <con2:xqueryTransform>
+                <con2:resource ref="ITEL/Core/Resources/XQueries/consultarPaquetesDatosMin_Error"/>
+                <con2:param name="descripcion">
+                  <con2:path>'ERROR'</con2:path>
+                </con2:param>
+                <con2:param name="codigo">
+                  <con2:path>$fault/ctx:reason/text()</con2:path>
+                </con2:param>
+              </con2:xqueryTransform>
+            </con1:expr>
+          </con1:replace>
+          <con2:reply>
+            <con2:id>_ActionId-3645351208375448940--14cfe84a.158f89cfacf.-5097</con2:id>
+          </con2:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="error" name="_onErrorHandler-3645351208375448940--14cfe84a.158f89cfacf.-490b">
+      <con:stage name="error1">
+        <con:context/>
+        <con:actions>
+          <con1:replace varName="body" contents-only="true">
+            <con2:id>_ActionId-3645351208375448940--14cfe84a.158f89cfacf.-482c</con2:id>
+            <con1:expr>
+              <con2:xqueryTransform>
+                <con2:resource ref="ITEL/Core/Resources/XQueries/consultarPaquetesDatosMin_Error"/>
+                <con2:param name="descripcion">
+                  <con2:path>'ERROR'</con2:path>
+                </con2:param>
+                <con2:param name="codigo">
+                  <con2:path>$fault/ctx:reason/text()</con2:path>
+                </con2:param>
+              </con2:xqueryTransform>
+            </con1:expr>
+          </con1:replace>
+          <con2:reply>
+            <con2:id>_ActionId-3645351208375448940--14cfe84a.158f89cfacf.-482b</con2:id>
+          </con2:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:flow>
+      <con:pipeline-node name="PipelinePairNode1">
+        <con:request>PipelinePairNode1_request</con:request>
+        <con:response>PipelinePairNode1_response</con:response>
+      </con:pipeline-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

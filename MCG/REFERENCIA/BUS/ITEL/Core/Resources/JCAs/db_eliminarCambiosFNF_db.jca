@@ -1,0 +1,17 @@
+<adapter-config name="eliminarCambiosFNF" adapter="Database Adapter"
+	wsdlLocation="../WSDLs/eliminarCambiosFNF_BD.wsdl"
+	xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+
+	<connection-factory location="eis/DB/ITEL_SOA_CENT"
+		UIConnectionName="ITEL_SOA" adapterRef="" />
+	<endpoint-interaction portType="eliminarCambiosFNF_ptt"
+		operation="eliminarCambiosFNF">
+		<interaction-spec
+			className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
+			<property name="PackageName" value="PKG_SOA_ITEL" />
+			<property name="ProcedureName" value="PRC_ELIMINAR_CAMBIOSFNF" />
+			<property name="GetActiveUnitOfWork" value="false" />
+		</interaction-spec>
+		<output />
+	</endpoint-interaction>
+</adapter-config>

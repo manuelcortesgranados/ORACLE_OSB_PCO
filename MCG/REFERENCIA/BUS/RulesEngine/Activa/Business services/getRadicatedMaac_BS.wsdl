@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/prueba2/Project1/bd_getRadicatedMaac" name="bd_getRadicatedMaac-concrete" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/prueba2/Project1/bd_getRadicatedMaac" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/prueba2/Project1/bd_getRadicatedMaac" location="../Resources/WSDLs/getRadicatedMaacActiva_BD.wsdl"/>
+  <binding name="bd_getRadicatedMaac_ptt-binding" type="tns:bd_getRadicatedMaac_ptt">
+    <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+    <operation name="bd_getRadicatedMaac">
+      <soap:operation soapAction="bd_getRadicatedMaac"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="bd_getRadicatedMaac-service">
+    <port name="bd_getRadicatedMaac-port" binding="tns:bd_getRadicatedMaac_ptt-binding">
+      <soap:address location="jca://eis/DB/Activa"/>
+    </port>
+  </service>
+</definitions>

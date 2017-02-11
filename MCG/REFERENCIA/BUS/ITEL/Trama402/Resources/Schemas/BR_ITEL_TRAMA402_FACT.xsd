@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://www.comcel.com.co/trama402Fact/"
+           xmlns:tns="http://www.comcel.com.co/trama402Fact/">
+   <xs:element name="TRAMA" type="tns:tramaType"/>
+   <xs:complexType name="tramaType">
+      <xs:sequence>
+         <xs:element name="HEADER" type="tns:headerType"/>
+         <xs:element name="PARAMETERS" type="tns:parametersType"/>
+         <xs:element name="RESULTADO" type="tns:resultadoType"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="headerType">
+      <xs:sequence>
+         <xs:element name="METODO" type="xs:string"/>
+         <xs:element name="MINDESTINO" type="xs:string"/>
+         <xs:element name="MINORIGEN" type="xs:string"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="parametersType">
+      <xs:sequence>
+         <xs:element name="COMENTARIO" type="xs:string"/>
+         <xs:element name="HOSTID" type="xs:string"/>
+         <xs:element name="CONSECUTIVO" type="xs:string"/>
+         <xs:element name="MONTORECARGA" type="xs:decimal"/>
+         <xs:element name="COBROSMS" type="xs:decimal"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="resultadoType">
+      <xs:sequence>
+         <xs:element name="ERROR" type="xs:string" nillable="true"/>
+         <xs:element name="CONSULTASUSCRIPTOR" type="xs:string"
+                     nillable="true"/>
+         <xs:element name="ACREDITAONPEAK" type="xs:string" nillable="true"/>
+         <xs:element name="MONTOONPEAKORIGEN" type="xs:decimal"/>
+         <xs:element name="MODIFICAVIGENCIAONPEAK" type="xs:string"
+                     nillable="true"/>
+         <xs:element name="VIGENCIAONPEAK" type="xs:string"/>
+         <xs:element name="MONTOONPEAKDESTINO" type="xs:decimal"/>
+      </xs:sequence>
+   </xs:complexType>
+</xs:schema>

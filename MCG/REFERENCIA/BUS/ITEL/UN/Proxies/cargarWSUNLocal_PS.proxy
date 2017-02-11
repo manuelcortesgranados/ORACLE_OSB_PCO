@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config">
+  <ser:coreEntry isProxy="true" isEnabled="true" isAutoPublish="false" isTracingEnabled="false">
+    <ser:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config">
+      <con:wsdl ref="ITEL/UN/Resources/WSDLs/cargarWSUN_PS"/>
+      <con:port>
+        <con:name>CargarWSUNSOAP</con:name>
+        <con:namespace>http://www.comcel.com.co/CargarWSUN/</con:namespace>
+      </con:port>
+      <con:selector type="SOAP body"/>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+    <ser:ws-policy>
+      <ser:binding-mode>wsdl-policy-attachments</ser:binding-mode>
+    </ser:ws-policy>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>local</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:inbound-properties/>
+    <tran:all-headers>true</tran:all-headers>
+  </ser:endpointConfig>
+  <ser:router>
+    <con:pipeline type="request" name="PipelinePairNode1_request">
+      <con:stage name="validacion" errorHandler="_onErrorHandler-1121776994630422408--7ab6da12.1333ceeaa12.-7f68">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/CargarWSUN/" prefix="car"/>
+        </con:context>
+        <con:actions>
+          <con2:assign varName="tiempo">
+            <con1:id>_ActionId-1121776994630422408--7ab6da12.1333ceeaa12.-7f82</con1:id>
+            <con2:expr>
+              <con1:xqueryText>fn:current-time()</con1:xqueryText>
+            </con2:expr>
+          </con2:assign>
+          <con2:validate>
+            <con1:id>_ActionId-1121776994630422408--7ab6da12.1333ceeaa12.-7f69</con1:id>
+            <con2:schema ref="ITEL/UN/Resources/Schemas/PS_ITEL_CARGAR_WSUN"/>
+            <con2:schemaElement xmlns:car="http://www.comcel.com.co/CargarWSUN/">car:Input_Parameters</con2:schemaElement>
+            <con2:varName>body</con2:varName>
+            <con2:location>
+              <con1:xpathText>./car:Input_Parameters</con1:xpathText>
+            </con2:location>
+          </con2:validate>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="PipelinePairNode1_response"/>
+    <con:pipeline type="error" name="_onErrorHandler-1121776994630422408--7ab6da12.1333ceeaa12.-7f68">
+      <con:stage name="error">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/CargarWSUN/" prefix="car"/>
+        </con:context>
+        <con:actions>
+          <con2:replace varName="body" contents-only="true">
+            <con1:id>_ActionId-1688226799896875762-3278b89e.1335a222342.-7ef2</con1:id>
+            <con2:expr>
+              <con1:xqueryTransform>
+                <con1:resource ref="ITEL/UN/Resources/XQueries/cargarWSUN_Error"/>
+                <con1:param name="tiempoI">
+                  <con1:path>$tiempo</con1:path>
+                </con1:param>
+                <con1:param name="mensaje">
+                  <con1:path>"Error en la etapa de validacion "</con1:path>
+                </con1:param>
+                <con1:param name="descripcion">
+                  <con1:path>$fault/ctx:reason/text(),$inbound/ctx:transport/ctx:uri</con1:path>
+                </con1:param>
+                <con1:param name="codigo">
+                  <con1:path>"903"</con1:path>
+                </con1:param>
+              </con1:xqueryTransform>
+            </con2:expr>
+          </con2:replace>
+          <con1:reply isError="false">
+            <con1:id>_ActionId-1121776994630422408--7ab6da12.1333ceeaa12.-7f07</con1:id>
+          </con1:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="error" name="_onErrorHandler-7175627361547289947--4ffe4ee4.13341839efc.-7f61">
+      <con:stage name="error_operacion">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/CargarWSUN/" prefix="car"/>
+        </con:context>
+        <con:actions>
+          <con2:replace varName="body" contents-only="true">
+            <con1:id>_ActionId-1688226799896875762-3278b89e.1335a222342.-7f11</con1:id>
+            <con2:expr>
+              <con1:xqueryTransform>
+                <con1:resource ref="ITEL/UN/Resources/XQueries/cargarWSUN_Error"/>
+                <con1:param name="tiempoI">
+                  <con1:path>$tiempo</con1:path>
+                </con1:param>
+                <con1:param name="mensaje">
+                  <con1:path>"Error en etapa de routing "</con1:path>
+                </con1:param>
+                <con1:param name="descripcion">
+                  <con1:path>$fault/ctx:reason/text()</con1:path>
+                </con1:param>
+                <con1:param name="codigo">
+                  <con1:path>"11"</con1:path>
+                </con1:param>
+              </con1:xqueryTransform>
+            </con2:expr>
+          </con2:replace>
+          <con1:reply isError="false">
+            <con1:id>_ActionId-7175627361547289947--4ffe4ee4.13341839efc.-7f39</con1:id>
+          </con1:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:flow>
+      <con:pipeline-node name="PipelinePairNode1">
+        <con:request>PipelinePairNode1_request</con:request>
+        <con:response>PipelinePairNode1_response</con:response>
+      </con:pipeline-node>
+      <con:route-node name="RouteTo_ejecutarOperacionesWSUN" error-handler="_onErrorHandler-7175627361547289947--4ffe4ee4.13341839efc.-7f61">
+        <con:context>
+          <con1:userNsDecl namespace="http://www.w3.org/2007/05/addressing/metadata" prefix="wsam"/>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/CargarWSUN/" prefix="car"/>
+        </con:context>
+        <con:actions>
+          <con3:route>
+            <con1:id>_ActionId-7175627361547289947--4ffe4ee4.13341839efc.-7f9d</con1:id>
+            <con3:service ref="ITEL/UN/Business Services/ejecutarOperacionWSUN_BS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con3:operation>ExecuteCommand</con3:operation>
+            <con3:outboundTransform>
+              <con2:replace varName="body" contents-only="true">
+                <con1:id>_ActionId-7175627361547289947--4ffe4ee4.13341839efc.-7d8b</con1:id>
+                <con2:expr>
+                  <con1:xqueryTransform>
+                    <con1:resource ref="ITEL/UN/Resources/XQueries/cargarWSUN_Req_ejecutarOperacionWSUN"/>
+                    <con1:param name="input_Parameters1">
+                      <con1:path>$body/car:Input_Parameters</con1:path>
+                    </con1:param>
+                  </con1:xqueryTransform>
+                </con2:expr>
+              </con2:replace>
+            </con3:outboundTransform>
+            <con3:responseTransform>
+              <con2:replace varName="body" contents-only="true">
+                <con1:id>_ActionId-3057080584951475083-78dc7923.13346bea93c.-7fba</con1:id>
+                <con2:expr>
+                  <con1:xqueryTransform>
+                    <con1:resource ref="ITEL/UN/Resources/XQueries/cargarWSUN_Res"/>
+                    <con1:param name="tiempoI">
+                      <con1:path>$tiempo</con1:path>
+                    </con1:param>
+                    <con1:param name="descripcion">
+                      <con1:path>"Carga ejecutada con exito "</con1:path>
+                    </con1:param>
+                    <con1:param name="commandResponseData1">
+                      <con1:path>$body/*:CommandResponseData</con1:path>
+                    </con1:param>
+                  </con1:xqueryTransform>
+                </con2:expr>
+              </con2:replace>
+            </con3:responseTransform>
+          </con3:route>
+        </con:actions>
+      </con:route-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.comcel.com.co/EjecutarTrama400/" 
+	xmlns:tns="http://www.comcel.com.co/EjecutarTrama400/">
+	<xs:element name="Input_Parameters" type="tns:Input_Paramaters" />
+	<xs:element name="WS_Result" type="tns:WS_Result" />
+
+	<xs:complexType name="Input_Paramaters">
+		<xs:sequence>
+			<xs:element name="TRAMA" type="tns:tramaType" />
+			<xs:element name="TRAMASTR" type="xs:string" />
+			<xs:element name="CODIGOIN" type="xs:string" />
+			<xs:element name="TIEMPO" type="xs:dateTime" />
+			<xs:element name="CONSECUTIVO" type="xs:decimal" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="tramaType">
+		<xs:sequence>
+			<xs:element name="HEADER" type="tns:headerType" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="headerType">
+		<xs:sequence>
+			<xs:element name="METODO" type="xs:string" />
+      <xs:element name="MIN" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="WS_Result">
+		<xs:sequence>
+			<xs:element name="CODIGO" type="xs:string" />
+			<xs:element name="MENSAJE" type="tns:MensajeType" />
+			<xs:element name="DESCRIPCION" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="MensajeType">
+		<xs:sequence>
+			<xs:element name="RESDESCRIPCION" type="xs:string" />
+			<xs:element name="PARAMETROSTRAMA" type="tns:parametrosType" />
+			<xs:element name="PARAMETROSREGLAS" type="tns:parametrosType" />
+			<xs:element name="UUID" type="xs:decimal" />
+			<xs:element name="DURTRAMA400" type="xs:integer" />
+			<xs:element name="DURREGLASNEGOCIO" type="xs:integer" />
+			<xs:element name="DURSUSCRIPTOR" type="xs:integer" />
+			<xs:element name="DURREGLASPROVISION" type="xs:integer" />
+			<xs:element name="DURSERVICIOSIN2" type="xs:integer" />
+			<xs:element name="DURSUSCRIPTORIN" type="xs:integer" />
+			<xs:element name="DURTXIN" type="xs:integer" />
+			<xs:element name="URLCOLAETAPA" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="parametrosType">
+		<xs:sequence>
+			<xs:element name="PARAMETRO" type="tns:parametroType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="parametroType">
+		<xs:sequence>
+			<xs:element name="NOMBRE" type="xs:string" />
+			<xs:element name="TIPO" type="xs:string" />
+			<xs:element name="VALOR" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	
+</xs:schema>

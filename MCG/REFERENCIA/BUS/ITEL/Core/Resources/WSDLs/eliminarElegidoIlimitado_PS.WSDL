@@ -1,0 +1,37 @@
+<wsdl:definitions name="eliminarElegidoIlimitado_PS" targetNamespace="http://www.comcel.com.co/eliminarElegidoIlimitado_PS/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.comcel.com.co/eliminarElegidoIlimitado_PS/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsd1="http://www.comcel.com.co/PS_ELIMINAR_ELEGIDOILIMITADO">
+	<wsdl:types>
+		<xsd:schema>
+			<xsd:import namespace="http://www.comcel.com.co/PS_ELIMINAR_ELEGIDOILIMITADO" schemaLocation="../Schemas/PS_ITEL_ELIMINAR_ELEGIDOILIMITADO.xsd">
+			</xsd:import>
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="eliminarElegidoIlimitadoRequest">
+		<wsdl:part element="xsd1:Input_Parameters" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="eliminarElegidoIlimitadoResponse">
+		<wsdl:part element="xsd1:WS_Result" name="parameters"/>
+	</wsdl:message>
+	<wsdl:portType name="eliminarElegidoIlimitado_PS">
+		<wsdl:operation name="eliminarElegidoIlimitado">
+			<wsdl:input message="tns:eliminarElegidoIlimitadoRequest"/>
+			<wsdl:output message="tns:eliminarElegidoIlimitadoResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="eliminarElegidoIlimitado_PSSOAP" type="tns:eliminarElegidoIlimitado_PS">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="eliminarElegidoIlimitado">
+			<soap:operation soapAction="http://www.comcel.com.co/eliminarElegidoIlimitado_PS/eliminarElegidoIlimitado"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="eliminarElegidoIlimitado_PS">
+		<wsdl:port binding="tns:eliminarElegidoIlimitado_PSSOAP" name="eliminarElegidoIlimitado_PSSOAP">
+			<soap:address location="http://www.comcel.com.co"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

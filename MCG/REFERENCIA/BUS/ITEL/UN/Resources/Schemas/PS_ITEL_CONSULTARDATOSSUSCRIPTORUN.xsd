@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.comcel.com.co/ConsultarDatosSuscriptorUN/"
+	xmlns:tns="http://www.comcel.com.co/ConsultarDatosSuscriptorUN/">
+	<xs:element name="Input_Parameters" type="tns:Input_Paramaters" />
+	<xs:element name="WS_Result" type="tns:WS_Result" />
+
+	<xs:complexType name="Input_Paramaters">
+		<xs:sequence>
+			<xs:element name="PREFIX" type="xs:string" />
+			<xs:element name="MIN" type="xs:string" />
+			<xs:element name="IN" type="xs:string" />
+			<xs:element name="TIMEOUTMS" type="xs:decimal" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="WS_Result">
+		<xs:sequence>
+			<xs:element name="CODIGO" type="xs:string" />
+			<xs:element name="MENSAJE" type="tns:MensajeType" />
+			<xs:element name="DESCRIPCION" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="MensajeType">
+		<xs:sequence>
+			<xs:element name="DatosSuscriptor" type="tns:datosSusType"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+			<xs:complexType name="datosSusType">
+				<xs:sequence>
+					<xs:element name="CUSTOMERID" type="xs:string" />
+						<xs:element name="Cgpa" type="xs:string" />
+						<xs:element name="Contract" type="xs:string" />
+						<xs:element name="IsLocked" type="xs:string" />
+						<xs:element name="IsFraudLocked" type="xs:string" />
+						<xs:element name="IsFirstCallPassed" type="xs:string" />
+						<xs:element name="IsGPRSUsed" type="xs:string" />
+						<xs:element name="IsWelcomeBackPromoDone" type="xs:string" />
+						<xs:element name="IsFnFPossible" type="xs:string" />
+						<xs:element name="FnF_Numbers" type="tns:DataArray" />
+						<xs:element name="IsBestFnFPossible" type="xs:string" />
+						<xs:element name="BestFnF_Numbers" type="tns:DataArray" />
+						<xs:element name="OnPeakAccountID" type="tns:AccountID" />
+						<xs:element name="OffPeakAccountID" type="tns:AccountID" />
+						<xs:element name="FreeSMSAccountID" type="tns:AccountID" />
+						<xs:element name="BonusAccountID" type="tns:AccountID" />
+						<xs:element name="MinutesAccountID2" type="tns:AccountID" />
+						<xs:element name="MinutesAccountID3" type="tns:AccountID" />
+						<xs:element name="MinutesAccountID4" type="tns:AccountID" />
+						<xs:element name="MonetaryAccountID2" type="tns:AccountID" />
+						<xs:element name="MonetaryAccountID3" type="tns:AccountID" />
+						<xs:element name="PreActiveEndDate" type="xs:string" />
+						<xs:element name="LastKnownPeriod" type="xs:string" />
+						<xs:element name="ActiveEndDate" type="xs:string" />
+				</xs:sequence>
+					<xs:attribute name="exito" type="xs:boolean" />
+					<xs:attribute name="mensaje" type="xs:string" />
+			</xs:complexType>
+			
+			<xs:complexType name="DataArray">
+				<xs:sequence>
+					<xs:element name="Detail" type="xs:string" minOccurs="0"
+						maxOccurs="unbounded" />
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="AccountID">
+				<xs:sequence>
+					<xs:element name="Balance" type="xs:string" />
+					<xs:element name="ExpiryDate" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+		
+
+</xs:schema>

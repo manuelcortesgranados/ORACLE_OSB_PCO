@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://retrievelinestatistics.performancemanagement.amx.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:WL5G3N4="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:WL5G3N3="http://retrievelinestatistics.performancemanagement.amx.com" xmlns:WL5G3N2="http://commonsexceptions.schema.amx.com" xmlns:WL5G3N0="http://schemas.xmlsoap.org/wsdl/" xmlns:WL5G3N1="http://retrievelinestatistics.performancemanagement.schema.amx.com">
+    <WL5G3N0:documentation>Author: Jorge Enrique Garrido
+		email: 	jorge.garridovergara@tcs.com
+		Date: 	22/04/2013
+		Version: 1.0
+		Objective: A new API will be exposed as a web service for Credit Engine to allow retrieving the Line Statistics in an independent API call.
+        Capabilities: RetrieveLineStatistics 
+        Changes: CR Post signed off</WL5G3N0:documentation>
+    <wsdl:types>
+        <xs:schema xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:commonexception="http://commonsexceptions.schema.amx.com" xmlns:ret="http://retrievelinestatistics.performancemanagement.schema.amx.com" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://retrievelinestatistics.performancemanagement.amx.com" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+            <xs:import namespace="http://retrievelinestatistics.performancemanagement.schema.amx.com" schemaLocation="../Schemas/BS_GET_CLIENTSTATISTICSLINES.xsd"/>
+            <xs:import namespace="http://commonsexceptions.schema.amx.com" schemaLocation="../Schemas/COMMON_EXCEPTIONS.xsd"/>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="RetrieveLineStatisticsRequest">
+        <wsdl:part name="body" element="WL5G3N1:RetrieveLineStatisticsRequest"/>
+    </wsdl:message>
+    <wsdl:message name="RetrieveLineStatisticsResponse">
+        <wsdl:part name="body" element="WL5G3N1:RetrieveLineStatisticsResponse"/>
+    </wsdl:message>
+    <wsdl:message name="InternalSystemErrorException">
+        <wsdl:part name="fault" element="WL5G3N2:InternalSystemErrorException"/>
+    </wsdl:message>
+    <wsdl:message name="ExternalSystemNotAvailableException">
+        <wsdl:part name="fault" element="WL5G3N2:ExternalSystemNotAvailableException"/>
+    </wsdl:message>
+    <wsdl:message name="MandatoryDataMissingException">
+        <wsdl:part name="fault" element="WL5G3N2:MandatoryDataMissingException"/>
+    </wsdl:message>
+    <wsdl:message name="ReferenceDataMissingException">
+        <wsdl:part name="fault" element="WL5G3N2:ReferenceDataMissingException"/>
+    </wsdl:message>
+    <wsdl:message name="BusinessExceptionFault">
+        <wsdl:part name="fault" element="WL5G3N2:BusinessExceptionFault"/>
+    </wsdl:message>
+    <wsdl:portType name="RetrieveLineStatistics">
+        <wsdl:operation name="RetrieveLineStatistics">
+            <WL5G3N0:documentation>A new API will be exposed as a web service for Credit Engine to allow retrieving the Line Statistics in an independent API call.</WL5G3N0:documentation>
+            <wsdl:input name="RetrieveLineStatisticsInput" message="WL5G3N3:RetrieveLineStatisticsRequest"/>
+            <wsdl:output name="RetrieveLineStatisticsOutput" message="WL5G3N3:RetrieveLineStatisticsResponse"/>
+            <wsdl:fault name="InternalSystemErrorException" message="WL5G3N3:InternalSystemErrorException"/>
+            <wsdl:fault name="ExternalSystemNotAvailableException" message="WL5G3N3:ExternalSystemNotAvailableException"/>
+            <wsdl:fault name="MandatoryDataMissingException" message="WL5G3N3:MandatoryDataMissingException"/>
+            <wsdl:fault name="ReferenceDataMissingException" message="WL5G3N3:ReferenceDataMissingException"/>
+            <wsdl:fault name="BusinessExceptionFault" message="WL5G3N3:BusinessExceptionFault"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="RetrieveLineStatisticsSoapBinding" type="WL5G3N3:RetrieveLineStatistics">
+        <WL5G3N4:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="RetrieveLineStatistics">
+            <WL5G3N4:operation soapAction="http://retrievelinestatistics.performancemanagement.amx.com/RetrieveLineStatistics"/>
+            <wsdl:input>
+                <WL5G3N4:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <WL5G3N4:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="InternalSystemErrorException">
+                <WL5G3N4:fault name="InternalSystemErrorException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ExternalSystemNotAvailableException">
+                <WL5G3N4:fault name="ExternalSystemNotAvailableException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="MandatoryDataMissingException">
+                <WL5G3N4:fault name="MandatoryDataMissingException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ReferenceDataMissingException">
+                <WL5G3N4:fault name="ReferenceDataMissingException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="BusinessExceptionFault">
+                <WL5G3N4:fault name="BusinessExceptionFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="RetrieveLineStatisticsService">
+        <wsdl:port name="RetrieveLineStatisticsPort" binding="WL5G3N3:RetrieveLineStatisticsSoapBinding">
+            <WL5G3N4:address location="http://lnxsoa12:8115/OSB_ONE_AMX_PRO/Services/Proxy_Services/RetrieveLineStatisticsService_PS"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

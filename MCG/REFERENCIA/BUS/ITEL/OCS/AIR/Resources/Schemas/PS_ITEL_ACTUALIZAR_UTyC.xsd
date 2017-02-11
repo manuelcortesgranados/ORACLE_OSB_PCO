@@ -1,0 +1,45 @@
+<xs:schema targetNamespace="http://www.comcel.com.co/ActualizarUTyCOCS/"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	xmlns:tns="http://www.comcel.com.co/ActualizarUTyCOCS/"
+	xmlns:oper="http://www.comcel.com.co/OCS/OperacionOCS_AIR">
+
+	<xs:import namespace="http://www.comcel.com.co/OCS/OperacionOCS_AIR"
+		schemaLocation="DA_ITEL_OPERACION_OCS_AIR.xsd" />
+
+	<xs:element name="Input_Parameters" type="tns:Input_Parameters" />
+	<xs:element name="WS_Result" type="tns:WS_Result" />
+
+	<xs:complexType name="Input_Parameters">
+		<xs:sequence>
+			<!-- originNodeType -->
+			<xs:element name="TIPO_NODO" type="xs:string" /> <!-- AIR, IVR, ADM , EXT -->
+			<!-- originHostName -->
+			<xs:element name="HOST_ORIGEN" type="xs:string" />
+			<!-- originTransactionID -->
+			<xs:element name="ID_TRANSACCION" type="xs:string" />
+			<!-- originTimeStamp -->
+			<xs:element name="FECHA_TRANSACCION" type="xs:string" />
+			<!-- subscriberNumber -->
+			<xs:element name="MIN" type="xs:string" />
+			<!-- requested -->  
+			<xs:element name="CONTADOR" type="xs:int" minOccurs="0"/>
+			<xs:element name="THRESHOLD" type="xs:int" minOccurs="0"/>
+			<xs:element name="VALOR" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="WS_Result">
+		<xs:sequence>
+			<xs:element name="CODIGO" type="xs:string" />
+			<xs:element name="MENSAJE" type="tns:MensajeType" />
+			<xs:element name="DESCRIPCION" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="MensajeType">
+		<xs:sequence>
+			<xs:element name="ACTUALIZAR_UTyC" type="oper:ActualizarUTyCResponse" />
+		</xs:sequence>
+	</xs:complexType>
+
+</xs:schema>

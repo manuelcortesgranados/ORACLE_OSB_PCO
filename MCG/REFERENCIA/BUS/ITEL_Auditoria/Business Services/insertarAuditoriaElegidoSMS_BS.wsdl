@@ -1,0 +1,20 @@
+<definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/Ensayo/Reglas/bd_insertarAuditoriaElegidoSMS" name="bd_insertarAuditoriaElegidoSMS-concrete" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/Ensayo/Reglas/bd_insertarAuditoriaElegidoSMS" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/Ensayo/Reglas/bd_insertarAuditoriaElegidoSMS" location="../Resources/WSDLs/insertarAuditoriaElegidoSMS_BD.wsdl"/>
+  <binding name="bd_insertarAuditoriaElegidoSMS_ptt-binding" type="tns:bd_insertarAuditoriaElegidoSMS_ptt">
+    <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+    <operation name="bd_insertarAuditoriaElegidoSMS">
+      <soap:operation soapAction="bd_insertarAuditoriaElegidoSMS"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="bd_insertarAuditoriaElegidoSMS-service">
+    <port name="bd_insertarAuditoriaElegidoSMS-port" binding="tns:bd_insertarAuditoriaElegidoSMS_ptt-binding">
+      <soap:address location="jca://eis/DB/ITEL_SOA"/>
+    </port>
+  </service>
+</definitions>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.comcel.com.co/ConsultarPaquetesDatos/"
+	xmlns:tns="http://www.comcel.com.co/ConsultarPaquetesDatos/">
+	
+	<xs:element name="Input_Parameters" type="tns:Input_Paramaters" />
+	<xs:element name="WS_Result" type="tns:WS_Result" />
+
+	<xs:complexType name="Input_Paramaters">
+		<xs:sequence>
+			<xs:element name="CODIGO" type="xs:string" />
+			<xs:element name="TIPO" type="xs:string" />
+			<xs:element name="CANAL" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="WS_Result">
+		<xs:sequence>
+			<xs:element name="CODIGO" type="xs:string" />
+			<xs:element name="MENSAJE" type="tns:respuestaType" />
+			<xs:element name="DESCRIPCION" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="respuestaType">
+		<xs:sequence>
+			<xs:element name="ID_SM_BRMS" type="xs:string" />
+			<xs:element name="COMENTARIO" type="xs:string" />
+			<xs:element name="HOST_ID" type="xs:string" />
+			<xs:element name="PLATAFORMA" type="xs:string" />
+			<xs:element name="VALOR" type="xs:decimal" />
+			<xs:element name="NOTIFICACION" type="xs:string" />
+			<xs:element name="OFFER_ID" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+
+</xs:schema>

@@ -1,0 +1,14 @@
+<adapter-config name="bd_insertarElegidoOCS" adapter="Database Adapter" wsdlLocation="../WSDLs/insertarElegidoOCS_BD.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/DB/ITELDB" UIConnectionName="desarrollo" adapterRef=""/>
+  <endpoint-interaction portType="bd_insertarElegidoOCS_ptt" operation="bd_insertarElegidoOCS">
+    <interaction-spec className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
+      <property name="PackageName" value="PKG_SOA_ITEL"/>
+      <property name="ProcedureName" value="PRC_INSERTAR_ELEGIDO_ILI_OCS"/>
+      <property name="QueryTimeout" value="1"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+    <output/>
+  </endpoint-interaction>
+
+</adapter-config>

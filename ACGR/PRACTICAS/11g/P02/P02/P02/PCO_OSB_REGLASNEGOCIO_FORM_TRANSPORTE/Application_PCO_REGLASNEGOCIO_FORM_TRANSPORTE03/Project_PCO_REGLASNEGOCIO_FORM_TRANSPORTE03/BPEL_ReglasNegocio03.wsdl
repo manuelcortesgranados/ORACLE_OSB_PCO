@@ -1,0 +1,32 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions
+     name="BPEL_ReglasNegocio03"
+     targetNamespace="http://xmlns.oracle.com/Application_PCO_REGLASNEGOCIO_FORM_TRANSPORTE03/Project_PCO_REGLASNEGOCIO_FORM_TRANSPORTE03/BPEL_ReglasNegocio03"
+     xmlns:ns1="http://www.example.org/FirmaFormRegistroAutomotor03"
+     xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+     xmlns:client="http://xmlns.oracle.com/Application_PCO_REGLASNEGOCIO_FORM_TRANSPORTE03/Project_PCO_REGLASNEGOCIO_FORM_TRANSPORTE03/BPEL_ReglasNegocio03"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+    <plnk:partnerLinkType name="BPEL_ReglasNegocio03">
+        <plnk:role name="BPEL_ReglasNegocio03Provider" portType="client:BPEL_ReglasNegocio03"/>
+    </plnk:partnerLinkType>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://www.example.org/FirmaFormRegistroAutomotor03"
+             xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:client="http://xmlns.oracle.com/Application_PCO_REGLASNEGOCIO_FORM_TRANSPORTE03/Project_PCO_REGLASNEGOCIO_FORM_TRANSPORTE03/BPEL_ReglasNegocio03"
+             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+            <import namespace="http://www.example.org/FirmaFormRegistroAutomotor03" schemaLocation="xsd/FirmaFormRegistroAutomotor03.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="BPEL_ReglasNegocio03RequestMessage">
+        <wsdl:part name="payload" element="ns1:formEntrada03"/>
+    </wsdl:message>
+    <wsdl:message name="BPEL_ReglasNegocio03ResponseMessage">
+        <wsdl:part name="payload" element="ns1:formRetorno03"/>
+    </wsdl:message>
+    <wsdl:portType name="BPEL_ReglasNegocio03">
+        <wsdl:operation name="process">
+            <wsdl:input message="client:BPEL_ReglasNegocio03RequestMessage"/>
+            <wsdl:output message="client:BPEL_ReglasNegocio03ResponseMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

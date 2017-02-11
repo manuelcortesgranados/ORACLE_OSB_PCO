@@ -1,0 +1,13 @@
+<adapter-config name="bd_getEntities" adapter="Database Adapter" wsdlLocation="../WSDLs/getEntities_BD.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+
+	<connection-factory location="eis/DB/Rules_Engine" UIConnectionName="desarrollo" adapterRef=""/>
+	<endpoint-interaction portType="bd_getEntities_ptt" operation="bd_getEntities">
+		<interaction-spec className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
+			<property name="PackageName" value="PKG_FRAMEWORK"/>
+			<property name="ProcedureName" value="PRC_GET_ENTITIES"/>
+			<property name="GetActiveUnitOfWork" value="false"/>
+		</interaction-spec>
+		<output/>
+	</endpoint-interaction>
+
+</adapter-config>

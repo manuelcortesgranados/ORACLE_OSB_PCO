@@ -1,0 +1,35 @@
+<wsdl:definitions name="servicioProvision_PS" targetNamespace="http://www.comcel.com.co/servicioProvision_PS/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.comcel.com.co/servicioProvision_PS/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsd1="http://www.comcel.com.co/ServicioProvision/">
+  <wsdl:types>
+    <xsd:schema>
+    	<xsd:import namespace="http://www.comcel.com.co/ServicioProvision/" schemaLocation="../Schemas/PS_ITEL_SERVICIO_PROVISION.xsd">
+    	</xsd:import></xsd:schema></wsdl:types>
+  <wsdl:message name="servicioProvisionRequest">
+    <wsdl:part element="xsd1:Input_Parameters" name="Input_Parameters"/>
+  </wsdl:message>
+  <wsdl:message name="servicioProvisionResponse">
+    <wsdl:part element="xsd1:WS_Result" name="WS_Result"/>
+  </wsdl:message>
+  <wsdl:portType name="servicioProvision_PS">
+    <wsdl:operation name="servicioProvision">
+      <wsdl:input message="tns:servicioProvisionRequest"/>
+      <wsdl:output message="tns:servicioProvisionResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="servicioProvision_PSSOAP" type="tns:servicioProvision_PS">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="servicioProvision">
+      <soap:operation soapAction="http://www.comcel.com.co/servicioProvision_PS/servicioProvision"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="servicioProvision_PS">
+    <wsdl:port binding="tns:servicioProvision_PSSOAP" name="servicioProvision_PSSOAP">
+      <soap:address location="http://www.comcel.com.co/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

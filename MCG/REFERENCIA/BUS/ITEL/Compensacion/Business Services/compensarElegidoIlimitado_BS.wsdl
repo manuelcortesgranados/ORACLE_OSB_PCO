@@ -1,0 +1,20 @@
+<definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/Ensayo/Reglas/bd_compensarElegidoIlimitado" name="bd_compensarElegidoIlimitado-concrete" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/Ensayo/Reglas/bd_compensarElegidoIlimitado" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/Ensayo/Reglas/bd_compensarElegidoIlimitado" location="../Resources/WSDLs/compensarElegidoIlimitado_BD.wsdl"/>
+  <binding name="bd_compensarElegidoIlimitado_ptt-binding" type="tns:bd_compensarElegidoIlimitado_ptt">
+    <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+    <operation name="bd_compensarElegidoIlimitado">
+      <soap:operation soapAction="bd_compensarElegidoIlimitado"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="bd_compensarElegidoIlimitado-service">
+    <port name="bd_compensarElegidoIlimitado-port" binding="tns:bd_compensarElegidoIlimitado_ptt-binding">
+      <soap:address location="jca://eis/DB/ITELDB"/>
+    </port>
+  </service>
+</definitions>

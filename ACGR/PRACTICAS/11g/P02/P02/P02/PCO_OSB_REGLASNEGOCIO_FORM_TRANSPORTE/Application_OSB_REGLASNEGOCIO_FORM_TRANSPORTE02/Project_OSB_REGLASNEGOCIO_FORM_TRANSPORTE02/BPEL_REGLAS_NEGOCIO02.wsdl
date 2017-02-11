@@ -1,0 +1,32 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions
+     name="BPEL_REGLAS_NEGOCIO02"
+     targetNamespace="http://xmlns.oracle.com/Application_OSB_REGLASNEGOCIO_FORM_TRANSPORTE02/Project_OSB_REGLASNEGOCIO_FORM_TRANSPORTE02/BPEL_REGLAS_NEGOCIO02"
+     xmlns:ns1="http://www.example.org/FirmaFormRegistroAutomotor02"
+     xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+     xmlns:client="http://xmlns.oracle.com/Application_OSB_REGLASNEGOCIO_FORM_TRANSPORTE02/Project_OSB_REGLASNEGOCIO_FORM_TRANSPORTE02/BPEL_REGLAS_NEGOCIO02"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+    <plnk:partnerLinkType name="BPEL_REGLAS_NEGOCIO02">
+        <plnk:role name="BPEL_REGLAS_NEGOCIO02Provider" portType="client:BPEL_REGLAS_NEGOCIO02"/>
+    </plnk:partnerLinkType>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://www.example.org/FirmaFormRegistroAutomotor02"
+             xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:client="http://xmlns.oracle.com/Application_OSB_REGLASNEGOCIO_FORM_TRANSPORTE02/Project_OSB_REGLASNEGOCIO_FORM_TRANSPORTE02/BPEL_REGLAS_NEGOCIO02"
+             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+            <import namespace="http://www.example.org/FirmaFormRegistroAutomotor02" schemaLocation="xsd/FirmaFormRegistroAutomotor02.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="BPEL_REGLAS_NEGOCIO02RequestMessage">
+        <wsdl:part name="payload" element="ns1:formularioEntrada"/>
+    </wsdl:message>
+    <wsdl:message name="BPEL_REGLAS_NEGOCIO02ResponseMessage">
+        <wsdl:part name="payload" element="ns1:formularioRetorno"/>
+    </wsdl:message>
+    <wsdl:portType name="BPEL_REGLAS_NEGOCIO02">
+        <wsdl:operation name="process">
+            <wsdl:input message="client:BPEL_REGLAS_NEGOCIO02RequestMessage"/>
+            <wsdl:output message="client:BPEL_REGLAS_NEGOCIO02ResponseMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

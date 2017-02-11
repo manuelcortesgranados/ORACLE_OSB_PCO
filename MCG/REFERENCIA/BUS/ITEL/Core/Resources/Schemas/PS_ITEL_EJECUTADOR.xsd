@@ -1,0 +1,101 @@
+<xs:schema targetNamespace="http://www.comcel.com.co/Ejecutador/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.comcel.com.co/Ejecutador/" xmlns:oper="http://www.comcel.com.co/IN/OperacionCorba" xmlns:oper2="http://www.comcel.com.co/OCS/OperacionOCS_AIR" xmlns:oper3="http://www.comcel.com.co/OCS/OperacionCorbaOCS">
+	
+	<xs:import namespace="http://www.comcel.com.co/IN/OperacionCorba" schemaLocation="../../../IN/Resources/Schemas/DA_ITEL_OPERACION_CORBA.xsd"/>
+		
+	<xs:import namespace="http://www.comcel.com.co/OCS/OperacionOCS_AIR" schemaLocation="../../../OCS/AIR/Resources/Schemas/DA_ITEL_OPERACION_OCS_AIR.xsd"/>	
+		
+	<xs:import namespace="http://www.comcel.com.co/OCS/OperacionCorbaOCS" schemaLocation="../../../OCS/SOI/Resources/Schemas/DA_ITEL_OPERACION_OCS_SOI.xsd"/>	
+	
+	<xs:element name="Input_Parameters" type="tns:Input_Parameters"/>
+	<xs:element name="WS_Result" type="tns:WS_Result"/>
+
+	<xs:complexType name="Input_Parameters">
+		<xs:sequence>
+			<xs:element name="METODO" type="xs:string"/>
+			<xs:element name="MIN_DESTINO" type="xs:string"/>
+			<xs:element name="MIN_ORIGEN" type="xs:string"/>
+			<xs:element name="IN_DESTINO" type="xs:string"/>
+			<xs:element name="IN_ORIGEN" type="xs:string"/>
+			<xs:element name="CONSECUTIVO" type="xs:string"/>
+			<xs:element name="PARAMETROS_TRAMA" type="tns:parametrosType"/>
+			<xs:element name="PARAMETROS_NEGOCIO" type="tns:parametrosType"/>
+			<xs:element name="SUSCRIPTOR_DESTINO" type="oper:Subscriber"/>
+			<xs:element name="SUSCRIPTOR_ORIGEN" type="oper:Subscriber"/>
+			<xs:element name="SUSCRIPTOR_OCS" type="tns:suscriptorOCSType" minOccurs="0"/>
+			<xs:element name="TIEMPO_INICIO" type="xs:dateTime"/>
+			<xs:element name="TIMEOUT" type="xs:integer"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="WS_Result">
+		<xs:sequence>
+			<xs:element name="CODIGO" type="xs:string"/>
+			<xs:element name="MENSAJE" type="tns:mensajeType"/>
+			<xs:element name="DESCRIPCION" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="mensajeType">
+		<xs:sequence>
+			<xs:element name="RESPUESTA" type="xs:string"/>
+			<xs:element name="DURREGLASPROVISION" type="xs:integer"/>
+			<xs:element name="DURSERVICIOSIN2" type="xs:integer"/>
+			<xs:element name="DURTXIN" type="xs:integer"/>
+			<xs:element name="SERVICIOS_EJECUTADOS" type="tns:serviciosType" minOccurs="0"/>
+			<xs:element name="BALANCES" type="tns:balancesType" minOccurs="0"/>
+			<xs:element name="BALANCES_ANTERIOR" type="tns:balancesType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="parametrosType">
+		<xs:sequence>
+			<xs:element name="PARAMETRO" type="tns:parametroType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="parametroType">
+		<xs:sequence>
+			<xs:element name="NOMBRE" type="xs:string"/>
+			<xs:element name="TIPO" type="xs:string"/>
+			<xs:element name="VALOR" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="serviciosType">
+		<xs:sequence>
+			<xs:element name="SERVICIO" type="tns:servicioType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="servicioType">
+		<xs:sequence>
+			<xs:element name="NOMBRE" type="xs:string"/>
+			<xs:element name="PARAMETROS" type="tns:parametrosType"/>
+		</xs:sequence>
+		<xs:attribute name="cluster" type="xs:string"/>
+	</xs:complexType>
+	
+	<xs:complexType name="balancesType">
+		<xs:sequence>
+			<xs:element name="BALANCE" type="tns:balanceType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="balanceType">
+		<xs:sequence>
+			<xs:element name="CUENTA" type="xs:string"/>
+			<xs:element name="VALOR" type="xs:decimal"/>
+			<xs:element name="DIASVIGENCIA" type="xs:string" minOccurs="0"/>
+			<xs:element name="SERVICECLASS" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="suscriptorOCSType">
+		<xs:sequence>
+			<xs:element name="BALANCES" type="oper2:AccountsData" minOccurs="0"/>
+			<xs:element name="DATOS_SUSCRIPTOR" type="oper3:SubscriberFinal" minOccurs="0"/>
+			<xs:element name="FAF_LIST" type="oper2:fafInformationListDetail" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+</xs:schema>

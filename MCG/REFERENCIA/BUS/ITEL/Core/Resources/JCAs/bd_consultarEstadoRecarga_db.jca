@@ -1,0 +1,14 @@
+<adapter-config name="bd_consultarEstadoRecarga" adapter="Database Adapter" wsdlLocation="../WSDLs/consultarEstadoRecarga_BD.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/DB/ITELSOA500" UIConnectionName="Des_Itel" adapterRef=""/>
+  <endpoint-interaction portType="bd_consultarEstadoRecarga_ptt" operation="bd_consultarEstadoRecarga">
+    <interaction-spec className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
+      <property name="PackageName" value="PKG_SOA_ITEL"/>
+      <property name="ProcedureName" value="PRC_CONSULTAR_ESTADO_RECARGA"/>
+      <property name="QueryTimeout" value="8"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+    <output/>
+  </endpoint-interaction>
+
+</adapter-config>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://www.claro.com.co/rulesEngine/ValidateStocksFact"
+	targetNamespace="http://www.claro.com.co/rulesEngine/ValidateStocksFact"
+	xmlns:fd="http://www.claro.com.co/rulesEngine/canonicalModel/FrameworkDomain"
+	xmlns:pd="http://www.claro.com.co/rulesEngine/canonicalModel/ProductDomain">
+	
+	<xs:import
+		schemaLocation="../../../Core/Resources/Schemas/CanonicalModel/ProductDomain.xsd"
+		namespace="http://www.claro.com.co/rulesEngine/canonicalModel/ProductDomain" />
+    <xs:import
+		schemaLocation="../../../Core/Resources/Schemas/CanonicalModel/FrameworkDomain.xsd"
+		namespace="http://www.claro.com.co/rulesEngine/canonicalModel/FrameworkDomain" />
+	
+	<xs:element name="ValidateStocksFactRequest" type="tns:ValidateStocksFactRequestType" />
+	<xs:element name="ValidateStocksFactResponse" type="tns:ValidateStocksFactResponseType" />
+	<xs:complexType name="ValidateStocksFactRequestType">
+		<xs:sequence>
+			<xs:element name="Product" type="pd:Product" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ValidateStocksFactResponseType">
+		<xs:sequence>
+			<xs:element name="Plan" type="fd:Plan" />
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

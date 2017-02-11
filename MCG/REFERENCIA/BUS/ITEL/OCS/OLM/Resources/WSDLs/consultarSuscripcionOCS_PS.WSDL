@@ -1,0 +1,36 @@
+<wsdl:definitions name="ConsultarSuscripcionOCS" targetNamespace="http://www.comcel.com.co/ConsultarSuscripcionOCS/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.comcel.com.co/ConsultarSuscripcionOCS/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<wsdl:types>
+		<schema xmlns="http://www.w3.org/2001/XMLSchema">
+			<import namespace="http://www.comcel.com.co/ConsultarSuscripcionOCS/" schemaLocation="../Schemas/PS_ITEL_CONSULTAR_SUSCRIPCION.xsd"/>
+		</schema>
+	</wsdl:types>
+	<wsdl:message name="Input_Parameters">
+		<wsdl:part element="tns:Input_Parameters" name="Input_Parameters"/>
+	</wsdl:message>
+	<wsdl:message name="WS_Result">
+		<wsdl:part element="tns:WS_Result" name="WS_Result"/>
+	</wsdl:message>
+	<wsdl:portType name="ConsultarSuscripcionOCS">
+		<wsdl:operation name="consultarSuscripcionOCS">
+			<wsdl:input message="tns:Input_Parameters"/>
+			<wsdl:output message="tns:WS_Result"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="ConsultarSuscripcionOCSSOAP" type="tns:ConsultarSuscripcionOCS">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="consultarSuscripcionOCS">
+			<soap:operation soapAction="http://www.comcel.com.co/ConsultarSuscripcionOCS/consultarSuscripcionOCS"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="ConsultarSuscripcionOCS">
+		<wsdl:port binding="tns:ConsultarSuscripcionOCSSOAP" name="ConsultarSuscripcionOCSSOAP">
+			<soap:address location="http://www.comcel.com.co/"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

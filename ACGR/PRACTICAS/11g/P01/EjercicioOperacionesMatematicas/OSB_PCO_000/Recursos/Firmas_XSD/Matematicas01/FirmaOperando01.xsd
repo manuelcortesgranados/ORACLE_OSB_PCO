@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema targetNamespace="http://www.firmaMatematicas01.org/FirmaOperando01" elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:mat="http://www.firmaMatematicas01.org/FirmaOperando01">
+
+    <complexType name="OperacionSumaRequesstType">
+    	<sequence>
+    		<element name="operando1" type="double"></element>
+    		<element name="operando2" type="double"></element>
+    	</sequence>
+    </complexType>
+    
+    <complexType name="OperacionSumaResponseType">
+    	<sequence>
+    		<element name="respuesta" type="double"></element>
+    	</sequence>
+    </complexType>
+    
+    <complexType name="OperacionRestaRequestType">
+    	<sequence>
+    		<element name="operando1" type="double"></element>
+    		<element name="operando2" type="double"></element>
+    	</sequence>
+    </complexType>
+    
+    <complexType name="OperacionRestaResponseType">
+    	<sequence>
+    		<element name="respuesta" type="double"></element>
+    	</sequence>
+    </complexType>
+    
+    <complexType name="OperacionMultiplicacionRequestType">
+    	<sequence>
+    		<element name="operando1" type="double"></element>
+    		<element name="operando2" type="double"></element>
+    	</sequence>
+    </complexType>
+    
+    <complexType name="OperacionMultiplicacionResponseType">
+    	<sequence>
+    		<element name="respuesta" type="double"></element>
+    	</sequence>
+    </complexType>
+    
+    <complexType name="OperacionDivisionRequestType">
+    	<sequence>
+    		<element name="operando1" type="double"></element>
+    		<element name="operando2" type="double"></element>
+    	</sequence>
+    </complexType>
+    
+    <complexType name="OperacionDivisionResponseType">
+    	<sequence>
+    		<element name="respuesta" type="double"></element>
+    	</sequence>
+    </complexType>
+
+    <element name="operacionSumaRequest"
+    	type="mat:OperacionSumaRequesstType">
+    </element>
+
+    <element name="operacionSumaResponse" type="mat:OperacionSumaResponseType"></element>
+
+    <element name="operacionRestaRequest" type="mat:OperacionRestaRequestType"></element>
+
+    <element name="operacionRestaResponse" type="mat:OperacionRestaResponseType"></element>
+
+    <element name="operacionMultiplicacionRequest" type="mat:OperacionMultiplicacionRequestType"></element>
+
+    <element name="operacionMultiplicacionResponse"
+    	type="mat:OperacionMultiplicacionResponseType">
+    </element>
+
+    <element name="operacionDivisionRequest"
+    	type="mat:OperacionDivisionRequestType">
+    </element>
+
+    <element name="operacionDivisionResponse"
+    	type="mat:OperacionDivisionResponseType">
+    </element>
+</schema>

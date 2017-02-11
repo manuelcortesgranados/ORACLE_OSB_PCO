@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.comcel.com.co/ConsultarReglasTrama400/" 
+	xmlns:tns="http://www.comcel.com.co/ConsultarReglasTrama400/">
+	<xs:element name="Input_Parameters" type="tns:Input_Paramaters" />
+	<xs:element name="WS_Result" type="tns:WS_Result" />
+
+	<xs:complexType name="Input_Paramaters">
+		<xs:sequence>
+			<xs:element name="HEADER" type="tns:headerType" />
+      		<xs:element name="PARAMETERS" type="tns:parametersType" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="WS_Result">
+		<xs:sequence>
+			<xs:element name="CODIGO" type="xs:string" />
+			<xs:element name="MENSAJE" type="tns:resultadoType" />
+			<xs:element name="DESCRIPCION" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="headerType">
+		<xs:sequence>
+			<xs:element name="METODO" type="xs:string" />
+      <xs:element name="MIN" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+  
+  <xs:complexType name="parametersType">
+		<xs:sequence>
+			<xs:element name="COMENTARIO" type="xs:string" />
+      <xs:element name="HOSTID" type="xs:string" />
+      <xs:element name="CONSECUTIVO" type="xs:string" />
+      <xs:element name="MONTORECARGA" type="xs:decimal" />
+      <xs:element name="BONIFICAR" type="xs:string" />
+      <xs:element name="DIASVIGENCIA" type="xs:string" />
+      <xs:element name="PLAN" type="xs:string"/>
+      <xs:element name="PLANESNUEVOS" type="tns:DataArray"/>
+      <xs:element name="PLANESBONOMIN" type="tns:DataArray"/>
+      <xs:element name="HASUNLIMITEDCHOSEN" type="xs:boolean"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="resultadoType">
+		<xs:sequence>
+			<xs:element name="ERROR" type="xs:string" nillable="true"/>
+			<xs:element name="CONSULTASUSCRIPTOR" type="xs:string" nillable="true"/>
+			
+			<xs:element name="ACREDITAONPEAK" type="xs:string" nillable="true"/>
+      		<xs:element name="MONTOONPEAK" type="xs:decimal" />      
+      		<xs:element name="MODIFICAVIGENCIAONPEAK" type="xs:string" nillable="true"/>
+      		<xs:element name="VIGENCIAONPEAK" type="xs:string" />
+      
+      		<xs:element name="ACREDITABONUS" type="xs:string"  nillable="true"/>
+      		<xs:element name="MODIFICAVIGENCIABONUS" type="xs:string" nillable="true"/>
+      		<xs:element name="VIGENCIABONOS" type="xs:string"  nillable="true"/>
+      		<xs:element name="MONTOBONOS" type="xs:decimal"  nillable="true"/>
+      		
+         	<xs:element name="ACREDITAMIN" type="xs:string" nillable="true"/>
+         	<xs:element name="MODIFICAVIGENCIAMIN" type="xs:string" nillable="true"/>
+         	<xs:element name="VIGENCIAMIN" type="xs:string" nillable="true"/>
+         	<xs:element name="MONTOMIN" type="xs:decimal" nillable="true"/>
+		</xs:sequence>
+	</xs:complexType>
+ 	
+   <xs:complexType name="DataArray">
+      <xs:sequence>
+         <xs:element name="Detail" type="xs:string" minOccurs="0"
+                     maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+	
+</xs:schema>

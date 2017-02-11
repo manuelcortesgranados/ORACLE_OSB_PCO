@@ -1,0 +1,15 @@
+<wsdl:definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/Application_PCO_FIRMACONTRATO_PA05/Project_PCO_FIRMACONTRATO_PA05/BSReferenceRegiones" name="BSReferenceRegiones-concrete" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <wsdl:import location="BSReferenceRegiones.wsdl" namespace="http://xmlns.oracle.com/pcbpel/adapter/db/Application_PCO_FIRMACONTRATO_PA05/Project_PCO_FIRMACONTRATO_PA05/BSReferenceRegiones"/>
+    <wsdl:binding name="BSReferenceRegiones_ptt-binding" type="bsr:BSReferenceRegiones_ptt" xmlns:bsr="http://xmlns.oracle.com/pcbpel/adapter/db/Application_PCO_FIRMACONTRATO_PA05/Project_PCO_FIRMACONTRATO_PA05/BSReferenceRegiones">
+        <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+        <wsdl:operation name="BSReferenceRegiones">
+            <soap:operation soapAction="BSReferenceRegiones"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+</wsdl:definitions>

@@ -1,0 +1,38 @@
+<xs:schema targetNamespace="http://www.comcel.com.co/ModificarElegidosIN/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.comcel.com.co/ModificarElegidosIN/" xmlns:oper="http://www.comcel.com.co/IN/OperacionCorba">
+	
+	<xs:import namespace="http://www.comcel.com.co/IN/OperacionCorba" schemaLocation="DA_ITEL_OPERACION_CORBA.xsd"/>
+	
+	<xs:element name="Input_Parameters" type="tns:Input_Parameters"/>
+	<xs:element name="WS_Result" type="tns:WS_Result"/>
+
+	<xs:complexType name="Input_Parameters">
+		<xs:sequence>
+			<xs:element name="PREFIX" type="xs:string"/>
+			<xs:element name="MIN" type="xs:string"/>
+			<xs:element name="ELEGIDOS" type="oper:DataArray"/>
+			<xs:element name="ELEGIDOS_ORIGINALES" type="oper:DataArray" minOccurs="0"/>
+			<xs:element name="ELEGIDOS_REMOVER" type="oper:DataArray" minOccurs="0"/>
+			<xs:element name="DIAS_VIGENCIA" type="xs:long" minOccurs="0"/>
+			<xs:element name="USUARIO" type="xs:string"/>
+			<xs:element name="TIQUETE" type="xs:string" minOccurs="0"/>
+			<xs:element name="REQUESTOR_ID" type="xs:long"/>
+			<xs:element name="ILIMITADOS" type="xs:boolean"/>
+			<xs:element name="ACTIVACION" type="xs:boolean"/>
+			<xs:element name="REMOVER_TODOS" type="xs:boolean"/>
+			<xs:element name="IN" type="xs:string"/>
+			<xs:element name="TIMEOUT" type="xs:long"/>
+			<xs:element name="VIGENCIA_ELEGIDO" type="xs:string" minOccurs="0"/>
+			<xs:element name="FECHA_CREACION_ELEGIDO" type="xs:string" minOccurs="0"/>
+			<xs:element name="FECHA_EXPIRACION_ELEGIDO" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="WS_Result">
+		<xs:sequence>
+			<xs:element name="CODIGO" type="xs:string"/>
+			<xs:element name="MENSAJE" type="xs:string"/>
+			<xs:element name="DESCRIPCION" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+
+</xs:schema>

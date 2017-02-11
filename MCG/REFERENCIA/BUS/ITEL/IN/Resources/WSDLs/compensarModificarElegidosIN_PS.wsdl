@@ -1,0 +1,36 @@
+<wsdl:definitions name="CompensarModificarElegidosIN" targetNamespace="http://www.comcel.com.co/CompensarModificarElegidosIN/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.comcel.com.co/CompensarModificarElegidosIN/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<wsdl:types>
+		<schema xmlns="http://www.w3.org/2001/XMLSchema">
+			<import namespace="http://www.comcel.com.co/CompensarModificarElegidosIN/" schemaLocation="../Schemas/PS_ITEL_COMPENSAR_MODIFICARELEGIDOS.xsd"/>
+		</schema>
+	</wsdl:types>
+	<wsdl:message name="Input_Parameters">
+		<wsdl:part element="tns:Input_Parameters" name="Input_Parameters"/>
+	</wsdl:message>
+	<wsdl:message name="WS_Result">
+		<wsdl:part element="tns:WS_Result" name="WS_Result"/>
+	</wsdl:message>
+	<wsdl:portType name="CompensarModificarElegidosIN">
+		<wsdl:operation name="CompensarModificarElegidosIN">
+			<wsdl:input message="tns:Input_Parameters"/>
+			<wsdl:output message="tns:WS_Result"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="CompensarModificarElegidosINSOAP" type="tns:CompensarModificarElegidosIN">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="CompensarModificarElegidosIN">
+			<soap:operation soapAction="http://www.comcel.com.co/CompensarModificarElegidosIN/"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="CompensarModificarElegidosIN">
+		<wsdl:port binding="tns:CompensarModificarElegidosINSOAP" name="CompensarModificarElegidosINSOAP">
+			<soap:address location="http://www.comcel.com.co/"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

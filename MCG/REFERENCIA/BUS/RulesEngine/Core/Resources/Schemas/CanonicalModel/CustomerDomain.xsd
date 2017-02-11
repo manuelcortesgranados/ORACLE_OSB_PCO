@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.claro.com.co/rulesEngine/canonicalModel/CustomerDomain"
+	xmlns:cbe="http://www.claro.com.co/rulesEngine/canonicalModel/CommonBusinessEntities"
+	xmlns:cd="http://www.claro.com.co/rulesEngine/canonicalModel/CustomerDomain"
+	xmlns:pd="http://www.claro.com.co/rulesEngine/canonicalModel/ProductDomain">
+
+	<import
+		namespace="http://www.claro.com.co/rulesEngine/canonicalModel/CommonBusinessEntities"
+		schemaLocation="CommonBusinessEntities.xsd" />
+	<import
+		namespace="http://www.claro.com.co/rulesEngine/canonicalModel/ProductDomain"
+		schemaLocation="ProductDomain.xsd" />
+	<annotation>
+		<documentation>
+   <![CDATA[
+	Canonical representation of Customer Domain
+    ]]>
+		</documentation>
+	</annotation>
+	<complexType name="Customer">
+		<sequence>
+			<element name="id" type="integer" minOccurs="0" />
+			<element name="code" type="string" minOccurs="0" />
+			<element name="description" type="string" minOccurs="0" />
+			<element name="firstName" type="string" minOccurs="0" />
+			<element name="secondName" type="string" minOccurs="0" />
+			<element name="lastName" type="string" minOccurs="0" />
+			<element name="secondLastName" type="string" minOccurs="0" />
+			<element name="ageRange" type="string" minOccurs="0" />
+			<element name="document" type="cd:CustomerDocument"
+				minOccurs="0" />
+			<element name="type" type="cd:CustomerType" minOccurs="0" />
+			<element name="issueDateOfID" type="date" minOccurs="0" />
+			<element name="location" type="cbe:Location" minOccurs="0" />
+			<element name="phoneNumber" type="string" minOccurs="0" />
+			<element name="dateOfBirth" type="date" minOccurs="0" />
+			<element name="nuncaIndicator" type="boolean" minOccurs="0" />
+			<element name="vipIndicator" type="boolean" minOccurs="0" />
+			<element name="order" type="cd:CustomerOrder" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element name="product" type="pd:Product" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element name="bankingAccount" type="cd:CustomerBankingAccount"
+				minOccurs="0" maxOccurs="unbounded" />
+			<element name="internalAccountBehavior" type="cd:InternalAccountBehavior"
+				minOccurs="0" maxOccurs="unbounded" />
+			<element name="billingBehavior" type="cd:CustomerBillingBehavior"
+				minOccurs="0" maxOccurs="1" />
+				<element name="acknowledgement" type="cd:CustomerBillingBehavior"
+				minOccurs="0" maxOccurs="1" />
+		</sequence>
+	</complexType>
+	<complexType name="CustomerDocument">
+		<sequence>
+			<element name="identifierNumber" type="string" minOccurs="0" />
+			<element name="type" type="cbe:DocumentType" minOccurs="0" />
+			<element name="documentStatus" type="cbe:Status" minOccurs="0"
+				maxOccurs="unbounded" />
+		</sequence>
+	</complexType>
+	<complexType name="CustomerBankingAccount">
+		<sequence>
+			<element name="id" type="integer" minOccurs="0" />
+			<element name="code" type="string" minOccurs="0" />
+			<element name="description" type="string" minOccurs="0" />
+			<element name="accountNumber" type="integer" minOccurs="0" />
+			<element name="bank" type="string" minOccurs="0" />
+		</sequence>
+	</complexType>
+	<complexType name="CustomerBillingBehavior">
+		<sequence>
+			<element name="id" type="integer" minOccurs="0" />
+			<element name="code" type="string" minOccurs="0" />
+			<element name="description" type="string" minOccurs="0" />
+			<element name="creditCheckApproved" type="boolean" minOccurs="0" />
+			<element name="scoreExpiryDate" type="date" minOccurs="0" />
+			<element name="dateCreditBureauConsulted" type="date"
+				minOccurs="0" />
+			<element name="creditRefNumber" type="string" minOccurs="0" />
+			<element name="evidentaAlreadyValid" type="boolean"
+				minOccurs="0" />
+			<element name="creditScoreCode" type="string" minOccurs="0" />
+			<element name="creditScoreDescription" type="string"
+				minOccurs="0" />
+			<element name="status" type="cbe:Status" minOccurs="0" />
+			<element name="highestDelayValue" type="string" minOccurs="0" />
+			<element name="timeDelayValue" type="string" minOccurs="0" />
+			<element name="delayValue" type="string" minOccurs="0" />
+		</sequence>
+	</complexType>
+	<complexType name="CustomerOrder">
+		<sequence>
+			<element name="id" type="integer" minOccurs="0" />
+			<element name="code" type="string" minOccurs="0" />
+			<element name="description" type="string" minOccurs="0" />
+			<element name="orderType" type="cd:OrderType" minOccurs="0" />
+			<element name="causal" type="string" minOccurs="0" />
+			<element name="orderActionType" type="string" minOccurs="0" />
+			<element name="acquisitionType" type="string" minOccurs="0" />
+			<element name="reasonCode" type="string" minOccurs="0" />
+			<element name="status" type="cbe:Status" minOccurs="0" />
+			<element name="homeVisitRequired" type="boolean" minOccurs="0" />
+			<element name="isOverrideImmediatePayment" type="boolean"
+				minOccurs="0" />
+			<element name="conditions" type="cbe:Conditions" minOccurs="0" />
+			<element name="exceptionBusiness" type="cbe:ExceptionBusiness"
+				minOccurs="0" maxOccurs="unbounded" />
+			<element name="documents" type="pd:RequiredDocuments"
+				minOccurs="0" maxOccurs="unbounded" />
+			<element name="extraDocuments" type="pd:RequiredDocuments"
+				minOccurs="0" maxOccurs="unbounded" />
+			<element name="creditApprovalIDOutput" type="string"
+				minOccurs="0" maxOccurs="unbounded" />
+			<element name="creditReference" type="cbe:CreditReference"
+				minOccurs="0" />
+			<element name="product" type="pd:Product" minOccurs="0" maxOccurs="unbounded" />
+		</sequence>
+	</complexType>
+	<complexType name="CustomerType">
+		<sequence>
+			<element name="id" type="integer" minOccurs="0" />
+			<element name="code" type="string" minOccurs="0" />
+			<element name="description" type="string" minOccurs="0" />
+		</sequence>
+	</complexType>
+	<complexType name="InternalAccountBehavior">
+		<sequence>
+			<element name="id" type="integer" minOccurs="0" />
+			<element name="code" type="string" minOccurs="0" />
+			<element name="description" type="string" minOccurs="0" />
+			<element name="accountNumber" type="integer" minOccurs="0" />
+			<element name="receivable" type="string" minOccurs="0" />
+			<element name="behavior" type="string" minOccurs="0" />
+			<element name="delayAmount" type="string" minOccurs="0" />
+			<element name="delayDays" type="string" minOccurs="0" />
+			<element name="behaviorCustomer" type="string" minOccurs="0" />
+			<element name="seniority" type="string" minOccurs="0" />
+		</sequence>
+	</complexType>
+	<complexType name="OrderType">
+		<sequence>
+			<element name="id" type="integer" minOccurs="0" />
+			<element name="code" type="string" minOccurs="0" />
+			<element name="description" type="string" minOccurs="0" />
+		</sequence>
+	</complexType>
+	<complexType name="Acknowledgement">
+		<sequence>
+			<element name="id" type="integer" minOccurs="0" />
+			<element name="code" type="string" minOccurs="0" />
+			<element name="description" type="string" minOccurs="0" />
+			<element name="status" type="cbe:Status" minOccurs="0" />
+			<element name="message" type="string" minOccurs="0" />
+		</sequence>
+	</complexType>
+
+</schema>

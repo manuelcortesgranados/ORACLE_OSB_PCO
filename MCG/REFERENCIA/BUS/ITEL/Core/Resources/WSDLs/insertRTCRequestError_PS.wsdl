@@ -1,0 +1,51 @@
+<wsdl:definitions name="Insertrtcrequesterror" targetNamespace="http://www.comcel.com.co/Insertrtcrequesterror/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.comcel.com.co/Insertrtcrequesterror/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsd1="http://www.comcel.com.co/Insertrtcrequesterror">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://www.comcel.com.co/Insertrtcrequesterror/">
+      <xsd:element name="insertrtcrequesterror">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="in" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="insertrtcrequesterrorResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="out" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+    <xsd:schema>
+    	<xsd:import namespace="http://www.comcel.com.co/Insertrtcrequesterror" schemaLocation="../Schemas/PS_ITEL_INSERT_RTC_REQUESTERROR.xsd">
+    	</xsd:import></xsd:schema></wsdl:types>
+  <wsdl:message name="insertrtcrequesterrorRequest">
+    <wsdl:part element="xsd1:Input_Parameters" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="insertrtcrequesterrorResponse">
+    <wsdl:part element="xsd1:WS_Result" name="parameters"/>
+  </wsdl:message>
+  <wsdl:portType name="insertrtcrequesterror">
+    <wsdl:operation name="insertrtcrequesterror">
+      <wsdl:input message="tns:insertrtcrequesterrorRequest"/>
+      <wsdl:output message="tns:insertrtcrequesterrorResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="insertrtcrequesterrorSOAP" type="tns:insertrtcrequesterror">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="insertrtcrequesterror">
+      <soap:operation soapAction="http://www.comcel.com.co/insertrtcrequesterror_PS/insertrtcrequesterror"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="insertrtcrequesterror">
+    <wsdl:port binding="tns:insertrtcrequesterrorSOAP" name="insertrtcrequesterrorSOAP">
+      <soap:address location="http://www.comcel.com.co"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

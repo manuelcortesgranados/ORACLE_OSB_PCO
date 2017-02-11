@@ -1,0 +1,687 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.comcel.com.co/IN/OperacionCorba"
+	xmlns:tns="http://www.comcel.com.co/IN/OperacionCorba"
+	elementFormDefault="qualified">
+
+	<element name="CrearSuscriptorRequest" type="tns:CrearSuscriptorRequest" />
+
+	<element name="ConsultarSuscriptorRequest" type="tns:ConsultarSuscriptorRequest" />
+
+	<element name="EliminarSuscriptorRequest" type="tns:EliminarSuscriptorRequest" />
+
+	<element name="BloquearSuscriptorRequest" type="tns:BloquearSuscriptorRequest" />
+
+	<element name="CambiarMinRequest" type="tns:CambiarMinRequest" />
+
+	<element name="CambiarPlanRequest" type="tns:CambiarPlanRequest" />
+
+	<element name="RegistrarElegidosRequest" type="tns:RegistrarElegidosRequest" />
+
+	<element name="ModificarElegidosRequest" type="tns:ModificarElegidosRequest" />
+
+	<element name="CargarRequest" type="tns:CargarRequest" />
+
+	<element name="RecargarRequest" type="tns:RecargarRequest" />
+
+	<!-- SMS Promotions -->
+
+	<element name="ConsultarSMSElegidosRequest" type="tns:ConsultarSMSElegidosRequest" />
+
+	<element name="RegistrarSMSElegidosRequest" type="tns:RegistrarSMSElegidosRequest" />
+
+	<element name="ModificarSMSElegidosRequest" type="tns:ModificarSMSElegidosRequest" />
+	
+	<element name="EliminarSMSElegidosRequest" type="tns:EliminarSMSElegidosRequest" />
+
+	<!-- FAR -->
+
+	<element name="RegistrarFARequest" type="tns:RegistrarFARequest" />
+
+	<element name="ModificarFARequest" type="tns:ModificarFARequest" />
+
+	<!-- **** Compensacion **** -->
+
+	<element name="CompensarCargarRequest" type="tns:CompensarCargarRequest" />
+
+	<element name="CompensarRecargarRequest" type="tns:CompensarRecargarRequest" />
+
+	<element name="CompensarCrearSuscriptorRequest" type="tns:CompensarCrearSuscriptorRequest" />
+
+	<element name="CompensarCambiarMinRequest" type="tns:CompensarCambiarMinRequest" />
+
+	<element name="CompensarCambiarPlanRequest" type="tns:CompensarCambiarPlanRequest" />
+
+	<element name="CompensarConsultarSuscriptorRequest" type="tns:CompensarConsultarSuscriptorRequest" />
+
+	<element name="CompensarRegistrarElegidosRequest" type="tns:CompensarRegistrarElegidosRequest" />
+
+	<element name="CompensarRegistrarSMSElegidosRequest" type="tns:CompensarRegistrarSMSElegidosRequest" />
+
+	<element name="CompensarModificarElegidosRequest" type="tns:CompensarModificarElegidosRequest" />
+	
+	<element name="CompensarModificarFARequest" type="tns:CompensarModificarFARequest" />
+
+	<element name="CompensarModificarSMSElegidosRequest" type="tns:CompensarModificarSMSElegidosRequest" />
+
+
+	<complexType name="CrearSuscriptorRequest">
+		<sequence>
+			<element name="suscriptor" type="tns:Subscriber" />
+		</sequence>
+		<attribute name="hostId" type="string" />
+		<attribute name="requestorId" type="long" />
+		<attribute name="in" type="string" />
+		<attribute name="timeout" type="long" />
+	</complexType>
+
+	<complexType name="ConsultarSuscriptorRequest">
+		<attribute name="prefijo" type="string" />
+		<attribute name="min" type="string" />
+		<attribute name="in" type="string" />
+		<attribute name="timeout" type="long" />
+	</complexType>
+
+	<complexType name="EliminarSuscriptorRequest">
+		<attribute name="prefijo" type="string" />
+		<attribute name="min" type="string" />
+		<attribute name="in" type="string" />
+		<attribute name="timeout" type="long" />
+	</complexType>
+
+	<complexType name="BloquearSuscriptorRequest">
+		<attribute name="prefijo" type="string" />
+		<attribute name="min" type="string" />
+		<attribute name="bloqueoFraude" type="boolean" />
+		<attribute name="bloqueoGeneral" type="boolean" />
+		<attribute name="in" type="string" />
+		<attribute name="timeout" type="long" />
+	</complexType>
+
+	<complexType name="CambiarMinRequest">
+		<sequence>
+			<element name="suscriptor" type="tns:Subscriber" />
+		</sequence>
+		<attribute name="prefijo" type="string" />
+		<attribute name="min" type="string" />
+		<attribute name="hostId" type="string" />
+		<attribute name="requestorId" type="long" />
+		<attribute name="in" type="string" />
+		<attribute name="timeout" type="long" />
+	</complexType>
+
+	<complexType name="CambiarPlanRequest">
+		<sequence>
+			<element name="carga" type="tns:Carga" />
+		</sequence>
+		<attribute name="prefijo" type="string" />
+		<attribute name="min" type="string" />
+		<attribute name="plan" type="string" />
+		<attribute name="planOriginal" type="string" />
+		<attribute name="in" type="string" />
+		<attribute name="timeout" type="long" />
+	</complexType>
+
+	<complexType name="RegistrarElegidosRequest">
+		<sequence>
+			<element name="elegidos" type="tns:DataArray" />
+			<element name="vigenciaElegidos" type="string" minOccurs="0" />
+			<element name="fechaExpiracionElegidos" type="string" />
+		</sequence>
+		<attribute name="prefijo" type="string" />
+		<attribute name="min" type="string" />
+		<attribute name="diasVigencia" type="long" use="optional" />
+		<attribute name="hostId" type="string" />
+		<attribute name="requestorId" type="long" />
+		<attribute name="ilimitados" type="boolean" />
+		<attribute name="activacion" type="boolean" />
+		<attribute name="in" type="string" />
+		<attribute name="timeout" type="long" />
+	</complexType>
+
+	<complexType name="ModificarElegidosRequest">
+		<sequence>
+			<element name="elegidos" type="tns:DataArray" />
+			<element name="elegidosOriginales" type="tns:DataArray" />
+			<element name="elegidosRemover" type="tns:DataArray"
+				minOccurs="0" />
+			<element name="tiquete" type="string" minOccurs="0" />
+			<element name="vigenciaElegidos" type="string" minOccurs="0" />
+			<element name="fechaExpiracionElegidos" type="string" />
+		</sequence>
+		<attribute name="prefijo" type="string" />
+		<attribute name="min" type="string" />
+		<attribute name="diasVigencia" type="long" use="optional" />
+		<attribute name="hostId" type="string" />
+		<attribute name="requestorId" type="long" />
+		<attribute name="ilimitados" type="boolean" />
+		<attribute name="activacion" type="boolean" />
+		<attribute name="removerTodos" type="boolean" />
+		<attribute name="in" type="string" />
+		<attribute name="timeout" type="long" />
+	</complexType>
+
+
+	<complexType name="CargarRequest">
+		<sequence>
+			<element name="carga" type="tns:Carga" />
+		</sequence>
+		<attribute name="prefijo" type="string" />
+		<attribute name="min" type="string" />
+		<attribute name="in" type="string" />
+		<attribute name="timeout" type="long" />
+	</complexType>
+
+	<complexType name="RecargarRequest">
+		<sequence>
+			<element name="carga" type="tns:Carga" />
+		</sequence>
+		<attribute name="prefijo" type="string" />
+		<attribute name="min" type="string" />
+		<attribute name="in" type="string" />
+		<attribute name="timeout" type="long" />
+	</complexType>
+
+	<complexType name="ConsultarSMSElegidosRequest">
+		<attribute name="prefijo" type="string" />
+		<attribute name="min" type="string" />
+		<attribute name="hostId" type="string" />
+		<attribute name="requestorId" type="long" />
+		<attribute name="in" type="string" />
+		<attribute name="timeout" type="long" />
+	</complexType>
+
+	<complexType name="RegistrarSMSElegidosRequest">
+		<sequence>
+			<element name="elegidos" type="tns:DataArray" />
+			<element name="vigenciaElegidos" type="string" minOccurs="0" />
+			<element name="fechaExpiracionElegidos" type="string" />
+		</sequence>
+		<attribute name="cuenta" type="string" />
+		<attribute name="prefijo" type="string" />
+		<attribute name="min" type="string" />
+		<attribute name="diasVigencia" type="long" use="optional" />
+		<attribute name="hostId" type="string" />
+		<attribute name="requestorId" type="long" />
+		<attribute name="activacion" type="boolean" />
+		<attribute name="in" type="string" />
+		<attribute name="timeout" type="long" />
+	</complexType>
+
+
+	<complexType name="ModificarSMSElegidosRequest">
+		<sequence>
+			<element name="elegidos" type="tns:DataArray" />
+			<element name="elegidosOriginales" type="tns:DataArray" />
+			<element name="elegidosRemover" type="tns:DataArray"
+				minOccurs="0" />
+			<element name="tiquete" type="string" minOccurs="0" />
+			<element name="vigenciaElegidos" type="string" minOccurs="0" />
+			<element name="fechaExpiracionElegidos" type="string" />
+		</sequence>
+		<attribute name="cuenta" type="string" />
+		<attribute name="prefijo" type="string" />
+		<attribute name="min" type="string" />
+		<attribute name="diasVigencia" type="long" use="optional" />
+		<attribute name="hostId" type="string" />
+		<attribute name="requestorId" type="long" />
+		<attribute name="activacion" type="boolean" />
+		<attribute name="removerTodos" type="boolean" />
+		<attribute name="in" type="string" />
+		<attribute name="timeout" type="long" />
+	</complexType>
+
+	<complexType name="EliminarSMSElegidosRequest">
+		<sequence>
+			<element name="elegidos" type="tns:DataArray" />
+			<element name="elegidosOriginales" type="tns:DataArray" />
+			<element name="elegidosRemover" type="tns:DataArray"
+				minOccurs="0" />
+			<element name="tiquete" type="string" minOccurs="0" />
+			<element name="vigenciaElegidos" type="string" minOccurs="0" />
+			<element name="fechaExpiracionElegidos" type="string" />
+		</sequence>
+		<attribute name="cuenta" type="string" />
+		<attribute name="prefijo" type="string" />
+		<attribute name="min" type="string" />
+		<attribute name="diasVigencia" type="long" use="optional" />
+		<attribute name="hostId" type="string" />
+		<attribute name="requestorId" type="long" />
+		<attribute name="activacion" type="boolean" />
+		<attribute name="removerTodos" type="boolean" />
+		<attribute name="in" type="string" />
+		<attribute name="timeout" type="long" />
+	</complexType>
+	
+	<complexType name="RegistrarFARequest">
+		<sequence>
+			<element name="elegidos" type="tns:DataArray" />
+			<element name="vigenciaElegidos" type="string" minOccurs="0" />
+			<element name="fechaExpiracionElegidos" type="string"
+				minOccurs="0" />
+		</sequence>
+		<attribute name="prefijo" type="string" />
+		<attribute name="min" type="string" />
+		<attribute name="diasVigencia" type="long" use="optional" />
+		<attribute name="hostId" type="string" />
+		<attribute name="requestorId" type="long" />
+		<attribute name="activacion" type="boolean" />
+		<attribute name="in" type="string" />
+		<attribute name="timeout" type="long" />
+	</complexType>
+
+	<complexType name="ModificarFARequest">
+		<sequence>
+			<element name="elegidos" type="tns:DataArray" />
+			<element name="elegidosOriginales" type="tns:DataArray" />
+			<element name="elegidosRemover" type="tns:DataArray"
+				minOccurs="0" />
+			<element name="tiquete" type="string" minOccurs="0" />
+			<element name="vigenciaElegidos" type="string" minOccurs="0" />
+			<element name="fechaExpiracionElegidos" type="string"
+				minOccurs="0" />
+		</sequence>
+		<attribute name="prefijo" type="string" />
+		<attribute name="min" type="string" />
+		<attribute name="diasVigencia" type="long" use="optional" />
+		<attribute name="hostId" type="string" />
+		<attribute name="requestorId" type="long" />
+		<attribute name="activacion" type="boolean" />
+		<attribute name="removerTodos" type="boolean" />
+		<attribute name="in" type="string" />
+		<attribute name="timeout" type="long" />
+	</complexType>
+
+
+	<complexType name="CompensarCrearSuscriptorRequest">
+		<attribute name="prefijo" type="string" />
+		<attribute name="min" type="string" />
+		<attribute name="in" type="string" />
+	</complexType>
+
+	<complexType name="CompensarCargarRequest">
+		<sequence>
+			<element name="carga" type="tns:Carga" />
+		</sequence>
+		<attribute name="prefijo" type="string" />
+		<attribute name="min" type="string" />
+		<attribute name="fechaExpiracion" type="string" />
+		<attribute name="in" type="string" />
+	</complexType>
+
+	<complexType name="CompensarRecargarRequest">
+		<sequence>
+			<element name="carga" type="tns:Carga" />
+		</sequence>
+		<attribute name="prefijo" type="string" />
+		<attribute name="min" type="string" />
+		<attribute name="fechaExpiracion" type="string" />
+		<attribute name="in" type="string" />
+	</complexType>
+	<complexType name="CompensarCambiarMinRequest">
+		<sequence>
+			<element name="suscriptor" type="tns:Subscriber" />
+		</sequence>
+		<attribute name="prefijo" type="string" />
+		<attribute name="min" type="string" />
+		<attribute name="hostId" type="string" />
+		<attribute name="requestorId" type="long" />
+		<attribute name="in" type="string" />
+	</complexType>
+
+	<complexType name="CompensarCambiarPlanRequest">
+		<sequence>
+			<element name="carga" type="tns:Carga" />
+		</sequence>
+		<attribute name="prefijo" type="string" />
+		<attribute name="min" type="string" />
+		<attribute name="plan" type="string" />
+		<attribute name="fechaExpiracion" type="string" />
+		<attribute name="in" type="string" />
+	</complexType>
+
+	<complexType name="CompensarConsultarSuscriptorRequest">
+		<sequence>
+			<element name="carga" type="tns:Carga" />
+		</sequence>
+		<attribute name="prefijo" type="string" />
+		<attribute name="min" type="string" />
+		<attribute name="fechaExpiracion" type="string" />
+		<attribute name="in" type="string" />
+	</complexType>
+
+	<complexType name="CompensarRegistrarElegidosRequest">
+		<sequence>
+			<element name="elegidos" type="tns:DataArray" />
+			<element name="fechaExpiracionElegidos" type="string" />
+		</sequence>
+		<attribute name="prefijo" type="string" />
+		<attribute name="min" type="string" />
+		<attribute name="diasVigencia" type="long" use="optional" />
+		<attribute name="hostId" type="string" />
+		<attribute name="requestorId" type="long" />
+		<attribute name="ilimitados" type="boolean" />
+		<attribute name="activacion" type="boolean" />
+		<attribute name="in" type="string" />
+	</complexType>
+
+
+	<complexType name="CompensarRegistrarSMSElegidosRequest">
+		<sequence>
+			<element name="elegidos" type="tns:DataArray" />
+			<element name="fechaExpiracionElegidos" type="string" />
+		</sequence>
+		<attribute name="cuenta" type="string" />
+		<attribute name="prefijo" type="string" />
+		<attribute name="min" type="string" />
+		<attribute name="diasVigencia" type="long" use="optional" />
+		<attribute name="hostId" type="string" />
+		<attribute name="requestorId" type="long" />
+		<attribute name="activacion" type="boolean" />
+		<attribute name="in" type="string" />
+	</complexType>
+
+	<complexType name="CompensarModificarElegidosRequest">
+		<sequence>
+			<element name="elegidos" type="tns:DataArray" />
+			<element name="elegidosOriginales" type="tns:DataArray" />
+			<element name="elegidosRemover" type="tns:DataArray"
+				minOccurs="0" />
+			<element name="tiquete" type="string" minOccurs="0" />
+			<element name="vigenciaElegidos" type="string" minOccurs="0" />
+			<element name="fechaExpiracionElegidos" type="string" />
+		</sequence>
+		<attribute name="prefijo" type="string" />
+		<attribute name="min" type="string" />
+		<attribute name="diasVigencia" type="long" use="optional" />
+		<attribute name="hostId" type="string" />
+		<attribute name="requestorId" type="long" />
+		<attribute name="ilimitados" type="boolean" />
+		<attribute name="activacion" type="boolean" />
+		<attribute name="removerTodos" type="boolean" />
+		<attribute name="in" type="string" />
+	</complexType>
+	
+	<complexType name="CompensarModificarFARequest">
+		<sequence>
+			<element name="elegidos" type="tns:DataArray" />
+			<element name="elegidosOriginales" type="tns:DataArray" />
+			<element name="elegidosRemover" type="tns:DataArray"
+				minOccurs="0" />
+			<element name="tiquete" type="string" minOccurs="0" />
+			<element name="vigenciaElegidos" type="string" minOccurs="0" />
+			<element name="fechaExpiracionElegidos" type="string" />
+		</sequence>
+		<attribute name="prefijo" type="string" />
+		<attribute name="min" type="string" />
+		<attribute name="diasVigencia" type="long" use="optional" />
+		<attribute name="hostId" type="string" />
+		<attribute name="requestorId" type="long" />
+		<attribute name="activacion" type="boolean" />
+		<attribute name="removerTodos" type="boolean" />
+		<attribute name="in" type="string" />
+	</complexType>
+
+	<complexType name="CompensarModificarSMSElegidosRequest">
+		<sequence>
+			<element name="elegidos" type="tns:DataArray" />
+			<element name="elegidosOriginales" type="tns:DataArray" />
+			<element name="elegidosRemover" type="tns:DataArray"
+				minOccurs="0" />
+			<element name="tiquete" type="string" minOccurs="0" />
+			<element name="vigenciaElegidos" type="string" minOccurs="0" />
+			<element name="fechaExpiracionElegidos" type="string" />
+		</sequence>
+		<attribute name="cuenta" type="string" />
+		<attribute name="prefijo" type="string" />
+		<attribute name="min" type="string" />
+		<attribute name="diasVigencia" type="long" use="optional" />
+		<attribute name="hostId" type="string" />
+		<attribute name="requestorId" type="long" />
+		<attribute name="activacion" type="boolean" />
+		<attribute name="removerTodos" type="boolean" />
+		<attribute name="in" type="string" />
+	</complexType>
+
+
+
+	<complexType name="Carga">
+		<sequence>
+			<element name="tiquete" type="string" />
+			<element name="tiqueteCompensacion" type="string" />
+		</sequence>
+		<attribute name="politicaExpiracion" type="long" />
+		<attribute name="diasExtension" type="long" />
+		<attribute name="fechaAbsoluta" type="string" />
+		<attribute name="cuenta" type="long" />
+		<attribute name="valor" type="long" />
+		<attribute name="usuario" type="string" />
+		<attribute name="requestorId" type="long" />
+	</complexType>
+
+	<simpleType name="Operacion">
+		<restriction base="string">
+			<enumeration value="Cargar" />
+			<enumeration value="Recargar" />
+		</restriction>
+	</simpleType>
+
+	<element name="CrearSuscriptorResponse" type="tns:CrearSuscriptorResponse" />
+
+	<element name="ConsultarSuscriptorResponse" type="tns:ConsultarSuscriptorResponse" />
+
+	<element name="EliminarSuscriptorResponse" type="tns:EliminarSuscriptorResponse" />
+
+	<element name="BloquearSuscriptorResponse" type="tns:BloquearSuscriptorResponse" />
+
+	<element name="CambiarMinResponse" type="tns:CambiarMinResponse" />
+
+	<element name="CambiarPlanResponse" type="tns:CambiarPlanResponse" />
+
+	<element name="RegistrarElegidosResponse" type="tns:RegistrarElegidosResponse" />
+
+	<element name="ModificarElegidosResponse" type="tns:ModificarElegidosResponse" />
+
+	<element name="CargarResponse" type="tns:CargarResponse" />
+
+	<element name="RecargarResponse" type="tns:RecargarResponse" />
+
+	<element name="ConsultarSMSElegidosResponse" type="tns:ConsultarSMSElegidosResponse" />
+
+	<element name="RegistrarSMSElegidosResponse" type="tns:RegistrarSMSElegidosResponse" />
+
+	<element name="ModificarSMSElegidosResponse" type="tns:ModificarSMSElegidosResponse" />
+	
+	<element name="EliminarSMSElegidosResponse" type="tns:EliminarSMSElegidosResponse" />
+	
+	<element name="RegistrarFAResponse" type="tns:RegistrarFAResponse" />
+	
+	<element name="ModificarFAResponse" type="tns:ModificarFAResponse" />
+
+	<element name="CompensacionResponse" type="tns:CompensacionResponse" />
+
+	<complexType name="CrearSuscriptorResponse">
+		<attribute name="exito" type="boolean" />
+		<attribute name="mensaje" type="string" />
+	</complexType>
+
+	<complexType name="ConsultarSuscriptorResponse">
+		<sequence>
+			<element name="suscriptor" type="tns:Subscriber" />
+		</sequence>
+		<attribute name="exito" type="boolean" />
+		<attribute name="mensaje" type="string" />
+		<attribute name="cluster" type="string" />
+	</complexType>
+
+	<complexType name="EliminarSuscriptorResponse">
+		<attribute name="exito" type="boolean" />
+		<attribute name="mensaje" type="string" />
+	</complexType>
+
+	<complexType name="BloquearSuscriptorResponse">
+		<attribute name="exito" type="boolean" />
+		<attribute name="mensaje" type="string" />
+	</complexType>
+
+	<complexType name="CambiarMinResponse">
+		<attribute name="exito" type="boolean" />
+		<attribute name="mensaje" type="string" />
+	</complexType>
+
+	<complexType name="CambiarPlanResponse">
+		<attribute name="exito" type="boolean" />
+		<attribute name="mensaje" type="string" />
+	</complexType>
+
+	<complexType name="RegistrarElegidosResponse">
+		<attribute name="exito" type="boolean" />
+		<attribute name="mensaje" type="string" />
+	</complexType>
+
+	<complexType name="ModificarElegidosResponse">
+		<attribute name="exito" type="boolean" />
+		<attribute name="mensaje" type="string" />
+	</complexType>
+
+	<complexType name="CargarResponse">
+		<sequence>
+			<element name="respuesta" type="tns:RespuestaCarga" />
+		</sequence>
+		<attribute name="exito" type="boolean" />
+		<attribute name="mensaje" type="string" />
+		<attribute name="cluster" type="string" />
+	</complexType>
+
+	<complexType name="RecargarResponse">
+		<sequence>
+			<element name="respuesta" type="tns:RespuestaCarga" />
+		</sequence>
+		<attribute name="exito" type="boolean" />
+		<attribute name="mensaje" type="string" />
+		<attribute name="cluster" type="string" />
+	</complexType>
+
+	<complexType name="ConsultarSMSElegidosResponse">
+		<attribute name="exito" type="boolean" />
+		<attribute name="mensaje" type="string" />
+	</complexType>
+
+	<complexType name="RegistrarSMSElegidosResponse">
+		<attribute name="exito" type="boolean" />
+		<attribute name="mensaje" type="string" />
+	</complexType>
+
+	<complexType name="ModificarSMSElegidosResponse">
+		<attribute name="exito" type="boolean" />
+		<attribute name="mensaje" type="string" />
+	</complexType>
+	
+	<complexType name="EliminarSMSElegidosResponse">
+		<attribute name="exito" type="boolean" />
+		<attribute name="mensaje" type="string" />
+	</complexType>
+	
+	<complexType name="RegistrarFAResponse">
+		<attribute name="exito" type="boolean" />
+		<attribute name="mensaje" type="string" />
+	</complexType>
+	
+	<complexType name="ModificarFAResponse">
+		<attribute name="exito" type="boolean" />
+		<attribute name="mensaje" type="string" />
+	</complexType>
+
+	<complexType name="CompensacionResponse">
+		<sequence>
+			<element name="respuesta" type="tns:RespuestaCarga" />
+		</sequence>
+		<attribute name="exito" type="boolean" />
+		<attribute name="mensaje" type="string" />
+	</complexType>
+
+	<complexType name="Subscriber">
+		<sequence>
+			<element name="CUSTOMERID" type="string" />
+			<element name="Cgpa" type="string" />
+			<element name="Contract" type="string" />
+			<element name="IsLocked" type="string" />
+			<element name="IsFraudLocked" type="string" />
+			<element name="IsFirstCallPassed" type="string" />
+			<element name="IsGPRSUsed" type="string" />
+			<element name="IsWelcomeBackPromoDone" type="string" />
+			<element name="IsFnFPossible" type="string" />
+			<element name="IsMLCPossible" type="string" minOccurs="0" />
+			<element name="FnF_Numbers" type="tns:DataArray" />
+			<element name="IsBestFnFPossible" type="string" />
+			<element name="BestFnF_Numbers" type="tns:DataArray" />
+			<element name="SMSOnNet_Numbers" type="tns:DataArray"
+				minOccurs="0" />
+			<element name="SMSOnNet_ExpirationDate" type="string"
+				minOccurs="0" />
+			<element name="SMSOffNet_Numbers" type="tns:DataArray"
+				minOccurs="0" />
+			<element name="SMSOffNet_ExpirationDate" type="string"
+				minOccurs="0" />
+			<element name="SMSAny_Numbers" type="tns:DataArray"
+				minOccurs="0" />
+			<element name="SMSAny_ExpirationDate" type="string"
+				minOccurs="0" />
+			<element name="IsFAPossible" type="string" />
+			<element name="FA_ActivationEndTime" type="string" />
+			<element name="FA_Destination" type="tns:DataArray" />
+			<element name="OnPeakAccountID" type="tns:AccountID" />
+			<element name="OffPeakAccountID" type="tns:AccountID" />
+			<element name="FreeSMSAccountID" type="tns:AccountID" />
+			<element name="BonusAccountID" type="tns:AccountID" />
+			<element name="MinutesAccountID2" type="tns:AccountID" />
+			<element name="MinutesAccountID3" type="tns:AccountID" />
+			<element name="MinutesAccountID4" type="tns:AccountID" />
+			<element name="MonetaryAccountID2" type="tns:AccountID" />
+			<element name="MonetaryAccountID3" type="tns:AccountID" />
+			<element name="PreActiveEndDate" type="string" />
+			<element name="LastKnownPeriod" type="string" />
+			<element name="ActiveEndDate" type="string" />
+			<element name="GraceEndDate" type="string" />
+			<element name="BestFnF_ActivationEndTime" type="string" />
+		</sequence>
+	</complexType>
+
+	<complexType name="DataArray">
+		<sequence>
+			<element name="Detail" type="string" minOccurs="0" maxOccurs="unbounded" />
+		</sequence>
+	</complexType>
+
+	<complexType name="AccountID">
+		<sequence>
+			<element name="Balance" type="string" />
+			<element name="ExpiryDate" type="string" />
+		</sequence>
+	</complexType>
+
+	<complexType name="Resultado">
+		<sequence>
+			<element name="respuesta" type="string" minOccurs="0"
+				maxOccurs="unbounded" />
+		</sequence>
+		<attribute name="posicion" type="integer" />
+	</complexType>
+
+	<complexType name="RespuestaCarga">
+		<sequence>
+			<element name="messageCode" type="long" />
+			<element name="resultCode" type="long" />
+			<element name="account" type="long" minOccurs="0" />
+			<element name="resultingBalance" type="long" minOccurs="0" />
+			<element name="resultingExpirationDate" type="string"
+				minOccurs="0" />
+			<element name="resultingCurrencyCode" type="string"
+				minOccurs="0" />
+			<element name="resultingMTCExpDate" type="string" minOccurs="0" />
+			<element name="language" type="long" minOccurs="0" />
+			<element name="resultText" type="string" minOccurs="0" />
+			<element name="additionalResults" type="string" minOccurs="0" />
+		</sequence>
+	</complexType>
+
+</schema>

@@ -1,0 +1,10 @@
+#Wed Dec 07 09:48:33 COT 2016
+ACTIVATION_DESCRIPTION_PROPERTY=Publish from Oracle Service Bus IDE.
+CUSTOMIZATION_FILE_PROPERTY=
+DISCARD_SESSION_PROPERTY=true
+KEYSTORE_PROPERTYfile=
+KEYSTORE_PROPERTYpassword=
+PUBLISH_SESSION_NAME_PROPERTY=OSB_Publish
+SERVER_PROPERTY=
+container.referenced.projects=exposing-session-bean-as-webservice|enabling-validate-dynamically|using-file-transport-to-write-to-file|exposing-session-bean-as-ejb|using-dynamic-split-join|consuming-restful-service|using-db-adapter-to-read-from-table|using-validate-to-do-message-validation|using-db-adapter-to-poll-for-changes-on-db|invoking-osb-service-async-from-sca-composite|accessing-jms-transport-headers-in-message-flow|using-java-callout-to-invoke-java|sync-request-response-over-jms-queue|using-websocket-transport|using-aq-adapter-to-enqueue-to-db|using-service-callout|invoking-osb-service-sync-from-sca-composite|using-db-adapter-to-update-to-table|using-message-validation|using-publish-to-async-invoke-service|invoking-osb-service-asynch-from-sca-composite|consuming-messages-from-queue-topic-selectively|using-converter-with-ejb-transport|using-java-callout-to-invoke-java-spring|changing-jms-transport-headers-properties|using-db-adapter-to-execute-custom-sql|sending-soap-over-jms|exposing-restful-service|using-foreach-to-process-collections|using-custom-xpath-function|reading-a-file-within-a-message-flow|enabling-jms-message-persistence|using-java-callout-with-xmlbeans|using-jndi-provider-to-invoke-remote-ejb|basic-osb-service|change-response-of-jejb-transport|using-aq-adapter-to-dequeue-from-db|file-transport-to-trigger-service|creating-generic-restful-gateway|using-http-for-msg-over-http|consuming-emails|invoking-soa-composite-async|invoking-soa-composite-sync|sending-emails|
+eclipse.preferences.version=1

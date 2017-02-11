@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.claro.com.co/rulesEngine/ValidateICCIDStatusFact/"
+     xmlns:pd="http://www.claro.com.co/rulesEngine/canonicalModel/ProductDomain" xmlns:tns="http://www.claro.com.co/rulesEngine/ValidateICCIDStatusFact/">
+    
+    <xs:import namespace="http://www.claro.com.co/rulesEngine/canonicalModel/ProductDomain"
+		schemaLocation="../../../Core/Resources/Schemas/CanonicalModel/ProductDomain.xsd" />
+			
+    <xs:element name="ValidateICCIDStatusFactRequest" type="tns:ValidateICCIDStatusFactRequestType"/>
+    <xs:element name="ValidateICCIDStatusFactResponse" type="tns:ValidateICCIDStatusFactResponseType"/>
+    <xs:complexType name="ValidateICCIDStatusFactRequestType">
+        <xs:sequence>
+            <xs:element name="Product" type="pd:Product"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="ValidateICCIDStatusFactResponseType">
+        <xs:sequence>
+            <xs:element name="Product" type="pd:Product" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

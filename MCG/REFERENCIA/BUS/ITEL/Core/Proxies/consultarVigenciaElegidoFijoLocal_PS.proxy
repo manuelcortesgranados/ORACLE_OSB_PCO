@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config">
+  <ser:coreEntry isProxy="true" isEnabled="true" isAutoPublish="false" isTracingEnabled="false">
+    <ser:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config">
+      <con:wsdl ref="ITEL/Core/Resources/WSDLs/consultarVigenciaElegidoFijo_PS"/>
+      <con:port>
+        <con:name>ConsultarVigenciaElegidoFijoSOAP</con:name>
+        <con:namespace>http://www.comcel.com.co/ConsultarVigenciaElegidoFijo/</con:namespace>
+      </con:port>
+      <con:selector type="SOAP body"/>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+    <ser:ws-policy>
+      <ser:binding-mode>wsdl-policy-attachments</ser:binding-mode>
+    </ser:ws-policy>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>local</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:inbound-properties/>
+    <tran:all-headers>true</tran:all-headers>
+  </ser:endpointConfig>
+  <ser:router>
+    <con:pipeline type="request" name="PipelinePairNode1_request">
+      <con:stage name="validacion" errorHandler="_onErrorHandler-5814401676609641406--690ddf8c.138343d411f.-7ee1">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/ConsultarVigenciaElegidoFijo/" prefix="con"/>
+        </con:context>
+        <con:actions>
+          <con2:validate>
+            <con1:id>_ActionId-5814401676609641406--690ddf8c.138343d411f.-7e9d</con1:id>
+            <con2:schema ref="ITEL/Core/Resources/Schemas/PS_ITEL_CONSULTARVIGENCIAELEGIDO_FIJO"/>
+            <con2:schemaElement xmlns:con="http://www.comcel.com.co/ConsultarVigenciaElegidoFijo/">con:Input_Parameters</con2:schemaElement>
+            <con2:varName>body</con2:varName>
+            <con2:location>
+              <con1:xpathText>./con:Input_Parameters</con1:xpathText>
+            </con2:location>
+          </con2:validate>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="PipelinePairNode1_response"/>
+    <con:pipeline type="error" name="_onErrorHandler-5814401676609641406--690ddf8c.138343d411f.-7ee1">
+      <con:stage name="error">
+        <con:context/>
+        <con:actions>
+          <con2:replace contents-only="true" varName="body">
+            <con1:id>_ActionId-5814401676609641406--690ddf8c.138343d411f.-7de0</con1:id>
+            <con2:expr>
+              <con1:xqueryTransform>
+                <con1:resource ref="ITEL/Core/Resources/XQueries/consultarVigenciaElegidoFijo_Error"/>
+                <con1:param name="descripcion">
+                  <con1:path>$fault/ctx:reason/text()</con1:path>
+                </con1:param>
+                <con1:param name="mensaje">
+                  <con1:path>""</con1:path>
+                </con1:param>
+                <con1:param name="codigo">
+                  <con1:path>"Error etapa de validacion"</con1:path>
+                </con1:param>
+              </con1:xqueryTransform>
+            </con2:expr>
+          </con2:replace>
+          <con1:reply>
+            <con1:id>_ActionId-5814401676609641406--690ddf8c.138343d411f.-7db5</con1:id>
+          </con1:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="error" name="_onErrorHandler-5814401676609641406--690ddf8c.138343d411f.-7eb9">
+      <con:stage name="error">
+        <con:context/>
+        <con:actions>
+          <con2:replace contents-only="true" varName="body">
+            <con1:id>_ActionId-5814401676609641406--690ddf8c.138343d411f.-7e74</con1:id>
+            <con2:expr>
+              <con1:xqueryTransform>
+                <con1:resource ref="ITEL/Core/Resources/XQueries/consultarVigenciaElegidoFijo_Error"/>
+                <con1:param name="descripcion">
+                  <con1:path>$fault/ctx:reason/text()</con1:path>
+                </con1:param>
+                <con1:param name="mensaje">
+                  <con1:path>""</con1:path>
+                </con1:param>
+                <con1:param name="codigo">
+                  <con1:path>"Error etapa routing"</con1:path>
+                </con1:param>
+              </con1:xqueryTransform>
+            </con2:expr>
+          </con2:replace>
+          <con1:reply>
+            <con1:id>_ActionId-5814401676609641406--690ddf8c.138343d411f.-7e4d</con1:id>
+          </con1:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:flow>
+      <con:pipeline-node name="PipelinePairNode1">
+        <con:request>PipelinePairNode1_request</con:request>
+        <con:response>PipelinePairNode1_response</con:response>
+      </con:pipeline-node>
+      <con:route-node name="routeConsultarVigenciaElegidoFijoBD" error-handler="_onErrorHandler-5814401676609641406--690ddf8c.138343d411f.-7eb9">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/ConsultarVigenciaElegidoFijo/" prefix="con"/>
+        </con:context>
+        <con:actions>
+          <con3:route>
+            <con1:id>_ActionId-5814401676609641406--690ddf8c.138343d411f.-7eba</con1:id>
+            <con3:service ref="ITEL/Core/Business Services/consultarVigenciaElegidoFijo_BS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con3:operation>bd_consultarVigenciaElegidoFijo</con3:operation>
+            <con3:outboundTransform>
+              <con2:replace varName="body" contents-only="true">
+                <con1:id>_ActionId-5814401676609641406--690ddf8c.138343d411f.-7e33</con1:id>
+                <con2:expr>
+                  <con1:xqueryTransform>
+                    <con1:resource ref="ITEL/Core/Resources/XQueries/consultarVigenciaElegidoFijo_Req"/>
+                    <con1:param name="input_Parameters1">
+                      <con1:path>$body/con:Input_Parameters</con1:path>
+                    </con1:param>
+                  </con1:xqueryTransform>
+                </con2:expr>
+              </con2:replace>
+            </con3:outboundTransform>
+            <con3:responseTransform>
+              <con2:replace contents-only="true" varName="body">
+                <con1:id>_ActionId-5814401676609641406--690ddf8c.138343d411f.-7dfd</con1:id>
+                <con2:expr>
+                  <con1:xqueryTransform>
+                    <con1:resource ref="ITEL/Core/Resources/XQueries/consultarVigenciaElegidoFijo_Res"/>
+                    <con1:param name="outputParameters1">
+                      <con1:path>$body/*:OutputParameters</con1:path>
+                    </con1:param>
+                  </con1:xqueryTransform>
+                </con2:expr>
+              </con2:replace>
+            </con3:responseTransform>
+          </con3:route>
+        </con:actions>
+      </con:route-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

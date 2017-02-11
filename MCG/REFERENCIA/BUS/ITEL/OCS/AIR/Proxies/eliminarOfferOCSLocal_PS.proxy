@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+  <ser:coreEntry isProxy="true" isEnabled="true" isAutoPublish="false" isTracingEnabled="false">
+    <ser:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config">
+      <con:wsdl ref="ITEL/OCS/AIR/Resources/WSDLs/eliminarOffer_PS"/>
+      <con:port>
+        <con:name>eliminarOffer_PSSOAP</con:name>
+        <con:namespace>http://www.comcel.com.co/eliminarOffer_PS/</con:namespace>
+      </con:port>
+      <con:selector type="SOAP body"/>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+    <ser:ws-policy>
+      <ser:binding-mode>wsdl-policy-attachments</ser:binding-mode>
+    </ser:ws-policy>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>http</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:URI>
+      <env:value>/ITEL/OCS/AIR/Proxies/eliminarOfferOCSLocal_PS</env:value>
+    </tran:URI>
+    <tran:inbound-properties/>
+    <tran:all-headers>false</tran:all-headers>
+    <tran:provider-specific>
+      <http:inbound-properties/>
+    </tran:provider-specific>
+  </ser:endpointConfig>
+  <ser:router>
+    <con:pipeline type="request" name="PipelinePairNode1_request">
+      <con:stage name="validacion" errorHandler="_onErrorHandler-4132889789295945889--4dae96c2.145d822b89c.-7bca">
+        <con:context>
+          <con2:varNsDecl namespace="http://www.comcel.com.co/EliminarOfferOCS/" prefix="elim"/>
+        </con:context>
+        <con:actions>
+          <con1:validate>
+            <con2:id>_ActionId-4132889789295945889--4dae96c2.145d822b89c.-7b58</con2:id>
+            <con1:schema ref="ITEL/OCS/AIR/Resources/Schemas/PS_ITEL_ELIMINAR_OFFER"/>
+            <con1:schemaElement xmlns:elim="http://www.comcel.com.co/EliminarOfferOCS/">elim:Input_Parameters</con1:schemaElement>
+            <con1:varName>body</con1:varName>
+            <con1:location>
+              <con2:xpathText>./elim:Input_Parameters</con2:xpathText>
+            </con1:location>
+          </con1:validate>
+        </con:actions>
+      </con:stage>
+      <con:stage name="Enrutamiento" errorHandler="_onErrorHandler-4132889789295945889--4dae96c2.145d822b89c.-78fc">
+        <con:context>
+          <con2:varNsDecl namespace="http://www.comcel.com.co/EliminarOfferOCS/" prefix="elim"/>
+        </con:context>
+        <con:actions>
+          <con1:wsCallout>
+            <con2:id>_ActionId-4132889789295945889--4dae96c2.145d822b89c.-7ab4</con2:id>
+            <con1:service xsi:type="ref:ProxyRef" ref="ITEL/OCS/AIR/Proxies/ejecutarOperacionAIRHTTPLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con1:request>
+              <con1:payload>$enrutamientoRequest</con1:payload>
+            </con1:request>
+            <con1:response>
+              <con1:payload>enrutamientoResponse</con1:payload>
+            </con1:response>
+            <con1:requestTransform>
+              <con1:assign varName="enrutamientoRequest">
+                <con2:id>_ActionId-4132889789295945889--4dae96c2.145d822b89c.-7a44</con2:id>
+                <con1:expr>
+                  <con2:xqueryTransform>
+                    <con2:resource ref="ITEL/OCS/AIR/Resources/XQueries/eliminarOffer_Req"/>
+                    <con2:param name="input_Parameters1">
+                      <con2:path>$body/elim:Input_Parameters</con2:path>
+                    </con2:param>
+                  </con2:xqueryTransform>
+                </con1:expr>
+              </con1:assign>
+            </con1:requestTransform>
+            <con1:responseTransform>
+              <con4:ifThenElse xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config">
+                <con1:id>_ActionId-4132889789295945889--4dae96c2.145d822b89c.-79c9</con1:id>
+                <con4:case>
+                  <con4:condition>
+                    <con1:xqueryText>data( $enrutamientoResponse/params/param/value/struct/member[name = "responseCode"]/value ) = "0"</con1:xqueryText>
+                  </con4:condition>
+                  <con4:actions>
+                    <con4:assign varName="codigo">
+                      <con1:id>_ActionId-4132889789295945889--4dae96c2.145d822b89c.-79c8</con1:id>
+                      <con4:expr>
+                        <con1:xqueryText>"1"</con1:xqueryText>
+                      </con4:expr>
+                    </con4:assign>
+                    <con4:assign varName="descripcion">
+                      <con1:id>_ActionId-4132889789295945889--4dae96c2.145d822b89c.-79c7</con1:id>
+                      <con4:expr>
+                        <con1:xqueryText>"Ejecucion exitosa"</con1:xqueryText>
+                      </con4:expr>
+                    </con4:assign>
+                  </con4:actions>
+                </con4:case>
+                <con4:case>
+                  <con4:condition>
+                    <con1:xqueryText>fn:exists( $enrutamientoResponse/fault )</con1:xqueryText>
+                  </con4:condition>
+                  <con4:actions>
+                    <con4:assign varName="codigo">
+                      <con1:id>_ActionId-4132889789295945889--4dae96c2.145d822b89c.-79c6</con1:id>
+                      <con4:expr>
+                        <con1:xqueryText>"901"</con1:xqueryText>
+                      </con4:expr>
+                    </con4:assign>
+                    <con4:assign varName="descripcion">
+                      <con1:id>_ActionId-4132889789295945889--4dae96c2.145d822b89c.-79c5</con1:id>
+                      <con4:expr>
+                        <con1:xqueryText>data($enrutamientoResponse/fault/value/struct/member[name='faultString']/value/string)</con1:xqueryText>
+                      </con4:expr>
+                    </con4:assign>
+                  </con4:actions>
+                </con4:case>
+                <con4:default>
+                  <con4:assign varName="codigo">
+                    <con1:id>_ActionId-4132889789295945889--4dae96c2.145d822b89c.-79c4</con1:id>
+                    <con4:expr>
+                      <con1:xqueryTransform>
+                        <con1:resource ref="ITEL/OCS/AIR/Resources/XQueries/obtenerCodigoError"/>
+                        <con1:param name="codigoOCS">
+                          <con1:path>data( $enrutamientoResponse/params/param/value/struct/member[name = "responseCode"]/value )</con1:path>
+                        </con1:param>
+                      </con1:xqueryTransform>
+                    </con4:expr>
+                  </con4:assign>
+                  <con4:assign varName="descripcion">
+                    <con1:id>_ActionId-4132889789295945889--4dae96c2.145d822b89c.-79c3</con1:id>
+                    <con4:expr>
+                      <con1:xqueryText>"Ejecucion fallida"</con1:xqueryText>
+                    </con4:expr>
+                  </con4:assign>
+                </con4:default>
+              </con4:ifThenElse>
+              <con4:replace contents-only="true" varName="body" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config">
+                <con1:id>_ActionId-4132889789295945889--4dae96c2.145d822b89c.-7935</con1:id>
+                <con4:expr>
+                  <con1:xqueryTransform>
+                    <con1:resource ref="ITEL/OCS/AIR/Resources/XQueries/eliminarOffer_Res"/>
+                    <con1:param name="descripcion">
+                      <con1:path>$descripcion</con1:path>
+                    </con1:param>
+                    <con1:param name="codigo">
+                      <con1:path>$codigo</con1:path>
+                    </con1:param>
+                    <con1:param name="methodResponse1">
+                      <con1:path>$enrutamientoResponse</con1:path>
+                    </con1:param>
+                  </con1:xqueryTransform>
+                </con4:expr>
+              </con4:replace>
+            </con1:responseTransform>
+          </con1:wsCallout>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="PipelinePairNode1_response"/>
+    <con:pipeline type="error" name="_onErrorHandler-4132889789295945889--4dae96c2.145d822b89c.-7bca">
+      <con:stage name="error">
+        <con:context xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+        <con:actions xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config">
+          <con3:replace contents-only="true" varName="body" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+            <con1:id>_ActionId-4132889789295945889--4dae96c2.145d822b89c.-7b91</con1:id>
+            <con3:expr>
+              <con1:xqueryTransform>
+                <con1:resource ref="ITEL/OCS/AIR/Resources/XQueries/eliminarOffer_Error"/>
+                <con1:param name="mensaje">
+                  <con1:path>"Error etapa de validacion"</con1:path>
+                </con1:param>
+                <con1:param name="descripcion">
+                  <con1:path>$fault/ctx:reason/text()</con1:path>
+                </con1:param>
+                <con1:param name="codigo">
+                  <con1:path>"20"</con1:path>
+                </con1:param>
+              </con1:xqueryTransform>
+            </con3:expr>
+          </con3:replace>
+          <con1:reply>
+            <con1:id>_ActionId-4132889789295945889--4dae96c2.145d822b89c.-7b90</con1:id>
+          </con1:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="error" name="_onErrorHandler-4132889789295945889--4dae96c2.145d822b89c.-78fc">
+      <con:stage name="error">
+        <con:context xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+        <con:actions xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config">
+          <con3:replace contents-only="true" varName="body" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+            <con1:id>_ActionId-4132889789295945889--4dae96c2.145d822b89c.-78c3</con1:id>
+            <con3:expr>
+              <con1:xqueryTransform>
+                <con1:resource ref="ITEL/OCS/AIR/Resources/XQueries/eliminarOffer_Error"/>
+                <con1:param name="mensaje">
+                  <con1:path>"Error etapa de enrutamiento"</con1:path>
+                </con1:param>
+                <con1:param name="descripcion">
+                  <con1:path>$fault/ctx:reason/text()</con1:path>
+                </con1:param>
+                <con1:param name="codigo">
+                  <con1:path>"20"</con1:path>
+                </con1:param>
+              </con1:xqueryTransform>
+            </con3:expr>
+          </con3:replace>
+          <con1:reply>
+            <con1:id>_ActionId-4132889789295945889--4dae96c2.145d822b89c.-78c2</con1:id>
+          </con1:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:flow>
+      <con:pipeline-node name="PipelinePairNode1">
+        <con:request>PipelinePairNode1_request</con:request>
+        <con:response>PipelinePairNode1_response</con:response>
+      </con:pipeline-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

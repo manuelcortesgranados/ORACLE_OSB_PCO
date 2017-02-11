@@ -1,0 +1,14 @@
+<adapter-config name="bd_updateCreditScore" adapter="Database Adapter" wsdlLocation="../WSDLs/updateCreditScore_BD.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/DB/Activa" UIConnectionName="ACTIVADEV" adapterRef=""/>
+  <endpoint-interaction portType="bd_updateCreditScore_ptt" operation="bd_updateCreditScore">
+    <interaction-spec className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
+      <property name="PackageName" value="PKG_RULESENGINE_ACTIVA"/>
+      <property name="ProcedureName" value="PRC_UPDATECREDITSCORE"/>
+      <property name="QueryTimeout" value="1"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+    <output/>
+  </endpoint-interaction>
+
+</adapter-config>

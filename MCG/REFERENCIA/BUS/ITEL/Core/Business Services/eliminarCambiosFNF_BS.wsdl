@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions
+	targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/ITEL/Adaptadores/eliminarCambiosFNF"
+	name="eliminarCambiosFNF-concrete" xmlns="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/ITEL/Adaptadores/eliminarCambiosFNF"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+	<import
+		namespace="http://xmlns.oracle.com/pcbpel/adapter/db/ITEL/Adaptadores/eliminarCambiosFNF"
+		location="../Resources/WSDLs/eliminarCambiosFNF_BD.wsdl" />
+	<binding name="eliminarCambiosFNF_ptt-binding" type="tns:eliminarCambiosFNF_ptt">
+		<soap:binding style="document"
+			transport="http://www.bea.com/wli/sb/transports/jca" />
+		<operation name="eliminarCambiosFNF">
+			<soap:operation soapAction="eliminarCambiosFNF" />
+			<input>
+				<soap:body use="literal" />
+			</input>
+			<output>
+				<soap:body use="literal" />
+			</output>
+		</operation>
+	</binding>
+	<service name="eliminarCambiosFNF-service">
+		<port name="eliminarCambiosFNF-port" binding="tns:eliminarCambiosFNF_ptt-binding">
+			<soap:address location="jca://eis/DB/ITEL_SOA_CENT" />
+		</port>
+	</service>
+</definitions>

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config">
+  <ser:coreEntry isProxy="true" isEnabled="true">
+    <ser:binding type="SOAP" isSoap12="false" xsi:type="con4:SoapBindingType" xmlns:con4="http://www.bea.com/wli/sb/services/bindings/config">
+      <con4:wsdl ref="RulesEngine/Activa/Resources/WSDLs/getRadicatedMaacActiva_PS"/>
+      <con4:port>
+        <con4:name>GetRadicatedMaacActivaSOAP</con4:name>
+        <con4:namespace>http://www.claro.com.co/rulesEngine/getRadicatedMaacActiva</con4:namespace>
+      </con4:port>
+      <con4:selector type="SOAP body"/>
+      <con4:WSI-compliant>false</con4:WSI-compliant>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+    <ser:ws-policy>
+      <ser:binding-mode>wsdl-policy-attachments</ser:binding-mode>
+    </ser:ws-policy>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>local</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:inbound-properties/>
+    <tran:all-headers>true</tran:all-headers>
+  </ser:endpointConfig>
+  <ser:router>
+    <con:pipeline type="request" name="PipelinePairNode1_request">
+      <con:stage name="validate" errorHandler="_onErrorHandler-128684183705117515-3e74b17f.13ea3dbd99e.-6d48">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.claro.com.co/rulesEngine/getRadicatedMaacActiva" prefix="get"/>
+        </con:context>
+        <con:actions>
+          <con2:assign varName="namespace">
+            <con1:id>_ActionId-19937711684209005-38ddb681.13feeb5eb0e.-7a3f</con1:id>
+            <con2:expr>
+              <con1:xqueryText>fn:namespace-uri($body/*:Input_Parameters)</con1:xqueryText>
+            </con2:expr>
+          </con2:assign>
+          <con2:assign varName="businessRequest">
+            <con1:id>_ActionId-24755856419545226-714fd06a.13f58bf540c.-74ca</con1:id>
+            <con2:expr>
+              <con1:xqueryTransform>
+                <con1:resource ref="RulesEngine/Activa/Resources/XQueries/getRadicatedMaacActiva_Req"/>
+                <con1:param name="input_Parameters1">
+                  <con1:path>$body/get:Input_Parameters</con1:path>
+                </con1:param>
+              </con1:xqueryTransform>
+            </con2:expr>
+          </con2:assign>
+          <con2:validate>
+            <con1:id>_ActionId-128684183705117515-3e74b17f.13ea3dbd99e.-6d49</con1:id>
+            <con2:schema ref="RulesEngine/Activa/Resources/Schemas/BD_GET_RADICATEDMAACACTIVA"/>
+            <con2:schemaElement xmlns:get="http://www.claro.com.co/rulesEngine/getRadicatedMaacActiva" xmlns:prc="http://xmlns.oracle.com/pcbpel/adapter/db/INH_MOTORREGLAS/PKG_RULESENGINE_ACTIVA/PRC_GET_RADICATED_MAAC_ACTIVA/">prc:InputParameters</con2:schemaElement>
+            <con2:varName>businessRequest</con2:varName>
+          </con2:validate>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="PipelinePairNode1_response"/>
+    <con:pipeline type="error" name="_onErrorHandler-128684183705117515-3e74b17f.13ea3dbd99e.-6d48">
+      <con:stage name="validateError">
+        <con:context/>
+        <con:actions>
+          <con2:replace contents-only="true" varName="body">
+            <con1:id>_ActionId-128684183705117515-3e74b17f.13ea3dbd99e.-6d10</con1:id>
+            <con2:expr>
+              <con1:xqueryTransform>
+                <con1:resource ref="RulesEngine/Util/Resources/XQueries/genericError"/>
+                <con1:param name="targetNamespace">
+                  <con1:path>$namespace</con1:path>
+                </con1:param>
+                <con1:param name="fault">
+                  <con1:path>$fault</con1:path>
+                </con1:param>
+                <con1:param name="code">
+                  <con1:path>"23"</con1:path>
+                </con1:param>
+              </con1:xqueryTransform>
+            </con2:expr>
+          </con2:replace>
+          <con1:reply isError="false">
+            <con1:id>_ActionId-128684183705117515-3e74b17f.13ea3dbd99e.-6c15</con1:id>
+          </con1:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="error" name="_onErrorHandler-128684183705117515-3e74b17f.13ea3dbd99e.-6c32">
+      <con:stage name="routingError">
+        <con:context/>
+        <con:actions>
+          <con2:replace contents-only="true" varName="body">
+            <con1:id>_ActionId-128684183705117515-3e74b17f.13ea3dbd99e.-6bdd</con1:id>
+            <con2:expr>
+              <con1:xqueryTransform>
+                <con1:resource ref="RulesEngine/Util/Resources/XQueries/genericError"/>
+                <con1:param name="targetNamespace">
+                  <con1:path>$namespace</con1:path>
+                </con1:param>
+                <con1:param name="fault">
+                  <con1:path>$fault</con1:path>
+                </con1:param>
+                <con1:param name="code">
+                  <con1:path>"20"</con1:path>
+                </con1:param>
+              </con1:xqueryTransform>
+            </con2:expr>
+          </con2:replace>
+          <con1:reply isError="false">
+            <con1:id>_ActionId-128684183705117515-3e74b17f.13ea3dbd99e.-6bc0</con1:id>
+          </con1:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:flow>
+      <con:pipeline-node name="PipelinePairNode1">
+        <con:request>PipelinePairNode1_request</con:request>
+        <con:response>PipelinePairNode1_response</con:response>
+      </con:pipeline-node>
+      <con:route-node name="getRadicatedMaacActiva" error-handler="_onErrorHandler-128684183705117515-3e74b17f.13ea3dbd99e.-6c32">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.claro.com.co/rulesEngine/getRadicatedMaacActiva" prefix="get"/>
+        </con:context>
+        <con:actions>
+          <con3:route>
+            <con1:id>_ActionId-128684183705117515-3e74b17f.13ea3dbd99e.-6cd9</con1:id>
+            <con3:service ref="RulesEngine/Activa/Business services/getRadicatedMaac_BS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con3:operation>bd_getRadicatedMaac</con3:operation>
+            <con3:outboundTransform>
+              <con2:replace varName="body" contents-only="true">
+                <con1:id>_ActionId-24755856419545226-714fd06a.13f58bf540c.-7ee9</con1:id>
+                <con2:expr>
+                  <con1:xqueryText>$businessRequest</con1:xqueryText>
+                </con2:expr>
+              </con2:replace>
+            </con3:outboundTransform>
+            <con3:responseTransform>
+              <con2:replace contents-only="true" varName="body">
+                <con1:id>_ActionId-24755856419545226-714fd06a.13f58bf540c.-7eb1</con1:id>
+                <con2:expr>
+                  <con1:xqueryTransform>
+                    <con1:resource ref="RulesEngine/Activa/Resources/XQueries/getRadicatedMaacActiva_Res"/>
+                    <con1:param name="outputParameters1">
+                      <con1:path>$body/*:OutputParameters</con1:path>
+                    </con1:param>
+                  </con1:xqueryTransform>
+                </con2:expr>
+              </con2:replace>
+            </con3:responseTransform>
+          </con3:route>
+        </con:actions>
+      </con:route-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

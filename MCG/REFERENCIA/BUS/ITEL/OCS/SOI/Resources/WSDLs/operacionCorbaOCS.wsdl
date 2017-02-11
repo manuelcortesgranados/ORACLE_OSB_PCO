@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="http://www.comcel.com.co/IN/OperacionCorbaOCS" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.comcel.com.co/IN/OperacionCorbaOCS" targetNamespace="http://www.comcel.com.co/IN/OperacionCorbaOCS">
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.comcel.com.co/IN/OperacionCorbaOCS">
+            <element name="EjecutarComandoRequest" type="tns:EjecutarComandoRequest"/>
+            <element name="CrearSuscriptorRequest" type="tns:CrearSuscriptorRequest"/>
+            <element name="ConsultarSuscriptorRequest" type="tns:ConsultarSuscriptorRequest"/>
+            <element name="EliminarSuscriptorRequest" type="tns:EliminarSuscriptorRequest"/>
+            <element name="BloquearSuscriptorRequest" type="tns:BloquearSuscriptorRequest"/>
+            <element name="CambiarMinRequest" type="tns:CambiarMinRequest"/>
+            <element name="CambiarPlanRequest" type="tns:CambiarPlanRequest"/>
+            <element name="CompensarCrearSuscriptorRequest" type="tns:CompensarCrearSuscriptorRequest"/>
+            <element name="CompensarCambiarMinRequest" type="tns:CompensarCambiarMinRequest"/>
+            <element name="CompensarCambiarPlanRequest" type="tns:CompensarCambiarPlanRequest"/>
+            <complexType name="EjecutarComandoRequest">
+                <sequence>
+                    <element name="comando" type="string"/>
+                    <element name="datos" type="tns:DataArray"/>
+                </sequence>
+                <attribute name="in" type="string"/>
+            </complexType>
+            <complexType name="CrearSuscriptorRequest">
+                <sequence>
+                    <element name="suscriptor" type="tns:SubscriberCreate"/>
+                </sequence>
+                <attribute name="prefijo" type="string"/>
+                <attribute name="min" type="string"/>
+                <attribute name="hostId" type="string"/>
+                <attribute name="requestorId" type="long"/>
+                <attribute name="in" type="string"/>
+                <attribute name="timeout" type="long"/>
+            </complexType>
+            <complexType name="ConsultarSuscriptorRequest">
+                <attribute name="prefijo" type="string"/>
+                <attribute name="min" type="string"/>
+                <attribute name="in" type="string"/>
+                <attribute name="timeout" type="long"/>
+            </complexType>
+            <complexType name="EliminarSuscriptorRequest">
+                <attribute name="prefijo" type="string"/>
+                <attribute name="min" type="string"/>
+                <attribute name="in" type="string"/>
+                <attribute name="timeout" type="long"/>
+            </complexType>
+            <complexType name="BloquearSuscriptorRequest">
+                <attribute name="prefijo" type="string"/>
+                <attribute name="min" type="string"/>
+                <attribute name="bloqueoFraude" type="boolean"/>
+                <attribute name="bloqueoGeneral" type="boolean"/>
+                <attribute name="in" type="string"/>
+                <attribute name="timeout" type="long"/>
+            </complexType>
+            <complexType name="CambiarMinRequest">
+                <sequence>
+                    <element name="suscriptor" type="tns:SubscriberFinal"/>
+                </sequence>
+                <attribute name="prefijo" type="string"/>
+                <attribute name="min" type="string"/>
+                <attribute name="hostId" type="string"/>
+                <attribute name="requestorId" type="long"/>
+                <attribute name="in" type="string"/>
+                <attribute name="timeout" type="long"/>
+            </complexType>
+            <complexType name="CambiarPlanRequest">
+                <attribute name="prefijo" type="string"/>
+                <attribute name="min" type="string"/>
+                <attribute name="plan" type="string"/>
+                <attribute name="planOriginal" type="string"/>
+                <attribute name="in" type="string"/>
+                <attribute name="timeout" type="long"/>
+            </complexType>
+            <complexType name="CompensarCrearSuscriptorRequest">
+                <attribute name="prefijo" type="string"/>
+                <attribute name="min" type="string"/>
+                <attribute name="in" type="string"/>
+            </complexType>
+            <complexType name="CompensarCambiarMinRequest">
+                <sequence>
+                    <element name="suscriptor" type="tns:SubscriberFinal"/>
+                </sequence>
+                <attribute name="prefijo" type="string"/>
+                <attribute name="min" type="string"/>
+                <attribute name="hostId" type="string"/>
+                <attribute name="requestorId" type="long"/>
+                <attribute name="in" type="string"/>
+            </complexType>
+            <complexType name="CompensarCambiarPlanRequest">
+                <attribute name="prefijo" type="string"/>
+                <attribute name="min" type="string"/>
+                <attribute name="plan" type="string"/>
+                <attribute name="fechaExpiracion" type="string"/>
+                <attribute name="in" type="string"/>
+            </complexType>
+            <simpleType name="Operacion">
+                <restriction base="string">
+                    <enumeration value="Carga"/>
+                    <enumeration value="Recarga"/>
+                </restriction>
+            </simpleType>
+            <simpleType name="Interfaz">
+                <restriction base="string">
+                    <enumeration value="CIB"/>
+                    <enumeration value="SMAF"/>
+                </restriction>
+            </simpleType>
+            <element name="EjecutarComandoResponse" type="tns:EjecutarComandoResponse"/>
+            <element name="CrearSuscriptorResponse" type="tns:CrearSuscriptorResponse"/>
+            <element name="ConsultarSuscriptorResponse" type="tns:ConsultarSuscriptorResponse"/>
+            <element name="EliminarSuscriptorResponse" type="tns:EliminarSuscriptorResponse"/>
+            <element name="BloquearSuscriptorResponse" type="tns:BloquearSuscriptorResponse"/>
+            <element name="CambiarMinResponse" type="tns:CambiarMinResponse"/>
+            <element name="CambiarPlanResponse" type="tns:CambiarPlanResponse"/>
+            <element name="CompensacionResponse" type="tns:CompensacionResponse"/>
+            <complexType name="EjecutarComandoResponse">
+                <sequence>
+                    <element name="resultado" type="tns:Resultado"/>
+                </sequence>
+                <attribute name="exito" type="boolean"/>
+                <attribute name="mensaje" type="string"/>
+            </complexType>
+            <complexType name="CrearSuscriptorResponse">
+                <attribute name="exito" type="boolean"/>
+                <attribute name="mensaje" type="string"/>
+            </complexType>
+            <complexType name="ConsultarSuscriptorResponse">
+                <sequence>
+                    <element name="suscriptor" type="tns:SubscriberFinal"/>
+                </sequence>
+                <attribute name="exito" type="boolean"/>
+                <attribute name="mensaje" type="string"/>
+                <attribute name="cluster" type="string"/>
+            </complexType>
+            <complexType name="EliminarSuscriptorResponse">
+                <attribute name="exito" type="boolean"/>
+                <attribute name="mensaje" type="string"/>
+            </complexType>
+            <complexType name="BloquearSuscriptorResponse">
+                <attribute name="exito" type="boolean"/>
+                <attribute name="mensaje" type="string"/>
+            </complexType>
+            <complexType name="CambiarMinResponse">
+                <attribute name="exito" type="boolean"/>
+                <attribute name="mensaje" type="string"/>
+            </complexType>
+            <complexType name="CambiarPlanResponse">
+                <attribute name="exito" type="boolean"/>
+                <attribute name="mensaje" type="string"/>
+            </complexType>
+            <complexType name="CompensacionResponse">
+                <attribute name="exito" type="boolean"/>
+                <attribute name="mensaje" type="string"/>
+            </complexType>
+            <complexType name="SubscriberCreate">
+                <sequence>
+                    <element name="AccountGroupID" type="string"/>
+                    <element name="AddressRoles" type="string"/>
+                    <element name="AddressSeq" type="string"/>
+                    <element name="ContractID" type="string"/>
+                    <element name="ContractType" type="string"/>
+                    <element name="CustomerStatus" type="string"/>
+                    <element name="DirectoryNumber" type="string"/>
+                    <element name="IVRLanguage" type="string"/>
+                    <element name="PublicMarketCode" type="string"/>
+                    <element name="PartyRoleSHName" type="string"/>
+                    <element name="PartyType" type="string"/>
+                    <element name="PaymentResponsibility" type="string"/>
+                    <element name="PortNumber" type="string"/>
+                    <element name="PublicNetworkId" type="string"/>
+                    <element name="PublicSubMarketCode" type="string"/>
+                    <element name="ReasonCode" type="string"/>
+                    <element name="SdpID" type="string"/>
+                    <element name="StorageMediumNumber" type="string"/>
+                    <element name="TemporaryBlocked" type="string"/>
+                </sequence>
+            </complexType>
+            <complexType name="SubscriberFinal">
+                <sequence>
+                    <element name="AccountGroupID" type="string"/>
+                    <element name="ContractID" type="string"/>
+                    <element name="ContractType" type="string"/>
+                    <element name="CustomerID" type="string"/>
+                    <element name="ContractStatus" type="string"/>
+                    <element name="DirectoryNumber" type="string"/>
+                    <element name="IVRLanguage" type="string"/>
+                    <element name="MarketCode" type="string"/>
+                    <element name="NetworkId" type="string"/>
+                    <element name="PublicContractId" type="string"/>
+                    <element name="PublicMarketCode" type="string"/>
+                    <element name="PublicNetworkId" type="string"/>
+                    <element name="PublicRatePlanCode" type="string"/>
+                    <element name="PublicSubMarketCode" type="string"/>
+                    <element name="RatePlanCode" type="string"/>
+                    <element name="ReasonCode" type="string"/>
+                    <element name="SdpID" type="string"/>
+                    <element name="StorageMediumNumber" type="string"/>
+                    <element name="SubMarketCode" type="string"/>
+                </sequence>
+            </complexType>
+            <complexType name="DataArray">
+                <sequence>
+                    <element maxOccurs="unbounded" minOccurs="0" name="Detail" type="string"/>
+                </sequence>
+            </complexType>
+            <complexType name="AccountID">
+                <sequence>
+                    <element name="Balance" type="string"/>
+                    <element name="ExpiryDate" type="string"/>
+                </sequence>
+            </complexType>
+            <complexType name="Resultado">
+                <sequence>
+                    <element maxOccurs="unbounded" minOccurs="0" name="respuesta" type="string"/>
+                </sequence>
+                <attribute name="posicion" type="integer"/>
+            </complexType>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="CompensarCambiarMinRequest">
+        <wsdl:part element="tns:CompensarCambiarMinRequest" name="CompensarCambiarMinRequest"/>
+    </wsdl:message>
+    <wsdl:message name="BloquearSuscriptorRequest">
+        <wsdl:part element="tns:BloquearSuscriptorRequest" name="BloquearSuscriptorRequest"/>
+    </wsdl:message>
+    <wsdl:message name="BloquearSuscriptorResponse">
+        <wsdl:part element="tns:BloquearSuscriptorResponse" name="BloquearSuscriptorResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ConsultarSuscriptorRequest">
+        <wsdl:part element="tns:ConsultarSuscriptorRequest" name="ConsultarSuscriptorRequest"/>
+    </wsdl:message>
+    <wsdl:message name="ConsultarSuscriptorResponse">
+        <wsdl:part element="tns:ConsultarSuscriptorResponse" name="ConsultarSuscriptorResponse"/>
+    </wsdl:message>
+    <wsdl:message name="CambiarPlanRequest">
+        <wsdl:part element="tns:CambiarPlanRequest" name="CambiarPlanRequest"/>
+    </wsdl:message>
+    <wsdl:message name="CambiarPlanResponse">
+        <wsdl:part element="tns:CambiarPlanResponse" name="CambiarPlanResponse"/>
+    </wsdl:message>
+    <wsdl:message name="CompensacionResponse">
+        <wsdl:part element="tns:CompensacionResponse" name="CompensacionResponse"/>
+    </wsdl:message>
+    <wsdl:message name="CrearSuscriptorRequest">
+        <wsdl:part element="tns:CrearSuscriptorRequest" name="CrearSuscriptorRequest"/>
+    </wsdl:message>
+    <wsdl:message name="CrearSuscriptorResponse">
+        <wsdl:part element="tns:CrearSuscriptorResponse" name="CrearSuscriptorResponse"/>
+    </wsdl:message>
+    <wsdl:message name="CambiarMinRequest">
+        <wsdl:part element="tns:CambiarMinRequest" name="CambiarMinRequest"/>
+    </wsdl:message>
+    <wsdl:message name="CambiarMinResponse">
+        <wsdl:part element="tns:CambiarMinResponse" name="CambiarMinResponse"/>
+    </wsdl:message>
+    <wsdl:message name="CompensarCrearSuscriptorRequest">
+        <wsdl:part element="tns:CompensarCrearSuscriptorRequest" name="CompensarCrearSuscriptorRequest"/>
+    </wsdl:message>
+    <wsdl:message name="EliminarSuscriptorRequest">
+        <wsdl:part element="tns:EliminarSuscriptorRequest" name="EliminarSuscriptorRequest"/>
+    </wsdl:message>
+    <wsdl:message name="EliminarSuscriptorResponse">
+        <wsdl:part element="tns:EliminarSuscriptorResponse" name="EliminarSuscriptorResponse"/>
+    </wsdl:message>
+    <wsdl:message name="CompensarCambiarPlanRequest">
+        <wsdl:part element="tns:CompensarCambiarPlanRequest" name="CompensarCambiarPlanRequest"/>
+    </wsdl:message>
+    <wsdl:message name="EjecutarComandoRequest">
+        <wsdl:part element="tns:EjecutarComandoRequest" name="EjecutarComandoRequest"/>
+    </wsdl:message>
+    <wsdl:message name="EjecutarComandoResponse">
+        <wsdl:part element="tns:EjecutarComandoResponse" name="EjecutarComandoResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="OperacionCorbaOCS">
+        <wsdl:operation name="CompensarCambiarMin">
+            <wsdl:input message="tns:CompensarCambiarMinRequest" name="CompensarCambiarMinRequest"/>
+        </wsdl:operation>
+        <wsdl:operation name="BloquearSuscriptor">
+            <wsdl:input message="tns:BloquearSuscriptorRequest" name="BloquearSuscriptorRequest"/>
+            <wsdl:output message="tns:BloquearSuscriptorResponse" name="BloquearSuscriptorResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="ConsultarSuscriptor">
+            <wsdl:input message="tns:ConsultarSuscriptorRequest" name="ConsultarSuscriptorRequest"/>
+            <wsdl:output message="tns:ConsultarSuscriptorResponse" name="ConsultarSuscriptorResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="CambiarPlan">
+            <wsdl:input message="tns:CambiarPlanRequest" name="CambiarPlanRequest"/>
+            <wsdl:output message="tns:CambiarPlanResponse" name="CambiarPlanResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="Compensacion">
+            <wsdl:output message="tns:CompensacionResponse" name="CompensacionResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="CrearSuscriptor">
+            <wsdl:input message="tns:CrearSuscriptorRequest" name="CrearSuscriptorRequest"/>
+            <wsdl:output message="tns:CrearSuscriptorResponse" name="CrearSuscriptorResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="CambiarMin">
+            <wsdl:input message="tns:CambiarMinRequest" name="CambiarMinRequest"/>
+            <wsdl:output message="tns:CambiarMinResponse" name="CambiarMinResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="CompensarCrearSuscriptor">
+            <wsdl:input message="tns:CompensarCrearSuscriptorRequest" name="CompensarCrearSuscriptorRequest"/>
+        </wsdl:operation>
+        <wsdl:operation name="EliminarSuscriptor">
+            <wsdl:input message="tns:EliminarSuscriptorRequest" name="EliminarSuscriptorRequest"/>
+            <wsdl:output message="tns:EliminarSuscriptorResponse" name="EliminarSuscriptorResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="CompensarCambiarPlan">
+            <wsdl:input message="tns:CompensarCambiarPlanRequest" name="CompensarCambiarPlanRequest"/>
+        </wsdl:operation>
+        <wsdl:operation name="EjecutarComando">
+            <wsdl:input message="tns:EjecutarComandoRequest" name="EjecutarComandoRequest"/>
+            <wsdl:output message="tns:EjecutarComandoResponse" name="EjecutarComandoResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="OperacionCorbaOCSSoap11" type="tns:OperacionCorbaOCS">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="CompensarCambiarMin">
+            <soap:operation soapAction=""/>
+            <wsdl:input name="CompensarCambiarMinRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="BloquearSuscriptor">
+            <soap:operation soapAction=""/>
+            <wsdl:input name="BloquearSuscriptorRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="BloquearSuscriptorResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ConsultarSuscriptor">
+            <soap:operation soapAction=""/>
+            <wsdl:input name="ConsultarSuscriptorRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="ConsultarSuscriptorResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="CambiarPlan">
+            <soap:operation soapAction=""/>
+            <wsdl:input name="CambiarPlanRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="CambiarPlanResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="Compensacion">
+            <soap:operation soapAction=""/>
+            <wsdl:output name="CompensacionResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="CrearSuscriptor">
+            <soap:operation soapAction=""/>
+            <wsdl:input name="CrearSuscriptorRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="CrearSuscriptorResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="CambiarMin">
+            <soap:operation soapAction=""/>
+            <wsdl:input name="CambiarMinRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="CambiarMinResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="CompensarCrearSuscriptor">
+            <soap:operation soapAction=""/>
+            <wsdl:input name="CompensarCrearSuscriptorRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="EliminarSuscriptor">
+            <soap:operation soapAction=""/>
+            <wsdl:input name="EliminarSuscriptorRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="EliminarSuscriptorResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="CompensarCambiarPlan">
+            <soap:operation soapAction=""/>
+            <wsdl:input name="CompensarCambiarPlanRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="EjecutarComando">
+            <soap:operation soapAction=""/>
+            <wsdl:input name="EjecutarComandoRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="EjecutarComandoResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="OperacionCorbaOCSService">
+        <wsdl:port binding="tns:OperacionCorbaOCSSoap11" name="OperacionCorbaOCSSoap11">
+            <soap:address location="http://172.22.85.87:9223/ConectorCorbaOCS/services"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

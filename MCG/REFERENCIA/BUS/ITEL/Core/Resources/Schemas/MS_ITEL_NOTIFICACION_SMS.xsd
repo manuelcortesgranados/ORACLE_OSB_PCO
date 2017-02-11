@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.comcel.com.co/NotificacionSMSITEL/"
+	xmlns:tns="http://www.comcel.com.co/NotificacionSMSITEL/">
+	
+	<xs:element name="Input_Parameters" type="tns:Input_Paramaters" />
+	
+	<xs:complexType name="Input_Paramaters">
+		<xs:sequence>
+			<xs:element name="ORIGEN" type="xs:string" />			
+			<xs:element name="DESTINO" type="xs:string" />
+			<xs:element name="OFFERID" type="xs:string" />		
+			<xs:element name="OFFERSTARTDATE" type="xs:string" />
+			<xs:element name="OFFERENDDATE" type="xs:string" />
+			<xs:element name="USAGECOUNTERVALUE" type="xs:decimal" />
+			<xs:element name="USAGECOUNTERLEVEL" type="xs:decimal" />
+			<xs:element name="MENSAJE" type="xs:string" />
+			<xs:element name="TIPONOTIFICACION" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+
+</xs:schema>

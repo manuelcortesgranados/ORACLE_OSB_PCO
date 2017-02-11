@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/ITEL/Adaptadores/bd_bbPrepago" name="bd_bbPrepago-concrete" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/ITEL/Adaptadores/bd_bbPrepago" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/ITEL/Adaptadores/bd_bbPrepago" location="../Resources/WSDLs/bbPrepago_BD.wsdl"/>
+  <binding name="bd_bbPrepago_ptt-binding" type="tns:bd_bbPrepago_ptt">
+    <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+    <operation name="bd_bbPrepago">
+      <soap:operation soapAction="bd_bbPrepago"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="bd_bbPrepago-service">
+    <port name="bd_bbPrepago-port" binding="tns:bd_bbPrepago_ptt-binding">
+      <soap:address location="jca://eis/DB/BSCS"/>
+    </port>
+  </service>
+</definitions>

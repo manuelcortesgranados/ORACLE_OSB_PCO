@@ -1,0 +1,126 @@
+<?xml version='1.0' encoding='utf-8'?><wsdl:definitions xmlns:plnk="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.oracle.com/CreditExclusions/DS_CreditExclusions" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:java="http://schemas.xmlsoap.org/wsdl/java/" xmlns:format="http://schemas.xmlsoap.org/wsdl/formatbinding/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:rules="http://xmlns.oracle.com/bpel/rules" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="DS_CreditExclusions" targetNamespace="http://xmlns.oracle.com/CreditExclusions/DS_CreditExclusions">
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://xmlns.oracle.com/CreditExclusions/DS_CreditExclusions">
+            <include schemaLocation="../Schemas/BR_CREDITEXCLUSIONS_MESSAGETYPES.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="callFunctionStatelessMessage">
+        <wsdl:part name="payload" element="tns:callFunctionStateless"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="callFunctionStatelessDecisionMessage">
+        <wsdl:part name="payload" element="tns:callFunctionStatelessDecision"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="decisionServiceError">
+        <wsdl:part name="payload" element="tns:errorInfo"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="callFunctionStatefulMessage">
+        <wsdl:part name="payload" element="tns:callFunctionStateful"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="callFunctionStatefulDecisionMessage">
+        <wsdl:part name="payload" element="tns:callFunctionStatefulDecision"></wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="IDecisionService">
+        <wsdl:operation name="callFunctionStateless">
+            <wsdl:input name="callFunctionStatelessInput" message="tns:callFunctionStatelessMessage"></wsdl:input>
+            <wsdl:output name="callFunctionStatelessOutput" message="tns:callFunctionStatelessDecisionMessage"></wsdl:output>
+            <wsdl:fault name="operationErroredFault" message="tns:decisionServiceError"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="callFunctionStateful">
+            <wsdl:input name="callFunctionStatefulInput" message="tns:callFunctionStatefulMessage"></wsdl:input>
+            <wsdl:output name="callFunctionStatefulOutput" message="tns:callFunctionStatefulDecisionMessage"></wsdl:output>
+            <wsdl:fault name="operationErroredFault" message="tns:decisionServiceError"></wsdl:fault>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="IDecisionServiceDirectBinding1.2" type="tns:IDecisionService">
+        <soap12:binding transport="http://xmlns.oracle.com/soa/direct"></soap12:binding>
+        <wsdl:operation name="callFunctionStateless">
+            <soap12:operation style="document" soapAction="callFunctionStateless" soapActionRequired="false"></soap12:operation>
+            <wsdl:input name="callFunctionStatelessInput">
+                <soap12:body use="literal" namespace="http://xmlns.oracle.com/CreditExclusions/DS_CreditExclusions"></soap12:body>
+            </wsdl:input>
+            <wsdl:output name="callFunctionStatelessOutput">
+                <soap12:body use="literal" namespace="http://xmlns.oracle.com/CreditExclusions/DS_CreditExclusions"></soap12:body>
+            </wsdl:output>
+            <wsdl:fault name="operationErroredFault">
+                <soap12:fault name="operationErroredFault" use="literal"></soap12:fault>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="callFunctionStateful">
+            <soap12:operation style="document" soapAction="callFunctionStateful" soapActionRequired="false"></soap12:operation>
+            <wsdl:input name="callFunctionStatefulInput">
+                <soap12:body use="literal" namespace="http://xmlns.oracle.com/CreditExclusions/DS_CreditExclusions"></soap12:body>
+            </wsdl:input>
+            <wsdl:output name="callFunctionStatefulOutput">
+                <soap12:body use="literal" namespace="http://xmlns.oracle.com/CreditExclusions/DS_CreditExclusions"></soap12:body>
+            </wsdl:output>
+            <wsdl:fault name="operationErroredFault">
+                <soap12:fault name="operationErroredFault" use="literal"></soap12:fault>
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="IDecisionServiceDirectBinding1.1" type="tns:IDecisionService">
+        <soap:binding transport="http://xmlns.oracle.com/soa/direct"></soap:binding>
+        <wsdl:operation name="callFunctionStateless">
+            <soap:operation style="document" soapAction="callFunctionStateless"></soap:operation>
+            <wsdl:input name="callFunctionStatelessInput">
+                <soap:body use="literal" namespace="http://xmlns.oracle.com/CreditExclusions/DS_CreditExclusions"></soap:body>
+            </wsdl:input>
+            <wsdl:output name="callFunctionStatelessOutput">
+                <soap:body use="literal" namespace="http://xmlns.oracle.com/CreditExclusions/DS_CreditExclusions"></soap:body>
+            </wsdl:output>
+            <wsdl:fault name="operationErroredFault">
+                <soap:fault name="operationErroredFault" use="literal"></soap:fault>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="callFunctionStateful">
+            <soap:operation style="document" soapAction="callFunctionStateful"></soap:operation>
+            <wsdl:input name="callFunctionStatefulInput">
+                <soap:body use="literal" namespace="http://xmlns.oracle.com/CreditExclusions/DS_CreditExclusions"></soap:body>
+            </wsdl:input>
+            <wsdl:output name="callFunctionStatefulOutput">
+                <soap:body use="literal" namespace="http://xmlns.oracle.com/CreditExclusions/DS_CreditExclusions"></soap:body>
+            </wsdl:output>
+            <wsdl:fault name="operationErroredFault">
+                <soap:fault name="operationErroredFault" use="literal"></soap:fault>
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="IDecisionServiceBinding" type="tns:IDecisionService">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"></soap:binding>
+        <wsdl:operation name="callFunctionStateless">
+            <soap:operation style="document" soapAction="callFunctionStateless"></soap:operation>
+            <wsdl:input name="callFunctionStatelessInput">
+                <soap:body use="literal"></soap:body>
+            </wsdl:input>
+            <wsdl:output name="callFunctionStatelessOutput">
+                <soap:body use="literal"></soap:body>
+            </wsdl:output>
+            <wsdl:fault name="operationErroredFault">
+                <soap:fault name="operationErroredFault" use="literal"></soap:fault>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="callFunctionStateful">
+            <soap:operation style="document" soapAction="callFunctionStateful"></soap:operation>
+            <wsdl:input name="callFunctionStatefulInput">
+                <soap:body use="literal"></soap:body>
+            </wsdl:input>
+            <wsdl:output name="callFunctionStatefulOutput">
+                <soap:body use="literal"></soap:body>
+            </wsdl:output>
+            <wsdl:fault name="operationErroredFault">
+                <soap:fault name="operationErroredFault" use="literal"></soap:fault>
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="DS_CreditExclusions_ep">
+        <wsdl:port name="IDecisionService_pt" binding="tns:IDecisionServiceBinding">
+            <soap:address location="t3://lnxmcdes01.comcel.com.co:8003/REPLACE_WITH_ACTUAL_URL"></soap:address>
+        </wsdl:port>
+        <wsdl:port name="DS_CreditExclusionsDirectBindingPort11" binding="tns:IDecisionServiceDirectBinding1.1">
+            <soap:address location="t3://lnxmcdes01.comcel.com.co:8003/RulesEngine/CreditExclusions!1.0/DS_CreditExclusions"></soap:address>
+        </wsdl:port>
+        <wsdl:port name="DS_CreditExclusionsDirectBindingPort12" binding="tns:IDecisionServiceDirectBinding1.2">
+            <soap12:address location="t3://lnxmcdes01.comcel.com.co:8003/RulesEngine/CreditExclusions!1.0/DS_CreditExclusions"></soap12:address>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

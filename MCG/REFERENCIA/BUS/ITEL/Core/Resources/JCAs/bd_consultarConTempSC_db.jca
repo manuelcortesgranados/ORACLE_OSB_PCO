@@ -1,0 +1,14 @@
+<adapter-config name="bd_consultarConTempSC" adapter="Database Adapter" wsdlLocation="../WSDLs/consultarConTempSC_BD.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/DB/ITEL_SOA" UIConnectionName="SOADES" adapterRef=""/>
+  <endpoint-interaction portType="bd_consultarConTempSC_ptt" operation="bd_consultarConTempSC">
+    <interaction-spec className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
+      <property name="PackageName" value="PKG_SOA_ITEL"/>
+      <property name="ProcedureName" value="PRC_CONSULTAR_CONTEMP_SC"/>
+      <property name="QueryTimeout" value="1"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+    <output/>
+  </endpoint-interaction>
+
+</adapter-config>

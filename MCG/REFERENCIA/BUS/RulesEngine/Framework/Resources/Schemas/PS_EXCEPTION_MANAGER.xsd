@@ -1,0 +1,28 @@
+<schema targetNamespace="http://www.claro.com.co/rulesEngine/exceptionManager" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.claro.com.co/rulesEngine/exceptionManager">
+	
+	<element name="Input_Parameters" type="tns:Input_Parameters"/>
+	
+	<complexType name="Input_Parameters">
+		<sequence>
+			<element name="operation" type="string"/>
+			<element name="exceptionCode" type="string"/>
+			<element name="exceptionDetail" type="string"/>
+		</sequence>
+	</complexType>
+	
+	<element name="WS_Result" type="tns:WS_Result"/>
+
+	<complexType name="WS_Result">
+		<sequence>
+			<element name="code" type="string"/>
+			<element name="message" type="tns:resultType"/>
+			<element name="description" type="string"/>
+		</sequence>
+	</complexType>
+	
+	<complexType name="resultType">
+		<sequence>
+			<element name="fault" type="anyType" minOccurs="0" />
+		</sequence>
+	</complexType>	
+</schema>

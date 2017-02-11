@@ -1,0 +1,35 @@
+<wsdl:definitions name="CompensacionITEL" targetNamespace="http://www.comcel.com.co/CompensacionITEL/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.comcel.com.co/CompensacionITEL/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<wsdl:types>
+		<schema xmlns="http://www.w3.org/2001/XMLSchema">
+			<import namespace="http://www.comcel.com.co/CompensacionITEL/" schemaLocation="../Schemas/PS_ITEL_COMPENSACION.xsd"/>
+		</schema>
+	</wsdl:types>
+	<wsdl:message name="Input_Parameters">
+		<wsdl:part element="tns:Input_Parameters" name="Input_Parameters"/>
+	</wsdl:message>
+	<wsdl:message name="WS_Result">
+	</wsdl:message>
+	<wsdl:portType name="CompensacionITEL">
+		<wsdl:operation name="compensacionITEL">
+			<wsdl:input message="tns:Input_Parameters"/>
+			<wsdl:output message="tns:WS_Result"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="CompensacionITELSOAP" type="tns:CompensacionITEL">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="compensacionITEL">
+			<soap:operation soapAction="http://www.comcel.com.co/CompensacionITEL/compensacionITEL"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="CompensacionITEL">
+		<wsdl:port binding="tns:CompensacionITELSOAP" name="CompensacionITELSOAP">
+			<soap:address location="http://www.comcel.com.co/"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

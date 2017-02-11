@@ -1,0 +1,20 @@
+<definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/Ensayo/Reglas/bd_eliminarElegidoIlimitado" name="bd_eliminarElegidoIlimitado-concrete" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/Ensayo/Reglas/bd_eliminarElegidoIlimitado" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/Ensayo/Reglas/bd_eliminarElegidoIlimitado" location="../Resources/WSDLs/eliminarElegidoIlimitado_BD.wsdl"/>
+  <binding name="bd_eliminarElegidoIlimitado_ptt-binding" type="tns:bd_eliminarElegidoIlimitado_ptt">
+    <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+    <operation name="bd_eliminarElegidoIlimitado">
+      <soap:operation soapAction="bd_eliminarElegidoIlimitado"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="bd_eliminarElegidoIlimitado-service">
+    <port name="bd_eliminarElegidoIlimitado-port" binding="tns:bd_eliminarElegidoIlimitado_ptt-binding">
+      <soap:address location="jca://eis/DB/ITELDB"/>
+    </port>
+  </service>
+</definitions>

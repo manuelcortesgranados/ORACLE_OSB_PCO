@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config">
+  <ser:coreEntry isProxy="true" isEnabled="true" isAutoPublish="false" isTracingEnabled="false">
+    <ser:binding type="SOAP" isSoap12="false" xsi:type="con4:SoapBindingType" xmlns:con4="http://www.bea.com/wli/sb/services/bindings/config">
+      <con4:wsdl ref="ITEL/OCS/OLM/Resources/WSDLs/registrarElegidoOCS_PS"/>
+      <con4:port>
+        <con4:name>RegistrarElegidoOCSSOAP</con4:name>
+        <con4:namespace>http://www.comcel.com.co/RegistrarElegidoOCS/</con4:namespace>
+      </con4:port>
+      <con4:selector type="SOAP body"/>
+      <con4:WSI-compliant>false</con4:WSI-compliant>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+    <ser:ws-policy>
+      <ser:binding-mode>wsdl-policy-attachments</ser:binding-mode>
+    </ser:ws-policy>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>http</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:URI>
+      <env:value>/ITEL/OCS/OLM/Proxies/registrarElegidoOCSLocal_PS</env:value>
+    </tran:URI>
+    <tran:inbound-properties/>
+    <tran:all-headers>false</tran:all-headers>
+    <tran:provider-specific>
+      <http:inbound-properties/>
+    </tran:provider-specific>
+  </ser:endpointConfig>
+  <ser:router>
+    <con:pipeline type="request" name="PipelinePairNode1_request">
+      <con:stage name="validacion" errorHandler="_onErrorHandler-7057185190205600141-e7dc4eb.139683935a6.-7ff1">
+        <con:context>
+          <con2:varNsDecl namespace="http://www.comcel.com.co/OCS/RegistrarElegidoOCS/" prefix="reg"/>
+          <con2:varNsDecl namespace="http://www.comcel.com.co/RegistrarElegidoOCS/" prefix="reg1"/>
+        </con:context>
+        <con:actions>
+          <con1:validate>
+            <con2:id>_ActionId-7057185190205600141-e7dc4eb.139683935a6.-7f21</con2:id>
+            <con1:schema ref="ITEL/OCS/OLM/Resources/Schemas/PS_ITEL_REGISTRAR_ELEGIDO"/>
+            <con1:schemaElement xmlns:reg="http://www.comcel.com.co/OCS/RegistrarElegidoOCS/" xmlns:reg1="http://www.comcel.com.co/RegistrarElegidoOCS/">reg1:Input_Parameters</con1:schemaElement>
+            <con1:varName>body</con1:varName>
+            <con1:location>
+              <con2:xpathText>./reg1:Input_Parameters</con2:xpathText>
+            </con1:location>
+          </con1:validate>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="PipelinePairNode1_response"/>
+    <con:pipeline type="error" name="_onErrorHandler-7057185190205600141-e7dc4eb.139683935a6.-7ff1">
+      <con:stage name="error">
+        <con:context/>
+        <con:actions>
+          <con1:replace contents-only="true" varName="body">
+            <con2:id>_ActionId-7057185190205600141-e7dc4eb.139683935a6.-7f54</con2:id>
+            <con1:expr>
+              <con2:xqueryTransform>
+                <con2:resource ref="ITEL/OCS/OLM/Resources/XQueries/registrarElegidoOCSOLM_Error"/>
+                <con2:param name="mensaje">
+                  <con2:path>$fault/ctx:reason/text()</con2:path>
+                </con2:param>
+                <con2:param name="descripcion">
+                  <con2:path>"Error etapa de validacion"</con2:path>
+                </con2:param>
+                <con2:param name="codigo">
+                  <con2:path>"30"</con2:path>
+                </con2:param>
+              </con2:xqueryTransform>
+            </con1:expr>
+          </con1:replace>
+          <con2:reply>
+            <con2:id>_ActionId-7057185190205600141-e7dc4eb.139683935a6.-7f38</con2:id>
+          </con2:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="error" name="_onErrorHandler-7057185190205600141-e7dc4eb.139683935a6.-7ed6">
+      <con:stage name="error">
+        <con:context/>
+        <con:actions>
+          <con1:replace contents-only="true" varName="body">
+            <con2:id>_ActionId-7057185190205600141-e7dc4eb.139683935a6.-7e65</con2:id>
+            <con1:expr>
+              <con2:xqueryTransform>
+                <con2:resource ref="ITEL/OCS/OLM/Resources/XQueries/registrarElegidoOCSOLM_Error"/>
+                <con2:param name="mensaje">
+                  <con2:path>$fault/ctx:reason/text()</con2:path>
+                </con2:param>
+                <con2:param name="descripcion">
+                  <con2:path>"Error etapa de routing"</con2:path>
+                </con2:param>
+                <con2:param name="codigo">
+                  <con2:path>"34"</con2:path>
+                </con2:param>
+              </con2:xqueryTransform>
+            </con1:expr>
+          </con1:replace>
+          <con2:reply>
+            <con2:id>_ActionId-7057185190205600141-e7dc4eb.139683935a6.-7e64</con2:id>
+          </con2:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:flow>
+      <con:pipeline-node name="PipelinePairNode1">
+        <con:request>PipelinePairNode1_request</con:request>
+        <con:response>PipelinePairNode1_response</con:response>
+      </con:pipeline-node>
+      <con:route-node name="RouteEjecutarOperacionOCS" error-handler="_onErrorHandler-7057185190205600141-e7dc4eb.139683935a6.-7ed6">
+        <con:context>
+          <con2:varNsDecl namespace="http://www.comcel.com.co/OCS/RegistrarElegidoOCS/" prefix="reg"/>
+          <con2:varNsDecl namespace="http://www.comcel.com.co/RegistrarElegidoOCS/" prefix="reg1"/>
+        </con:context>
+        <con:actions>
+          <con3:route>
+            <con2:id>_ActionId-7057185190205600141-e7dc4eb.139683935a6.-7eff</con2:id>
+            <con3:service ref="ITEL/OCS/OLM/Business Services/provision_BS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con3:operation>dsmnRequest</con3:operation>
+            <con3:outboundTransform>
+              <con1:replace contents-only="true" varName="body">
+                <con2:id>_ActionId-7057185190205600141-e7dc4eb.139683935a6.-7e39</con2:id>
+                <con1:expr>
+                  <con2:xqueryTransform>
+                    <con2:resource ref="ITEL/OCS/OLM/Resources/XQueries/registrarElegidoOCS_Req"/>
+                    <con2:param name="input_Parameters1">
+                      <con2:path>$body/reg1:Input_Parameters</con2:path>
+                    </con2:param>
+                  </con2:xqueryTransform>
+                </con1:expr>
+              </con1:replace>
+            </con3:outboundTransform>
+            <con3:responseTransform>
+              <con4:ifThenElse xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config">
+                <con1:id>_ActionId-7057185190205600141-e7dc4eb.139683935a6.-7d8b</con1:id>
+                <con4:case>
+                  <con4:condition>
+                    <con1:xqueryText>data($body/*:dsmnResponse/*:response/*:result/*:item[*:key="status"]/*:value) = "ok"</con1:xqueryText>
+                  </con4:condition>
+                  <con4:actions>
+                    <con4:assign varName="codigo">
+                      <con1:id>_ActionId-7057185190205600141-e7dc4eb.139683935a6.-7d8a</con1:id>
+                      <con4:expr>
+                        <con1:xqueryText>"1"</con1:xqueryText>
+                      </con4:expr>
+                    </con4:assign>
+                    <con4:assign varName="descripcion">
+                      <con1:id>_ActionId-7057185190205600141-e7dc4eb.139683935a6.-7d89</con1:id>
+                      <con4:expr>
+                        <con1:xqueryText>"Ejecucion exitosa"</con1:xqueryText>
+                      </con4:expr>
+                    </con4:assign>
+                  </con4:actions>
+                </con4:case>
+                <con4:default>
+                  <con4:assign varName="codigo">
+                    <con1:id>_ActionId-7057185190205600141-e7dc4eb.139683935a6.-7d88</con1:id>
+                    <con4:expr>
+                      <con1:xqueryTransform>
+                        <con1:resource ref="ITEL/OCS/OLM/Resources/XQueries/obtenerCodigoError"/>
+                        <con1:param name="codigoDESC">
+                          <con1:path>data($body/*:dsmnResponse/*:response/*:result/*:item[*:key="errorDescription"]/*:value)</con1:path>
+                        </con1:param>
+                        <con1:param name="codigoOCS">
+                          <con1:path>data($body/*:dsmnResponse/*:response/*:result/*:item[*:key="errorCode"]/*:value)</con1:path>
+                        </con1:param>
+                      </con1:xqueryTransform>
+                    </con4:expr>
+                  </con4:assign>
+                  <con4:assign varName="descripcion">
+                    <con1:id>_ActionId-7057185190205600141-e7dc4eb.139683935a6.-7d87</con1:id>
+                    <con4:expr>
+                      <con1:xqueryText>data($body/*:dsmnResponse/*:response/*:result/*:item[*:key="errorDescription"]/*:value)</con1:xqueryText>
+                    </con4:expr>
+                  </con4:assign>
+                </con4:default>
+              </con4:ifThenElse>
+              <con1:replace contents-only="true" varName="body">
+                <con2:id>_ActionId-7057185190205600141-e7dc4eb.139683935a6.-7d64</con2:id>
+                <con1:expr>
+                  <con2:xqueryTransform>
+                    <con2:resource ref="ITEL/OCS/OLM/Resources/XQueries/registrarElegidoOCS_Res"/>
+                    <con2:param name="descripcion">
+                      <con2:path>$descripcion</con2:path>
+                    </con2:param>
+                    <con2:param name="codigo">
+                      <con2:path>$codigo</con2:path>
+                    </con2:param>
+                    <con2:param name="dsmnResponse1">
+                      <con2:path>$body/*:dsmnResponse</con2:path>
+                    </con2:param>
+                  </con2:xqueryTransform>
+                </con1:expr>
+              </con1:replace>
+            </con3:responseTransform>
+          </con3:route>
+        </con:actions>
+      </con:route-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

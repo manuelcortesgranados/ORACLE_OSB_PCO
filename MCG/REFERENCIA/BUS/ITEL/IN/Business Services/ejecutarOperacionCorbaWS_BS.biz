@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http">
+  <ser:coreEntry isProxy="false" isEnabled="true" isAutoPublish="false" isTracingEnabled="false">
+    <ser:description/>
+    <ser:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config">
+      <con:wsdl ref="ITEL/IN/Resources/WSDLs/ejecutarOperacionesIN"/>
+      <con:port>
+        <con:name>OperacionCorbaSoap11</con:name>
+        <con:namespace>http://www.comcel.com.co/IN/OperacionCorba</con:namespace>
+      </con:port>
+      <con:WSI-compliant>false</con:WSI-compliant>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:ws-policy>
+      <ser:binding-mode>wsdl-policy-attachments</ser:binding-mode>
+    </ser:ws-policy>
+    <ser:throttling enabled="true">
+      <ser:capacity>50</ser:capacity>
+      <ser:maxQueueLength>5</ser:maxQueueLength>
+      <ser:timeToLive>20</ser:timeToLive>
+    </ser:throttling>
+    <ser:pageAttachments isEnabled="false"/>
+    <ser:result-caching isEnabled="true" isSupported="false"/>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>http</tran:provider-id>
+    <tran:inbound>false</tran:inbound>
+    <tran:URI weight="1">
+      <env:value>http://CORBAIN1:9444/ConectorCorbaIN/services</env:value>
+    </tran:URI>
+    <tran:URI weight="0">
+      <env:value>http://CORBAIN2:9444/ConectorCorbaIN/services</env:value>
+    </tran:URI>
+    <tran:URI weight="0">
+      <env:value>http://CORBAIN3:9444/ConectorCorbaIN/services</env:value>
+    </tran:URI>
+    <tran:URI weight="0">
+      <env:value>http://CORBAIN4:9444/ConectorCorbaIN/services</env:value>
+    </tran:URI>
+    <tran:URI weight="0">
+      <env:value>http://CORBAIN5:9444/ConectorCorbaIN/services</env:value>
+    </tran:URI>
+    <tran:URI weight="0">
+      <env:value>http://CORBAIN6:9444/ConectorCorbaIN/services</env:value>
+    </tran:URI>
+    <tran:URI weight="0">
+      <env:value>http://CORBAIN7:9444/ConectorCorbaIN/services</env:value>
+    </tran:URI>
+    <tran:URI weight="0">
+      <env:value>http://CORBAIN8:9444/ConectorCorbaIN/services</env:value>
+    </tran:URI>
+    <tran:URI weight="0">
+      <env:value>http://CORBAIN9:9444/ConectorCorbaIN/services</env:value>
+    </tran:URI>
+    <tran:URI weight="0">
+      <env:value>http://CORBAIN10:9444/ConectorCorbaIN/services</env:value>
+    </tran:URI>
+    <tran:URI weight="0">
+      <env:value>http://CORBAIN11:9444/ConectorCorbaIN/services</env:value>
+    </tran:URI>
+    <tran:URI weight="0">
+      <env:value>http://CORBAIN12:9444/ConectorCorbaIN/services</env:value>
+    </tran:URI>
+    <tran:URI weight="0">
+      <env:value>http://CORBAIN13:9444/ConectorCorbaIN/services</env:value>
+    </tran:URI>
+    <tran:URI weight="0">
+      <env:value>http://CORBAIN14:9444/ConectorCorbaIN/services</env:value>
+    </tran:URI>
+    <tran:URI weight="0">
+      <env:value>http://CORBAIN15:9444/ConectorCorbaIN/services</env:value>
+    </tran:URI>
+    <tran:URI weight="0">
+      <env:value>http://CORBAIN16:9444/ConectorCorbaIN/services</env:value>
+    </tran:URI>
+    <tran:URI weight="0">
+      <env:value>http://CORBAIN17:9444/ConectorCorbaIN/services</env:value>
+    </tran:URI>
+    <tran:URI weight="0">
+      <env:value>http://CORBAIN18:9444/ConectorCorbaIN/services</env:value>
+    </tran:URI>
+    <tran:URI weight="0">
+      <env:value>http://CORBAIN19:9444/ConectorCorbaIN/services</env:value>
+    </tran:URI>
+    <tran:URI weight="0">
+      <env:value>http://CORBAIN20:9444/ConectorCorbaIN/services</env:value>
+    </tran:URI>
+    <tran:URI weight="0">
+      <env:value>http://CORBAIN21:9444/ConectorCorbaIN/services</env:value>
+    </tran:URI>
+    <tran:URI weight="0">
+      <env:value>http://CORBAIN22:9444/ConectorCorbaIN/services</env:value>
+    </tran:URI>
+    <tran:URI weight="0">
+      <env:value>http://CORBAIN23:9444/ConectorCorbaIN/services</env:value>
+    </tran:URI>
+    <tran:URI weight="0">
+      <env:value>http://CORBAIN24:9444/ConectorCorbaIN/services</env:value>
+    </tran:URI>
+    <tran:URI weight="0">
+      <env:value>http://CORBAIN25:9444/ConectorCorbaIN/services</env:value>
+    </tran:URI>
+    <tran:URI weight="0">
+      <env:value>http://CORBAIN26:9444/ConectorCorbaIN/services</env:value>
+    </tran:URI>
+    <tran:URI weight="0">
+      <env:value>http://CORBAIN27:9444/ConectorCorbaIN/services</env:value>
+    </tran:URI>
+    <tran:URI weight="0">
+      <env:value>http://CORBAIN28:9444/ConectorCorbaIN/services</env:value>
+    </tran:URI>
+    <tran:URI weight="0">
+      <env:value>http://CORBAIN29:9444/ConectorCorbaIN/services</env:value>
+    </tran:URI>
+    <tran:URI weight="0">
+      <env:value>http://CORBAIN30:9444/ConectorCorbaIN/services</env:value>
+    </tran:URI>
+    <tran:outbound-properties>
+      <tran:load-balancing-algorithm>round-robin</tran:load-balancing-algorithm>
+      <tran:retry-count>5</tran:retry-count>
+      <tran:retry-interval>1</tran:retry-interval>
+      <tran:retry-application-errors>true</tran:retry-application-errors>
+      <tran:delay-interval-configuration isEnabled="false">
+        <tran:delay-interval>0</tran:delay-interval>
+      </tran:delay-interval-configuration>
+    </tran:outbound-properties>
+    <tran:provider-specific xsi:type="http:HttpEndPointConfiguration">
+      <http:outbound-properties>
+        <http:request-method>POST</http:request-method>
+        <http:timeout>6</http:timeout>
+        <http:connection-timeout>1</http:connection-timeout>
+        <http:follow-redirects>false</http:follow-redirects>
+        <http:chunked-streaming-mode>true</http:chunked-streaming-mode>
+      </http:outbound-properties>
+    </tran:provider-specific>
+  </ser:endpointConfig>
+</xml-fragment>

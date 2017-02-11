@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config">
+  <ser:coreEntry isProxy="true" isEnabled="true">
+    <ser:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config">
+      <con:wsdl ref="RulesEngine/Sap/Resources/WSDLs/getInventory_PS"/>
+      <con:port>
+        <con:name>GetInventorySOAP</con:name>
+        <con:namespace>http://www.claro.com.co/rulesEngine/getInventory</con:namespace>
+      </con:port>
+      <con:selector type="SOAP body"/>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+    <ser:ws-policy>
+      <ser:binding-mode>wsdl-policy-attachments</ser:binding-mode>
+    </ser:ws-policy>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>local</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:inbound-properties/>
+    <tran:all-headers>true</tran:all-headers>
+  </ser:endpointConfig>
+  <ser:router>
+    <con:pipeline type="request" name="PipelinePairNode1_request">
+      <con:stage name="validate" errorHandler="_onErrorHandler-6917472406672355292-53571aa2.13e233e5305.-7f2d">
+        <con:comment/>
+        <con:context>
+          <con2:varNsDecl namespace="http://www.claro.com.co/rulesEngine/getInventory" prefix="get"/>
+        </con:context>
+        <con:actions>
+          <con1:assign varName="namespace">
+            <con2:id>_ActionId-668931819637029395-52285a38.140089a2433.-7f92</con2:id>
+            <con1:expr>
+              <con2:xqueryText>fn:namespace-uri($body/*:Input_Parameters)</con2:xqueryText>
+            </con1:expr>
+          </con1:assign>
+          <con1:assign varName="businessRequest">
+            <con2:id>_ActionId-4649163575980877742-5030650.13f526a1c2c.-7d1a</con2:id>
+            <con1:expr>
+              <con2:xqueryTransform>
+                <con2:resource ref="RulesEngine/Sap/Resources/XQueries/getInventory_Req"/>
+                <con2:param name="input_Parameters1">
+                  <con2:path>$body/get:Input_Parameters</con2:path>
+                </con2:param>
+              </con2:xqueryTransform>
+            </con1:expr>
+          </con1:assign>
+          <con1:validate>
+            <con2:id>_ActionId-4649163575980877742-5030650.13f526a1c2c.-7d05</con2:id>
+            <con1:schema ref="RulesEngine/Sap/Resources/Schemas/BS_VALIDATE_SERIAL_REQ"/>
+            <con1:schemaElement xmlns:urn="urn:sap-com:document:sap:rfc:functions">urn:ZMM_VALIDAR_SERIAL</con1:schemaElement>
+            <con1:varName>businessRequest</con1:varName>
+          </con1:validate>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="PipelinePairNode1_response"/>
+    <con:pipeline type="error" name="_onErrorHandler-6917472406672355292-53571aa2.13e233e5305.-7f2d">
+      <con:stage name="validateError">
+        <con:context/>
+        <con:actions>
+          <con1:replace varName="body" contents-only="true">
+            <con2:id>_ActionId-6917472406672355292-53571aa2.13e233e5305.-7f16</con2:id>
+            <con1:expr>
+              <con2:xqueryTransform>
+                <con2:resource ref="RulesEngine/Util/Resources/XQueries/genericError"/>
+                <con2:param name="targetNamespace">
+                  <con2:path>$namespace</con2:path>
+                </con2:param>
+                <con2:param name="fault">
+                  <con2:path>$fault</con2:path>
+                </con2:param>
+                <con2:param name="code">
+                  <con2:path>"23"</con2:path>
+                </con2:param>
+              </con2:xqueryTransform>
+            </con1:expr>
+          </con1:replace>
+          <con2:reply>
+            <con2:id>_ActionId-6940739529688333763--6d1cdd11.13efc34f07d.-7e9b</con2:id>
+          </con2:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="error" name="_onErrorHandler-6940739529688333763--6d1cdd11.13efc34f07d.-7ec5">
+      <con:stage name="routingError">
+        <con:context/>
+        <con:actions>
+          <con1:replace varName="body" contents-only="true">
+            <con2:id>_ActionId-6940739529688333763--6d1cdd11.13efc34f07d.-7eb0</con2:id>
+            <con1:expr>
+              <con2:xqueryTransform>
+                <con2:resource ref="RulesEngine/Util/Resources/XQueries/genericError"/>
+                <con2:param name="targetNamespace">
+                  <con2:path>$namespace</con2:path>
+                </con2:param>
+                <con2:param name="fault">
+                  <con2:path>$fault</con2:path>
+                </con2:param>
+                <con2:param name="code">
+                  <con2:path>"21"</con2:path>
+                </con2:param>
+              </con2:xqueryTransform>
+            </con1:expr>
+          </con1:replace>
+          <con2:reply>
+            <con2:id>_ActionId-6940739529688333763--6d1cdd11.13efc34f07d.-7e83</con2:id>
+          </con2:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:flow>
+      <con:pipeline-node name="PipelinePairNode1">
+        <con:request>PipelinePairNode1_request</con:request>
+        <con:response>PipelinePairNode1_response</con:response>
+      </con:pipeline-node>
+      <con:route-node name="RoutetoGetInventory" error-handler="_onErrorHandler-6940739529688333763--6d1cdd11.13efc34f07d.-7ec5">
+        <con:context>
+          <con2:varNsDecl namespace="http://www.claro.com.co/rulesEngine/getInventory" prefix="get"/>
+        </con:context>
+        <con:actions>
+          <con3:route>
+            <con2:id>_ActionId-834506734295900946-77df38c1.13eb477ebc8.-667f</con2:id>
+            <con3:service ref="RulesEngine/Sap/Business services/validateSerial_BS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con3:operation>ZMM_VALIDAR_SERIAL</con3:operation>
+            <con3:outboundTransform>
+              <con1:replace varName="body" contents-only="true">
+                <con2:id>_ActionId-6940739529688333763--6d1cdd11.13efc34f07d.-7ed6</con2:id>
+                <con1:expr>
+                  <con2:xqueryText>$businessRequest</con2:xqueryText>
+                </con1:expr>
+              </con1:replace>
+            </con3:outboundTransform>
+            <con3:responseTransform>
+              <con1:replace varName="body" contents-only="true">
+                <con2:id>_ActionId-6940739529688333763--6d1cdd11.13efc34f07d.-7ec6</con2:id>
+                <con1:expr>
+                  <con2:xqueryTransform>
+                    <con2:resource ref="RulesEngine/Sap/Resources/XQueries/getInventory_Res"/>
+                    <con2:param name="zMM_VALIDAR_SERIAL.Response1">
+                      <con2:path>$body/*:ZMM_VALIDAR_SERIAL.Response</con2:path>
+                    </con2:param>
+                  </con2:xqueryTransform>
+                </con1:expr>
+              </con1:replace>
+            </con3:responseTransform>
+          </con3:route>
+        </con:actions>
+      </con:route-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

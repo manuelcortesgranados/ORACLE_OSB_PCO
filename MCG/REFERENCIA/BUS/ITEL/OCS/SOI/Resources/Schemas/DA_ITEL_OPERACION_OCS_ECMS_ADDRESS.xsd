@@ -1,0 +1,438 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://ericsson.com/services/ws_cma3/addresswrite"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://ericsson.com/services/ws_cma3/addresswrite"
+	elementFormDefault="qualified">
+
+	<xs:complexType name="addressWriteResponse">
+		<xs:all>
+			<xs:element name="adrSeq" type="xs:long" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;Sequence no. of the party.&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="addressWriteRequest">
+		<xs:all>
+			<xs:annotation>
+				<xs:documentation>
+						&lt;p&gt;Identifies a country by the public or private key.&lt;/p&gt;
+				</xs:documentation>
+			</xs:annotation>
+			<xs:element name="adrSeq" type="xs:long">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;Sequence no of the party. Private key of the party. &lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="adrRoles" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;All address roles assigned to this party.&lt;/p&gt;&lt;p&gt; This argument is modeled as a
+							&lt;code&gt;String&lt;/code&gt; containing the character encodings of the various
+							address roles, as defined in &lt;code&gt;ADDRESSROLES.READ&lt;/code&gt;.
+							&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ttlId" type="xs:long" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;title of the customer. &lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ttlIdPub" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;Public key of the title&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="adrDeleted" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt; true if the address should be deleted. The party must have no address role. A deleted address cannot be activated.&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="adrLname" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt; last name of the party.&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="adrName" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt; company name if applicable &lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="adrFname" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt; first name of the party &lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="adrStreet" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt; street of the postal address &lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="adrStreetno" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt; street no of the postal address &lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="adrZip" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;Zip of the postal address. The value is checked against the country specific format defined in the database (in &lt;code&gt;COUNTRY.POSTAL_CODE_FORMAT&lt;/code&gt;). The ZIP code check for a country can be switched off by setting the value of the &lt;code&gt;POSTAL_CODE_FORMAT&lt;/code&gt; column to null. If no country (see parameter &lt;code&gt;COUNTRY_ID&lt;/code&gt;) is set, no ZIP code validation is performed.&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="adrCity" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt; city of the postal address &lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="lngCode" type="xs:long" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt; language code of the party &lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="lngCodePub" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;Public key of the language&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="adrNote1" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt; note 1 of the postal address &lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="adrNote2" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt; note 2 of the postal address &lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="adrNote3" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt; note 3 of the postal address &lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="adrJbdes" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt; job description of the party &lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="adrPhn1Area" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt; phone no.1 areacode of the voice address &lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="adrPhn1" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt; phone no.1 of the voice address &lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="adrPhn2Area" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt; phone no.2 areacode of the voice address &lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="adrPhn2" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt; phone no.2 of the voice address &lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="adrFaxArea" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt; fax no.1 areacode of the fax address &lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="adrFax" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt; fax no.1 of the fax address &lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="adrMname" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt; middle initial name of the party &lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="adrEmail" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt; email address of the party &lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="adrSmsno" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt; short message no of the party &lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="adrYears" type="xs:integer" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt; years at this postal address &lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="adrState" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt; state of the postal address &lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="adrCounty" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt; county of the postal address &lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="adrValiddate" type="xs:dateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt; date of last address validation &lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="adrInccode" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt; incorporated city area of the postal address &lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="adrUrgent" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt; address is of "urgent" type &lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="adrForward" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt; address may be forwarded for commercial purposes &lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="adrLocation1" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt; additional address information 1 of the postal address &lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="adrLocation2" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt; additional address information 2 of the postal address &lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="adrRemark" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt; hints for installation workforce of the postal address &lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="adrWriteOnReq" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt; Create new address if no entry was found. &lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="adrCheck" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt; Decide whether the address check should be done or not.&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="adrTaxno" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt; tax registration number of the party &lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="adrCompno" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt; company registration number of the party &lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="idtypeCode" type="xs:long" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt; identity-type code of the party &lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="adrIdno" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt; identity-number of the party &lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="adrBirthdt" type="xs:date" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt; birth date of the party &lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="adrSocialseno" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt; social security number of the party &lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="adrDrivelicence" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt; driving licence number of the party &lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="adrSex" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;gender of the party.&lt;ul&gt;&lt;li&gt;'F' - Female&lt;/li&gt;&lt;li&gt;'M' - Male&lt;/li&gt;&lt;li&gt;'NULL' - Party is not related to sex&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="adrEmployer" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt; employer of the party &lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="adrCusttype" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;type of the party, either 'C' for company or 'B' for natural person.&lt;/p&gt;&lt;p&gt;The type of he billing address determines the type of the customer.&lt;/p&gt;&lt;p&gt;This parameter is also used to change
+							the type from company to natural person and vice versa.&lt;/p&gt;&lt;p&gt;If the value is changed the entry for ADR_TITLE has to be changed as well.&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="masCode" type="xs:long" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt; marital status of the party &lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="masCodePub" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;Public key of the marital status.&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="adrNationality" type="xs:long" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt; nationality of the party &lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="adrNationalityPub" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;Public key of the country&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="adrEmployee" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt; remark if customer is an employee &lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="csId" type="xs:long" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt; internal BSCS customer id. Only mandatory if the context is empty. &lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="csIdPub" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;Customers public key&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="countryId" type="xs:long" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt; country id of the postal address &lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="countryIdPub" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;Public key of the country&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+
+</schema>

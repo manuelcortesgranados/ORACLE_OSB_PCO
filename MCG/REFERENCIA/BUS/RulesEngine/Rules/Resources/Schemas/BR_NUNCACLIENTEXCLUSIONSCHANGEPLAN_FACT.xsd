@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.claro.com.co/rulesEngine/NuncaClientExclusionChangePlanFact/"
+	xmlns:cd="http://www.claro.com.co/rulesEngine/canonicalModel/CustomerDomain"
+	xmlns:cbe="http://www.claro.com.co/rulesEngine/canonicalModel/CommonBusinessEntities"
+	xmlns:tns="http://www.claro.com.co/rulesEngine/NuncaClientExclusionChangePlanFact/">
+	
+	<xs:import schemaLocation="../../../Core/Resources/Schemas/CanonicalModel/CustomerDomain.xsd"
+         namespace="http://www.claro.com.co/rulesEngine/canonicalModel/CustomerDomain"/>
+         
+	<xs:element name="NuncaClientExclusionChangePlanRequest"
+		type="tns:NuncaClientExclusionChangePlanFactRequestType" />
+	<xs:element name="NuncaClientExclusionChangePlanResponse"
+		type="tns:NuncaClientExclusionChangePlanFactResponseType" />
+	<xs:complexType name="NuncaClientExclusionChangePlanFactRequestType">
+		<xs:sequence>
+			<xs:element name="ExceptionBusinessCollection" type="cbe:ExceptionBusinessCollection" />
+			<xs:element name="Customer" type="cd:Customer" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="NuncaClientExclusionChangePlanFactResponseType">
+		<xs:sequence>
+			<xs:element name="ExceptionBusinessCollection" type="cbe:ExceptionBusinessCollection" />
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

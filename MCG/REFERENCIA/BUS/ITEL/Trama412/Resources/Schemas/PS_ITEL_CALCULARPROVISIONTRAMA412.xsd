@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.comcel.com.co/CalcularProvisionTrama412/"
+	xmlns:tns="http://www.comcel.com.co/CalcularProvisionTrama412/">
+	<xs:element name="Input_Parameters" type="tns:Input_Parameters" />
+	<xs:element name="WS_Result" type="tns:WS_Result" />
+
+	<xs:complexType name="Input_Parameters">
+		<xs:sequence>
+			<xs:element name="TRAMA" type="xs:string" />
+			<xs:element name="METODO" type="xs:string" />
+			<xs:element name="MIN" type="xs:string" />
+			<xs:element name="PARAMETROSTRAMA" type="tns:parametrosType" />
+			<xs:element name="PARAMETROSNEGOCIO" type="tns:parametrosType" />
+			<xs:element name="CODIGOIN" type="xs:string" />
+			<xs:element name="TIEMPO" type="xs:time" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="WS_Result">
+		<xs:sequence>
+			<xs:element name="CODIGO" type="xs:string" />
+			<xs:element name="MENSAJE" type="tns:serviciosType" />
+			<xs:element name="DESCRIPCION" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="parametrosType">
+		<xs:sequence>
+			<xs:element name="PARAMETRO" type="tns:parametroType"
+				minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="parametroType">
+		<xs:sequence>
+			<xs:element name="NOMBRE" type="xs:string" />
+			<xs:element name="TIPO" type="xs:string" />
+			<xs:element name="VALOR" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="serviciosType">
+		<xs:sequence>
+			<xs:element name="SERVICIO" type="tns:servicioType"
+				minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="servicioType">
+		<xs:sequence>
+			<xs:element name="NOMBRE" type="xs:string" />
+			<xs:element name="PARAMETROS" type="tns:parametrosType" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="DataArray">
+		<xs:sequence>
+			<xs:element name="Detail" type="xs:string" minOccurs="0"
+				maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+</xs:schema>

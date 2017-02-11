@@ -1,0 +1,106 @@
+<wsdl:definitions targetNamespace="http://performfullcreditevaluation.creditcalculation.amx.com" xmlns:tns="http://performfullcreditevaluation.creditcalculation.amx.com" xmlns:cli="http://performfullcreditevaluation.creditcalculation.schema.amx.com" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:commonexception="http://commonsexceptions.schema.amx.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:apachesoap="http://xml.apache.org/xml-soap">
+                  
+    <wsdl:documentation>
+		Author: Jorge Enrique Garrido
+		email: 	jorge.garridovergara@tcs.com
+		Date: 	22/04/2013
+		Version: 1.1
+		Objective: Perform the full Credit check with the customer order and product configuration.This interface is called after the customer configures the product. As part of this interface, a call to the credit system is made to validate the product configurations asked from the customer.
+        Capabilities: PerformFullCreditEvaluation
+        Changes: CR Post signed off
+	</wsdl:documentation>	
+	              
+  <wsdl:types>
+    <xs:schema>  
+      <xs:import namespace="http://performfullcreditevaluation.creditcalculation.schema.amx.com" schemaLocation="../Schemas/PS_PERFORMFULLCREDITEVALUATION.xsd"/>
+      <xs:import namespace="http://commonsexceptions.schema.amx.com" schemaLocation="../../../Amdocs/Resources/Schemas/COMMON_EXCEPTIONS.xsd"/>
+    </xs:schema>
+  </wsdl:types>
+  
+  <wsdl:message name="PerformFullCreditEvaluationRequest">
+    <wsdl:part name="body" element="cli:PerformFullCreditEvaluationRequest"/>
+  </wsdl:message>
+  <wsdl:message name="PerformFullCreditEvaluationResponse">
+    <wsdl:part name="body" element="cli:PerformFullCreditEvaluationResponse"/>
+  </wsdl:message>
+
+	  <wsdl:message name="ExternalSystemNotAvailableException">
+	    <wsdl:part name="fault" element="commonexception:ExternalSystemNotAvailableException"/>
+	  </wsdl:message>
+
+	  <wsdl:message name="MandatoryDataMissingException">
+	    <wsdl:part name="fault" element="commonexception:MandatoryDataMissingException"/>
+	  </wsdl:message>
+
+	  <wsdl:message name="ReferenceDataMissingException">
+	    <wsdl:part name="fault" element="commonexception:ReferenceDataMissingException"/>
+	  </wsdl:message>
+
+	  <wsdl:message name="InternalSystemErrorException">
+	    <wsdl:part name="fault" element="commonexception:InternalSystemErrorException"/>
+	  </wsdl:message>
+	
+	<wsdl:message name="BusinessExceptionFault">
+		<wsdl:part name="fault" element="commonexception:BusinessExceptionFault"/>
+	</wsdl:message>
+  
+  <wsdl:portType name="PerformFullCreditEvaluation">
+    <wsdl:operation name="PerformFullCreditEvaluation">
+        <wsdl:documentation>
+		This interface is called after the customer configures the product. As part of this interface, a call to the credit system is made to validate the product configurations asked from the customer.
+        </wsdl:documentation>
+      
+      <wsdl:input name="PerformFullCreditEvaluationInput" message="tns:PerformFullCreditEvaluationRequest"/>
+      <wsdl:output name="PerformFullCreditEvaluationOutput" message="tns:PerformFullCreditEvaluationResponse"/>
+      <wsdl:fault name="MandatoryDataMissingException" message="tns:MandatoryDataMissingException"/>
+	  <wsdl:fault name="ExternalSystemNotAvailableException" message="tns:ExternalSystemNotAvailableException"/>
+	  <wsdl:fault name="InternalSystemErrorException" message="tns:InternalSystemErrorException"/>
+	   <wsdl:fault name="ReferenceDataMissingException" message="tns:ReferenceDataMissingException"/>
+	   <wsdl:fault name="BusinessExceptionFault" message="tns:BusinessExceptionFault"/>
+      
+    </wsdl:operation>
+  </wsdl:portType>
+  
+  <wsdl:binding name="PerformFullCreditEvaluationSoapBinding" type="tns:PerformFullCreditEvaluation">
+    <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="PerformFullCreditEvaluation">
+      <wsdlsoap:operation style="document" soapAction="http://performfullcreditevaluation.creditcalculation.amx.com/PerformFullCreditEvaluation"/>
+      
+      <wsdl:input>
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+      
+
+
+			<wsdl:fault name="MandatoryDataMissingException">
+				<wsdlsoap:fault name="MandatoryDataMissingException" use="literal"/>
+			</wsdl:fault>	
+			
+			<wsdl:fault name="ExternalSystemNotAvailableException">
+				<wsdlsoap:fault name="ExternalSystemNotAvailableException" use="literal"/>
+			</wsdl:fault>
+			
+			<wsdl:fault name="InternalSystemErrorException">
+				<wsdlsoap:fault name="InternalSystemErrorException" use="literal"/>
+			</wsdl:fault>
+
+			<wsdl:fault name="ReferenceDataMissingException">
+				<wsdlsoap:fault name="ReferenceDataMissingException" use="literal"/>
+			</wsdl:fault>
+
+			<wsdl:fault name="BusinessExceptionFault">
+				<wsdlsoap:fault name="BusinessExceptionFault" use="literal"/>
+			</wsdl:fault>
+			
+    </wsdl:operation>
+  </wsdl:binding>
+  
+  <wsdl:service name="PerformFullCreditEvaluationService">
+    <wsdl:port name="PerformFullCreditEvaluationPort" binding="tns:PerformFullCreditEvaluationSoapBinding">
+      <wsdlsoap:address location="http://www.example.com"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

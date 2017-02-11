@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_Project_PCO_002_JDEV/OSB_Project_PCO_002_JDEV/DB_PKG_SOA_ITEL_PRC_VERIFICAR_PERMISOS_USUARIO" name="DB_PKG_SOA_ITEL_PRC_VERIFICAR_PERMISOS_USUARIO-concrete" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_Project_PCO_002_JDEV/OSB_Project_PCO_002_JDEV/DB_PKG_SOA_ITEL_PRC_VERIFICAR_PERMISOS_USUARIO" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_Project_PCO_002_JDEV/OSB_Project_PCO_002_JDEV/DB_PKG_SOA_ITEL_PRC_VERIFICAR_PERMISOS_USUARIO" location="../JDEV/OSB_Project_PCO_002_JDEV/DB_PKG_SOA_ITEL_PRC_VERIFICAR_PERMISOS_USUARIO.wsdl"/>
+  <binding name="DB_PKG_SOA_ITEL_PRC_VERIFICAR_PERMISOS_USUARIO_ptt-binding" type="tns:DB_PKG_SOA_ITEL_PRC_VERIFICAR_PERMISOS_USUARIO_ptt">
+    <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+    <operation name="DB_PKG_SOA_ITEL_PRC_VERIFICAR_PERMISOS_USUARIO">
+      <soap:operation soapAction="DB_PKG_SOA_ITEL_PRC_VERIFICAR_PERMISOS_USUARIO"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="DB_PKG_SOA_ITEL_PRC_VERIFICAR_PERMISOS_USUARIO-service">
+    <port name="DB_PKG_SOA_ITEL_PRC_VERIFICAR_PERMISOS_USUARIO-port" binding="tns:DB_PKG_SOA_ITEL_PRC_VERIFICAR_PERMISOS_USUARIO_ptt-binding">
+      <soap:address location="jca://eis/DB/ItelSoaConnection"/>
+    </port>
+  </service>
+</definitions>

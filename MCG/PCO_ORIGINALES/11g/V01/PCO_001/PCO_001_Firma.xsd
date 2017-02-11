@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/PCO_001_Firma" xmlns:tns="http://www.example.org/PCO_001_Firma" elementFormDefault="qualified">
+
+    <complexType name="PCO_001_RequestType">
+    	<sequence>
+    		<element name="cadenaEntrada" type="string"></element>
+    	</sequence>
+    </complexType>
+    
+    <complexType name="PCO_001_ResponseType">
+    	<sequence>
+    		<element name="cadenaSalida" type="string"></element>
+    	</sequence>
+    </complexType>
+
+    <element name="PCO_001_Request" type="tns:PCO_001_RequestType"></element>
+
+    <element name="PCO_001_Response" type="tns:PCO_001_ResponseType"></element>
+</schema>

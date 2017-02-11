@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<definitions targetNamespace="urn:ContratoRegiones" xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:tns="urn:ContratoRegiones" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+             xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:firReg="http://www.firReg.org">
+  <types>
+    <xsd:schema>
+      <xsd:import schemaLocation="../XMLFirmas/FirmaRegiones.xsd" namespace="http://www.firReg.org"/>
+    </xsd:schema>
+  </types>
+  <message name="mensajeEntradaRegiones">
+    <part name="partMensajeEntrada" element="firReg:regionesRequest"/>
+  </message>
+  <message name="mensajeSalidaRegiones">
+    <part name="partMensajeSalida" element="firReg:regionesResponse"/>
+  </message>
+  <portType name="puertoTipoRegiones">
+    <operation name="operacionRegiones">
+      <input message="tns:mensajeEntradaRegiones"/>
+      <output message="tns:mensajeSalidaRegiones"/>
+    </operation>
+  </portType>
+  <binding name="puertoTipoRegionesSOAP11Binding" type="tns:puertoTipoRegiones">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="operacionRegiones">
+      <soap:operation style="document" soapAction="urn:ContratoRegiones/operacionRegiones"/>
+      <input>
+        <soap:body use="literal" parts="partMensajeEntrada"/>
+      </input>
+      <output>
+        <soap:body use="literal" parts="partMensajeSalida"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="servicioRegiones">
+    <port name="puertoTipoRegiones" binding="tns:puertoTipoRegionesSOAP11Binding">
+      <soap:address location="http://www.example.com"/>
+    </port>
+  </service>
+</definitions>

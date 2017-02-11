@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://retrievelinestatistics.performancemanagement.schema.amx.com"
+	targetNamespace="http://retrievelinestatistics.performancemanagement.schema.amx.com"
+	elementFormDefault="qualified">
+	<xs:element name="RetrieveLineStatisticsRequest" type="tns:RetrieveLineStatisticsRequest" />
+	<xs:element name="RetrieveLineStatisticsResponse" type="tns:RetrieveLineStatisticsResponse" />
+	<xs:complexType name="RetrieveLineStatisticsRequest">
+		<xs:sequence>
+			<xs:element name="RetrieveLineStatistics" type="tns:RetrieveLineStatistics"
+				minOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="RetrieveLineStatisticsResponse">
+		<xs:sequence>
+			<xs:element name="CustomerLineStatistics" type="tns:CustomerLineStatistics"
+				minOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="RetrieveLineStatistics">
+		<xs:sequence>
+			<xs:element name="customerId" type="xs:string" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="CustomerLineStatistics">
+		<xs:sequence>
+			<xs:element name="GamaStatistics" type="tns:GamaStatistics"
+				minOccurs="1" maxOccurs="3" />
+			<xs:element name="OrderActionAndProductsStatistics" type="tns:OrderActionAndProductsStatistics"
+				minOccurs="1" />
+			<xs:element name="RetentionCase" type="tns:RetentionCase"
+				minOccurs="1" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="GamaStatistics">
+		<xs:sequence>
+			<xs:element name="gamaType" type="xs:string" minOccurs="1" />
+			<xs:element name="totalPendingProvide" type="xs:string"
+				minOccurs="1" />
+			<xs:element name="totalActiveLines" type="xs:string"
+				minOccurs="1" />
+			<xs:element name="PlanCategoryLines" type="tns:PlanCategoryLines"
+				minOccurs="1" maxOccurs="unbounded" />
+			<xs:element name="totalAssignedLines" type="xs:string"
+				minOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="PlanCategoryLines">
+		<xs:sequence>
+			<xs:element name="planCategory" type="xs:string"
+				minOccurs="1" />
+			<xs:element name="totalLines" type="xs:string" minOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="OrderActionAndProductsStatistics">
+		<xs:sequence>
+			<xs:element name="DisactiveProductsInfo" type="tns:DisactiveProductsInfo"
+				minOccurs="1" maxOccurs="3" />
+			<xs:element name="totalActiveLinesNoCreditStudy" type="xs:string"
+				minOccurs="1" />
+			<xs:element name="totalPendingCeaseLines" type="xs:string"
+				minOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="DisactiveProductsInfo">
+		<xs:sequence>
+			<xs:element name="productStatus" type="xs:string"
+				minOccurs="1" />
+			<xs:element name="DisactivationInfo" type="tns:DisactivationInfo"
+				minOccurs="1" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="DisactivationInfo">
+		<xs:sequence>
+			<xs:element name="msisdn" type="xs:string" minOccurs="1" />
+			<xs:element name="reason" type="xs:string" minOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="RetentionCase">
+		<xs:sequence>
+			<xs:element name="retentionCaseId" type="xs:string"
+				minOccurs="0" />
+			<xs:element name="retentionMSISDN" type="xs:string"
+				minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+
+
+</xs:schema>

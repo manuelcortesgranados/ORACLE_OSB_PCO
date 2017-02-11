@@ -1,0 +1,42 @@
+<wsdl:definitions name="registroPaquetesBB"
+	targetNamespace="http://www.comcel.com.co/registroPaquetesBB/"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.comcel.com.co/registroPaquetesBB/"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<wsdl:types>
+		<schema xmlns="http://www.w3.org/2001/XMLSchema">
+			<import namespace="http://www.comcel.com.co/registroPaquetesBB/"
+				schemaLocation="../Schemas/PS_ITEL_REGISTRO_PAQUETESBB.xsd" />
+		</schema>
+	</wsdl:types>
+	<wsdl:message name="Input_Parameters">
+		<wsdl:part element="tns:Input_Parameters" name="Input_Parameters" />
+	</wsdl:message>
+	<wsdl:message name="WS_Result">
+		<wsdl:part element="tns:WS_Result" name="WS_Result" />
+	</wsdl:message>
+	<wsdl:portType name="registroPaquetesBB">
+		<wsdl:operation name="registroPaquetesBB">
+			<wsdl:input message="tns:Input_Parameters" />
+			<wsdl:output message="tns:WS_Result" />
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="registroPaquetesBBSOAP" type="tns:registroPaquetesBB">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="registroPaquetesBB">
+			<soap:operation
+				soapAction="http://www.comcel.com.co/registroPaquetesBB/registroPaquetesBB" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="registroPaquetesBB">
+		<wsdl:port binding="tns:registroPaquetesBBSOAP" name="registroPaquetesBBSOAP">
+			<soap:address location="http://www.comcel.com.co/" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/prueba2/Project1/bd_getInternalEvidenteInformation" name="bd_getInternalEvidenteInformation-concrete" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/prueba2/Project1/bd_getInternalEvidenteInformation" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/prueba2/Project1/bd_getInternalEvidenteInformation" location="../Resources/WSDLs/getInternalEvidenteInformation_BD.wsdl"/>
+  <binding name="bd_getInternalEvidenteInformation_ptt-binding" type="tns:bd_getInternalEvidenteInformation_ptt">
+    <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+    <operation name="bd_getInternalEvidenteInformation">
+      <soap:operation soapAction="bd_getInternalEvidenteInformation"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="bd_getInternalEvidenteInformation-service">
+    <port name="bd_getInternalEvidenteInformation-port" binding="tns:bd_getInternalEvidenteInformation_ptt-binding">
+      <soap:address location="jca://eis/DB/Activa"/>
+    </port>
+  </service>
+</definitions>

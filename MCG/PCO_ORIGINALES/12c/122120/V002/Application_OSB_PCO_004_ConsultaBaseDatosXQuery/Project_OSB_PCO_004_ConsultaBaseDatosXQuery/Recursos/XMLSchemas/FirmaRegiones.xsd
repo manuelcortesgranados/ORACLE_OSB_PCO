@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:reg="http://www.firmaRegiones.org"
+            targetNamespace="http://www.firmaRegiones.org" elementFormDefault="qualified">
+  <xsd:complexType name="RegionesRequestType">
+    <xsd:sequence>
+      <xsd:element name="codigoRegion" type="xsd:integer"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="RegionesResponseType">
+    <xsd:sequence maxOccurs="unbounded">
+      <xsd:element name="region" type="reg:RegionType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="RegionType">
+    <xsd:sequence>
+      <xsd:element name="codigoRegion" type="xsd:integer"/>
+      <xsd:element name="nombreRegion" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="regionesRequest" type="reg:RegionesRequestType"/>
+  <xsd:element name="regionesResponse" type="reg:RegionesResponseType"/>
+</xsd:schema>

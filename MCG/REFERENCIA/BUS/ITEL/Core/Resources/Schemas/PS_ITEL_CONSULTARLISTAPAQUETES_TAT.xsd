@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.comcel.com.co/ConsultarListaPaquetesTAT/"
+	xmlns:tns="http://www.comcel.com.co/ConsultarListaPaquetesTAT/">
+
+	<xs:element name="Input_Parameters" type="tns:Input_Paramaters" />
+	<xs:element name="WS_Result" type="tns:WS_Result" />
+
+	<xs:complexType name="Input_Paramaters"/>
+
+	<xs:complexType name="WS_Result">
+		<xs:sequence>
+			<xs:element name="CODIGO" type="xs:string" />
+			<xs:element name="MENSAJE" type="tns:respuestaType" />
+			<xs:element name="DESCRIPCION" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="respuestaType">
+		<xs:sequence>
+			<xs:element name="PAQUETES" type="tns:paquetesType" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="paquetesType">
+		<xs:sequence>
+			<xs:element name="PAQUETE" type="tns:paqueteType" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="paqueteType">
+		<xs:sequence>
+			<xs:element name="CODIGO_PAQUETE" type="xs:string" />
+			<xs:element name="VALOR" type="xs:decimal" />
+			<xs:element name="DESC_CORTA" type="xs:string" />
+			<xs:element name="VIGENCIA" type="xs:string" />
+			<xs:element name="CANTIDAD" type="xs:string" />
+			<xs:element name="TIPO" type="xs:string" />
+			<xs:element name="DESC_LARGA" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+
+</xs:schema>

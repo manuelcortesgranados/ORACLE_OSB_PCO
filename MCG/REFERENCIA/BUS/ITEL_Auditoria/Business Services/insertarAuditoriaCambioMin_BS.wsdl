@@ -1,0 +1,20 @@
+<definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/SOA/DBAdapter/bd_insertarAuditoriaCambioMin" name="bd_insertarAuditoriaCambioMin-concrete" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/SOA/DBAdapter/bd_insertarAuditoriaCambioMin" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/SOA/DBAdapter/bd_insertarAuditoriaCambioMin" location="../Resources/WSDLs/insertarAuditoriaCambioMin_BD.wsdl"/>
+  <binding name="bd_insertarAuditoriaCambioMin_ptt-binding" type="tns:bd_insertarAuditoriaCambioMin_ptt">
+    <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+    <operation name="bd_insertarAuditoriaCambioMin">
+      <soap:operation soapAction="bd_insertarAuditoriaCambioMin"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="bd_insertarAuditoriaCambioMin-service">
+    <port name="bd_insertarAuditoriaCambioMin-port" binding="tns:bd_insertarAuditoriaCambioMin_ptt-binding">
+      <soap:address location="jca://eis/DB/ITEL_SOA"/>
+    </port>
+  </service>
+</definitions>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<definitions targetNamespace="urn:Contrato03" xmlns="http://schemas.xmlsoap.org/wsdl/" 
+             xmlns:tns="urn:Contrato03" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" 
+             xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:bebe03="http://www.bebe03.org">
+  <types>
+    <xsd:schema>
+      <xsd:import schemaLocation="../XMLSchema/Firma03.xsd" namespace="http://www.bebe03.org"/>
+    </xsd:schema>
+  </types>
+  <message name="mensajeEntrada03">
+    <part name="parteEntrada03" element="bebe03:ositaRequest"/>
+  </message>
+  <message name="mensajeSalida03">
+    <part name="parteSalida03" element="bebe03:ositaResponse"/>
+  </message>
+  <portType name="puertoType03">
+    <operation name="operacion03">
+      <input message="tns:mensajeEntrada03"/>
+      <output message="tns:mensajeSalida03"/>
+    </operation>
+  </portType>
+  <binding name="puertoType03SOAP11Binding" type="tns:puertoType03">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="operacion03">
+      <soap:operation style="document" soapAction="urn:Contrato03/operacion03"/>
+      <input>
+        <soap:body use="literal" parts="parteEntrada03"/>
+      </input>
+      <output>
+        <soap:body use="literal" parts="parteSalida03"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="servicio03">
+    <port name="puertoType03" binding="tns:puertoType03SOAP11Binding">
+      <soap:address location="http://www.example.com"/>
+    </port>
+  </service>
+</definitions>

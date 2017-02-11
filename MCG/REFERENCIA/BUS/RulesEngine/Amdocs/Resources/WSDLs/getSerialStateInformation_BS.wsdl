@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WL5G3N0:definitions targetNamespace="http://getserialstateinformation.selfmanagement.amx.com" xmlns:WL5G3N0="http://schemas.xmlsoap.org/wsdl/" xmlns:WL5G3N1="http://getserialstateinformation.selfmanagement.schema.amx.com" xmlns:WL5G3N2="http://commonsexceptions.schema.amx.com" xmlns:WL5G3N3="http://getserialstateinformation.selfmanagement.amx.com" xmlns:WL5G3N4="http://schemas.xmlsoap.org/wsdl/soap/">
+  <WL5G3N0:types>
+    <xsd:schema xmlns:commonexception="http://commonsexceptions.schema.amx.com" xmlns:gss="http://getserialstateinformation.selfmanagement.schema.amx.com" xmlns:tns="http://getserialstateinformation.selfmanagement.amx.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <xsd:import namespace="http://getserialstateinformation.selfmanagement.schema.amx.com" schemaLocation="../Schemas/BS_GET_SERIALSTATUSINFORMATION.xsd"/>
+      <xsd:import namespace="http://commonsexceptions.schema.amx.com" schemaLocation="../Schemas/COMMON_EXCEPTIONS.xsd"/>
+    </xsd:schema>
+  </WL5G3N0:types>
+  <WL5G3N0:message name="GetSerialStateInformationRequest">
+    <WL5G3N0:part element="WL5G3N1:GetSerialStateInformationRequest" name="body"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="GetSerialStateInformationResponse">
+    <WL5G3N0:part element="WL5G3N1:GetSerialStateInformationResponse" name="body"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="ExternalSystemNotAvailableException">
+    <WL5G3N0:part element="WL5G3N2:ExternalSystemNotAvailableException" name="fault"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="MandatoryDataMissingException">
+    <WL5G3N0:part element="WL5G3N2:MandatoryDataMissingException" name="fault"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="ReferenceDataMissingException">
+    <WL5G3N0:part element="WL5G3N2:ReferenceDataMissingException" name="fault"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="InternalSystemErrorException">
+    <WL5G3N0:part element="WL5G3N2:InternalSystemErrorException" name="fault"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="BusinessExceptionFault">
+    <WL5G3N0:part element="WL5G3N2:BusinessExceptionFault" name="fault"/>
+  </WL5G3N0:message>
+  <WL5G3N0:portType name="GetSerialStateInformation">
+    <WL5G3N0:operation name="GetSerialStateInformation">
+      <WL5G3N0:input message="WL5G3N3:GetSerialStateInformationRequest" name="GetSerialStateInformationInput"/>
+      <WL5G3N0:output message="WL5G3N3:GetSerialStateInformationResponse" name="GetSerialStateInformationOutput"/>
+      <WL5G3N0:fault message="WL5G3N3:MandatoryDataMissingException" name="MandatoryDataMissingException"/>
+      <WL5G3N0:fault message="WL5G3N3:ExternalSystemNotAvailableException" name="ExternalSystemNotAvailableException"/>
+      <WL5G3N0:fault message="WL5G3N3:InternalSystemErrorException" name="InternalSystemErrorException"/>
+      <WL5G3N0:fault message="WL5G3N3:ReferenceDataMissingException" name="ReferenceDataMissingException"/>
+      <WL5G3N0:fault message="WL5G3N3:BusinessExceptionFault" name="BusinessExceptionFault"/>
+    </WL5G3N0:operation>
+  </WL5G3N0:portType>
+  <WL5G3N0:binding name="GetSerialStateInformationSoapBinding" type="WL5G3N3:GetSerialStateInformation">
+    <WL5G3N4:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <WL5G3N0:operation name="GetSerialStateInformation">
+      <WL5G3N4:operation soapAction="http://getserialstateinformation.selfmanagement.amx.com/GetSerialStateInformation" style="document"/>
+      <WL5G3N0:input>
+        <WL5G3N4:body use="literal"/>
+      </WL5G3N0:input>
+      <WL5G3N0:output>
+        <WL5G3N4:body use="literal"/>
+      </WL5G3N0:output>
+      <WL5G3N0:fault name="MandatoryDataMissingException">
+        <WL5G3N4:fault name="MandatoryDataMissingException" use="literal"/>
+      </WL5G3N0:fault>
+      <WL5G3N0:fault name="ExternalSystemNotAvailableException">
+        <WL5G3N4:fault name="ExternalSystemNotAvailableException" use="literal"/>
+      </WL5G3N0:fault>
+      <WL5G3N0:fault name="InternalSystemErrorException">
+        <WL5G3N4:fault name="InternalSystemErrorException" use="literal"/>
+      </WL5G3N0:fault>
+      <WL5G3N0:fault name="ReferenceDataMissingException">
+        <WL5G3N4:fault name="ReferenceDataMissingException" use="literal"/>
+      </WL5G3N0:fault>
+      <WL5G3N0:fault name="BusinessExceptionFault">
+        <WL5G3N4:fault name="BusinessExceptionFault" use="literal"/>
+      </WL5G3N0:fault>
+    </WL5G3N0:operation>
+  </WL5G3N0:binding>
+  <WL5G3N0:service name="GetSerialStateInformation">
+    <WL5G3N0:port binding="WL5G3N3:GetSerialStateInformationSoapBinding" name="GetSerialStateInformationPort">
+      <WL5G3N4:address location="http://lnxsoa12:8115/OSB_ONE_AMX_PRO/Services/Proxy_Services/GetSerialStateInformationService_PS"/>
+    </WL5G3N0:port>
+  </WL5G3N0:service>
+</WL5G3N0:definitions>

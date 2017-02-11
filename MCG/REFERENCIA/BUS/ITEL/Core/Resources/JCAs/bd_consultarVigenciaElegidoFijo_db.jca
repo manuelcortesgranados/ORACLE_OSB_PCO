@@ -1,0 +1,14 @@
+<adapter-config name="bd_consultarVigenciaElegidoFijo" adapter="Database Adapter" wsdlLocation="../WSDLs/consultarVigenciaElegidoFijo_BD.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/DB/ITEL_SOA" UIConnectionName="Des_Itel" adapterRef=""/>
+  <endpoint-interaction portType="bd_consultarVigenciaElegidoFijo_ptt" operation="bd_consultarVigenciaElegidoFijo">
+    <interaction-spec className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
+      <property name="PackageName" value="PKG_SOA_ITEL"/>
+      <property name="ProcedureName" value="PRC_CONSULTAR_VIG_ELEGIDO_FIJO"/>
+      <property name="QueryTimeout" value="1"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+    <output/>
+  </endpoint-interaction>
+
+</adapter-config>

@@ -1,0 +1,20 @@
+<definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/SOA/Adapters/bd_getService" name="bd_getService-concrete" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/SOA/Adapters/bd_getService" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/SOA/Adapters/bd_getService" location="../Resources/WSDLs/getService_BD.wsdl"/>
+  <binding name="bd_getService_ptt-binding" type="tns:bd_getService_ptt">
+    <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+    <operation name="bd_getService">
+      <soap:operation soapAction="bd_getService"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="bd_getService-service">
+    <port name="bd_getService-port" binding="tns:bd_getService_ptt-binding">
+      <soap:address location="jca://eis/DB/Rules_Engine"/>
+    </port>
+  </service>
+</definitions>

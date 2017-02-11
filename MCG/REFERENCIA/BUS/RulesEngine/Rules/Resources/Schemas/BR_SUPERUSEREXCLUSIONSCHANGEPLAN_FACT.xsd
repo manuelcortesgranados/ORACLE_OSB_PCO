@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.claro.com.co/rulesEngine/SuperUserExclusionChangePlanFact/"
+	xmlns:msd="http://www.claro.com.co/rulesEngine/canonicalModel/MarketSalesDomain"
+	xmlns:cbe="http://www.claro.com.co/rulesEngine/canonicalModel/CommonBusinessEntities"
+	xmlns:tns="http://www.claro.com.co/rulesEngine/SuperUserExclusionChangePlanFact/">
+
+	<xs:import schemaLocation="../../../Core/Resources/Schemas/CanonicalModel/CommonBusinessEntities.xsd"
+		namespace="http://www.claro.com.co/rulesEngine/canonicalModel/CommonBusinessEntities" />
+	<xs:import schemaLocation="../../../Core/Resources/Schemas/CanonicalModel/CustomerDomain.xsd"
+         namespace="http://www.claro.com.co/rulesEngine/canonicalModel/CustomerDomain"/>
+    <xs:import schemaLocation="../../../Core/Resources/Schemas/CanonicalModel/MarketSalesDomain.xsd"
+         namespace="http://www.claro.com.co/rulesEngine/canonicalModel/MarketSalesDomain"/>
+
+	<xs:element name="SuperUserExclusionChangePlanRequest"
+		type="tns:SuperUserExclusionChangePlanFactRequestType" />
+	<xs:element name="SuperUserExclusionChangePlanResponse"
+		type="tns:SuperUserExclusionChangePlanFactResponseType" />
+	
+	<xs:complexType name="SuperUserExclusionChangePlanFactRequestType">
+		<xs:sequence>
+			<xs:element name="ExceptionBusinessCollection" type="cbe:ExceptionBusinessCollection" />
+			<xs:element name="SalesChannel" type="msd:SalesChannel" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SuperUserExclusionChangePlanFactResponseType">
+		<xs:sequence>
+			<xs:element name="ExceptionBusinessCollection" type="cbe:ExceptionBusinessCollection" />
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

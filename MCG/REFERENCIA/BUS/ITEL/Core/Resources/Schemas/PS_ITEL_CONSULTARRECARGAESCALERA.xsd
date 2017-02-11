@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.comcel.com.co/ConsultarRecargaEscalera/" 
+	xmlns:tns="http://www.comcel.com.co/ConsultarRecargaEscalera/">
+	<xs:element name="Input_Parameters" type="tns:Input_Parameters" />
+	<xs:element name="WS_Result" type="tns:WS_Result" />
+
+	<xs:complexType name="Input_Parameters">
+		<xs:sequence>
+			<xs:element name="HOSTIDIN" type="xs:decimal" />
+			<xs:element name="RECARGA" type="xs:decimal" />
+			<xs:element name="MIN" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="WS_Result">
+		<xs:sequence>
+			<xs:element name="CODIGO" type="xs:string" />
+			<xs:element name="MENSAJE" type="tns:MensajeType" />
+			<xs:element name="DESCRIPCION" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="MensajeType">
+		<xs:sequence>
+			<xs:element name="CODIGO" type="xs:decimal" />
+			<xs:element name="CUENTA" type="xs:decimal" />
+			<xs:element name="COMENTARIO" type="xs:string" />
+			<xs:element name="HOSTIDOUT" type="xs:decimal" />
+			<xs:element name="VALOR" type="xs:decimal" />
+			<xs:element name="VIGENCIA" type="xs:decimal" />
+		</xs:sequence>
+	</xs:complexType>
+	
+</xs:schema>

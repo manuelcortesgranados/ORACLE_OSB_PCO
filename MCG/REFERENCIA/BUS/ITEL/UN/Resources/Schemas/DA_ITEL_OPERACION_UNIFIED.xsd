@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.comcel.com.co/UN/OperacionUnified"
+	xmlns:tns="http://www.comcel.com.co/UN/OperacionUnified"
+	elementFormDefault="qualified">
+
+	<element name="DatosSuscriptor">
+		<complexType>
+			<sequence>
+				<element name="CUSTOMERID" type="string" />
+				<element name="Cgpa" type="string" />
+				<element name="Contract" type="string" />
+				<element name="IsLocked" type="string" />
+				<element name="IsFraudLocked" type="string" />
+				<element name="IsFirstCallPassed" type="string" />
+				<element name="IsGPRSUsed" type="string" />
+				<element name="IsWelcomeBackPromoDone" type="string" />
+				<element name="IsFnFPossible" type="string" />
+				<element name="FnF_Numbers" type="tns:DataArray" />
+				<element name="IsBestFnFPossible" type="string" />
+				<element name="BestFnF_Numbers" type="tns:DataArray" />
+				<element name="OnPeakAccountID" type="tns:AccountID" />
+				<element name="OffPeakAccountID" type="tns:AccountID" />
+				<element name="FreeSMSAccountID" type="tns:AccountID" />
+				<element name="BonusAccountID" type="tns:AccountID" />
+				<element name="MinutesAccountID2" type="tns:AccountID" />
+				<element name="MinutesAccountID3" type="tns:AccountID" />
+				<element name="MinutesAccountID4" type="tns:AccountID" />
+				<element name="MonetaryAccountID2" type="tns:AccountID" />
+				<element name="MonetaryAccountID3" type="tns:AccountID" />
+				<element name="PreActiveEndDate" type="string" />
+				<element name="LastKnownPeriod" type="string" />
+				<element name="ActiveEndDate" type="string" />
+			</sequence>
+			<attribute name="exito" type="boolean" />
+			<attribute name="mensaje" type="string" />
+		</complexType>
+	</element>
+
+	<complexType name="DataArray">
+		<sequence>
+			<element name="Detail" type="string" minOccurs="0" maxOccurs="unbounded" />
+		</sequence>
+	</complexType>
+
+	<complexType name="AccountID">
+		<sequence>
+			<element name="Balance" type="string" />
+			<element name="ExpiryDate" type="string" />
+		</sequence>
+	</complexType>
+
+	<element name="TopUpRecharge">
+		<complexType>
+			<sequence>
+				<element name="messageCode" type="long" />
+				<element name="resultCode" type="long" />
+				<element name="account" type="long" minOccurs="0" />
+				<element name="resultingBalance" type="long" minOccurs="0" />
+				<element name="resultingExpirationDate" type="string"
+					minOccurs="0" />
+				<element name="resultingCurrencyCode" type="string"
+					minOccurs="0" />
+				<element name="resultingMTCExpDate" type="string" minOccurs="0" />
+				<element name="language" type="long" minOccurs="0" />
+				<element name="resultText" type="string" minOccurs="0" />
+				<element name="additionalResults" type="string" minOccurs="0" />
+			</sequence>
+			<attribute name="exito" type="boolean" />
+			<attribute name="mensaje" type="string" />
+		</complexType>
+	</element>
+
+	<element name="Charge">
+		<complexType>
+			<sequence>
+				<element name="messageCode" type="long" />
+				<element name="resultCode" type="long" />
+				<element name="account" type="long" minOccurs="0" />
+				<element name="resultingBalance" type="long" minOccurs="0" />
+				<element name="resultingExpirationDate" type="string"
+					minOccurs="0" />
+				<element name="resultingCurrencyCode" type="string"
+					minOccurs="0" />
+				<element name="resultingMTCExpDate" type="string" minOccurs="0" />
+				<element name="language" type="long" minOccurs="0" />
+				<element name="resultText" type="string" minOccurs="0" />
+				<element name="additionalResults" type="string" minOccurs="0" />
+			</sequence>
+			<attribute name="exito" type="boolean" />
+			<attribute name="mensaje" type="string" />
+		</complexType>
+	</element>
+
+</schema>

@@ -1,0 +1,37 @@
+<wsdl:definitions name="InsertarBloqueoHotkit_PS" targetNamespace="http://www.comcel.com.co/InsertarBloqueoHotkit_PS/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.comcel.com.co/InsertarBloqueoHotkit_PS/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsd1="http://www.comcel.com.co/InsertarBloqueoHotkit">
+	<wsdl:types>
+		<xsd:schema>
+			<xsd:import namespace="http://www.comcel.com.co/InsertarBloqueoHotkit" schemaLocation="../Schemas/PS_ITEL_INSERTAR_BLOQUEO_HOTKIT.xsd">
+			</xsd:import>
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="InsertarBloqueoHotkitRequest">
+		<wsdl:part element="xsd1:Input_Parameters" name="Input_Parameters"/>
+	</wsdl:message>
+	<wsdl:message name="InsertarBloqueoHotkitResponse">
+		<wsdl:part element="xsd1:WS_Result" name="WS_Result"/>
+	</wsdl:message>
+	<wsdl:portType name="InsertarBloqueoHotkit_PS">
+		<wsdl:operation name="InsertarBloqueoHotkit">
+			<wsdl:input message="tns:InsertarBloqueoHotkitRequest"/>
+			<wsdl:output message="tns:InsertarBloqueoHotkitResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="InsertarBloqueoHotkit_PSSOAP" type="tns:InsertarBloqueoHotkit_PS">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="InsertarBloqueoHotkit">
+			<soap:operation soapAction="http://www.comcel.com.co/InsertarBloqueoHotkit_PS/InsertarBloqueoHotkit"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="InsertarBloqueoHotkit_PS">
+		<wsdl:port binding="tns:InsertarBloqueoHotkit_PSSOAP" name="InsertarBloqueoHotkit_PSSOAP">
+			<soap:address location="http://www.comcel.com.co/"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

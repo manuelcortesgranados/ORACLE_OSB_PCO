@@ -1,0 +1,20 @@
+<definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/ITEL/Adaptadores/bd_insertarElegido" name="bd_insertarElegido-concrete" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/ITEL/Adaptadores/bd_insertarElegido" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/ITEL/Adaptadores/bd_insertarElegido" location="../Resources/WSDLs/insertarElegido_BD.wsdl"/>
+  <binding name="bd_insertarElegido_ptt-binding" type="tns:bd_insertarElegido_ptt">
+    <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+    <operation name="bd_insertarElegido">
+      <soap:operation soapAction="bd_insertarElegido"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="bd_insertarElegido-service">
+    <port name="bd_insertarElegido-port" binding="tns:bd_insertarElegido_ptt-binding">
+      <soap:address location="jca://eis/DB/ITELDB"/>
+    </port>
+  </service>
+</definitions>

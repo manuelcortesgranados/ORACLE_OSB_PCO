@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config">
+  <ser:coreEntry isProxy="true" isEnabled="true">
+    <ser:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config">
+      <con:wsdl ref="RulesEngine/Amdocs/Resources/WSDLs/getClientFinancialInformation_PS"/>
+      <con:port>
+        <con:name>GetClientFinancialInformationSOAP</con:name>
+        <con:namespace>http://www.claro.com.co/rulesEngine/getClientFinancialInformation</con:namespace>
+      </con:port>
+      <con:selector type="SOAP body"/>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+    <ser:ws-policy>
+      <ser:binding-mode>wsdl-policy-attachments</ser:binding-mode>
+    </ser:ws-policy>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>local</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:inbound-properties/>
+    <tran:all-headers>true</tran:all-headers>
+  </ser:endpointConfig>
+  <ser:router>
+    <con:pipeline type="request" name="PipelinePairNode1_request">
+      <con:stage name="stage1" errorHandler="_onErrorHandler-5688880829236331301--6c53ae2e.13e323957d7.-743f">
+        <con:context>
+          <con2:varNsDecl namespace="http://www.claro.com.co/rulesEngine/getClientFinancialInformation" prefix="get"/>
+        </con:context>
+        <con:actions>
+          <con1:insert varName="body">
+            <con2:id>_ActionId-4649163575980877742-5030650.13f526a1c2c.-6c78</con2:id>
+            <con1:location>
+              <con2:xpathText>./get:Input_Parameters/customer</con2:xpathText>
+            </con1:location>
+            <con1:where>last-child</con1:where>
+            <con1:expr>
+              <con2:xqueryText><![CDATA[<internalAccountBehavior>
+	<delayAmount>99999</delayAmount>
+	<behaviorCustomer>A</behaviorCustomer>
+	<seniority>1</seniority>
+</internalAccountBehavior>,
+<internalAccountBehavior>
+	<delayAmount>0</delayAmount>
+	<behaviorCustomer>S</behaviorCustomer>
+	<seniority>1</seniority>
+</internalAccountBehavior>]]></con2:xqueryText>
+            </con1:expr>
+          </con1:insert>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="PipelinePairNode1_response">
+      <con:stage name="response">
+        <con:context>
+          <con2:varNsDecl namespace="http://www.claro.com.co/rulesEngine/getClientFinancialInformation" prefix="get"/>
+        </con:context>
+        <con:actions>
+          <con1:replace varName="body" contents-only="true">
+            <con2:id>_ActionId-6940739529688333763--6d1cdd11.13efc34f07d.-7f6d</con2:id>
+            <con1:expr>
+              <con2:xqueryTransform>
+                <con2:resource ref="RulesEngineDummies/Amdocs/Resources/XQueries/getClientFinancialInformationTemp2_Res"/>
+                <con2:param name="input_Parameters">
+                  <con2:path>$body/get:Input_Parameters</con2:path>
+                </con2:param>
+              </con2:xqueryTransform>
+            </con1:expr>
+          </con1:replace>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="error" name="_onErrorHandler-5688880829236331301--6c53ae2e.13e323957d7.-743f">
+      <con:stage name="stage1">
+        <con:context/>
+        <con:actions>
+          <con2:reply>
+            <con2:id>_ActionId-6721944585020651053-53b27670.13ee6affb7a.-7f75</con2:id>
+          </con2:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:flow>
+      <con:pipeline-node name="PipelinePairNode1">
+        <con:request>PipelinePairNode1_request</con:request>
+        <con:response>PipelinePairNode1_response</con:response>
+      </con:pipeline-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

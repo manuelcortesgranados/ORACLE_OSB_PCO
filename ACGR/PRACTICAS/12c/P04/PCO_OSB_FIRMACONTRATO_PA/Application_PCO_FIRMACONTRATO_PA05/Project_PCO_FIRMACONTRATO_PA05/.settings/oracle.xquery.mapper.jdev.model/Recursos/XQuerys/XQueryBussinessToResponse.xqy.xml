@@ -1,0 +1,6 @@
+<view_states>
+   <function arity="1" name="funcionTransformadora2">
+      <source_tree_view last.visible.row="5" last.visible.path="/sourceRoot[[0]]/OutputParameters[[0]]/P_CURSOR_RETORNO[[0]]/Row[[0]]/Column[[0]]/sqltype[[1]]" first.visible.path="/sourceRoot[[0]]/OutputParameters[[0]]" expanded.paths="/sourceRoot[[0]]/OutputParameters[[0]]&#xA;/sourceRoot[[0]]/OutputParameters[[0]]/P_CURSOR_RETORNO[[0]]&#xA;/sourceRoot[[0]]/OutputParameters[[0]]/P_CURSOR_RETORNO[[0]]/Row[[0]]&#xA;/sourceRoot[[0]]/OutputParameters[[0]]/P_CURSOR_RETORNO[[0]]/Row[[0]]/Column[[0]]" first.visible.row="0" selected.paths=""/>
+      <target_tree_view last.visible.row="3" last.visible.path="/TargetRoot[[0]]/regionesResponse[[0]]/regiones[[0]]/nombreRegion[[1]]" first.visible.path="/TargetRoot[[0]]/regionesResponse[[0]]" expanded.paths="/TargetRoot[[0]]/regionesResponse[[0]]&#xA;/TargetRoot[[0]]/regionesResponse[[0]]/regiones[[0]]" first.visible.row="0" selected.paths=""/>
+   </function>
+</view_states>

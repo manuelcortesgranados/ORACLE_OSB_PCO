@@ -1,0 +1,14 @@
+<adapter-config name="insertarEnviaPort" adapter="Database Adapter" wsdlLocation="../WSDLs/insertarEnviaPort.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/DB/SMO" UIConnectionName="SMO" adapterRef=""/>
+  <endpoint-interaction portType="insertarEnviaPort_ptt" operation="insertarEnviaPort">
+    <interaction-spec className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
+      <property name="SchemaName" value="INH_SMO"/>
+      <property name="ProcedureName" value="PRCINS_ENVIA_PORT_OUT"/>
+      <property name="QueryTimeout" value="1"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+    <output/>
+  </endpoint-interaction>
+
+</adapter-config>

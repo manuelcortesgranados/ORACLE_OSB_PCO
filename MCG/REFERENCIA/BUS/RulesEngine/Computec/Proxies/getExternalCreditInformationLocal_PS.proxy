@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config">
+  <ser:coreEntry isProxy="true" isEnabled="true">
+    <ser:binding type="SOAP" isSoap12="false" xsi:type="con4:SoapBindingType" xmlns:con4="http://www.bea.com/wli/sb/services/bindings/config">
+      <con4:wsdl ref="RulesEngine/Computec/Resources/WSDLs/getExternalCreditInformation_PS"/>
+      <con4:port>
+        <con4:name>getExternalCreditInformationSOAP</con4:name>
+        <con4:namespace>http://www.claro.com.co/rulesEngine/getExternalCreditInformation</con4:namespace>
+      </con4:port>
+      <con4:selector type="SOAP body"/>
+      <con4:WSI-compliant>false</con4:WSI-compliant>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+    <ser:ws-policy>
+      <ser:binding-mode>wsdl-policy-attachments</ser:binding-mode>
+    </ser:ws-policy>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>local</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:inbound-properties/>
+    <tran:all-headers>true</tran:all-headers>
+  </ser:endpointConfig>
+  <ser:router>
+    <con:pipeline type="request" name="PipelinePairNode1_request">
+      <con:stage name="validate" errorHandler="_onErrorHandler-1159658307279427387-4d8b1bdd.13e23fbd9f1.-7f2e">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.claro.com.co/rulesEngine/getExternalCreditInformation" prefix="get"/>
+        </con:context>
+        <con:actions>
+          <con2:assign varName="namespace">
+            <con1:id>_ActionId-19937711684209005-38ddb681.13feeb5eb0e.-79b4</con1:id>
+            <con2:expr>
+              <con1:xqueryText>fn:namespace-uri($body/*:Input_Parameters)</con1:xqueryText>
+            </con2:expr>
+          </con2:assign>
+          <con2:assign varName="customer">
+            <con1:id>_ActionId-2829537419253848294--3bdb18f9.13f87775144.-7893</con1:id>
+            <con2:expr>
+              <con1:xqueryText>$body/get:Input_Parameters/customer</con1:xqueryText>
+            </con2:expr>
+          </con2:assign>
+          <con2:validate>
+            <con1:id>_ActionId-171956477758306968-1f978e85.14053efc2aa.-7c76</con1:id>
+            <con2:schema ref="RulesEngine/Computec/Resources/Schemas/PS_GET_EXTERNALCREDITINFORMATION"/>
+            <con2:schemaElement xmlns:get="http://www.claro.com.co/rulesEngine/getExternalCreditInformation">get:Input_Parameters</con2:schemaElement>
+            <con2:varName>body</con2:varName>
+            <con2:location>
+              <con1:xpathText>./get:Input_Parameters</con1:xpathText>
+            </con2:location>
+          </con2:validate>
+        </con:actions>
+      </con:stage>
+      <con:stage name="getParameters">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.claro.com.co/rulesEngine/getExternalCreditInformation" prefix="get"/>
+        </con:context>
+        <con:actions>
+          <con2:wsCallout>
+            <con1:id>_ActionId-4271361337942025678--46e8e023.14040e0124d.-7fcc</con1:id>
+            <con2:service xsi:type="ref:BusinessServiceRef" ref="RulesEngine/Core/Business Services/getParameters_BS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con2:operation>getParameters</con2:operation>
+            <con2:request>
+              <con2:body>$parametersRequest</con2:body>
+            </con2:request>
+            <con2:response>
+              <con2:body>parametersResponse</con2:body>
+            </con2:response>
+            <con2:requestTransform>
+              <con2:assign varName="parametersRequest">
+                <con1:id>_ActionId-4271361337942025678--46e8e023.14040e0124d.-7fa8</con1:id>
+                <con2:expr>
+                  <con1:xqueryTransform>
+                    <con1:resource ref="RulesEngine/Core/Resources/XQueries/getParameters_Req"/>
+                    <con1:param name="platform">
+                      <con1:path>'COMPUTEC'</con1:path>
+                    </con1:param>
+                  </con1:xqueryTransform>
+                </con2:expr>
+              </con2:assign>
+            </con2:requestTransform>
+            <con2:responseTransform/>
+          </con2:wsCallout>
+          <con2:assign varName="businessRequest">
+            <con1:id>_ActionId-4271361337942025678--46e8e023.14040e0124d.-7ff0</con1:id>
+            <con2:expr>
+              <con1:xqueryTransform>
+                <con1:resource ref="RulesEngine/Computec/Resources/XQueries/getExternalCreditInformation_Req"/>
+                <con1:param name="password">
+                  <con1:path>for $row in $parametersResponse/*:P_PARAMETERS/*:Row
+   where $row/*:Column[@name='PARAMETER_NAME'] = 'PASSWORD'
+   return data($row/*:Column[@name='PARAMETER_VALUE'])</con1:path>
+                </con1:param>
+                <con1:param name="documentNumber">
+                  <con1:path>data($body/get:Input_Parameters/customer/document/identifierNumber)</con1:path>
+                </con1:param>
+                <con1:param name="user">
+                  <con1:path>for $row in $parametersResponse/*:P_PARAMETERS/*:Row
+   where $row/*:Column[@name='PARAMETER_NAME'] = 'USER'
+   return data($row/*:Column[@name='PARAMETER_VALUE'])</con1:path>
+                </con1:param>
+                <con1:param name="documentType">
+                  <con1:path>data($body/get:Input_Parameters/customer/document/type/code)</con1:path>
+                </con1:param>
+                <con1:param name="lastName">
+                  <con1:path>data($body/get:Input_Parameters/customer/lastName)</con1:path>
+                </con1:param>
+              </con1:xqueryTransform>
+            </con2:expr>
+          </con2:assign>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="PipelinePairNode1_response">
+      <con:stage name="insert Local DB">
+        <con:context/>
+        <con:actions>
+          <con2:wsCallout>
+            <con1:id>_ActionId-2693877847964134255--70d23e1a.13fd49155ee.-7f5d</con1:id>
+            <con2:service xsi:type="ref:ProxyRef" ref="RulesEngine/Core/Proxies/insertExternalCreditInformationLocal" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con2:operation>insertExternalCreditInformation</con2:operation>
+            <con2:request>
+              <con2:body>$report</con2:body>
+            </con2:request>
+            <con2:response>
+              <con2:body>insertExternalCreditInformationResponse</con2:body>
+            </con2:response>
+            <con2:requestTransform>
+              <con2:assign varName="report">
+                <con1:id>_ActionId-2757635994210574223--27d5bf1f.13fe4100df6.-7df1</con1:id>
+                <con2:expr>
+                  <con1:xqueryTransform>
+                    <con1:resource ref="RulesEngine/Computec/Resources/XQueries/getExternalCreditInformation_insertExternalCreditInformation"/>
+                    <con1:param name="input">
+                      <con1:path>$information</con1:path>
+                    </con1:param>
+                  </con1:xqueryTransform>
+                </con2:expr>
+              </con2:assign>
+            </con2:requestTransform>
+            <con2:responseTransform/>
+          </con2:wsCallout>
+        </con:actions>
+      </con:stage>
+      <con:stage name="insert Activa">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.claro.com.co/rulesEngine/getExternalCreditInformation" prefix="get"/>
+        </con:context>
+        <con:actions>
+          <con2:wsCallout>
+            <con1:id>_ActionId-171956477758306968-1f978e85.14053efc2aa.-7cb8</con1:id>
+            <con2:service xsi:type="ref:ProxyRef" ref="RulesEngine/Activa/Proxies/insertInternalCreditInformationLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con2:operation>insertInternalCreditInformation</con2:operation>
+            <con2:request>
+              <con2:body>$insertActivaRequest</con2:body>
+            </con2:request>
+            <con2:response>
+              <con2:body>insertActivaResponse</con2:body>
+            </con2:response>
+            <con2:requestTransform>
+              <con2:assign varName="insertActivaRequest">
+                <con1:id>_ActionId-171956477758306968-1f978e85.14053efc2aa.-7c8a</con1:id>
+                <con2:expr>
+                  <con1:xqueryTransform>
+                    <con1:resource ref="RulesEngine/Activa/Resources/XQueries/insertInternalCreditInformationPS_Req"/>
+                    <con1:param name="documentType">
+                      <con1:path>data($customer/type/description)</con1:path>
+                    </con1:param>
+                    <con1:param name="report">
+                      <con1:path>$information</con1:path>
+                    </con1:param>
+                  </con1:xqueryTransform>
+                </con2:expr>
+              </con2:assign>
+            </con2:requestTransform>
+            <con2:responseTransform/>
+          </con2:wsCallout>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="error" name="_onErrorHandler-1159658307279427387-4d8b1bdd.13e23fbd9f1.-7f2e">
+      <con:stage name="validateError">
+        <con:context/>
+        <con:actions>
+          <con2:replace varName="body" contents-only="true">
+            <con1:id>_ActionId-1159658307279427387-4d8b1bdd.13e23fbd9f1.-786e</con1:id>
+            <con2:expr>
+              <con1:xqueryTransform>
+                <con1:resource ref="RulesEngine/Util/Resources/XQueries/genericError"/>
+                <con1:param name="targetNamespace">
+                  <con1:path>$namespace</con1:path>
+                </con1:param>
+                <con1:param name="fault">
+                  <con1:path>$fault</con1:path>
+                </con1:param>
+                <con1:param name="code">
+                  <con1:path>"23"</con1:path>
+                </con1:param>
+              </con1:xqueryTransform>
+            </con2:expr>
+          </con2:replace>
+          <con1:reply isError="false">
+            <con1:id>_ActionId-1159658307279427387-4d8b1bdd.13e23fbd9f1.-77e3</con1:id>
+          </con1:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="error" name="_onErrorHandler-1159658307279427387-4d8b1bdd.13e23fbd9f1.-7de4">
+      <con:stage name="errorRouting">
+        <con:context/>
+        <con:actions>
+          <con2:replace varName="body" contents-only="true">
+            <con1:id>_ActionId-1159658307279427387-4d8b1bdd.13e23fbd9f1.-7775</con1:id>
+            <con2:expr>
+              <con1:xqueryTransform>
+                <con1:resource ref="RulesEngine/Util/Resources/XQueries/genericError"/>
+                <con1:param name="targetNamespace">
+                  <con1:path>$namespace</con1:path>
+                </con1:param>
+                <con1:param name="fault">
+                  <con1:path>$fault</con1:path>
+                </con1:param>
+                <con1:param name="code">
+                  <con1:path>"21"</con1:path>
+                </con1:param>
+              </con1:xqueryTransform>
+            </con2:expr>
+          </con2:replace>
+          <con1:reply>
+            <con1:id>_ActionId-1159658307279427387-4d8b1bdd.13e23fbd9f1.-7758</con1:id>
+          </con1:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:flow>
+      <con:pipeline-node name="PipelinePairNode1">
+        <con:request>PipelinePairNode1_request</con:request>
+        <con:response>PipelinePairNode1_response</con:response>
+      </con:pipeline-node>
+      <con:route-node name="RoutegetExternalCreditDemographicInformationLocal_PS" error-handler="_onErrorHandler-1159658307279427387-4d8b1bdd.13e23fbd9f1.-7de4">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.claro.com.co/rulesEngine/getExternalCreditInformation" prefix="get"/>
+        </con:context>
+        <con:actions>
+          <con3:route>
+            <con1:id>_ActionId-1159658307279427387-4d8b1bdd.13e23fbd9f1.-7ef7</con1:id>
+            <con3:service ref="RulesEngine/Computec/Business services/getExternalCreditDemographicInformation" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con3:operation>consultarHC</con3:operation>
+            <con3:outboundTransform>
+              <con2:replace varName="body" contents-only="true">
+                <con1:id>_ActionId-24755856419545226-714fd06a.13f58bf540c.-7d23</con1:id>
+                <con2:expr>
+                  <con1:xqueryText>$businessRequest</con1:xqueryText>
+                </con2:expr>
+              </con2:replace>
+            </con3:outboundTransform>
+            <con3:responseTransform>
+              <con2:assign varName="information">
+                <con1:id>_ActionId-4649163575980877742-5030650.13f526a1c2c.-6c48</con1:id>
+                <con2:expr>
+                  <con1:xqueryText>fn-bea:inlinedXML($body/*:consultarHCResponse/*:consultarHCReturn/node())</con1:xqueryText>
+                </con2:expr>
+              </con2:assign>
+              <con2:replace varName="body" contents-only="true">
+                <con1:id>_ActionId-24755856419545226-714fd06a.13f58bf540c.-7ceb</con1:id>
+                <con2:expr>
+                  <con1:xqueryTransform>
+                    <con1:resource ref="RulesEngine/Computec/Resources/XQueries/getExternalCreditInformation_Res"/>
+                    <con1:param name="informe">
+                      <con1:path>$information</con1:path>
+                    </con1:param>
+                    <con1:param name="customer">
+                      <con1:path>$customer</con1:path>
+                    </con1:param>
+                  </con1:xqueryTransform>
+                </con2:expr>
+              </con2:replace>
+            </con3:responseTransform>
+          </con3:route>
+        </con:actions>
+      </con:route-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

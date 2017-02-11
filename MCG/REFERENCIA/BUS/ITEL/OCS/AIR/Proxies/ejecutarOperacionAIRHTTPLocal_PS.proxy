@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:env="http://www.bea.com/wli/config/env" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <ser:coreEntry isProxy="true" isEnabled="true" isAutoPublish="false" isTracingEnabled="false">
+    <ser:description/>
+    <ser:binding type="abstract XML"/>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>local</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:inbound-properties/>
+    <tran:all-headers>true</tran:all-headers>
+  </ser:endpointConfig>
+  <ser:router>
+    <con:flow>
+      <con:route-node name="RouteTo_ejecutarOperacionAIRHTTP_BS">
+        <con:context/>
+        <con:actions>
+          <con1:route xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config">
+            <conid1:id xmlns:conid1="http://www.bea.com/wli/sb/stages/config">_ActionId-7276784283298738349--27073c42.136bb7fcac0.-7f9a</conid1:id>
+            <con1:service ref="ITEL/OCS/AIR/Business Services/ejecutarOperacionAIRHTTP_BS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con1:outboundTransform>
+              <con3:assign varName="methodCall" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+                <con2:id>_ActionId-6603885104533387705-5cd7b039.136e9f25192.-7f9f</con2:id>
+                <con3:expr>
+                  <con2:xqueryText>$body//*:methodCall</con2:xqueryText>
+                </con3:expr>
+              </con3:assign>
+              <con3:replace varName="body" contents-only="true" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+                <con2:id>_ActionId-6603885104533387705-5cd7b039.136e9f25192.-7f8d</con2:id>
+                <con3:expr>
+                  <con2:xqueryText>$methodCall</con2:xqueryText>
+                </con3:expr>
+              </con3:replace>
+              <con3:transport-headers xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+                <con2:id>_ActionId-7276784283298738349--27073c42.136bb7fcac0.-7f51</con2:id>
+                <con3:header-set>outbound-request</con3:header-set>
+                <con3:header name="User-Agent" value="expression">
+                  <con2:xqueryText>"UGw Server/5.0/1.0"</con2:xqueryText>
+                </con3:header>
+                <con3:header name="Content-Type" value="expression">
+                  <con2:xqueryText>"text/xml"</con2:xqueryText>
+                </con3:header>
+                <con3:header name="Content-Encoding" value="expression">
+                  <con2:xqueryText>"UTF-8"</con2:xqueryText>
+                </con3:header>
+                <con3:header value="expression" name="Authorization">
+                  <con2:xqueryText>"Basic aXRlbHVzZXI6aXRlbHVzZXI="</con2:xqueryText>
+                </con3:header>
+              </con3:transport-headers>
+            </con1:outboundTransform>
+            <con1:responseTransform/>
+          </con1:route>
+        </con:actions>
+      </con:route-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

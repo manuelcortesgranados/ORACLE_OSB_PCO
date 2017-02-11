@@ -1,0 +1,19 @@
+<adapter-config wsdlLocation="../WSDLs/validateSerial_SAP.wsdl" name="ZMM_VALIDAR_SERIAL" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata" adapter="SAP Adapter">
+   <connection-factory location="eis/OracleJCAAdapter/RulesEngine_SAPAdapter">
+      <connection-spec className="com.ibi.afjca.cci.IWAFConnectionSpec">
+         <property name="AdapterName" value="MySAP"/>
+         <property name="Config" value="SAP_Server"/>
+      </connection-spec>
+   </connection-factory>
+   <endpoint-interaction portType="ZMM_VALIDAR_SERIALPortType" operation="ZMM_VALIDAR_SERIAL">
+      <interaction-spec className="com.ibi.afjca.cci.IWAFInteractionSpec">
+         <property name="FunctionName" value="PROCESS"/>
+      </interaction-spec>
+      <input>
+         <header message="ZMM_VALIDAR_SERIAL:request" part="input_ZMM_VALIDAR_SERIAL"/>
+      </input>
+      <output>
+         <header message="ZMM_VALIDAR_SERIAL:response" part="output_ZMM_VALIDAR_SERIAL"/>
+      </output>
+   </endpoint-interaction>
+</adapter-config>

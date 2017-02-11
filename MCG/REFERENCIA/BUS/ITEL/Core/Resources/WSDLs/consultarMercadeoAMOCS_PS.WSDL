@@ -1,0 +1,36 @@
+<wsdl:definitions name="ConsultarMercadeoAMOCS" targetNamespace="http://www.comcel.com.co/ConsultarMercadeoAMOCS/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.comcel.com.co/ConsultarMercadeoAMOCS/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<wsdl:types>
+			<schema xmlns="http://www.w3.org/2001/XMLSchema">
+				<import namespace="http://www.comcel.com.co/ConsultarMercadeoAMOCS/" schemaLocation="../Schemas/PS_ITEL_CONSULTAR_MERCADEO_AMD_OCS.xsd"/>
+			</schema>
+	</wsdl:types>
+	<wsdl:message name="Input_Parameters">
+		<wsdl:part element="tns:Input_Parameters" name="Input_Parameters"/>
+	</wsdl:message>
+	<wsdl:message name="WS_Result">
+		<wsdl:part element="tns:WS_Result" name="WS_Result"/>
+	</wsdl:message>
+	<wsdl:portType name="ConsultarMercadeoAMOCS">
+		<wsdl:operation name="ConsultarMercadeoAMOCS">
+			<wsdl:input message="tns:Input_Parameters"/>
+			<wsdl:output message="tns:WS_Result"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="ConsultarMercadeoAMOCSSOAP" type="tns:ConsultarMercadeoAMOCS">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="ConsultarMercadeoAMOCS">
+			<soap:operation soapAction="http://www.comcel.com.co/ConsultarMercadeoAMOCS/ConsultarMercadeoAMOCS"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="ConsultarMercadeoAMOCS">
+		<wsdl:port binding="tns:ConsultarMercadeoAMOCSSOAP" name="ConsultarMercadeoAMOCSSOAP">
+			<soap:address location="http://www.comcel.com.co/"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,24 @@
+<?binding.jca bd_insertarAuditoriaRecarga_db.jca?><wsdl:definitions name="bd_insertarAuditoriaRecarga" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/SOA/DBAdapter/bd_insertarAuditoriaRecarga" xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/SOA_TEST/PKG_SOA_ITEL/PRC_INSERTAR_AUDITORIA_RECARGA/" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/SOA/DBAdapter/bd_insertarAuditoriaRecarga" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/">
+    <plt:partnerLinkType name="bd_insertarAuditoriaRecarga_plt">
+        <plt:role name="bd_insertarAuditoriaRecarga_role">
+            <plt:portType name="tns:bd_insertarAuditoriaRecarga_ptt"/>
+        </plt:role>
+    </plt:partnerLinkType>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/SOA_TEST/PKG_SOA_ITEL/PRC_INSERTAR_AUDITORIA_RECARGA/" schemaLocation="../Schemas/BD_ITEL_INSERTARAUDITORIARECARGA.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="args_in_msg">
+        <wsdl:part name="InputParameters" element="db:InputParameters"/>
+    </wsdl:message>
+    <wsdl:message name="args_out_msg">
+        <wsdl:part name="OutputParameters" element="db:OutputParameters"/>
+    </wsdl:message>
+    <wsdl:portType name="bd_insertarAuditoriaRecarga_ptt">
+        <wsdl:operation name="bd_insertarAuditoriaRecarga">
+            <wsdl:input message="tns:args_in_msg"/>
+            <wsdl:output message="tns:args_out_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

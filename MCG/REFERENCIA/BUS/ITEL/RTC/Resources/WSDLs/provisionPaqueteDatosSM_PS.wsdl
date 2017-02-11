@@ -1,0 +1,38 @@
+<wsdl:definitions name="provisionPaqueteDatosSM" targetNamespace="http://www.comcel.com.co/SuscriptionAddRequestSM/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.comcel.com.co/SuscriptionAddRequestSM/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<wsdl:types>
+		<schema xmlns="http://www.w3.org/2001/XMLSchema">
+			<import namespace="http://www.comcel.com.co/SuscriptionAddRequestSM/" schemaLocation="../Schemas/PS_PROVISION_PAQUETE_DATOS_SM.xsd"/>
+		</schema>
+	</wsdl:types>
+
+	<wsdl:message name="Input_Parameters">
+		<wsdl:part element="tns:Input_Parameters" name="Input_Parameters"/>
+	</wsdl:message>
+	<wsdl:message name="WS_Result">
+		<wsdl:part element="tns:WS_Result" name="WS_Result"/>
+	</wsdl:message>
+
+	<wsdl:portType name="SuscriptionAddRequestSMInterface">
+		<wsdl:operation name="provisionPaqueteDatosSM">
+			<wsdl:input message="tns:Input_Parameters"/>
+			<wsdl:output message="tns:WS_Result"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="SuscriptionAddRequestSMSOAP" type="tns:SuscriptionAddRequestSMInterface">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="provisionPaqueteDatosSM">
+			<soap:operation soapAction="http://www.claro.com.co/SuscriptionAddRequestSM/provisionPaqueteDatosSM"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="SuscriptionAddRequestSM">
+		<wsdl:port binding="tns:SuscriptionAddRequestSMSOAP" name="SuscriptionAddRequestSMSOAP">
+			<soap:address location="http://www.claro.com.co/"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

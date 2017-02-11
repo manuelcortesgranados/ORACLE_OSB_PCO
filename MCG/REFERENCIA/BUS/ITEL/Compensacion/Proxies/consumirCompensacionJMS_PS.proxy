@@ -1,0 +1,1272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jms="http://www.bea.com/wli/sb/transports/jms" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+  <ser:coreEntry isProxy="true" isEnabled="true" isAutoPublish="false" isTracingEnabled="false">
+    <ser:description/>
+    <ser:binding type="SOAP" isSoap12="false" xsi:type="con3:SoapBindingType" xmlns:con3="http://www.bea.com/wli/sb/services/bindings/config">
+      <con3:wsdl ref="ITEL/Compensacion/Resources/WSDLs/consumirCompensacionJMS_PS"/>
+      <con3:port>
+        <con3:name>consumirCompensacionJMS-port</con3:name>
+        <con3:namespace>http://xmlns.oracle.com/pcbpel/adapter/jms/Comcel/ITEL/consumirCompensacionJMS</con3:namespace>
+      </con3:port>
+      <con3:selector type="SOAP action"/>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+    <ser:ws-policy>
+      <ser:binding-mode>wsdl-policy-attachments</ser:binding-mode>
+    </ser:ws-policy>
+    <ser:transactions isRequired="false" sameTxForResponse="false"/>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>jms</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:URI>
+      <env:value>jms://OSBG1:8013,OSBG2:8013,OSBG3:8013,OSBG4:8013,OSBG5:8013,OSBG6:8013,OSBG7:8013,OSBG8:8013,OSBG9:8013,OSBG10:8013,OSBG11:8013,OSBG12:8013,OSBG13:8013,OSBG14:8013,OSBG15:8013,OSBG16:8013,OSBG17:8013,OSBG18:8013,OSBG19:8013,OSBG20:8013,OSBG21:8013,OSBG22:8013,OSBG23:8013,OSBG24:8013,OSBG25:8013,OSBG26:8013,OSBG27:8013,OSBG28:8013,OSBG29:8013,OSBG30:8013,OSBG31:8013,OSBG32:8013,OSBG33:8013,OSBG34:8013,OSBG35:8013,OSBG36:8013,OSBG37:8013,OSBG38:8013,OSBG39:8013,OSBG40:8013,OSBG41:8013,OSBG42:8013,OSBG43:8013,OSBG44:8013,OSBG45:8013,OSBG46:8013,OSBG47:8013,OSBG48:8013/weblogic.jms.ConnectionFactory/jms/compensacionITELQueue</env:value>
+    </tran:URI>
+    <tran:inbound-properties/>
+    <tran:all-headers>false</tran:all-headers>
+    <tran:provider-specific xsi:type="jms:JmsEndPointConfiguration">
+      <jms:is-queue>true</jms:is-queue>
+      <jms:is-secure>false</jms:is-secure>
+      <jms:inbound-properties>
+        <jms:response-required>false</jms:response-required>
+        <jms:XA-required>false</jms:XA-required>
+        <jms:transaction-timeout>600</jms:transaction-timeout>
+      </jms:inbound-properties>
+      <jms:request-encoding>UTF-8</jms:request-encoding>
+      <jms:jndi-timeout>0</jms:jndi-timeout>
+    </tran:provider-specific>
+  </ser:endpointConfig>
+  <ser:router>
+    <con:pipeline type="request" name="PipelinePairNode1_request">
+      <con:stage name="compensar">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/CompensacionITEL/" prefix="com"/>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/IN/OperacionCorba" prefix="oper"/>
+        </con:context>
+        <con:actions>
+          <con2:ifThenElse>
+            <con1:id>_ActionId-3794114680580593586-4f9de804.13b1ad53e37.-7cdc</con1:id>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>matches($body/com:Input_Parameters/SERVICIOS_EJECUTADOS/SERVICIO[1]/NOMBRE, 'OCS')
+and not(data($body/com:Input_Parameters/METODO) = '600')</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:replace varName="body" contents-only="true">
+                  <con1:id>_ActionId-3794114680580593586-4f9de804.13b1ad53e37.-7cda</con1:id>
+                  <con2:expr>
+                    <con1:xqueryTransform>
+                      <con1:resource ref="ITEL/Compensacion/Resources/XQueries/serviciosEjecutadosSwap"/>
+                      <con1:param name="input_Parameters1">
+                        <con1:path>$body/com:Input_Parameters</con1:path>
+                      </con1:param>
+                    </con1:xqueryTransform>
+                  </con2:expr>
+                </con2:replace>
+              </con2:actions>
+            </con2:case>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>data($body/com:Input_Parameters/METODO) = '600' 
+and not(data($body/com:Input_Parameters/SUSCRIPTOR_ORIGEN/*:CUSTOMERID)="")</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:replace varName="body" contents-only="true">
+                  <con1:id>_ActionId-3794114680580593586-4f9de804.13b1ad53e37.-7b54</con1:id>
+                  <con2:expr>
+                    <con1:xqueryTransform>
+                      <con1:resource ref="ITEL/Compensacion/Resources/XQueries/calcularServicioCambioMinOCS"/>
+                      <con1:param name="input_Parameters1">
+                        <con1:path>$body/com:Input_Parameters</con1:path>
+                      </con1:param>
+                    </con1:xqueryTransform>
+                  </con2:expr>
+                </con2:replace>
+              </con2:actions>
+            </con2:case>
+            <con2:default/>
+          </con2:ifThenElse>
+          <con2:assign varName="compensoBD">
+            <con1:id>_ActionId-811886621967503759-1a009cd5.13632515fad.-7eb9</con1:id>
+            <con2:expr>
+              <con1:xqueryText>"N"</con1:xqueryText>
+            </con2:expr>
+          </con2:assign>
+          <con2:foreach>
+            <con1:id>_ActionId-430631732729745049-7f37b99d.133a76d801d.-7fa9</con1:id>
+            <con2:variable>body</con2:variable>
+            <con2:expression>
+              <con1:xpathText>./com:Input_Parameters/SERVICIOS_EJECUTADOS/SERVICIO</con1:xpathText>
+            </con2:expression>
+            <con2:value-variable>servicio</con2:value-variable>
+            <con2:index-variable>index</con2:index-variable>
+            <con2:total-variable>count</con2:total-variable>
+            <con2:actions>
+              <con2:ifThenElse>
+                <con1:id>_ActionId-2223410252578323103--7971afde.1361226fefa.-7e95</con1:id>
+                <con2:case>
+                  <con2:condition>
+                    <con1:xqueryText>$servicio/NOMBRE = "ITEL/IN/Proxies/crearSuscriptorINLocal_PS"</con1:xqueryText>
+                  </con2:condition>
+                  <con2:actions>
+                    <con2:wsCallout>
+                      <con1:id>_ActionId-2223410252578323103--7971afde.1361226fefa.-7e3c</con1:id>
+                      <con2:service xsi:type="ref:ProxyRef" ref="ITEL/IN/Proxies/compensarCrearSuscriptorINLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                      <con2:operation>CompensarCrearSuscriptorIN</con2:operation>
+                      <con2:request>
+                        <con2:body wrapped="false">$compensarRequest</con2:body>
+                        <con2:header/>
+                      </con2:request>
+                      <con2:response>
+                        <con2:body wrapped="false">compensarResponse</con2:body>
+                        <con2:header/>
+                      </con2:response>
+                      <con2:requestTransform>
+                        <con2:assign varName="compensarRequest">
+                          <con1:id>_ActionId-2223410252578323103--7971afde.1361226fefa.-7e3d</con1:id>
+                          <con2:expr>
+                            <con1:xqueryTransform>
+                              <con1:resource ref="ITEL/Compensacion/Resources/XQueries/consumirCompensacionJMS_Req_compensarCrearSuscriptorIN"/>
+                              <con1:param name="servicioEjecutado">
+                                <con1:path>$servicio</con1:path>
+                              </con1:param>
+                            </con1:xqueryTransform>
+                          </con2:expr>
+                        </con2:assign>
+                      </con2:requestTransform>
+                      <con2:responseTransform/>
+                    </con2:wsCallout>
+                  </con2:actions>
+                </con2:case>
+                <con2:case>
+                  <con2:condition>
+                    <con1:xqueryText>$servicio/NOMBRE = "ITEL/IN/Proxies/recargarINLocal_PS"</con1:xqueryText>
+                  </con2:condition>
+                  <con2:actions>
+                    <con2:assign varName="fechaExpiracion">
+                      <con1:id>_ActionId-5365724256648820089-168f63fa.136136fc593.-77f8</con1:id>
+                      <con2:expr>
+                        <con1:xqueryTransform>
+                          <con1:resource ref="ITEL/Compensacion/Resources/XQueries/calcularFechaExpiracion"/>
+                          <con1:param name="mensajeCompensacion">
+                            <con1:path>$body/com:Input_Parameters</con1:path>
+                          </con1:param>
+                          <con1:param name="servicioEjecutado">
+                            <con1:path>$servicio</con1:path>
+                          </con1:param>
+                        </con1:xqueryTransform>
+                      </con2:expr>
+                    </con2:assign>
+                    <con2:wsCallout>
+                      <con1:id>_ActionId-5365724256648820089-168f63fa.136136fc593.-784f</con1:id>
+                      <con2:service xsi:type="ref:ProxyRef" ref="ITEL/IN/Proxies/compensarRecargarINLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                      <con2:operation>CompensarRecargarIN</con2:operation>
+                      <con2:request>
+                        <con2:body wrapped="false">$compensarRequest</con2:body>
+                        <con2:header/>
+                      </con2:request>
+                      <con2:response>
+                        <con2:body wrapped="false">compensarResponse</con2:body>
+                        <con2:header/>
+                      </con2:response>
+                      <con2:requestTransform>
+                        <con2:assign varName="compensarRequest">
+                          <con1:id>_ActionId-5365724256648820089-168f63fa.136136fc593.-7850</con1:id>
+                          <con2:expr>
+                            <con1:xqueryTransform>
+                              <con1:resource ref="ITEL/Compensacion/Resources/XQueries/consumirCompensacionJMS_Req_compensarRecargarIN"/>
+                              <con1:param name="servicio">
+                                <con1:path>$servicio</con1:path>
+                              </con1:param>
+                              <con1:param name="fechaExpiracion">
+                                <con1:path>$fechaExpiracion</con1:path>
+                              </con1:param>
+                            </con1:xqueryTransform>
+                          </con2:expr>
+                        </con2:assign>
+                      </con2:requestTransform>
+                      <con2:responseTransform/>
+                    </con2:wsCallout>
+                  </con2:actions>
+                </con2:case>
+                <con2:case>
+                  <con2:condition>
+                    <con1:xqueryText>$servicio/NOMBRE = "ITEL/IN/Proxies/cargarINLocal_PS"</con1:xqueryText>
+                  </con2:condition>
+                  <con2:actions>
+                    <con2:assign varName="fechaExpiracion">
+                      <con1:id>_ActionId-5365724256648820089-168f63fa.136136fc593.-77d0</con1:id>
+                      <con2:expr>
+                        <con1:xqueryTransform>
+                          <con1:resource ref="ITEL/Compensacion/Resources/XQueries/calcularFechaExpiracion"/>
+                          <con1:param name="mensajeCompensacion">
+                            <con1:path>$body/com:Input_Parameters</con1:path>
+                          </con1:param>
+                          <con1:param name="servicioEjecutado">
+                            <con1:path>$servicio</con1:path>
+                          </con1:param>
+                        </con1:xqueryTransform>
+                      </con2:expr>
+                    </con2:assign>
+                    <con2:wsCallout>
+                      <con1:id>_ActionId-5365724256648820089-168f63fa.136136fc593.-7841</con1:id>
+                      <con2:service xsi:type="ref:ProxyRef" ref="ITEL/IN/Proxies/compensarCargarINLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                      <con2:operation>CompensarCargarIN</con2:operation>
+                      <con2:request>
+                        <con2:body wrapped="false">$compensarRequest</con2:body>
+                        <con2:header/>
+                      </con2:request>
+                      <con2:response>
+                        <con2:body wrapped="false">compensarResponse</con2:body>
+                        <con2:header/>
+                      </con2:response>
+                      <con2:requestTransform>
+                        <con2:assign varName="compensarRequest">
+                          <con1:id>_ActionId-5365724256648820089-168f63fa.136136fc593.-7842</con1:id>
+                          <con2:expr>
+                            <con1:xqueryTransform>
+                              <con1:resource ref="ITEL/Compensacion/Resources/XQueries/consumirCompensacionJMS_Req_compensarCargarIN"/>
+                              <con1:param name="servicio">
+                                <con1:path>$servicio</con1:path>
+                              </con1:param>
+                              <con1:param name="fechaExpiracion">
+                                <con1:path>$fechaExpiracion</con1:path>
+                              </con1:param>
+                            </con1:xqueryTransform>
+                          </con2:expr>
+                        </con2:assign>
+                      </con2:requestTransform>
+                      <con2:responseTransform/>
+                    </con2:wsCallout>
+                    <con2:ifThenElse>
+                      <con1:id>_ActionId-811886621967503759-1a009cd5.13632515fad.-7f41</con1:id>
+                      <con2:case>
+                        <con2:condition>
+                          <con1:xqueryText>data($body/com:Input_Parameters/METODO) = '200' and $compensoBD = 'N'</con1:xqueryText>
+                        </con2:condition>
+                        <con2:actions>
+                          <con2:wsCallout>
+                            <con1:id>_ActionId-811886621967503759-1a009cd5.13632515fad.-7ef2</con1:id>
+                            <con2:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/insertarCantidadConsultasDiaLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                            <con2:operation>insertarCantidadConsultas</con2:operation>
+                            <con2:request>
+                              <con2:body wrapped="false">$insertarConsultasRequest</con2:body>
+                              <con2:header/>
+                            </con2:request>
+                            <con2:response>
+                              <con2:body wrapped="false">insertarConsultasResponse</con2:body>
+                              <con2:header/>
+                            </con2:response>
+                            <con2:requestTransform>
+                              <con2:assign varName="insertarConsultasRequest">
+                                <con1:id>_ActionId-811886621967503759-1a009cd5.13632515fad.-7ef3</con1:id>
+                                <con2:expr>
+                                  <con1:xqueryTransform>
+                                    <con1:resource ref="ITEL/Compensacion/Resources/XQueries/consumirCompensacionJMS_Req_insertarCantidadConsultas"/>
+                                    <con1:param name="servicio">
+                                      <con1:path>$servicio</con1:path>
+                                    </con1:param>
+                                  </con1:xqueryTransform>
+                                </con2:expr>
+                              </con2:assign>
+                            </con2:requestTransform>
+                            <con2:responseTransform/>
+                          </con2:wsCallout>
+                          <con2:assign varName="compensoBD">
+                            <con1:id>_ActionId-811886621967503759-1a009cd5.13632515fad.-7f19</con1:id>
+                            <con2:expr>
+                              <con1:xqueryText>"S"</con1:xqueryText>
+                            </con2:expr>
+                          </con2:assign>
+                        </con2:actions>
+                      </con2:case>
+                      <con2:default/>
+                    </con2:ifThenElse>
+                  </con2:actions>
+                </con2:case>
+                <con2:case>
+                  <con2:condition>
+                    <con1:xqueryText>$servicio/NOMBRE = "ITEL/IN/Proxies/cambiarMinINLocal_PS"</con1:xqueryText>
+                  </con2:condition>
+                  <con2:actions>
+                    <con2:wsCallout>
+                      <con1:id>_ActionId-5365724256648820089-168f63fa.136136fc593.-7835</con1:id>
+                      <con2:service xsi:type="ref:ProxyRef" ref="ITEL/IN/Proxies/compensarCambiarMinINLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                      <con2:operation>CompensarCambiarMinIN</con2:operation>
+                      <con2:request>
+                        <con2:body wrapped="false">$compensarRequest</con2:body>
+                        <con2:header/>
+                      </con2:request>
+                      <con2:response>
+                        <con2:body wrapped="false">compensarResponse</con2:body>
+                        <con2:header/>
+                      </con2:response>
+                      <con2:requestTransform>
+                        <con2:assign varName="compensarRequest">
+                          <con1:id>_ActionId-5365724256648820089-168f63fa.136136fc593.-7836</con1:id>
+                          <con2:expr>
+                            <con1:xqueryTransform>
+                              <con1:resource ref="ITEL/Compensacion/Resources/XQueries/consumirCompensacionJMS_Req_compensarCambiarPlanIN"/>
+                              <con1:param name="servicio">
+                                <con1:path>$servicio</con1:path>
+                              </con1:param>
+                              <con1:param name="fechaExpiracion">
+                                <con1:path>$fechaExpiracion</con1:path>
+                              </con1:param>
+                            </con1:xqueryTransform>
+                          </con2:expr>
+                        </con2:assign>
+                      </con2:requestTransform>
+                      <con2:responseTransform/>
+                    </con2:wsCallout>
+                  </con2:actions>
+                </con2:case>
+                <con2:case>
+                  <con2:condition>
+                    <con1:xqueryText>$servicio/NOMBRE = "ITEL/IN/Proxies/cambiarPlanINLocal_PS"</con1:xqueryText>
+                  </con2:condition>
+                  <con2:actions>
+                    <con2:assign varName="fechaExpiracion">
+                      <con1:id>_ActionId-5365724256648820089-168f63fa.136136fc593.-7790</con1:id>
+                      <con2:expr>
+                        <con1:xqueryTransform>
+                          <con1:resource ref="ITEL/Compensacion/Resources/XQueries/calcularFechaExpiracion"/>
+                          <con1:param name="mensajeCompensacion">
+                            <con1:path>$body/com:Input_Parameters</con1:path>
+                          </con1:param>
+                          <con1:param name="servicioEjecutado">
+                            <con1:path>$servicio</con1:path>
+                          </con1:param>
+                        </con1:xqueryTransform>
+                      </con2:expr>
+                    </con2:assign>
+                    <con2:wsCallout>
+                      <con1:id>_ActionId-5365724256648820089-168f63fa.136136fc593.-782a</con1:id>
+                      <con2:service xsi:type="ref:ProxyRef" ref="ITEL/IN/Proxies/compensarCambiarPlanINLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                      <con2:operation>CompensarCambiarPlanIN</con2:operation>
+                      <con2:request>
+                        <con2:body wrapped="false">$compensarRequest</con2:body>
+                        <con2:header/>
+                      </con2:request>
+                      <con2:response>
+                        <con2:body wrapped="false">compensarResponse</con2:body>
+                        <con2:header/>
+                      </con2:response>
+                      <con2:requestTransform>
+                        <con2:assign varName="compensarRequest">
+                          <con1:id>_ActionId-5365724256648820089-168f63fa.136136fc593.-782b</con1:id>
+                          <con2:expr>
+                            <con1:xqueryTransform>
+                              <con1:resource ref="ITEL/Compensacion/Resources/XQueries/consumirCompensacionJMS_Req_compensarCambiarPlanIN"/>
+                              <con1:param name="servicio">
+                                <con1:path>$servicio</con1:path>
+                              </con1:param>
+                              <con1:param name="fechaExpiracion">
+                                <con1:path>$fechaExpiracion</con1:path>
+                              </con1:param>
+                            </con1:xqueryTransform>
+                          </con2:expr>
+                        </con2:assign>
+                      </con2:requestTransform>
+                      <con2:responseTransform/>
+                    </con2:wsCallout>
+                  </con2:actions>
+                </con2:case>
+                <con2:case>
+                  <con2:condition>
+                    <con1:xqueryText>$servicio/NOMBRE = "ITEL/IN/Proxies/registrarElegidosINLocal_PS"</con1:xqueryText>
+                  </con2:condition>
+                  <con2:actions>
+                    <con2:wsCallout>
+                      <con1:id>_ActionId-1907298126438667581-74f6db6a.13650f18a40.-7ff0</con1:id>
+                      <con2:service xsi:type="ref:ProxyRef" ref="ITEL/IN/Proxies/compensarRegistrarElegidosINLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                      <con2:operation>CompensarRegistrarElegidosIN</con2:operation>
+                      <con2:request>
+                        <con2:body wrapped="false">$compensarRequest</con2:body>
+                        <con2:header/>
+                      </con2:request>
+                      <con2:response>
+                        <con2:body wrapped="false">compensarResponse</con2:body>
+                        <con2:header/>
+                      </con2:response>
+                      <con2:requestTransform>
+                        <con2:assign varName="compensarRequest">
+                          <con1:id>_ActionId-1907298126438667581-74f6db6a.13650f18a40.-7ff1</con1:id>
+                          <con2:expr>
+                            <con1:xqueryTransform>
+                              <con1:resource ref="ITEL/Compensacion/Resources/XQueries/consumirCompensacionJMS_Req_compensarRegistrarElegidosIN"/>
+                              <con1:param name="servicio">
+                                <con1:path>$servicio</con1:path>
+                              </con1:param>
+                            </con1:xqueryTransform>
+                          </con2:expr>
+                        </con2:assign>
+                      </con2:requestTransform>
+                      <con2:responseTransform/>
+                    </con2:wsCallout>
+                    <con2:wsCallout>
+                      <con1:id>_ActionId-3240996374908289818-134d2eb4.136bb68b4fc.-7fc8</con1:id>
+                      <con2:service xsi:type="ref:ProxyRef" ref="ITEL/Compensacion/Proxies/compensarElegidoIlimitadoLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                      <con2:operation>compensarElegidoIlimitado</con2:operation>
+                      <con2:request>
+                        <con2:body wrapped="false">$compensarElegidoRequest</con2:body>
+                        <con2:header/>
+                      </con2:request>
+                      <con2:response>
+                        <con2:body wrapped="false">compensarElegidoResponse</con2:body>
+                        <con2:header/>
+                      </con2:response>
+                      <con2:requestTransform>
+                        <con2:assign varName="compensarElegidoRequest">
+                          <con1:id>_ActionId-3240996374908289818-134d2eb4.136bb68b4fc.-7f90</con1:id>
+                          <con2:expr>
+                            <con1:xqueryTransform>
+                              <con1:resource ref="ITEL/Compensacion/Resources/XQueries/compensarElegidoIlimitadoPS_Req"/>
+                              <con1:param name="min">
+                                <con1:path>data($body/com:Input_Parameters/SERVICIOS_EJECUTADOS/SERVICIO/PARAMETROS/PARAMETRO[NOMBRE='MIN']/VALOR)</con1:path>
+                              </con1:param>
+                              <con1:param name="elegido">
+                                <con1:path>fn:string-join(data($body/com:Input_Parameters/SERVICIOS_EJECUTADOS/SERVICIO/PARAMETROS/PARAMETRO[NOMBRE='ELEGIDOS']/VALOR/*:Detail), ";")</con1:path>
+                              </con1:param>
+                              <con1:param name="elegidoAntiguo">
+                                <con1:path>fn:string-join(data($body/com:Input_Parameters/SERVICIOS_EJECUTADOS/SERVICIO/PARAMETROS/PARAMETRO[NOMBRE='ELEGIDOS_ORIGINALES']/VALOR/*:Detail), ";")</con1:path>
+                              </con1:param>
+                              <con1:param name="fechaCreacion">
+                                <con1:path>fn:string-join(data($body/com:Input_Parameters/SERVICIOS_EJECUTADOS/SERVICIO/PARAMETROS/PARAMETRO[NOMBRE='FECHA_CREACION_ELEGIDO']/VALOR), ";")</con1:path>
+                              </con1:param>
+                              <con1:param name="fechaExpiracion">
+                                <con1:path>fn:string-join(data($body/com:Input_Parameters/SERVICIOS_EJECUTADOS/SERVICIO/PARAMETROS/PARAMETRO[NOMBRE='FECHA_EXPIRACION_ELEGIDO']/VALOR), ";")</con1:path>
+                              </con1:param>
+                              <con1:param name="vigencia">
+                                <con1:path>fn:string-join(data($body/com:Input_Parameters/SERVICIOS_EJECUTADOS/SERVICIO/PARAMETROS/PARAMETRO[NOMBRE='VIGENCIA_ELEGIDO']/VALOR), ";")</con1:path>
+                              </con1:param>
+                            </con1:xqueryTransform>
+                          </con2:expr>
+                        </con2:assign>
+                      </con2:requestTransform>
+                      <con2:responseTransform/>
+                    </con2:wsCallout>
+                  </con2:actions>
+                </con2:case>
+                <con2:case>
+                  <con2:condition>
+                    <con1:xqueryText>$servicio/NOMBRE = "ITEL/IN/Proxies/modificarElegidosINLocal_PS" and data($body/com:Input_Parameters/METODO) != '304'</con1:xqueryText>
+                  </con2:condition>
+                  <con2:actions>
+                    <con2:wsCallout>
+                      <con1:id>_ActionId-3411378168129529367-52c97390.1365a01547f.-7ff4</con1:id>
+                      <con2:service xsi:type="ref:ProxyRef" ref="ITEL/IN/Proxies/compensarModificarElegidosINLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                      <con2:operation>CompensarModificarElegidosIN</con2:operation>
+                      <con2:request>
+                        <con2:body wrapped="false">$compensarRequest</con2:body>
+                        <con2:header/>
+                      </con2:request>
+                      <con2:response>
+                        <con2:body wrapped="false">compensarResponse</con2:body>
+                        <con2:header/>
+                      </con2:response>
+                      <con2:requestTransform>
+                        <con2:assign varName="compensarRequest">
+                          <con1:id>_ActionId-3411378168129529367-52c97390.1365a01547f.-7ff5</con1:id>
+                          <con2:expr>
+                            <con1:xqueryTransform>
+                              <con1:resource ref="ITEL/Compensacion/Resources/XQueries/consumirCompensacionJMS_Req_compensarModificarElegidosIN"/>
+                              <con1:param name="servicio">
+                                <con1:path>$servicio</con1:path>
+                              </con1:param>
+                            </con1:xqueryTransform>
+                          </con2:expr>
+                        </con2:assign>
+                      </con2:requestTransform>
+                      <con2:responseTransform/>
+                    </con2:wsCallout>
+                    <con2:ifThenElse>
+                      <con1:id>_ActionId-3320457338110958878--11b03aa.138902065ad.-7712</con1:id>
+                      <con2:case>
+                        <con2:condition>
+                          <con1:xqueryText>data($body/com:Input_Parameters/METODO) != '306'</con1:xqueryText>
+                        </con2:condition>
+                        <con2:actions>
+                          <con2:wsCallout>
+                            <con1:id>_ActionId-3320457338110958878--11b03aa.138902065ad.-770e</con1:id>
+                            <con2:service xsi:type="ref:ProxyRef" ref="ITEL/Compensacion/Proxies/compensarElegidoIlimitadoLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                            <con2:operation>compensarElegidoIlimitado</con2:operation>
+                            <con2:request>
+                              <con2:body wrapped="false">$compensarElegidoRequest</con2:body>
+                              <con2:header/>
+                            </con2:request>
+                            <con2:response>
+                              <con2:body wrapped="false">compensarElegidoResponse</con2:body>
+                              <con2:header/>
+                            </con2:response>
+                            <con2:requestTransform>
+                              <con2:assign varName="compensarElegidoRequest">
+                                <con1:id>_ActionId-3320457338110958878--11b03aa.138902065ad.-770f</con1:id>
+                                <con2:expr>
+                                  <con1:xqueryTransform>
+                                    <con1:resource ref="ITEL/Compensacion/Resources/XQueries/compensarElegidoIlimitadoPS_Req"/>
+                                    <con1:param name="min">
+                                      <con1:path>data($body/com:Input_Parameters/SERVICIOS_EJECUTADOS/SERVICIO/PARAMETROS/PARAMETRO[NOMBRE='MIN']/VALOR)</con1:path>
+                                    </con1:param>
+                                    <con1:param name="elegido">
+                                      <con1:path>fn:string-join(data($body/com:Input_Parameters/SERVICIOS_EJECUTADOS/SERVICIO/PARAMETROS/PARAMETRO[NOMBRE='ELEGIDOS']/VALOR/*:Detail), ";")</con1:path>
+                                    </con1:param>
+                                    <con1:param name="elegidoAntiguo">
+                                      <con1:path>fn:string-join(data($body/com:Input_Parameters/SERVICIOS_EJECUTADOS/SERVICIO/PARAMETROS/PARAMETRO[NOMBRE='ELEGIDOS_ORIGINALES']/VALOR/*:Detail), ";")</con1:path>
+                                    </con1:param>
+                                    <con1:param name="fechaCreacion">
+                                      <con1:path>data($body/com:Input_Parameters/SERVICIOS_EJECUTADOS/SERVICIO/PARAMETROS/PARAMETRO[NOMBRE='FECHA_CREACION_ELEGIDO']/VALOR)</con1:path>
+                                    </con1:param>
+                                    <con1:param name="fechaExpiracion">
+                                      <con1:path>data($body/com:Input_Parameters/SERVICIOS_EJECUTADOS/SERVICIO/PARAMETROS/PARAMETRO[NOMBRE='FECHA_EXPIRACION_ELEGIDO']/VALOR)</con1:path>
+                                    </con1:param>
+                                    <con1:param name="vigencia">
+                                      <con1:path>data($body/com:Input_Parameters/SERVICIOS_EJECUTADOS/SERVICIO/PARAMETROS/PARAMETRO[NOMBRE='VIGENCIA_ELEGIDO']/VALOR)</con1:path>
+                                    </con1:param>
+                                  </con1:xqueryTransform>
+                                </con2:expr>
+                              </con2:assign>
+                            </con2:requestTransform>
+                            <con2:responseTransform/>
+                          </con2:wsCallout>
+                        </con2:actions>
+                      </con2:case>
+                      <con2:default/>
+                    </con2:ifThenElse>
+                  </con2:actions>
+                </con2:case>
+                <con2:case>
+                  <con2:condition>
+                    <con1:xqueryText>$servicio/NOMBRE = "ITEL/IN/Proxies/modificarElegidosFijosINLocal_PS"</con1:xqueryText>
+                  </con2:condition>
+                  <con2:actions>
+                    <con2:wsCallout>
+                      <con1:id>_ActionId-3320457338110958878--11b03aa.138902065ad.-7ff7</con1:id>
+                      <con2:service xsi:type="ref:ProxyRef" ref="ITEL/IN/Proxies/compensarModificarElegidosFijosINLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                      <con2:operation>CompensarModificarFA</con2:operation>
+                      <con2:request>
+                        <con2:body wrapped="false">$compensarRequest</con2:body>
+                        <con2:header/>
+                      </con2:request>
+                      <con2:response>
+                        <con2:body wrapped="false">compensarResponse</con2:body>
+                        <con2:header/>
+                      </con2:response>
+                      <con2:requestTransform>
+                        <con2:assign varName="compensarRequest">
+                          <con1:id>_ActionId-3320457338110958878--11b03aa.138902065ad.-7ff8</con1:id>
+                          <con2:expr>
+                            <con1:xqueryTransform>
+                              <con1:resource ref="ITEL/Compensacion/Resources/XQueries/consumirCompensacionJMS_Req_compensarModificarElegidosFijosIN"/>
+                              <con1:param name="servicio">
+                                <con1:path>$servicio</con1:path>
+                              </con1:param>
+                            </con1:xqueryTransform>
+                          </con2:expr>
+                        </con2:assign>
+                      </con2:requestTransform>
+                      <con2:responseTransform/>
+                    </con2:wsCallout>
+                  </con2:actions>
+                </con2:case>
+                <con2:case>
+                  <con2:condition>
+                    <con1:xqueryText>$servicio/NOMBRE = "ITEL/IN/Proxies/registrarSMSElegidosINLocal_PS"</con1:xqueryText>
+                  </con2:condition>
+                  <con2:actions>
+                    <con2:wsCallout>
+                      <con1:id>_ActionId-3240996374908289818-134d2eb4.136bb68b4fc.-763c</con1:id>
+                      <con2:service xsi:type="ref:ProxyRef" ref="ITEL/IN/Proxies/compensarRegistrarSMSElegidosINLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                      <con2:operation>compensarRegistrarSMSElegidosIN</con2:operation>
+                      <con2:request>
+                        <con2:body wrapped="false">$compensarRequest</con2:body>
+                        <con2:header/>
+                      </con2:request>
+                      <con2:response>
+                        <con2:body wrapped="false">compensarResponse</con2:body>
+                        <con2:header/>
+                      </con2:response>
+                      <con2:requestTransform>
+                        <con2:assign varName="compensarRequest">
+                          <con1:id>_ActionId-3240996374908289818-134d2eb4.136bb68b4fc.-763d</con1:id>
+                          <con2:expr>
+                            <con1:xqueryTransform>
+                              <con1:resource ref="ITEL/Compensacion/Resources/XQueries/consumirCompensacionJMS_Req_compensarRegistrarSMSElegidosIN"/>
+                              <con1:param name="servicio">
+                                <con1:path>$servicio</con1:path>
+                              </con1:param>
+                            </con1:xqueryTransform>
+                          </con2:expr>
+                        </con2:assign>
+                      </con2:requestTransform>
+                      <con2:responseTransform/>
+                    </con2:wsCallout>
+                    <con2:wsCallout>
+                      <con1:id>_ActionId-4278807260743534015--3f36aea9.136df5bc0ec.-7fac</con1:id>
+                      <con2:service xsi:type="ref:ProxyRef" ref="ITEL/Compensacion/Proxies/compensarElegidoSMSLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                      <con2:operation>compensarElegidoSMS</con2:operation>
+                      <con2:request>
+                        <con2:body wrapped="false">$compensarSMSRequest</con2:body>
+                        <con2:header/>
+                      </con2:request>
+                      <con2:response>
+                        <con2:body wrapped="false">compensarSMSResponse</con2:body>
+                        <con2:header/>
+                      </con2:response>
+                      <con2:requestTransform>
+                        <con2:assign varName="compensarSMSRequest">
+                          <con1:id>_ActionId-4278807260743534015--3f36aea9.136df5bc0ec.-7fad</con1:id>
+                          <con2:expr>
+                            <con1:xqueryTransform>
+                              <con1:resource ref="ITEL/Compensacion/Resources/XQueries/compensarElegidoSMSPS_Req"/>
+                              <con1:param name="elegidoAntiguo">
+                                <con1:path>""</con1:path>
+                              </con1:param>
+                              <con1:param name="min">
+                                <con1:path>data($servicio/PARAMETROS/PARAMETRO[NOMBRE='MIN']/VALOR)</con1:path>
+                              </con1:param>
+                              <con1:param name="suscripcion">
+                                <con1:path>data($servicio/PARAMETROS/PARAMETRO[NOMBRE='CUENTA']/VALOR)</con1:path>
+                              </con1:param>
+                              <con1:param name="elegido">
+                                <con1:path>fn:string-join(data($servicio/PARAMETROS/PARAMETRO[NOMBRE='ELEGIDOS']/VALOR/*:Detail), ";")</con1:path>
+                              </con1:param>
+                              <con1:param name="fechaCreacion">
+                                <con1:path>""</con1:path>
+                              </con1:param>
+                              <con1:param name="fechaExpiracion">
+                                <con1:path>""</con1:path>
+                              </con1:param>
+                              <con1:param name="vigencia">
+                                <con1:path>""</con1:path>
+                              </con1:param>
+                            </con1:xqueryTransform>
+                          </con2:expr>
+                        </con2:assign>
+                      </con2:requestTransform>
+                      <con2:responseTransform/>
+                    </con2:wsCallout>
+                  </con2:actions>
+                </con2:case>
+                <con2:case>
+                  <con2:condition>
+                    <con1:xqueryText>$servicio/NOMBRE = "ITEL/IN/Proxies/modificarSMSElegidosINLocal_PS" and data($body/com:Input_Parameters/METODO) != '704'</con1:xqueryText>
+                  </con2:condition>
+                  <con2:actions>
+                    <con2:wsCallout>
+                      <con1:id>_ActionId-3240996374908289818-134d2eb4.136bb68b4fc.-7633</con1:id>
+                      <con2:service xsi:type="ref:ProxyRef" ref="ITEL/IN/Proxies/compensarModificarSMSElegidosINLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                      <con2:operation>compensarModificarSMSElegidosIN</con2:operation>
+                      <con2:request>
+                        <con2:body wrapped="false">$compensarRequest</con2:body>
+                        <con2:header/>
+                      </con2:request>
+                      <con2:response>
+                        <con2:body wrapped="false">compensarResponse</con2:body>
+                        <con2:header/>
+                      </con2:response>
+                      <con2:requestTransform>
+                        <con2:assign varName="compensarRequest">
+                          <con1:id>_ActionId-3240996374908289818-134d2eb4.136bb68b4fc.-7634</con1:id>
+                          <con2:expr>
+                            <con1:xqueryTransform>
+                              <con1:resource ref="ITEL/Compensacion/Resources/XQueries/consumirCompensacionJMS_Req_compensarModificarSMSElegidosIN"/>
+                              <con1:param name="servicio">
+                                <con1:path>$servicio</con1:path>
+                              </con1:param>
+                            </con1:xqueryTransform>
+                          </con2:expr>
+                        </con2:assign>
+                      </con2:requestTransform>
+                      <con2:responseTransform/>
+                    </con2:wsCallout>
+                    <con2:wsCallout>
+                      <con1:id>_ActionId-4278807260743534015--3f36aea9.136df5bc0ec.-7f9c</con1:id>
+                      <con2:service xsi:type="ref:ProxyRef" ref="ITEL/Compensacion/Proxies/compensarElegidoSMSLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                      <con2:operation>compensarElegidoSMS</con2:operation>
+                      <con2:request>
+                        <con2:body wrapped="false">$compensarSMSRequest</con2:body>
+                        <con2:header/>
+                      </con2:request>
+                      <con2:response>
+                        <con2:body wrapped="false">compensarSMSResponse</con2:body>
+                        <con2:header/>
+                      </con2:response>
+                      <con2:requestTransform>
+                        <con2:assign varName="compensarSMSRequest">
+                          <con1:id>_ActionId-4278807260743534015--3f36aea9.136df5bc0ec.-7f9d</con1:id>
+                          <con2:expr>
+                            <con1:xqueryTransform>
+                              <con1:resource ref="ITEL/Compensacion/Resources/XQueries/compensarElegidoSMSPS_Req"/>
+                              <con1:param name="elegidoAntiguo">
+                                <con1:path>fn:string-join(data($servicio/PARAMETROS/PARAMETRO[NOMBRE='ELEGIDOSORIGINALES']/VALOR/*:Detail), ";")</con1:path>
+                              </con1:param>
+                              <con1:param name="min">
+                                <con1:path>data($servicio/PARAMETROS/PARAMETRO[NOMBRE='MIN']/VALOR)</con1:path>
+                              </con1:param>
+                              <con1:param name="suscripcion">
+                                <con1:path>data($servicio/PARAMETROS/PARAMETRO[NOMBRE='SUSCRIPCION_ELEGIDO']/VALOR)</con1:path>
+                              </con1:param>
+                              <con1:param name="elegido">
+                                <con1:path>fn:string-join(data($servicio/PARAMETROS/PARAMETRO[NOMBRE='ELEGIDOS']/VALOR/*:Detail), ";")</con1:path>
+                              </con1:param>
+                              <con1:param name="fechaCreacion">
+                                <con1:path>data($servicio/PARAMETROS/PARAMETRO[NOMBRE='FECHA_CREACION_ELEGIDO']/VALOR)</con1:path>
+                              </con1:param>
+                              <con1:param name="fechaExpiracion">
+                                <con1:path>data($servicio/PARAMETROS/PARAMETRO[NOMBRE='FECHA_EXPIRACION_ELEGIDO']/VALOR)</con1:path>
+                              </con1:param>
+                              <con1:param name="vigencia">
+                                <con1:path>data($servicio/PARAMETROS/PARAMETRO[NOMBRE='VIGENCIA_ELEGIDO']/VALOR)</con1:path>
+                              </con1:param>
+                            </con1:xqueryTransform>
+                          </con2:expr>
+                        </con2:assign>
+                      </con2:requestTransform>
+                      <con2:responseTransform/>
+                    </con2:wsCallout>
+                  </con2:actions>
+                </con2:case>
+                <con2:case>
+                  <con2:condition>
+                    <con1:xqueryText>$servicio/NOMBRE = "ITEL/OCS/AIR/Proxies/recargarOCSLocal_PS"
+and not(contains($servicio,"CODIGO_VOUCHER"))</con1:xqueryText>
+                  </con2:condition>
+                  <con2:actions>
+                    <con2:wsCallout>
+                      <con1:id>_ActionId-6920248578600958155--18afbc0b.13ae74df1bd.-7f85</con1:id>
+                      <con2:service xsi:type="ref:ProxyRef" ref="ITEL/OCS/AIR/Proxies/actualizarBalanceFechaOCSLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                      <con2:operation>actualizarBalanceFecha</con2:operation>
+                      <con2:request>
+                        <con2:body wrapped="false">$compensarRequest</con2:body>
+                        <con2:header/>
+                      </con2:request>
+                      <con2:response>
+                        <con2:body wrapped="false">compensarResponse</con2:body>
+                        <con2:header/>
+                      </con2:response>
+                      <con2:requestTransform>
+                        <con2:assign varName="compensarRequest">
+                          <con1:id>_ActionId-6920248578600958155--18afbc0b.13ae74df1bd.-7f74</con1:id>
+                          <con2:expr>
+                            <con1:xqueryTransform>
+                              <con1:resource ref="ITEL/Compensacion/Resources/XQueries/consumirCompensacionJMS_Req_actualizarBalanceFechaAIR"/>
+                              <con1:param name="servicio">
+                                <con1:path>$servicio</con1:path>
+                              </con1:param>
+                              <con1:param name="balances">
+                                <con1:path>$body/com:Input_Parameters/BALANCES</con1:path>
+                              </con1:param>
+                              <con1:param name="balancesAnterior">
+                                <con1:path>$body/com:Input_Parameters/BALANCES_ANTERIOR</con1:path>
+                              </con1:param>
+                            </con1:xqueryTransform>
+                          </con2:expr>
+                        </con2:assign>
+                      </con2:requestTransform>
+                      <con2:responseTransform/>
+                    </con2:wsCallout>
+                  </con2:actions>
+                </con2:case>
+                <con2:case>
+                  <con2:condition>
+                    <con1:xqueryText>$servicio/NOMBRE = "ITEL/OCS/AIR/Proxies/actualizarBalanceFechaOCSLocal_PS"</con1:xqueryText>
+                  </con2:condition>
+                  <con2:actions>
+                    <con2:wsCallout>
+                      <con1:id>_ActionId-6920248578600958155--18afbc0b.13ae74df1bd.-7f35</con1:id>
+                      <con2:service xsi:type="ref:ProxyRef" ref="ITEL/OCS/AIR/Proxies/actualizarBalanceFechaOCSLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                      <con2:operation>actualizarBalanceFecha</con2:operation>
+                      <con2:request>
+                        <con2:body wrapped="false">$compensarRequest</con2:body>
+                        <con2:header/>
+                      </con2:request>
+                      <con2:response>
+                        <con2:body wrapped="false">compensarResponse</con2:body>
+                        <con2:header/>
+                      </con2:response>
+                      <con2:requestTransform>
+                        <con2:assign varName="compensarRequest">
+                          <con1:id>_ActionId-6920248578600958155--18afbc0b.13ae74df1bd.-7f36</con1:id>
+                          <con2:expr>
+                            <con:xqueryTransform xmlns:con="http://www.bea.com/wli/sb/stages/config">
+                              <con:resource ref="ITEL/Compensacion/Resources/XQueries/consumirCompensacionJMS_Req_ajustesAIR"/>
+                              <con:param name="servicio">
+                                <con:path>$servicio</con:path>
+                              </con:param>
+                            </con:xqueryTransform>
+                          </con2:expr>
+                        </con2:assign>
+                      </con2:requestTransform>
+                      <con2:responseTransform/>
+                    </con2:wsCallout>
+                  </con2:actions>
+                </con2:case>
+                <con2:case>
+                  <con2:condition>
+                    <con1:xqueryText>fn-bea:trim($servicio/NOMBRE) = "ITEL/OCS/SOI/Proxies/crearSuscriptorOCSLocal_PS"</con1:xqueryText>
+                  </con2:condition>
+                  <con2:actions>
+                    <con2:wsCallout>
+                      <con1:id>_ActionId-3794114680580593586-4f9de804.13b1ad53e37.-7e48</con1:id>
+                      <con2:service xsi:type="ref:ProxyRef" ref="ITEL/OCS/SOI/Proxies/eliminarSuscriptorOCSLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                      <con2:operation>eliminarSuscriptorOCS</con2:operation>
+                      <con2:request>
+                        <con2:body>$eliminarSuscriptorRequest</con2:body>
+                      </con2:request>
+                      <con2:response>
+                        <con2:body>eliminarSuscriptorResponse</con2:body>
+                      </con2:response>
+                      <con2:requestTransform>
+                        <con2:assign varName="eliminarSuscriptorRequest">
+                          <con1:id>_ActionId-3794114680580593586-4f9de804.13b1ad53e37.-7e10</con1:id>
+                          <con2:expr>
+                            <con1:xqueryTransform>
+                              <con1:resource ref="ITEL/Compensacion/Resources/XQueries/consumirCompensacionJMS_Req_eliminarSuscriptorOCS"/>
+                              <con1:param name="input_Parameters1">
+                                <con1:path>$servicio</con1:path>
+                              </con1:param>
+                            </con1:xqueryTransform>
+                          </con2:expr>
+                        </con2:assign>
+                      </con2:requestTransform>
+                      <con2:responseTransform/>
+                    </con2:wsCallout>
+                  </con2:actions>
+                </con2:case>
+                <con2:case>
+                  <con2:condition>
+                    <con1:xqueryText>$servicio/NOMBRE = "ITEL/OCS/OLM/Proxies/crearSuscripcionOCSLocal_PS"
+or $servicio/NOMBRE = "generalCancellation"</con1:xqueryText>
+                  </con2:condition>
+                  <con2:actions>
+                    <con2:wsCallout>
+                      <con1:id>_ActionId-3794114680580593586-4f9de804.13b1ad53e37.-7da1</con1:id>
+                      <con2:service xsi:type="ref:ProxyRef" ref="ITEL/OCS/OLM/Proxies/eliminarSuscripcionOCSLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                      <con2:operation>eliminarSuscripcionOCS</con2:operation>
+                      <con2:request>
+                        <con2:body wrapped="false">$eliminarSuscripcionOCSRequest</con2:body>
+                        <con2:header/>
+                      </con2:request>
+                      <con2:response>
+                        <con2:body wrapped="false">eliminarSuscripcionOCSResponse</con2:body>
+                        <con2:header/>
+                      </con2:response>
+                      <con2:requestTransform>
+                        <con2:assign varName="eliminarSuscripcionOCSRequest">
+                          <con1:id>_ActionId-3794114680580593586-4f9de804.13b1ad53e37.-7d69</con1:id>
+                          <con2:expr>
+                            <con1:xqueryTransform>
+                              <con1:resource ref="ITEL/Compensacion/Resources/XQueries/consumirCompensacionJMS_Req_eliminarSuscripcionOCS"/>
+                              <con1:param name="sERVICIO1">
+                                <con1:path>$servicio</con1:path>
+                              </con1:param>
+                            </con1:xqueryTransform>
+                          </con2:expr>
+                        </con2:assign>
+                      </con2:requestTransform>
+                      <con2:responseTransform/>
+                    </con2:wsCallout>
+                  </con2:actions>
+                </con2:case>
+                <con2:case>
+                  <con2:condition>
+                    <con1:xqueryText>$servicio/NOMBRE = "ITEL/RLM/Proxies/actualizarSaldoMayoristaLocal_PS"</con1:xqueryText>
+                  </con2:condition>
+                  <con2:actions>
+                    <con2:wsCallout>
+                      <con1:id>_ActionId-3020866163893850678-69c90c7a.153a455b390.-7f92</con1:id>
+                      <con2:service xsi:type="ref:ProxyRef" ref="ITEL/RLM/Proxies/actualizarSaldoMayoristaLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                      <con2:operation>actualizarSaldoMayorista</con2:operation>
+                      <con2:request>
+                        <con2:body>$actualizarSaldoMayoristaRequest</con2:body>
+                      </con2:request>
+                      <con2:response>
+                        <con2:body>actualizarSaldoMayoristaResponse</con2:body>
+                      </con2:response>
+                      <con2:requestTransform>
+                        <con2:assign varName="actualizarSaldoMayoristaRequest">
+                          <con1:id>_ActionId-3020866163893850678-69c90c7a.153a455b390.-7f5a</con1:id>
+                          <con2:expr>
+                            <con1:xqueryTransform>
+                              <con1:resource ref="ITEL/Compensacion/Resources/XQueries/consumirCompensacionJMS_Req_compensarAjustarSaldoMayorista"/>
+                              <con1:param name="sERVICIO1">
+                                <con1:path>$servicio</con1:path>
+                              </con1:param>
+                            </con1:xqueryTransform>
+                          </con2:expr>
+                        </con2:assign>
+                      </con2:requestTransform>
+                      <con2:responseTransform/>
+                    </con2:wsCallout>
+                  </con2:actions>
+                </con2:case>
+                <con2:case>
+                  <con2:condition>
+                    <con1:xqueryText>$servicio/NOMBRE = "ITEL/OCS/SOI/Proxies/cambiarPlanOCSLocal_PS"</con1:xqueryText>
+                  </con2:condition>
+                  <con2:actions>
+                    <con2:wsCallout>
+                      <con1:id>_ActionId-3794114680580593586-4f9de804.13b1ad53e37.-6502</con1:id>
+                      <con2:service xsi:type="ref:ProxyRef" ref="ITEL/OCS/SOI/Proxies/cambiarPlanOCSLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                      <con2:operation>cambiarPlanOCS</con2:operation>
+                      <con2:request>
+                        <con2:body wrapped="false">$cambiarPlanOCSRequest</con2:body>
+                        <con2:header/>
+                      </con2:request>
+                      <con2:response>
+                        <con2:body wrapped="false">cambiarPlanOCSResponse</con2:body>
+                        <con2:header/>
+                      </con2:response>
+                      <con2:requestTransform>
+                        <con2:assign varName="cambiarPlanOCSRequest">
+                          <con1:id>_ActionId-3794114680580593586-4f9de804.13b1ad53e37.-64ca</con1:id>
+                          <con2:expr>
+                            <con1:xqueryTransform>
+                              <con1:resource ref="ITEL/Compensacion/Resources/XQueries/consumirCompensacionJMS_Req_cambiarPlanOCS"/>
+                              <con1:param name="input_Parameters1">
+                                <con1:path>$body/com:Input_Parameters</con1:path>
+                              </con1:param>
+                              <con1:param name="Servicio1">
+                                <con1:path>$servicio</con1:path>
+                              </con1:param>
+                            </con1:xqueryTransform>
+                          </con2:expr>
+                        </con2:assign>
+                      </con2:requestTransform>
+                      <con2:responseTransform/>
+                    </con2:wsCallout>
+                  </con2:actions>
+                </con2:case>
+                <con2:case>
+                  <con2:condition>
+                    <con1:xqueryText>$servicio/NOMBRE = "ITEL/OCS/OLM/Proxies/eliminarElegidosOCSLocal_PS"</con1:xqueryText>
+                  </con2:condition>
+                  <con2:actions>
+                    <con2:wsCallout>
+                      <con1:id>_ActionId-3794114680580593586-4f9de804.13b1ad53e37.-6380</con1:id>
+                      <con2:service xsi:type="ref:ProxyRef" ref="ITEL/OCS/OLM/Proxies/registrarElegidosOCSLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                      <con2:operation>registrarElegidosOCS</con2:operation>
+                      <con2:request>
+                        <con2:body wrapped="false">$registrarElegidosOCSRequest</con2:body>
+                        <con2:header/>
+                      </con2:request>
+                      <con2:response>
+                        <con2:body wrapped="false">registrarElegidosOCSResponse</con2:body>
+                        <con2:header/>
+                      </con2:response>
+                      <con2:requestTransform>
+                        <con2:assign varName="registrarElegidosOCSRequest">
+                          <con1:id>_ActionId-3794114680580593586-4f9de804.13b1ad53e37.-6348</con1:id>
+                          <con2:expr>
+                            <con1:xqueryTransform>
+                              <con1:resource ref="ITEL/Compensacion/Resources/XQueries/consumirCompensacionJMS_Req_registrarElegidosOCS"/>
+                              <con1:param name="Servicio1">
+                                <con1:path>$servicio</con1:path>
+                              </con1:param>
+                            </con1:xqueryTransform>
+                          </con2:expr>
+                        </con2:assign>
+                      </con2:requestTransform>
+                      <con2:responseTransform/>
+                    </con2:wsCallout>
+                  </con2:actions>
+                </con2:case>
+                <con2:case>
+                  <con2:condition>
+                    <con1:xqueryText>$servicio/NOMBRE = "ITEL/OCS/OLM/Proxies/eliminarSuscripcionOCSLocal_PS"</con1:xqueryText>
+                  </con2:condition>
+                  <con2:actions>
+                    <con2:wsCallout>
+                      <con1:id>_ActionId-3794114680580593586-4f9de804.13b1ad53e37.-6310</con1:id>
+                      <con2:service xsi:type="ref:ProxyRef" ref="ITEL/OCS/OLM/Proxies/crearSuscripcionOCSLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                      <con2:operation>crearSuscripcionOCS</con2:operation>
+                      <con2:request>
+                        <con2:body wrapped="false">$crearSuscripcionOCSRequest</con2:body>
+                        <con2:header/>
+                      </con2:request>
+                      <con2:response>
+                        <con2:body wrapped="false">crearSuscripcionOCSResponse</con2:body>
+                        <con2:header/>
+                      </con2:response>
+                      <con2:requestTransform>
+                        <con2:assign varName="crearSuscripcionOCSRequest">
+                          <con1:id>_ActionId-3794114680580593586-4f9de804.13b1ad53e37.-62d8</con1:id>
+                          <con2:expr>
+                            <con1:xqueryTransform>
+                              <con1:resource ref="ITEL/Compensacion/Resources/XQueries/consumirCompensacionJMS_Req_crearSuscripcionOCS"/>
+                              <con1:param name="Servicio1">
+                                <con1:path>$servicio</con1:path>
+                              </con1:param>
+                            </con1:xqueryTransform>
+                          </con2:expr>
+                        </con2:assign>
+                      </con2:requestTransform>
+                      <con2:responseTransform/>
+                    </con2:wsCallout>
+                  </con2:actions>
+                </con2:case>
+                <con2:case>
+                  <con2:condition>
+                    <con1:xqueryText>$servicio/NOMBRE= "ITEL/OCS/OLM/Proxies/registrarElegidosOCSLocal_PS"</con1:xqueryText>
+                  </con2:condition>
+                  <con2:actions>
+                    <con2:wsCallout>
+                      <con1:id>_ActionId-3794114680580593586-4f9de804.13b1ad53e37.-62a0</con1:id>
+                      <con2:service xsi:type="ref:ProxyRef" ref="ITEL/OCS/OLM/Proxies/eliminarElegidosOCSLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                      <con2:operation>eliminarElegidosOCS</con2:operation>
+                      <con2:request>
+                        <con2:body wrapped="false">$eliminarElegidosOCSRequest</con2:body>
+                        <con2:header/>
+                      </con2:request>
+                      <con2:response>
+                        <con2:body wrapped="false">eliminarElegidosOCSResponse</con2:body>
+                        <con2:header/>
+                      </con2:response>
+                      <con2:requestTransform>
+                        <con2:assign varName="eliminarElegidosOCSRequest">
+                          <con1:id>_ActionId-3794114680580593586-4f9de804.13b1ad53e37.-6268</con1:id>
+                          <con2:expr>
+                            <con1:xqueryTransform>
+                              <con1:resource ref="ITEL/Compensacion/Resources/XQueries/consumirCompensacionJMS_Req_eliminarElegidosOCS"/>
+                              <con1:param name="Servicio1">
+                                <con1:path>$servicio</con1:path>
+                              </con1:param>
+                            </con1:xqueryTransform>
+                          </con2:expr>
+                        </con2:assign>
+                      </con2:requestTransform>
+                      <con2:responseTransform/>
+                    </con2:wsCallout>
+                    <con2:wsCallout>
+                      <con1:id>_ActionId-5589146410162128447-200f144d.13baff2b911.-7ee4</con1:id>
+                      <con2:service xsi:type="ref:ProxyRef" ref="ITEL/Compensacion/Proxies/compensarElegidoIlimitadoLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                      <con2:operation>compensarElegidoIlimitado</con2:operation>
+                      <con2:request>
+                        <con2:body wrapped="false">$compensarElegidoRequest</con2:body>
+                        <con2:header/>
+                      </con2:request>
+                      <con2:response>
+                        <con2:body wrapped="false">compensarElegidoResponse</con2:body>
+                        <con2:header/>
+                      </con2:response>
+                      <con2:requestTransform>
+                        <con2:assign varName="compensarElegidoRequest">
+                          <con1:id>_ActionId-5589146410162128447-200f144d.13baff2b911.-7edf</con1:id>
+                          <con2:expr>
+                            <con1:xqueryTransform>
+                              <con1:resource ref="ITEL/Compensacion/Resources/XQueries/compensarElegidoIlimitadoPS_Req"/>
+                              <con1:param name="min">
+                                <con1:path>substring(data($servicio/PARAMETROS/PARAMETRO[NOMBRE='MSISDN']/VALOR),3)</con1:path>
+                              </con1:param>
+                              <con1:param name="elegidoAntiguo">
+                                <con1:path>''</con1:path>
+                              </con1:param>
+                              <con1:param name="elegido">
+                                <con1:path>''</con1:path>
+                              </con1:param>
+                              <con1:param name="fechaExpiracion">
+                                <con1:path>''</con1:path>
+                              </con1:param>
+                              <con1:param name="fechaCreacion">
+                                <con1:path>''</con1:path>
+                              </con1:param>
+                              <con1:param name="vigencia">
+                                <con1:path>''</con1:path>
+                              </con1:param>
+                            </con1:xqueryTransform>
+                          </con2:expr>
+                        </con2:assign>
+                      </con2:requestTransform>
+                      <con2:responseTransform/>
+                    </con2:wsCallout>
+                  </con2:actions>
+                </con2:case>
+                <con2:case>
+                  <con2:condition>
+                    <con1:xqueryText>$servicio/NOMBRE= "ITEL/OCS/OLM/Proxies/registrarElegidoOCSLocal_PS"</con1:xqueryText>
+                  </con2:condition>
+                  <con2:actions>
+                    <con2:wsCallout>
+                      <con1:id>_ActionId-9015714680426829760-1442772d.13b49235484.-7ffa</con1:id>
+                      <con2:service xsi:type="ref:ProxyRef" ref="ITEL/OCS/OLM/Proxies/eliminarElegidosOCSLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                      <con2:operation>eliminarElegidosOCS</con2:operation>
+                      <con2:request>
+                        <con2:body wrapped="false">$eliminarElegidosOCSRequest</con2:body>
+                        <con2:header/>
+                      </con2:request>
+                      <con2:response>
+                        <con2:body wrapped="false">eliminarElegidosOCSResponse</con2:body>
+                        <con2:header/>
+                      </con2:response>
+                      <con2:requestTransform>
+                        <con2:assign varName="eliminarElegidosOCSRequest">
+                          <con1:id>_ActionId-9015714680426829760-1442772d.13b49235484.-7ffb</con1:id>
+                          <con2:expr>
+                            <con1:xqueryTransform>
+                              <con1:resource ref="ITEL/Compensacion/Resources/XQueries/consumirCompensacionJMS_Req_eliminarElegidoOCS"/>
+                              <con1:param name="Servicio1">
+                                <con1:path>$servicio</con1:path>
+                              </con1:param>
+                            </con1:xqueryTransform>
+                          </con2:expr>
+                        </con2:assign>
+                      </con2:requestTransform>
+                      <con2:responseTransform/>
+                    </con2:wsCallout>
+                    <con2:ifThenElse>
+                      <con1:id>_ActionId-6606101633557249270--337b6944.13bdc8fd83d.-742b</con1:id>
+                      <con2:case>
+                        <con2:condition>
+                          <con1:xqueryText>data($body/com:Input_Parameters/METODO) != '305'</con1:xqueryText>
+                        </con2:condition>
+                        <con2:actions>
+                          <con2:wsCallout>
+                            <con1:id>_ActionId-6606101633557249270--337b6944.13bdc8fd83d.-7427</con1:id>
+                            <con2:service xsi:type="ref:ProxyRef" ref="ITEL/Compensacion/Proxies/compensarElegidoIlimitadoLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                            <con2:operation>compensarElegidoIlimitado</con2:operation>
+                            <con2:request>
+                              <con2:body wrapped="false">$compensarElegidoRequest</con2:body>
+                              <con2:header/>
+                            </con2:request>
+                            <con2:response>
+                              <con2:body wrapped="false">compensarElegidoResponse</con2:body>
+                              <con2:header/>
+                            </con2:response>
+                            <con2:requestTransform>
+                              <con2:ifThenElse>
+                                <con1:id>_ActionId-9136876008661476161--4d26bcbf.13cf3e5ea0b.-7fe2</con1:id>
+                                <con2:case>
+                                  <con2:condition>
+                                    <con1:xqueryText>data($body/com:Input_Parameters/METODO) = '309'</con1:xqueryText>
+                                  </con2:condition>
+                                  <con2:actions>
+                                    <con2:assign varName="compensarElegidoRequest">
+                                      <con1:id>_ActionId-9136876008661476161--4d26bcbf.13cf3e5ea0b.-7fe0</con1:id>
+                                      <con2:expr>
+                                        <con1:xqueryTransform>
+                                          <con1:resource ref="ITEL/Compensacion/Resources/XQueries/compensarElegidoIlimitadoPS_Req"/>
+                                          <con1:param name="min">
+                                            <con1:path>substring(data($servicio/PARAMETROS/PARAMETRO[NOMBRE='MSISDN']/VALOR),3)</con1:path>
+                                          </con1:param>
+                                          <con1:param name="elegidoAntiguo">
+                                            <con1:path>''</con1:path>
+                                          </con1:param>
+                                          <con1:param name="elegido">
+                                            <con1:path>substring(data($servicio/PARAMETROS/PARAMETRO[NOMBRE='MSISDNELEGIDOTOREGISTER']/VALOR), 4, 10)</con1:path>
+                                          </con1:param>
+                                          <con1:param name="fechaExpiracion">
+                                            <con1:path>''</con1:path>
+                                          </con1:param>
+                                          <con1:param name="fechaCreacion">
+                                            <con1:path>data($body/com:Input_Parameters/METODO)</con1:path>
+                                          </con1:param>
+                                          <con1:param name="vigencia">
+                                            <con1:path>''</con1:path>
+                                          </con1:param>
+                                        </con1:xqueryTransform>
+                                      </con2:expr>
+                                    </con2:assign>
+                                  </con2:actions>
+                                </con2:case>
+                                <con2:default>
+                                  <con2:assign varName="compensarElegidoRequest">
+                                    <con1:id>_ActionId-9136876008661476161--4d26bcbf.13cf3e5ea0b.-7fd9</con1:id>
+                                    <con2:expr>
+                                      <con1:xqueryTransform>
+                                        <con1:resource ref="ITEL/Compensacion/Resources/XQueries/compensarElegidoIlimitadoPS_Req"/>
+                                        <con1:param name="min">
+                                          <con1:path>substring(data($servicio/PARAMETROS/PARAMETRO[NOMBRE='MSISDN']/VALOR),3)</con1:path>
+                                        </con1:param>
+                                        <con1:param name="elegidoAntiguo">
+                                          <con1:path>''</con1:path>
+                                        </con1:param>
+                                        <con1:param name="elegido">
+                                          <con1:path>''</con1:path>
+                                        </con1:param>
+                                        <con1:param name="fechaExpiracion">
+                                          <con1:path>''</con1:path>
+                                        </con1:param>
+                                        <con1:param name="fechaCreacion">
+                                          <con1:path>''</con1:path>
+                                        </con1:param>
+                                        <con1:param name="vigencia">
+                                          <con1:path>''</con1:path>
+                                        </con1:param>
+                                      </con1:xqueryTransform>
+                                    </con2:expr>
+                                  </con2:assign>
+                                </con2:default>
+                              </con2:ifThenElse>
+                            </con2:requestTransform>
+                            <con2:responseTransform/>
+                          </con2:wsCallout>
+                        </con2:actions>
+                      </con2:case>
+                      <con2:default/>
+                    </con2:ifThenElse>
+                  </con2:actions>
+                </con2:case>
+                <con2:case>
+                  <con2:condition>
+                    <con1:xqueryText>$servicio/NOMBRE= "ITEL/OCS/OLM/Proxies/modificarElegidosOCSLocal_PS"</con1:xqueryText>
+                  </con2:condition>
+                  <con2:actions>
+                    <con2:wsCallout>
+                      <con1:id>_ActionId-7022386730249279168-13a84306.13b3ea91c72.-7ff0</con1:id>
+                      <con2:service xsi:type="ref:ProxyRef" ref="ITEL/OCS/OLM/Proxies/modificarElegidosOCSLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                      <con2:operation>modificarElegidosOCS</con2:operation>
+                      <con2:request>
+                        <con2:body wrapped="false">$compensarRequest</con2:body>
+                        <con2:header/>
+                      </con2:request>
+                      <con2:response>
+                        <con2:body wrapped="false">compensarResponse</con2:body>
+                        <con2:header/>
+                      </con2:response>
+                      <con2:requestTransform>
+                        <con2:assign varName="compensarRequest">
+                          <con1:id>_ActionId-7022386730249279168-13a84306.13b3ea91c72.-7ff1</con1:id>
+                          <con2:expr>
+                            <con1:xqueryTransform>
+                              <con1:resource ref="ITEL/Compensacion/Resources/XQueries/consumirCompensacionJMS_Req_modificarElegidosOCS"/>
+                              <con1:param name="servicio">
+                                <con1:path>$servicio</con1:path>
+                              </con1:param>
+                            </con1:xqueryTransform>
+                          </con2:expr>
+                        </con2:assign>
+                      </con2:requestTransform>
+                      <con2:responseTransform/>
+                    </con2:wsCallout>
+                  </con2:actions>
+                </con2:case>
+                <con2:default/>
+              </con2:ifThenElse>
+            </con2:actions>
+          </con2:foreach>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="PipelinePairNode1_response"/>
+    <con:flow>
+      <con:pipeline-node name="PipelinePairNode1">
+        <con:request>PipelinePairNode1_request</con:request>
+        <con:response>PipelinePairNode1_response</con:response>
+      </con:pipeline-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<definitions targetNamespace="urn:Contrato07" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="urn:Contrato07"
+             xmlns:soap12="http://schemas.xmlsoap.rmira/wsdl/soap12/" 
+             xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+              xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:bebe07="http://www.bebe07.org">
+  <types>
+    <xsd:schema>
+      <xsd:import schemaLocation="../XML_Schema/Firma07.xsd" namespace="http://www.bebe07.org"/>
+    </xsd:schema>
+  </types>
+  <message name="mensajeEntrada">
+    <part name="parteMensajeEntrada" element="bebe07:cadenaRequest"/>
+  </message>
+  <message name="mensajeSalida">
+    <part name="parteCadenaSalida" element="bebe07:cadenaResponse"/>
+  </message>
+  <portType name="puertoTipo07">
+    <operation name="miOperacion">
+      <input message="tns:mensajeEntrada"/>
+      <output message="tns:mensajeSalida"/>
+    </operation>
+  </portType>
+  <binding name="puertoTipo07SOAP11Binding" type="tns:puertoTipo07">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="miOperacion">
+      <soap:operation style="document" soapAction="urn:Contrato07/miOperacion"/>
+      <input>
+        <soap:body use="literal" parts="parteMensajeEntrada"/>
+      </input>
+      <output>
+        <soap:body use="literal" parts="parteCadenaSalida"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="miServicio07">
+    <port name="puertoTipo07" binding="tns:puertoTipo07SOAP11Binding">
+      <soap:address location="http://www.example.com"/>
+    </port>
+  </service>
+</definitions>

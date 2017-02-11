@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<decisionServices xmlns="http://xmlns.oracle.com/bpel/rules" name="DiccionarioReglasNegocio">
+    <ruleEngineProvider provider="Oracle_11.0.0.0.0" name="OracleRulesSDK">
+        <repository type="SCA-Archive">
+            <path>Project_OSB_REGLASNEGOCIO_FORM_TRANSPORTE01/oracle/rules/project_osb_reglasnegocio_form_transporte01/DiccionarioReglasNegocio.rules</path>
+        </repository>
+    </ruleEngineProvider>
+    <decisionService name="DiccionarioReglasNegocio_DecisionFunction01" ruleEngineProviderReference="OracleRulesSDK" targetNamespace="http://xmlns.oracle.com/DiccionarioReglasNegocio/DiccionarioReglasNegocio_DecisionFunction01">
+        <catalog>DiccionarioReglasNegocio</catalog>
+        <pattern name="CallFunctionStateless">
+            <arguments>
+                <call>project_osb_reglasnegocio_form_transporte01.DiccionarioReglasNegocio.DecisionFunction01</call>
+            </arguments>
+        </pattern>
+        <pattern name="CallFunctionStateful">
+            <arguments>
+                <call>project_osb_reglasnegocio_form_transporte01.DiccionarioReglasNegocio.DecisionFunction01</call>
+            </arguments>
+        </pattern>
+    </decisionService>
+</decisionServices>

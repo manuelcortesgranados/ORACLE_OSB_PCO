@@ -1,0 +1,35 @@
+<xs:schema targetNamespace="http://ar7creditevaluation.customerorder.schema.amx.com" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://ar7creditevaluation.customerorder.schema.amx.com">
+
+	<xs:element name="AR7CreditEvaluationRequest" type="tns:AR7CreditEvaluationRequest"/>
+	<xs:element name="AR7CreditEvaluationResponse" type="tns:AR7CreditEvaluationResponse"/>
+
+	<xs:complexType name="AR7CreditEvaluationRequest">
+		<xs:sequence>
+			<xs:element name="customerNo" type="xs:long" minOccurs="1"/>
+			<xs:element name="msisdn" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="AR7CreditEvaluationResponse">
+		<xs:sequence>
+			<xs:element name="Ar7CreditEvaluationInfo" type="tns:Ar7CreditEvaluationInfo" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+		<xs:complexType name="Ar7CreditEvaluationInfo">
+		<xs:sequence>
+			<xs:element name="accountId" type="xs:long" minOccurs="1"/>
+			<xs:element name="ageBucket" type="xs:string" minOccurs="1"/>
+			<xs:element name="dueAmount" type="xs:double" minOccurs="1"/>
+			<xs:element name="debtAge" type="xs:int" minOccurs="1"/>
+			<xs:element name="arBalance" type="xs:double" minOccurs="1"/>
+			<xs:element name="l7CustPymBehavior" type="xs:string" minOccurs="1"/>
+			<xs:element name="l7PymBehavior" type="xs:string" minOccurs="1"/>
+			<xs:element name="l7Vip" type="xs:string" minOccurs="1"/>
+			<xs:element name="l7Nunca" type="xs:string" minOccurs="1"/>
+			<xs:element name="l7Msisdn" type="xs:string" minOccurs="1"/>
+			<xs:element name="l7SubSeniority" type="xs:int" minOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+</xs:schema>

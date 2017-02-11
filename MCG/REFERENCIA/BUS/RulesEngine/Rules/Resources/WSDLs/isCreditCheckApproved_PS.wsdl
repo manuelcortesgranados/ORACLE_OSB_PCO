@@ -1,0 +1,41 @@
+<wsdl:definitions name="isCreditCheckApproved"
+	targetNamespace="http://www.claro.com.co/rulesEngine/isCreditCheckApproved"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.claro.com.co/rulesEngine/isCreditCheckApproved"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<wsdl:types>
+		<schema xmlns="http://www.w3.org/2001/XMLSchema">
+			<import namespace="http://www.claro.com.co/rulesEngine/isCreditCheckApproved"
+				schemaLocation="../Schemas/PS_ISCREDITCHECKAPPROVED.xsd" />
+		</schema>
+	</wsdl:types>
+	<wsdl:message name="Input_Parameters">
+		<wsdl:part element="tns:Input_Parameters" name="Input_Parameters" />
+	</wsdl:message>
+	<wsdl:message name="WS_Result">
+		<wsdl:part element="tns:WS_Result" name="WS_Result" />
+	</wsdl:message>
+	<wsdl:portType name="IsCreditCheckApprovedInterface">
+		<wsdl:operation name="isCreditCheckApproved">
+			<wsdl:input message="tns:Input_Parameters" />
+			<wsdl:output message="tns:WS_Result" />
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="IsCreditCheckApprovedSOAP" type="tns:IsCreditCheckApprovedInterface">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="isCreditCheckApproved">
+			<soap:operation soapAction="http://www.claro.com.co/IsCreditCheckApproved/isCreditCheckApproved" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="IsCreditCheckApproved">
+		<wsdl:port binding="tns:IsCreditCheckApprovedSOAP" name="IsCreditCheckApprovedSOAP">
+			<soap:address location="http://www.claro.com.co/" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

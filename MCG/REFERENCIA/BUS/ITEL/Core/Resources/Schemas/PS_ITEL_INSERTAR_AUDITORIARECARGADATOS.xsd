@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.comcel.com.co/InsertarAuditoriaRecargaDatos"
+	xmlns:tns="http://www.comcel.com.co/InsertarAuditoriaRecargaDatos">
+	<xs:element name="Input_Parameters" type="tns:Input_Paramaters" />
+	<xs:element name="WS_Result" type="tns:WS_Result" />
+	
+	<xs:complexType name="Input_Paramaters">
+		<xs:sequence>
+			<xs:element name="MIN" type="xs:decimal" />
+			<xs:element name="FECHAPRC" type="xs:dateTime" nillable="true" />
+			<xs:element name="CODRESPRTC" type="xs:string" nillable="true" />
+			<xs:element name="RECARGA" type="xs:decimal" />
+			<xs:element name="CONSECUTIVO" type="xs:string" nillable="true"  />
+			<xs:element name="HOSTID" type="xs:decimal" nillable="true"  />
+			<xs:element name="FECHARECARGA" type="xs:dateTime" nillable="true"  />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="WS_Result">
+		<xs:sequence>
+			<xs:element name="CODIGO" type="xs:string" />
+			<xs:element name="MENSAJE" type="tns:respuestaType" />
+			<xs:element name="DESCRIPCION" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="respuestaType">
+		<xs:sequence>
+			<xs:element name="EXITO" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

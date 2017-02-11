@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con2="http://www.bea.com/wli/sb/stages/routing/config">
+  <ser:coreEntry isProxy="true" isEnabled="true" isAutoPublish="false" isTracingEnabled="false">
+    <ser:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config">
+      <con:wsdl ref="ITEL/Trama310/Resources/WSDLs/calcularProvisionTrama310_PS"/>
+      <con:port>
+        <con:name>calcularProvisionTrama310_PSSOAP</con:name>
+        <con:namespace>http://www.comcel.com/calcularProvisionTrama310_PS/</con:namespace>
+      </con:port>
+      <con:selector type="SOAP body"/>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+    <ser:ws-policy>
+      <ser:binding-mode>wsdl-policy-attachments</ser:binding-mode>
+    </ser:ws-policy>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>local</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:inbound-properties/>
+    <tran:all-headers>true</tran:all-headers>
+  </ser:endpointConfig>
+  <ser:router>
+    <con:flow>
+      <con:route-node name="RouteTo_CalcularProvision_BS">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/CalcularProvisionTrama310/" prefix="cal"/>
+        </con:context>
+        <con:actions>
+          <con2:route>
+            <con1:id>_ActionId-650919862507942970--6e211063.13f8632e713.-7eab</con1:id>
+            <con2:service ref="ITEL/Trama310/Business Services/calcularProvisionTrama310_BS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con2:operation>callFunctionStateless</con2:operation>
+            <con2:outboundTransform>
+              <con4:assign varName="in" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                <con2:id>_ActionId-650919862507942970--6e211063.13f8632e713.-7e57</con2:id>
+                <con4:expr>
+                  <con2:xqueryText>$body/cal:Input_Parameters/CODIGOIN</con2:xqueryText>
+                </con4:expr>
+              </con4:assign>
+              <con1:replace varName="body" contents-only="true" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-650919862507942970--6e211063.13f8632e713.-7e1e</con4:id>
+                <con1:expr>
+                  <con4:xqueryTransform xmlns:con4="http://www.bea.com/wli/sb/stages/config">
+                    <con4:resource ref="ITEL/Trama310/Resources/XQueries/calcularProvisionTrama310_Req"/>
+                    <con4:param name="input_Parameters1">
+                      <con4:path>$body/cal:Input_Parameters</con4:path>
+                    </con4:param>
+                  </con4:xqueryTransform>
+                </con1:expr>
+              </con1:replace>
+            </con2:outboundTransform>
+            <con2:responseTransform>
+              <con1:replace varName="body" contents-only="true" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-650919862507942970--6e211063.13f8632e713.-7dca</con4:id>
+                <con1:expr>
+                  <con4:xqueryTransform xmlns:con4="http://www.bea.com/wli/sb/stages/config">
+                    <con4:resource ref="ITEL/Trama310/Resources/XQueries/calcularProvisionTrama310_Res"/>
+                    <con4:param name="callFunctionStatelessDecision1">
+                      <con4:path>$body/*:callFunctionStatelessDecision</con4:path>
+                    </con4:param>
+                  </con4:xqueryTransform>
+                </con1:expr>
+              </con1:replace>
+              <con1:ifThenElse xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-650919862507942970--6e211063.13f8632e713.-7d66</con4:id>
+                <con1:case>
+                  <con1:condition>
+                    <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config">$in >= 51</con4:xqueryText>
+                  </con1:condition>
+                  <con1:actions/>
+                </con1:case>
+                <con1:default>
+                  <con4:assign varName="elegidos" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config">
+                    <con5:id xmlns:con5="http://www.bea.com/wli/sb/stages/config">_ActionId-650919862507942970--6e211063.13f8632e713.-7d65</con5:id>
+                    <con4:expr>
+                      <con5:xqueryText xmlns:con5="http://www.bea.com/wli/sb/stages/config">let $paramElegidos := $body/cal:WS_Result/MENSAJE/SERVICIO[NOMBRE='ITEL/IN/Proxies/modificarElegidosINLocal_PS']/PARAMETROS/PARAMETRO[NOMBRE='ELEGIDOS']
+return
+ if ($paramElegidos != "" ) then 
+	fn-bea:inlinedXML( $paramElegidos/VALOR/text() ) else ""</con5:xqueryText>
+                    </con4:expr>
+                  </con4:assign>
+                  <con4:replace varName="body" contents-only="true" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config">
+                    <con5:id xmlns:con5="http://www.bea.com/wli/sb/stages/config">_ActionId-650919862507942970--6e211063.13f8632e713.-7d64</con5:id>
+                    <con4:location>
+                      <con5:xpathText xmlns:con5="http://www.bea.com/wli/sb/stages/config">./cal:WS_Result/MENSAJE/SERVICIO[NOMBRE='ITEL/IN/Proxies/modificarElegidosINLocal_PS']/PARAMETROS/PARAMETRO[NOMBRE='ELEGIDOS']/VALOR</con5:xpathText>
+                    </con4:location>
+                    <con4:expr>
+                      <con5:xqueryText xmlns:con5="http://www.bea.com/wli/sb/stages/config">$elegidos/*:BestFnF_Numbers//*</con5:xqueryText>
+                    </con4:expr>
+                  </con4:replace>
+                  <con1:assign varName="elegidosOriginales">
+                    <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-650919862507942970--6e211063.13f8632e713.-7d63</con4:id>
+                    <con1:expr>
+                      <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config">let $paramElegidos := $body/cal:WS_Result/MENSAJE/SERVICIO[NOMBRE='ITEL/IN/Proxies/modificarElegidosINLocal_PS']/PARAMETROS/PARAMETRO[NOMBRE='ELEGIDOS_ORIGINALES']
+return
+ if ($paramElegidos != "" ) then 
+	fn-bea:inlinedXML( $paramElegidos/VALOR/text() ) else ""</con4:xqueryText>
+                    </con1:expr>
+                  </con1:assign>
+                  <con1:replace varName="body" contents-only="true">
+                    <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-650919862507942970--6e211063.13f8632e713.-7d62</con4:id>
+                    <con1:location>
+                      <con4:xpathText xmlns:con4="http://www.bea.com/wli/sb/stages/config">./cal:WS_Result/MENSAJE/SERVICIO[NOMBRE='ITEL/IN/Proxies/modificarElegidosINLocal_PS']/PARAMETROS/PARAMETRO[NOMBRE='ELEGIDOS_ORIGINALES']/VALOR</con4:xpathText>
+                    </con1:location>
+                    <con1:expr>
+                      <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config">$elegidosOriginales/*:BestFnF_Numbers//*</con4:xqueryText>
+                    </con1:expr>
+                  </con1:replace>
+                  <con1:assign varName="elegidosFijos">
+                    <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-650919862507942970--6e211063.13f8632e713.-7d61</con4:id>
+                    <con1:expr>
+                      <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config">let $paramElegidos := $body/cal:WS_Result/MENSAJE/SERVICIO[NOMBRE='ITEL/IN/Proxies/modificarElegidosFijosINLocal_PS']/PARAMETROS/PARAMETRO[NOMBRE='ELEGIDOS']
+return
+ if ($paramElegidos != "" ) then 
+	fn-bea:inlinedXML( $paramElegidos/VALOR/text() ) else ""</con4:xqueryText>
+                    </con1:expr>
+                  </con1:assign>
+                  <con1:replace varName="body" contents-only="true">
+                    <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-650919862507942970--6e211063.13f8632e713.-7d60</con4:id>
+                    <con1:location>
+                      <con4:xpathText xmlns:con4="http://www.bea.com/wli/sb/stages/config">./cal:WS_Result/MENSAJE/SERVICIO[NOMBRE='ITEL/IN/Proxies/modificarElegidosFijosINLocal_PS']/PARAMETROS/PARAMETRO[NOMBRE='ELEGIDOS']/VALOR</con4:xpathText>
+                    </con1:location>
+                    <con1:expr>
+                      <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config">$elegidosFijos/*:BestFnF_Numbers//*</con4:xqueryText>
+                    </con1:expr>
+                  </con1:replace>
+                  <con1:assign varName="elegidosOriginalesFijos">
+                    <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-650919862507942970--6e211063.13f8632e713.-7d5f</con4:id>
+                    <con1:expr>
+                      <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config">let $paramElegidos := $body/cal:WS_Result/MENSAJE/SERVICIO[NOMBRE='ITEL/IN/Proxies/modificarElegidosFijosINLocal_PS']/PARAMETROS/PARAMETRO[NOMBRE='ELEGIDOSORIGINALES']
+return
+ if ($paramElegidos != "" ) then 
+	fn-bea:inlinedXML( $paramElegidos/VALOR/text() ) else ""</con4:xqueryText>
+                    </con1:expr>
+                  </con1:assign>
+                  <con1:replace varName="body" contents-only="true">
+                    <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-650919862507942970--6e211063.13f8632e713.-7d5e</con4:id>
+                    <con1:location>
+                      <con4:xpathText xmlns:con4="http://www.bea.com/wli/sb/stages/config">./cal:WS_Result/MENSAJE/SERVICIO[NOMBRE='ITEL/IN/Proxies/modificarElegidosFijosINLocal_PS']/PARAMETROS/PARAMETRO[NOMBRE='ELEGIDOSORIGINALES']/VALOR</con4:xpathText>
+                    </con1:location>
+                    <con1:expr>
+                      <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config">$elegidosOriginalesFijos/*:BestFnF_Numbers//*</con4:xqueryText>
+                    </con1:expr>
+                  </con1:replace>
+                </con1:default>
+              </con1:ifThenElse>
+            </con2:responseTransform>
+          </con2:route>
+        </con:actions>
+      </con:route-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

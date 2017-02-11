@@ -1,0 +1,973 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con2="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+  <ser:coreEntry isProxy="true" isEnabled="true" isAutoPublish="false" isTracingEnabled="false">
+    <ser:binding type="SOAP" isSoap12="false" xsi:type="con4:SoapBindingType" xmlns:con4="http://www.bea.com/wli/sb/services/bindings/config">
+      <con4:wsdl ref="ITEL/Core/Resources/WSDLs/consultarReglas_PS"/>
+      <con4:port>
+        <con4:name>ConsultarReglasSOAP</con4:name>
+        <con4:namespace>http://www.comcel.com.co/ConsultarReglas/</con4:namespace>
+      </con4:port>
+      <con4:selector type="SOAP body"/>
+      <con4:WSI-compliant>false</con4:WSI-compliant>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+    <ser:ws-policy>
+      <ser:binding-mode>wsdl-policy-attachments</ser:binding-mode>
+    </ser:ws-policy>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>local</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:inbound-properties/>
+    <tran:all-headers>true</tran:all-headers>
+  </ser:endpointConfig>
+  <ser:router>
+    <con:pipeline type="error" name="_onErrorHandler-5189814270715276062-271d3496.1335a7ba078.-6d88">
+      <con:stage name="error">
+        <con:context/>
+        <con:actions>
+          <con3:replace varName="body" contents-only="true">
+            <con1:id>_ActionId-5189814270715276062-271d3496.1335a7ba078.-6d6d</con1:id>
+            <con3:expr>
+              <con1:xqueryTransform>
+                <con1:resource ref="ITEL/Core/Resources/XQueries/consultarReglas_Error"/>
+                <con1:param name="mensaje">
+                  <con1:path>"Error en ejecucion de reglas de negocio"</con1:path>
+                </con1:param>
+                <con1:param name="descripcion">
+                  <con1:path>$fault/ctx:reason/text()</con1:path>
+                </con1:param>
+                <con1:param name="codigo">
+                  <con1:path>"7"</con1:path>
+                </con1:param>
+              </con1:xqueryTransform>
+            </con3:expr>
+          </con3:replace>
+          <con1:reply>
+            <con1:id>_ActionId-5189814270715276062-271d3496.1335a7ba078.-6d4a</con1:id>
+          </con1:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="request" name="PipelinePairNode1_request">
+      <con:stage name="validar" errorHandler="_onErrorHandler-5503355093146939009--7fa9a687.1373c5d9727.-6571">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/ActualizarCantidadConsultasDia/" prefix="act"/>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/ActualizarCantidadConsultasGratisDia/" prefix="act1"/>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/ConsultarReglas/" prefix="con"/>
+        </con:context>
+        <con:actions>
+          <con3:validate>
+            <con1:id>_ActionId-5503355093146939009--7fa9a687.1373c5d9727.-6572</con1:id>
+            <con3:schema ref="ITEL/Core/Resources/Schemas/PS_ITEL_CONSULTARREGLAS"/>
+            <con3:schemaElement xmlns:act="http://www.comcel.com.co/ActualizarCantidadConsultasGratisDia/" xmlns:con4="http://www.comcel.com.co/ConsultarReglas/">con4:Input_Parameters</con3:schemaElement>
+            <con3:varName>body</con3:varName>
+            <con3:location>
+              <con1:xpathText>./con:Input_Parameters</con1:xpathText>
+            </con3:location>
+          </con3:validate>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="PipelinePairNode1_response"/>
+    <con:pipeline name="_onErrorHandler-5503355093146939009--7fa9a687.1373c5d9727.-6571" type="error">
+      <con:stage name="error">
+        <con:context/>
+        <con:actions>
+          <con3:replace varName="body" contents-only="true">
+            <con1:id>_ActionId-5503355093146939009--7fa9a687.1373c5d9727.-6566</con1:id>
+            <con3:expr>
+              <con1:xqueryTransform>
+                <con1:resource ref="ITEL/Core/Resources/XQueries/consultarReglas_Error"/>
+                <con1:param name="mensaje">
+                  <con1:path>"Error en ejecucion de reglas de negocio"</con1:path>
+                </con1:param>
+                <con1:param name="descripcion">
+                  <con1:path>$fault/ctx:reason/text()</con1:path>
+                </con1:param>
+                <con1:param name="codigo">
+                  <con1:path>"7"</con1:path>
+                </con1:param>
+              </con1:xqueryTransform>
+            </con3:expr>
+          </con3:replace>
+          <con1:reply>
+            <con1:id>_ActionId-5503355093146939009--7fa9a687.1373c5d9727.-6565</con1:id>
+          </con1:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:flow>
+      <con:pipeline-node name="PipelinePairNode1">
+        <con:request>PipelinePairNode1_request</con:request>
+        <con:response>PipelinePairNode1_response</con:response>
+      </con:pipeline-node>
+      <con:route-node name="RouteNode1" error-handler="_onErrorHandler-5189814270715276062-271d3496.1335a7ba078.-6d88">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/ConsultarReglas/" prefix="con"/>
+        </con:context>
+        <con:actions>
+          <con2:routingTable>
+            <con1:id>_ActionId-6072017332753721301-6568e233.12f8f27409e.-7f1f</con1:id>
+            <con2:expression>
+              <con1:xqueryText>$body/con:Input_Parameters/METODO/text()</con1:xqueryText>
+            </con2:expression>
+            <con2:case>
+              <con2:operator>equals</con2:operator>
+              <con2:value>400</con2:value>
+              <con2:route>
+                <con1:id>_ActionId-6072017332753721301-6568e233.12f8f27409e.-7f22</con1:id>
+                <con2:service ref="ITEL/Trama400/Proxies/consultarReglasTrama400Local_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                <con2:operation>consultarReglasTrama400</con2:operation>
+                <con2:outboundTransform>
+                  <con3:replace varName="body" contents-only="true">
+                    <con1:id>_ActionId-1684182584636093251-6b8ad8d.12f92005b76.-7cb6</con1:id>
+                    <con3:expr>
+                      <con1:xqueryTransform>
+                        <con1:resource ref="ITEL/Core/Resources/XQueries/consultarReglas_Req_consultarReglasTrama400Local"/>
+                        <con1:param name="input_Parameters1">
+                          <con1:path>$body/con:Input_Parameters</con1:path>
+                        </con1:param>
+                      </con1:xqueryTransform>
+                    </con3:expr>
+                  </con3:replace>
+                </con2:outboundTransform>
+                <con2:responseTransform>
+                  <con3:replace varName="body" contents-only="true">
+                    <con1:id>_ActionId-1684182584636093251-6b8ad8d.12f92005b76.-7c80</con1:id>
+                    <con3:expr>
+                      <con1:xqueryTransform>
+                        <con1:resource ref="ITEL/Core/Resources/XQueries/consultarReglas_Res_Trama400"/>
+                        <con1:param name="wS_Result1">
+                          <con1:path>$body/*:WS_Result</con1:path>
+                        </con1:param>
+                      </con1:xqueryTransform>
+                    </con3:expr>
+                  </con3:replace>
+                </con2:responseTransform>
+              </con2:route>
+            </con2:case>
+            <con2:case>
+              <con2:operator>equals</con2:operator>
+              <con2:value>401</con2:value>
+              <con2:route>
+                <con1:id>_ActionId-4078329064030967049-3a1e482c.142e85452dc.-7f97</con1:id>
+                <con2:service ref="ITEL/Trama400/Proxies/consultarReglasTrama400Local_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                <con2:operation>consultarReglasTrama400</con2:operation>
+                <con2:outboundTransform>
+                  <con3:replace varName="body" contents-only="true">
+                    <con1:id>_ActionId-4078329064030967049-3a1e482c.142e85452dc.-7f96</con1:id>
+                    <con3:expr>
+                      <con1:xqueryTransform>
+                        <con1:resource ref="ITEL/Core/Resources/XQueries/consultarReglas_Req_consultarReglasTrama400Local"/>
+                        <con1:param name="input_Parameters1">
+                          <con1:path>$body/con:Input_Parameters</con1:path>
+                        </con1:param>
+                      </con1:xqueryTransform>
+                    </con3:expr>
+                  </con3:replace>
+                </con2:outboundTransform>
+                <con2:responseTransform>
+                  <con3:replace varName="body" contents-only="true">
+                    <con1:id>_ActionId-4078329064030967049-3a1e482c.142e85452dc.-7f95</con1:id>
+                    <con3:expr>
+                      <con1:xqueryTransform>
+                        <con1:resource ref="ITEL/Core/Resources/XQueries/consultarReglas_Res_Trama400"/>
+                        <con1:param name="wS_Result1">
+                          <con1:path>$body/*:WS_Result</con1:path>
+                        </con1:param>
+                      </con1:xqueryTransform>
+                    </con3:expr>
+                  </con3:replace>
+                </con2:responseTransform>
+              </con2:route>
+            </con2:case>
+            <con2:case>
+              <con2:operator>equals</con2:operator>
+              <con2:value>402</con2:value>
+              <con2:route>
+                <con1:id>_ActionId-336713036705027811--18af3f57.133179154c6.-7db5</con1:id>
+                <con2:service ref="ITEL/Trama402/Proxies/consultarReglasTrama402Local_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                <con2:operation>consultarReglasTrama402</con2:operation>
+                <con2:outboundTransform>
+                  <con3:replace varName="body" contents-only="true">
+                    <con1:id>_ActionId-336713036705027811--18af3f57.133179154c6.-7db2</con1:id>
+                    <con3:expr>
+                      <con1:xqueryTransform>
+                        <con1:resource ref="ITEL/Core/Resources/XQueries/consultarReglas_Req_consultarReglasTrama402Local"/>
+                        <con1:param name="input_Parameters1">
+                          <con1:path>$body/con:Input_Parameters</con1:path>
+                        </con1:param>
+                      </con1:xqueryTransform>
+                    </con3:expr>
+                  </con3:replace>
+                </con2:outboundTransform>
+                <con2:responseTransform>
+                  <con3:replace varName="body" contents-only="true">
+                    <con1:id>_ActionId-336713036705027811--18af3f57.133179154c6.-7daf</con1:id>
+                    <con3:expr>
+                      <con1:xqueryTransform>
+                        <con1:resource ref="ITEL/Core/Resources/XQueries/consultarReglas_Res_Trama402"/>
+                        <con1:param name="wS_Result">
+                          <con1:path>$body/*:WS_Result</con1:path>
+                        </con1:param>
+                      </con1:xqueryTransform>
+                    </con3:expr>
+                  </con3:replace>
+                </con2:responseTransform>
+              </con2:route>
+            </con2:case>
+            <con2:case>
+              <con2:operator>equals</con2:operator>
+              <con2:value>403</con2:value>
+              <con2:route>
+                <con1:id>_ActionId-4078329064030967049-3a1e482c.142e85452dc.-7f94</con1:id>
+                <con2:service ref="ITEL/Trama403/Proxies/consultarReglasTrama403Local_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                <con2:operation>consultarReglasTrama403</con2:operation>
+                <con2:outboundTransform>
+                  <con3:replace varName="body" contents-only="true">
+                    <con1:id>_ActionId-4078329064030967049-3a1e482c.142e85452dc.-7f93</con1:id>
+                    <con3:expr>
+                      <con1:xqueryTransform>
+                        <con1:resource ref="ITEL/Core/Resources/XQueries/consultarReglas_Req_consultarReglasTrama403Local"/>
+                        <con1:param name="input_Parameters1">
+                          <con1:path>$body/con:Input_Parameters</con1:path>
+                        </con1:param>
+                      </con1:xqueryTransform>
+                    </con3:expr>
+                  </con3:replace>
+                </con2:outboundTransform>
+                <con2:responseTransform>
+                  <con3:replace varName="body" contents-only="true">
+                    <con1:id>_ActionId-4078329064030967049-3a1e482c.142e85452dc.-7f92</con1:id>
+                    <con3:expr>
+                      <con1:xqueryTransform>
+                        <con1:resource ref="ITEL/Core/Resources/XQueries/consultarReglas_Res_Trama403"/>
+                        <con1:param name="wS_Result1">
+                          <con1:path>$body/*:WS_Result</con1:path>
+                        </con1:param>
+                      </con1:xqueryTransform>
+                    </con3:expr>
+                  </con3:replace>
+                </con2:responseTransform>
+              </con2:route>
+            </con2:case>
+            <con2:case>
+              <con2:operator>equals</con2:operator>
+              <con2:value>405</con2:value>
+              <con2:route>
+                <con1:id>_ActionId-4078329064030967049-3a1e482c.142e85452dc.-7f91</con1:id>
+                <con2:service ref="ITEL/Trama405/Proxies/consultarReglasTrama405Local_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                <con2:operation>consultarReglasTrama405</con2:operation>
+                <con2:outboundTransform>
+                  <con3:replace varName="body" contents-only="true">
+                    <con1:id>_ActionId-4078329064030967049-3a1e482c.142e85452dc.-7f90</con1:id>
+                    <con3:expr>
+                      <con1:xqueryTransform>
+                        <con1:resource ref="ITEL/Core/Resources/XQueries/consultarReglas_Req_consultarReglasTrama405Local"/>
+                        <con1:param name="input_Parameters1">
+                          <con1:path>$body/con:Input_Parameters</con1:path>
+                        </con1:param>
+                      </con1:xqueryTransform>
+                    </con3:expr>
+                  </con3:replace>
+                </con2:outboundTransform>
+                <con2:responseTransform>
+                  <con3:replace varName="body" contents-only="true">
+                    <con1:id>_ActionId-4078329064030967049-3a1e482c.142e85452dc.-7f8f</con1:id>
+                    <con3:expr>
+                      <con1:xqueryTransform>
+                        <con1:resource ref="ITEL/Core/Resources/XQueries/consultarReglas_Res_Trama405"/>
+                        <con1:param name="wS_Result">
+                          <con1:path>$body/*:WS_Result</con1:path>
+                        </con1:param>
+                      </con1:xqueryTransform>
+                    </con3:expr>
+                  </con3:replace>
+                </con2:responseTransform>
+              </con2:route>
+            </con2:case>
+            <con2:case>
+              <con2:operator>equals</con2:operator>
+              <con2:value>406</con2:value>
+              <con2:route>
+                <con1:id>_ActionId-4078329064030967049-3a1e482c.142e85452dc.-7f8e</con1:id>
+                <con2:service ref="ITEL/Trama406/Proxies/consultarReglasTrama406Local_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                <con2:operation>consultarReglasTrama406</con2:operation>
+                <con2:outboundTransform>
+                  <con3:replace varName="body" contents-only="true">
+                    <con1:id>_ActionId-4078329064030967049-3a1e482c.142e85452dc.-7f8d</con1:id>
+                    <con3:expr>
+                      <con1:xqueryTransform>
+                        <con1:resource ref="ITEL/Core/Resources/XQueries/consultarReglas_Req_consultarReglasTrama406Local"/>
+                        <con1:param name="input_Parameters1">
+                          <con1:path>$body/con:Input_Parameters</con1:path>
+                        </con1:param>
+                      </con1:xqueryTransform>
+                    </con3:expr>
+                  </con3:replace>
+                </con2:outboundTransform>
+                <con2:responseTransform>
+                  <con3:replace varName="body" contents-only="true">
+                    <con1:id>_ActionId-4078329064030967049-3a1e482c.142e85452dc.-7f8c</con1:id>
+                    <con3:expr>
+                      <con1:xqueryTransform>
+                        <con1:resource ref="ITEL/Core/Resources/XQueries/consultarReglas_Res_Trama406"/>
+                        <con1:param name="wS_Result">
+                          <con1:path>$body/*:WS_Result</con1:path>
+                        </con1:param>
+                      </con1:xqueryTransform>
+                    </con3:expr>
+                  </con3:replace>
+                </con2:responseTransform>
+              </con2:route>
+            </con2:case>
+            <con2:case>
+              <con2:operator>equals</con2:operator>
+              <con2:value>200</con2:value>
+              <con2:route>
+                <con1:id>_ActionId-4078329064030967049-3a1e482c.142e85452dc.-7f8b</con1:id>
+                <con2:service ref="ITEL/Trama200/Proxies/consultarReglasTrama200Local_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                <con2:operation>consultarReglasTrama200</con2:operation>
+                <con2:outboundTransform>
+                  <con3:replace varName="body" contents-only="true">
+                    <con1:id>_ActionId-4078329064030967049-3a1e482c.142e85452dc.-7f8a</con1:id>
+                    <con3:expr>
+                      <con1:xqueryTransform>
+                        <con1:resource ref="ITEL/Core/Resources/XQueries/consultarReglas_Req_consultarReglasTrama200Local"/>
+                        <con1:param name="input_Parameters1">
+                          <con1:path>$body/con:Input_Parameters</con1:path>
+                        </con1:param>
+                      </con1:xqueryTransform>
+                    </con3:expr>
+                  </con3:replace>
+                </con2:outboundTransform>
+                <con2:responseTransform>
+                  <con3:replace varName="body" contents-only="true">
+                    <con1:id>_ActionId-4078329064030967049-3a1e482c.142e85452dc.-7f89</con1:id>
+                    <con3:expr>
+                      <con1:xqueryTransform>
+                        <con1:resource ref="ITEL/Core/Resources/XQueries/consultarReglas_Res_Trama200"/>
+                        <con1:param name="wS_Result1">
+                          <con1:path>$body/*:WS_Result</con1:path>
+                        </con1:param>
+                      </con1:xqueryTransform>
+                    </con3:expr>
+                  </con3:replace>
+                </con2:responseTransform>
+              </con2:route>
+            </con2:case>
+            <con2:case>
+              <con2:operator>equals</con2:operator>
+              <con2:value>601</con2:value>
+              <con2:route>
+                <con1:id>_ActionId-4078329064030967049-3a1e482c.142e85452dc.-7f88</con1:id>
+                <con2:service ref="ITEL/Trama601/Proxies/consultarReglasTrama601Local_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                <con2:operation>consultarReglasTrama601</con2:operation>
+                <con2:outboundTransform>
+                  <con3:replace varName="body" contents-only="true">
+                    <con1:id>_ActionId-4078329064030967049-3a1e482c.142e85452dc.-7f87</con1:id>
+                    <con3:expr>
+                      <con1:xqueryTransform>
+                        <con1:resource ref="ITEL/Core/Resources/XQueries/consultarReglas_Req_consultarReglasTrama601Local"/>
+                        <con1:param name="input_Parameters1">
+                          <con1:path>$body/con:Input_Parameters</con1:path>
+                        </con1:param>
+                      </con1:xqueryTransform>
+                    </con3:expr>
+                  </con3:replace>
+                </con2:outboundTransform>
+                <con2:responseTransform>
+                  <con3:replace varName="body" contents-only="true">
+                    <con1:id>_ActionId-4078329064030967049-3a1e482c.142e85452dc.-7f86</con1:id>
+                    <con3:expr>
+                      <con1:xqueryTransform>
+                        <con1:resource ref="ITEL/Core/Resources/XQueries/consultarReglas_Res_Trama601"/>
+                        <con1:param name="wS_Result1">
+                          <con1:path>$body/*:WS_Result</con1:path>
+                        </con1:param>
+                      </con1:xqueryTransform>
+                    </con3:expr>
+                  </con3:replace>
+                </con2:responseTransform>
+              </con2:route>
+            </con2:case>
+            <con2:case>
+              <con2:operator>equals</con2:operator>
+              <con2:value>100</con2:value>
+              <con2:route>
+                <con1:id>_ActionId-4078329064030967049-3a1e482c.142e85452dc.-7f85</con1:id>
+                <con2:service ref="ITEL/Trama100/Proxies/consultarReglasTrama100Local_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                <con2:operation>consultarReglasTrama100</con2:operation>
+                <con2:outboundTransform>
+                  <con3:replace varName="body" contents-only="true">
+                    <con1:id>_ActionId-4078329064030967049-3a1e482c.142e85452dc.-7f84</con1:id>
+                    <con3:expr>
+                      <con1:xqueryTransform>
+                        <con1:resource ref="ITEL/Core/Resources/XQueries/consultarReglas_Req_consultarReglasTrama100Local"/>
+                        <con1:param name="input_Parameters1">
+                          <con1:path>$body/con:Input_Parameters</con1:path>
+                        </con1:param>
+                      </con1:xqueryTransform>
+                    </con3:expr>
+                  </con3:replace>
+                </con2:outboundTransform>
+                <con2:responseTransform>
+                  <con3:replace varName="body" contents-only="true">
+                    <con1:id>_ActionId-4078329064030967049-3a1e482c.142e85452dc.-7f83</con1:id>
+                    <con3:expr>
+                      <con1:xqueryTransform>
+                        <con1:resource ref="ITEL/Core/Resources/XQueries/consultarReglas_Res_Trama100"/>
+                        <con1:param name="wS_Result1">
+                          <con1:path>$body/*:WS_Result</con1:path>
+                        </con1:param>
+                      </con1:xqueryTransform>
+                    </con3:expr>
+                  </con3:replace>
+                </con2:responseTransform>
+              </con2:route>
+            </con2:case>
+            <con2:case>
+              <con2:operator>equals</con2:operator>
+              <con2:value>301</con2:value>
+              <con2:route>
+                <con1:id>_ActionId-4078329064030967049-3a1e482c.142e85452dc.-7f82</con1:id>
+                <con2:service ref="ITEL/Trama301/Proxies/consultarReglasTrama301Local_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                <con2:operation>consultarReglasTrama301</con2:operation>
+                <con2:outboundTransform>
+                  <con3:replace varName="body" contents-only="true">
+                    <con1:id>_ActionId-4078329064030967049-3a1e482c.142e85452dc.-7f81</con1:id>
+                    <con3:expr>
+                      <con1:xqueryTransform>
+                        <con1:resource ref="ITEL/Core/Resources/XQueries/consultarReglas_Req_consultarReglasTrama301Local"/>
+                        <con1:param name="input_Parameters1">
+                          <con1:path>$body/con:Input_Parameters</con1:path>
+                        </con1:param>
+                      </con1:xqueryTransform>
+                    </con3:expr>
+                  </con3:replace>
+                </con2:outboundTransform>
+                <con2:responseTransform>
+                  <con3:replace varName="body" contents-only="true">
+                    <con1:id>_ActionId-4078329064030967049-3a1e482c.142e85452dc.-7f80</con1:id>
+                    <con3:expr>
+                      <con1:xqueryTransform>
+                        <con1:resource ref="ITEL/Core/Resources/XQueries/consultarReglas_Res_Trama301"/>
+                        <con1:param name="wS_Result1">
+                          <con1:path>$body/*:WS_Result</con1:path>
+                        </con1:param>
+                      </con1:xqueryTransform>
+                    </con3:expr>
+                  </con3:replace>
+                </con2:responseTransform>
+              </con2:route>
+            </con2:case>
+            <con2:case>
+              <con2:operator>equals</con2:operator>
+              <con2:value>302</con2:value>
+              <con2:route>
+                <con1:id>_ActionId-4078329064030967049-3a1e482c.142e85452dc.-7f7f</con1:id>
+                <con2:service ref="ITEL/Trama302/Proxies/consultarReglasTrama302Local_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                <con2:operation>consultarReglasTrama302</con2:operation>
+                <con2:outboundTransform>
+                  <con3:replace varName="body" contents-only="true">
+                    <con1:id>_ActionId-4078329064030967049-3a1e482c.142e85452dc.-7f7e</con1:id>
+                    <con3:expr>
+                      <con1:xqueryTransform>
+                        <con1:resource ref="ITEL/Core/Resources/XQueries/consultarReglas_Req_consultarReglasTrama302Local"/>
+                        <con1:param name="input_Parameters1">
+                          <con1:path>$body/con:Input_Parameters</con1:path>
+                        </con1:param>
+                      </con1:xqueryTransform>
+                    </con3:expr>
+                  </con3:replace>
+                </con2:outboundTransform>
+                <con2:responseTransform>
+                  <con3:replace varName="body" contents-only="true">
+                    <con1:id>_ActionId-4078329064030967049-3a1e482c.142e85452dc.-7f7d</con1:id>
+                    <con3:expr>
+                      <con1:xqueryTransform>
+                        <con1:resource ref="ITEL/Core/Resources/XQueries/consultarReglas_Res_Trama302"/>
+                        <con1:param name="wS_Result1">
+                          <con1:path>$body/*:WS_Result</con1:path>
+                        </con1:param>
+                      </con1:xqueryTransform>
+                    </con3:expr>
+                  </con3:replace>
+                </con2:responseTransform>
+              </con2:route>
+            </con2:case>
+            <con2:case>
+              <con2:operator>equals</con2:operator>
+              <con2:value>303</con2:value>
+              <con2:route>
+                <con1:id>_ActionId-4078329064030967049-3a1e482c.142e85452dc.-7f7c</con1:id>
+                <con2:service ref="ITEL/Trama303/Proxies/consultarReglasTrama303Local_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                <con2:operation>consultarReglasTrama303</con2:operation>
+                <con2:outboundTransform>
+                  <con3:replace varName="body" contents-only="true">
+                    <con1:id>_ActionId-4078329064030967049-3a1e482c.142e85452dc.-7f7b</con1:id>
+                    <con3:expr>
+                      <con1:xqueryTransform>
+                        <con1:resource ref="ITEL/Core/Resources/XQueries/consultarReglas_Req_consultarReglasTrama303Local"/>
+                        <con1:param name="input_Parameters1">
+                          <con1:path>$body/con:Input_Parameters</con1:path>
+                        </con1:param>
+                      </con1:xqueryTransform>
+                    </con3:expr>
+                  </con3:replace>
+                </con2:outboundTransform>
+                <con2:responseTransform>
+                  <con3:replace varName="body" contents-only="true">
+                    <con1:id>_ActionId-4078329064030967049-3a1e482c.142e85452dc.-7f7a</con1:id>
+                    <con3:expr>
+                      <con1:xqueryTransform>
+                        <con1:resource ref="ITEL/Core/Resources/XQueries/consultarReglas_Res_Trama303"/>
+                        <con1:param name="wS_Result1">
+                          <con1:path>$body/*:WS_Result</con1:path>
+                        </con1:param>
+                      </con1:xqueryTransform>
+                    </con3:expr>
+                  </con3:replace>
+                </con2:responseTransform>
+              </con2:route>
+            </con2:case>
+            <con2:case>
+              <con2:operator>equals</con2:operator>
+              <con2:value>305</con2:value>
+              <con2:route>
+                <con1:id>_ActionId-4078329064030967049-3a1e482c.142e85452dc.-7f79</con1:id>
+                <con2:service ref="ITEL/Trama305/Proxies/consultarReglasTrama305Local_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                <con2:operation>consultarReglasTrama305</con2:operation>
+                <con2:outboundTransform>
+                  <con3:replace varName="body" contents-only="true">
+                    <con1:id>_ActionId-4078329064030967049-3a1e482c.142e85452dc.-7f78</con1:id>
+                    <con3:expr>
+                      <con1:xqueryTransform>
+                        <con1:resource ref="ITEL/Core/Resources/XQueries/consultarReglas_Req_consultarReglasTrama305Local"/>
+                        <con1:param name="input_Parameters1">
+                          <con1:path>$body/con:Input_Parameters</con1:path>
+                        </con1:param>
+                      </con1:xqueryTransform>
+                    </con3:expr>
+                  </con3:replace>
+                </con2:outboundTransform>
+                <con2:responseTransform>
+                  <con3:replace varName="body" contents-only="true">
+                    <con1:id>_ActionId-4078329064030967049-3a1e482c.142e85452dc.-7f77</con1:id>
+                    <con3:expr>
+                      <con1:xqueryTransform>
+                        <con1:resource ref="ITEL/Core/Resources/XQueries/consultarReglas_Res_Trama305"/>
+                        <con1:param name="wS_Result1">
+                          <con1:path>$body/*:WS_Result</con1:path>
+                        </con1:param>
+                      </con1:xqueryTransform>
+                    </con3:expr>
+                  </con3:replace>
+                </con2:responseTransform>
+              </con2:route>
+            </con2:case>
+            <con2:case>
+              <con2:operator>equals</con2:operator>
+              <con2:value>306</con2:value>
+              <con2:route>
+                <con1:id>_ActionId-4078329064030967049-3a1e482c.142e85452dc.-7f76</con1:id>
+                <con2:service ref="ITEL/Trama306/Proxies/consultarReglasTrama306Local_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                <con2:operation>consultarReglasTrama306</con2:operation>
+                <con2:outboundTransform>
+                  <con3:replace varName="body" contents-only="true">
+                    <con1:id>_ActionId-4078329064030967049-3a1e482c.142e85452dc.-7f75</con1:id>
+                    <con3:expr>
+                      <con1:xqueryTransform>
+                        <con1:resource ref="ITEL/Core/Resources/XQueries/consultarReglas_Req_consultarReglasTrama306Local"/>
+                        <con1:param name="input_Parameters1">
+                          <con1:path>$body/con:Input_Parameters</con1:path>
+                        </con1:param>
+                      </con1:xqueryTransform>
+                    </con3:expr>
+                  </con3:replace>
+                </con2:outboundTransform>
+                <con2:responseTransform>
+                  <con3:replace varName="body" contents-only="true">
+                    <con1:id>_ActionId-4078329064030967049-3a1e482c.142e85452dc.-7f74</con1:id>
+                    <con3:expr>
+                      <con1:xqueryTransform>
+                        <con1:resource ref="ITEL/Core/Resources/XQueries/consultarReglas_Res_Trama306"/>
+                        <con1:param name="wS_Result1">
+                          <con1:path>$body/*:WS_Result</con1:path>
+                        </con1:param>
+                      </con1:xqueryTransform>
+                    </con3:expr>
+                  </con3:replace>
+                </con2:responseTransform>
+              </con2:route>
+            </con2:case>
+            <con2:case>
+              <con2:operator>equals</con2:operator>
+              <con2:value>307</con2:value>
+              <con2:route>
+                <con1:id>_ActionId-4078329064030967049-3a1e482c.142e85452dc.-7f73</con1:id>
+                <con2:service ref="ITEL/Trama307/Proxies/consultarReglasTrama307Local_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                <con2:operation>consultarReglasTrama307</con2:operation>
+                <con2:outboundTransform>
+                  <con3:replace varName="body" contents-only="true">
+                    <con1:id>_ActionId-4078329064030967049-3a1e482c.142e85452dc.-7f72</con1:id>
+                    <con3:expr>
+                      <con1:xqueryTransform>
+                        <con1:resource ref="ITEL/Core/Resources/XQueries/consultarReglas_Req_consultarReglasTrama307Local"/>
+                        <con1:param name="input_Parameters1">
+                          <con1:path>$body/con:Input_Parameters</con1:path>
+                        </con1:param>
+                      </con1:xqueryTransform>
+                    </con3:expr>
+                  </con3:replace>
+                </con2:outboundTransform>
+                <con2:responseTransform>
+                  <con3:replace varName="body" contents-only="true">
+                    <con1:id>_ActionId-4078329064030967049-3a1e482c.142e85452dc.-7f71</con1:id>
+                    <con3:expr>
+                      <con1:xqueryTransform>
+                        <con1:resource ref="ITEL/Core/Resources/XQueries/consultarReglas_Res_Trama307"/>
+                        <con1:param name="wS_Result1">
+                          <con1:path>$body/*:WS_Result</con1:path>
+                        </con1:param>
+                      </con1:xqueryTransform>
+                    </con3:expr>
+                  </con3:replace>
+                </con2:responseTransform>
+              </con2:route>
+            </con2:case>
+            <con2:case>
+              <con2:operator>equals</con2:operator>
+              <con2:value>308</con2:value>
+              <con2:route>
+                <con1:id>_ActionId-4078329064030967049-3a1e482c.142e85452dc.-7f70</con1:id>
+                <con2:service ref="ITEL/Trama308/Proxies/consultarReglasTrama308Local_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                <con2:operation>consultarReglasTrama308</con2:operation>
+                <con2:outboundTransform>
+                  <con3:replace varName="body" contents-only="true">
+                    <con1:id>_ActionId-4078329064030967049-3a1e482c.142e85452dc.-7f6f</con1:id>
+                    <con3:expr>
+                      <con1:xqueryTransform>
+                        <con1:resource ref="ITEL/Core/Resources/XQueries/consultarReglas_Req_consultarReglasTrama308Local"/>
+                        <con1:param name="input_Parameters1">
+                          <con1:path>$body/con:Input_Parameters</con1:path>
+                        </con1:param>
+                      </con1:xqueryTransform>
+                    </con3:expr>
+                  </con3:replace>
+                </con2:outboundTransform>
+                <con2:responseTransform>
+                  <con3:replace varName="body" contents-only="true">
+                    <con1:id>_ActionId-4078329064030967049-3a1e482c.142e85452dc.-7f6e</con1:id>
+                    <con3:expr>
+                      <con1:xqueryTransform>
+                        <con1:resource ref="ITEL/Core/Resources/XQueries/consultarReglas_Res_Trama308"/>
+                        <con1:param name="wS_Result1">
+                          <con1:path>$body/*:WS_Result</con1:path>
+                        </con1:param>
+                      </con1:xqueryTransform>
+                    </con3:expr>
+                  </con3:replace>
+                </con2:responseTransform>
+              </con2:route>
+            </con2:case>
+            <con2:case>
+              <con2:operator>equals</con2:operator>
+              <con2:value>311</con2:value>
+              <con2:route>
+                <con1:id>_ActionId-8585969624932901464-7ba7c514.13fa51823a9.-7d71</con1:id>
+                <con2:service ref="ITEL/Trama311/Proxies/consultarReglasTrama311Local_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                <con2:operation>consultarReglasTrama311</con2:operation>
+                <con2:outboundTransform>
+                  <con3:replace varName="body" contents-only="true">
+                    <con1:id>_ActionId-8585969624932901464-7ba7c514.13fa51823a9.-7d1d</con1:id>
+                    <con3:expr>
+                      <con1:xqueryTransform>
+                        <con1:resource ref="ITEL/Core/Resources/XQueries/consultarReglas_Req_consultarReglasTrama311Local"/>
+                        <con1:param name="input_Parameters1">
+                          <con1:path>$body/con:Input_Parameters</con1:path>
+                        </con1:param>
+                      </con1:xqueryTransform>
+                    </con3:expr>
+                  </con3:replace>
+                </con2:outboundTransform>
+                <con2:responseTransform>
+                  <con3:replace varName="body" contents-only="true">
+                    <con1:id>_ActionId-8585969624932901464-7ba7c514.13fa51823a9.-7cc9</con1:id>
+                    <con3:expr>
+                      <con1:xqueryTransform>
+                        <con1:resource ref="ITEL/Core/Resources/XQueries/consultarReglas_Res_Trama311"/>
+                        <con1:param name="wS_Result1">
+                          <con1:path>$body/*:WS_Result</con1:path>
+                        </con1:param>
+                      </con1:xqueryTransform>
+                    </con3:expr>
+                  </con3:replace>
+                </con2:responseTransform>
+              </con2:route>
+            </con2:case>
+            <con2:case>
+              <con2:operator>equals</con2:operator>
+              <con2:value>309</con2:value>
+              <con2:route>
+                <con1:id>_ActionId-4078329064030967049-3a1e482c.142e85452dc.-7f6d</con1:id>
+                <con2:service ref="ITEL/Trama309/Proxies/consultarReglasTrama309Local_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                <con2:operation>consultarReglasTrama309</con2:operation>
+                <con2:outboundTransform>
+                  <con3:replace varName="body" contents-only="true">
+                    <con1:id>_ActionId-4078329064030967049-3a1e482c.142e85452dc.-7f6c</con1:id>
+                    <con3:expr>
+                      <con1:xqueryTransform>
+                        <con1:resource ref="ITEL/Core/Resources/XQueries/consultarReglas_Req_consultarReglasTrama309Local"/>
+                        <con1:param name="input_Parameters1">
+                          <con1:path>$body/con:Input_Parameters</con1:path>
+                        </con1:param>
+                      </con1:xqueryTransform>
+                    </con3:expr>
+                  </con3:replace>
+                </con2:outboundTransform>
+                <con2:responseTransform>
+                  <con3:replace varName="body" contents-only="true">
+                    <con1:id>_ActionId-4078329064030967049-3a1e482c.142e85452dc.-7f6b</con1:id>
+                    <con3:expr>
+                      <con1:xqueryTransform>
+                        <con1:resource ref="ITEL/Core/Resources/XQueries/consultarReglas_Res_Trama309"/>
+                        <con1:param name="wS_Result1">
+                          <con1:path>$body/*:WS_Result</con1:path>
+                        </con1:param>
+                      </con1:xqueryTransform>
+                    </con3:expr>
+                  </con3:replace>
+                </con2:responseTransform>
+              </con2:route>
+            </con2:case>
+            <con2:case>
+              <con2:operator>equals</con2:operator>
+              <con2:value>310</con2:value>
+              <con2:route>
+                <con1:id>_ActionId-5823006968542368613-72ec1483.13f76d84837.-7b7e</con1:id>
+                <con2:service ref="ITEL/Trama310/Proxies/consultarReglasTrama310Local_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                <con2:operation>consultarReglasTrama310</con2:operation>
+                <con2:outboundTransform>
+                  <con3:replace contents-only="true" varName="body">
+                    <con1:id>_ActionId-5823006968542368613-72ec1483.13f76d84837.-7b5f</con1:id>
+                    <con3:expr>
+                      <con1:xqueryTransform>
+                        <con1:resource ref="ITEL/Core/Resources/XQueries/consultarReglas_Req_consultarReglasTrama310Local"/>
+                        <con1:param name="input_Parameters1">
+                          <con1:path>$body/con:Input_Parameters</con1:path>
+                        </con1:param>
+                      </con1:xqueryTransform>
+                    </con3:expr>
+                  </con3:replace>
+                </con2:outboundTransform>
+                <con2:responseTransform>
+                  <con3:replace contents-only="true" varName="body">
+                    <con1:id>_ActionId-5823006968542368613-72ec1483.13f76d84837.-7b4a</con1:id>
+                    <con3:expr>
+                      <con1:xqueryTransform>
+                        <con1:resource ref="ITEL/Core/Resources/XQueries/consultarReglas_Res_Trama310"/>
+                        <con1:param name="wS_Result1">
+                          <con1:path>$body/*:WS_Result</con1:path>
+                        </con1:param>
+                      </con1:xqueryTransform>
+                    </con3:expr>
+                  </con3:replace>
+                </con2:responseTransform>
+              </con2:route>
+            </con2:case>
+            <con2:case>
+              <con2:operator>equals</con2:operator>
+              <con2:value>701</con2:value>
+              <con2:route>
+                <con1:id>_ActionId-4078329064030967049-3a1e482c.142e85452dc.-7f6a</con1:id>
+                <con2:service ref="ITEL/Trama701/Proxies/consultarReglasTrama701Local_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                <con2:operation>consultarReglasTrama701</con2:operation>
+                <con2:outboundTransform>
+                  <con3:replace varName="body" contents-only="true">
+                    <con1:id>_ActionId-4078329064030967049-3a1e482c.142e85452dc.-7f69</con1:id>
+                    <con3:expr>
+                      <con1:xqueryTransform>
+                        <con1:resource ref="ITEL/Core/Resources/XQueries/consultarReglas_Req_consultarReglasTrama701Local"/>
+                        <con1:param name="input_Parameters1">
+                          <con1:path>$body/con:Input_Parameters</con1:path>
+                        </con1:param>
+                      </con1:xqueryTransform>
+                    </con3:expr>
+                  </con3:replace>
+                </con2:outboundTransform>
+                <con2:responseTransform>
+                  <con3:replace varName="body" contents-only="true">
+                    <con1:id>_ActionId-4078329064030967049-3a1e482c.142e85452dc.-7f68</con1:id>
+                    <con3:expr>
+                      <con1:xqueryTransform>
+                        <con1:resource ref="ITEL/Core/Resources/XQueries/consultarReglas_Res_Trama701"/>
+                        <con1:param name="wS_Result1">
+                          <con1:path>$body/*:WS_Result</con1:path>
+                        </con1:param>
+                      </con1:xqueryTransform>
+                    </con3:expr>
+                  </con3:replace>
+                </con2:responseTransform>
+              </con2:route>
+            </con2:case>
+            <con2:case>
+              <con2:operator>equals</con2:operator>
+              <con2:value>702</con2:value>
+              <con2:route>
+                <con1:id>_ActionId-4078329064030967049-3a1e482c.142e85452dc.-7f67</con1:id>
+                <con2:service ref="ITEL/Trama702/Proxies/consultarReglasTrama702Local_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                <con2:operation>consultarReglasTrama702</con2:operation>
+                <con2:outboundTransform>
+                  <con3:replace varName="body" contents-only="true">
+                    <con1:id>_ActionId-4078329064030967049-3a1e482c.142e85452dc.-7f66</con1:id>
+                    <con3:expr>
+                      <con1:xqueryTransform>
+                        <con1:resource ref="ITEL/Core/Resources/XQueries/consultarReglas_Req_consultarReglasTrama702Local"/>
+                        <con1:param name="input_Parameters1">
+                          <con1:path>$body/con:Input_Parameters</con1:path>
+                        </con1:param>
+                      </con1:xqueryTransform>
+                    </con3:expr>
+                  </con3:replace>
+                </con2:outboundTransform>
+                <con2:responseTransform>
+                  <con3:replace varName="body" contents-only="true">
+                    <con1:id>_ActionId-4078329064030967049-3a1e482c.142e85452dc.-7f65</con1:id>
+                    <con3:expr>
+                      <con1:xqueryTransform>
+                        <con1:resource ref="ITEL/Core/Resources/XQueries/consultarReglas_Res_Trama702"/>
+                        <con1:param name="wS_Result1">
+                          <con1:path>$body/*:WS_Result</con1:path>
+                        </con1:param>
+                      </con1:xqueryTransform>
+                    </con3:expr>
+                  </con3:replace>
+                </con2:responseTransform>
+              </con2:route>
+            </con2:case>
+            <con2:case>
+              <con2:operator>equals</con2:operator>
+              <con2:value>703</con2:value>
+              <con2:route>
+                <con1:id>_ActionId-4078329064030967049-3a1e482c.142e85452dc.-7f64</con1:id>
+                <con2:service ref="ITEL/Trama703/Proxies/consultarReglasTrama703Local_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                <con2:operation>consultarReglasTrama703</con2:operation>
+                <con2:outboundTransform>
+                  <con3:replace varName="body" contents-only="true">
+                    <con1:id>_ActionId-4078329064030967049-3a1e482c.142e85452dc.-7f63</con1:id>
+                    <con3:expr>
+                      <con1:xqueryTransform>
+                        <con1:resource ref="ITEL/Core/Resources/XQueries/consultarReglas_Req_consultarReglasTrama703Local"/>
+                        <con1:param name="input_Parameters1">
+                          <con1:path>$body/con:Input_Parameters</con1:path>
+                        </con1:param>
+                      </con1:xqueryTransform>
+                    </con3:expr>
+                  </con3:replace>
+                </con2:outboundTransform>
+                <con2:responseTransform>
+                  <con3:replace varName="body" contents-only="true">
+                    <con1:id>_ActionId-4078329064030967049-3a1e482c.142e85452dc.-7f62</con1:id>
+                    <con3:expr>
+                      <con1:xqueryTransform>
+                        <con1:resource ref="ITEL/Core/Resources/XQueries/consultarReglas_Res_Trama703"/>
+                        <con1:param name="wS_Result1">
+                          <con1:path>$body/*:WS_Result</con1:path>
+                        </con1:param>
+                      </con1:xqueryTransform>
+                    </con3:expr>
+                  </con3:replace>
+                </con2:responseTransform>
+              </con2:route>
+            </con2:case>
+            <con2:case>
+              <con2:operator>equals</con2:operator>
+              <con2:value>705</con2:value>
+              <con2:route>
+                <con1:id>_ActionId-4078329064030967049-3a1e482c.142e85452dc.-7f61</con1:id>
+                <con2:service ref="ITEL/Trama705/Proxies/consultarReglasTrama705Local_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                <con2:operation>consultarReglasTrama705</con2:operation>
+                <con2:outboundTransform>
+                  <con3:replace varName="body" contents-only="true">
+                    <con1:id>_ActionId-4078329064030967049-3a1e482c.142e85452dc.-7f60</con1:id>
+                    <con3:expr>
+                      <con1:xqueryTransform>
+                        <con1:resource ref="ITEL/Core/Resources/XQueries/consultarReglas_Req_consultarReglasTrama705Local"/>
+                        <con1:param name="input_Parameters1">
+                          <con1:path>$body/con:Input_Parameters</con1:path>
+                        </con1:param>
+                      </con1:xqueryTransform>
+                    </con3:expr>
+                  </con3:replace>
+                </con2:outboundTransform>
+                <con2:responseTransform>
+                  <con3:replace varName="body" contents-only="true">
+                    <con1:id>_ActionId-4078329064030967049-3a1e482c.142e85452dc.-7f5f</con1:id>
+                    <con3:expr>
+                      <con1:xqueryTransform>
+                        <con1:resource ref="ITEL/Core/Resources/XQueries/consultarReglas_Res_Trama705"/>
+                        <con1:param name="wS_Result1">
+                          <con1:path>$body/*:WS_Result</con1:path>
+                        </con1:param>
+                      </con1:xqueryTransform>
+                    </con3:expr>
+                  </con3:replace>
+                </con2:responseTransform>
+              </con2:route>
+            </con2:case>
+            <con2:case>
+              <con2:operator>equals</con2:operator>
+              <con2:value>604</con2:value>
+              <con2:route>
+                <con1:id>_ActionId-2136301715180315283--62e33a73.143011032cf.-6420</con1:id>
+                <con2:service ref="ITEL/Trama601/Proxies/consultarReglasTrama601Local_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                <con2:operation>consultarReglasTrama601</con2:operation>
+                <con2:outboundTransform>
+                  <con3:replace varName="body" contents-only="true">
+                    <con1:id>_ActionId-2136301715180315283--62e33a73.143011032cf.-635d</con1:id>
+                    <con3:expr>
+                      <con1:xqueryTransform>
+                        <con1:resource ref="ITEL/Core/Resources/XQueries/consultarReglas_Req_consultarReglasTrama601Local"/>
+                        <con1:param name="input_Parameters1">
+                          <con1:path>$body/con:Input_Parameters</con1:path>
+                        </con1:param>
+                      </con1:xqueryTransform>
+                    </con3:expr>
+                  </con3:replace>
+                </con2:outboundTransform>
+                <con2:responseTransform>
+                  <con3:replace varName="body" contents-only="true">
+                    <con1:id>_ActionId-2136301715180315283--62e33a73.143011032cf.-6309</con1:id>
+                    <con3:expr>
+                      <con1:xqueryTransform>
+                        <con1:resource ref="ITEL/Core/Resources/XQueries/consultarReglas_Res_Trama601"/>
+                        <con1:param name="wS_Result1">
+                          <con1:path>$body/*:WS_Result</con1:path>
+                        </con1:param>
+                      </con1:xqueryTransform>
+                    </con3:expr>
+                  </con3:replace>
+                </con2:responseTransform>
+              </con2:route>
+            </con2:case>
+          </con2:routingTable>
+        </con:actions>
+      </con:route-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

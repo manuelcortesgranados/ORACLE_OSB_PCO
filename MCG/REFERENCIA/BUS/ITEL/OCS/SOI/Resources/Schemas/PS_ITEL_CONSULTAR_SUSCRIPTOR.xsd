@@ -1,0 +1,31 @@
+<xs:schema targetNamespace="http://www.comcel.com.co/ConsultarSuscriptorOCS/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.comcel.com.co/ConsultarSuscriptorOCS/" xmlns:oper="http://www.comcel.com.co/OCS/OperacionCorbaOCS">
+	
+	<xs:import namespace="http://www.comcel.com.co/OCS/OperacionCorbaOCS" schemaLocation="DA_ITEL_OPERACION_OCS_SOI.xsd"/>
+	
+	<xs:element name="Input_Parameters" type="tns:Input_Parameters"/>
+	<xs:element name="WS_Result" type="tns:WS_Result"/>
+
+	<xs:complexType name="Input_Parameters">
+		<xs:sequence>
+			<!-- <xs:element name="PREFIJO" type="xs:string"/>-->
+			<xs:element name="MIN" type="xs:string"/>
+			<xs:element name="IN" type="xs:string"/>
+			<xs:element name="TIMEOUT" type="xs:long"/>
+		</xs:sequence>
+	</xs:complexType>	
+	
+	<xs:complexType name="WS_Result">
+		<xs:sequence>
+			<xs:element name="CODIGO" type="xs:string"/>
+			<xs:element name="MENSAJE" type="tns:MensajeType"/>
+			<xs:element name="DESCRIPCION" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="MensajeType">
+		<xs:sequence>
+			<xs:element name="CONSULTAR_SUSCRIPTOR" type="oper:ConsultarSuscriptorResponse"/>
+		</xs:sequence>
+	</xs:complexType>
+
+</xs:schema>

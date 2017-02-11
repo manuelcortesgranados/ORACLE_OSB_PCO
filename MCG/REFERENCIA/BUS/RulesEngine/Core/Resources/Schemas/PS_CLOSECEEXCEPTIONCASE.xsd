@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://closeceexceptioncase.performancemanagement.schema.amx.com" targetNamespace="http://closeceexceptioncase.performancemanagement.schema.amx.com" elementFormDefault="qualified">
+
+	<xs:element name="CloseCEExceptionCaseRequest" type="tns:CloseCEExceptionCaseRequest"/>
+	<xs:element name="CloseCEExceptionCaseResponse" type="tns:CloseCEExceptionCaseResponse"/>
+	
+	<xs:complexType name="CloseCEExceptionCaseRequest">
+		<xs:sequence>
+			<xs:element name="caseId" type="xs:string" minOccurs="1"/>
+			<xs:element name="cbpId" type="xs:string" minOccurs="1"/>
+			<xs:element name="caseTypeLevels" type="xs:string" minOccurs="1" maxOccurs="unbounded"/>
+			<xs:element name="closeStatus" type="xs:string" minOccurs="1"/>
+			<xs:element name="resolutionCode1" type="xs:string" minOccurs="1"/>
+			<xs:element name="resolutionCode2" type="xs:string" minOccurs="1"/>
+			<xs:element name="FlexibleAttributeVO" type="tns:FlexibleAttributeVO" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="agentId" type="xs:string" minOccurs="1"/>
+			<xs:element name="closeDate" type="xs:dateTime" minOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="CloseCEExceptionCaseResponse">
+		<xs:sequence/>
+	</xs:complexType>	
+	
+	<xs:complexType name="FlexibleAttributeVO">
+		<xs:sequence>
+			<xs:element name="flexAttrName" type="xs:string" minOccurs="1"/>
+			<xs:element name="flexAttriValue" type="xs:string" minOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>	
+</xs:schema>

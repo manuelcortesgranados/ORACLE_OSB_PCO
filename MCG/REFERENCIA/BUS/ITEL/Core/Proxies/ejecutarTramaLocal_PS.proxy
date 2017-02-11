@@ -1,0 +1,2814 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con4="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con5="http://www.bea.com/wli/sb/stages/publish/config">
+  <ser:coreEntry isProxy="true" isEnabled="true" isAutoPublish="false" isTracingEnabled="false">
+    <ser:binding type="SOAP" isSoap12="false" xsi:type="con6:SoapBindingType" xmlns:con6="http://www.bea.com/wli/sb/services/bindings/config">
+      <con6:wsdl ref="ITEL/Core/Resources/WSDLs/ejecutarTrama_PS"/>
+      <con6:port>
+        <con6:name>EjecutarTramaSOAP</con6:name>
+        <con6:namespace>http://www.comcel.com.co/EjecutarTrama/</con6:namespace>
+      </con6:port>
+      <con6:selector type="SOAP body"/>
+      <con6:WSI-compliant>false</con6:WSI-compliant>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+    <ser:ws-policy>
+      <ser:binding-mode>wsdl-policy-attachments</ser:binding-mode>
+    </ser:ws-policy>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>local</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:inbound-properties/>
+    <tran:all-headers>true</tran:all-headers>
+  </ser:endpointConfig>
+  <ser:router>
+    <con:pipeline type="request" name="PipelinePairNode1_request">
+      <con:stage name="variables" errorHandler="_onErrorHandler-2204270597828647040--7c77bcf4.12f6f6971b2.-7d89">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/EjecutarTrama/" prefix="ejec"/>
+        </con:context>
+        <con:actions>
+          <con2:assign varName="tiempoInicio">
+            <con1:id>_ActionId-6816873300214950834--486688a8.131debf19ea.-7fe3</con1:id>
+            <con2:expr>
+              <con1:xqueryText>fn:current-dateTime()</con1:xqueryText>
+            </con2:expr>
+          </con2:assign>
+          <con2:assign varName="codigoError">
+            <con1:id>_ActionId-5174370892286694528-6956db40.133a81e5a33.-7a85</con1:id>
+            <con2:expr>
+              <con1:xqueryText>"1"</con1:xqueryText>
+            </con2:expr>
+          </con2:assign>
+          <con2:assign varName="ipOrigen">
+            <con1:id>_ActionId-5174370892286694528-6956db40.133a81e5a33.-7a69</con1:id>
+            <con2:expr>
+              <con1:xqueryText>if (fn:not(fn:exists($body/ejec:Input_Parameters/IP_ORIGEN)) or data($body/ejec:Input_Parameters/IP_ORIGEN) = "") then "Local" else data($body/ejec:Input_Parameters/IP_ORIGEN)</con1:xqueryText>
+            </con2:expr>
+          </con2:assign>
+          <con2:javaCallout varName="ipLocal">
+            <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-6a4b</con1:id>
+            <con2:archive ref="ITEL/Core/Resources/JARs/OSBUtils"/>
+            <con2:className>co.com.comcel.osb.OSBUtils</con2:className>
+            <con2:method>public static java.lang.String obtenerHostLocal()</con2:method>
+          </con2:javaCallout>
+        </con:actions>
+      </con:stage>
+      <con:stage name="validacion" errorHandler="_onErrorHandler-3166700838857645387--551f9b11.133cb9965be.-6976">
+        <con:context>
+          <con1:userNsDecl namespace="http://www.comcel.com.co/DA_TRAMA" prefix="da"/>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/EjecutarTrama/" prefix="ejec"/>
+        </con:context>
+        <con:actions>
+          <con2:wsCallout>
+            <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-6996</con1:id>
+            <con2:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/validarTramaLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con2:operation>validarTrama</con2:operation>
+            <con2:request>
+              <con2:body>$validarRequest</con2:body>
+            </con2:request>
+            <con2:response>
+              <con2:body>validarResponse</con2:body>
+            </con2:response>
+            <con2:requestTransform>
+              <con2:assign varName="validarRequest">
+                <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-6977</con1:id>
+                <con2:expr>
+                  <con1:xqueryTransform>
+                    <con1:resource ref="ITEL/Core/Resources/XQueries/validarTrama_Req"/>
+                    <con1:param name="trama">
+                      <con1:path>if (fn:empty($body/ejec:Input_Parameters/TRAMA)) then
+	""
+else
+	data($body/ejec:Input_Parameters/TRAMA)</con1:path>
+                    </con1:param>
+                  </con1:xqueryTransform>
+                </con2:expr>
+              </con2:assign>
+            </con2:requestTransform>
+            <con2:responseTransform>
+              <con2:assign varName="codigoError">
+                <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-6860</con1:id>
+                <con2:expr>
+                  <con1:xqueryText>data($validarResponse/CODIGO)</con1:xqueryText>
+                </con2:expr>
+              </con2:assign>
+              <con2:assign varName="metodo">
+                <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-616f</con1:id>
+                <con2:expr>
+                  <con1:xqueryText>data($validarResponse/MENSAJE/TRAMA/da:METODO)</con1:xqueryText>
+                </con2:expr>
+              </con2:assign>
+            </con2:responseTransform>
+          </con2:wsCallout>
+        </con:actions>
+      </con:stage>
+      <con:stage name="parametros" errorHandler="_onErrorHandler-3166700838857645387--551f9b11.133cb9965be.-67c8">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/EjecutarTrama/" prefix="ejec"/>
+        </con:context>
+        <con:actions>
+          <con2:assign varName="tiempoValidacion">
+            <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-64d1</con1:id>
+            <con2:expr>
+              <con1:xqueryText>fn:current-dateTime()</con1:xqueryText>
+            </con2:expr>
+          </con2:assign>
+          <con2:assign varName="duracionValidacion">
+            <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-64d0</con1:id>
+            <con2:expr>
+              <con1:xqueryText>fn:seconds-from-duration(xs:dateTime($tiempoValidacion) - xs:dateTime($tiempoInicio)) * 1000</con1:xqueryText>
+            </con2:expr>
+          </con2:assign>
+          <con2:ifThenElse>
+            <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-64cd</con1:id>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>$codigoError = "1"</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:ifThenElse>
+                  <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-64a9</con1:id>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>xs:integer($duracionValidacion) >= data($validarResponse/MENSAJE/TIMEOUT_VALIDACION)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:assign varName="codigoError">
+                        <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-64a7</con1:id>
+                        <con2:expr>
+                          <con1:xqueryText>"14"</con1:xqueryText>
+                        </con2:expr>
+                      </con2:assign>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:default>
+                    <con2:wsCallout>
+                      <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-6485</con1:id>
+                      <con2:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/consultarParametrosEjecucionLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                      <con2:operation>consultarParametrosEjecucion</con2:operation>
+                      <con2:request>
+                        <con2:body>$parametrosRequest</con2:body>
+                      </con2:request>
+                      <con2:response>
+                        <con2:body>parametrosResponse</con2:body>
+                      </con2:response>
+                      <con2:requestTransform>
+                        <con2:assign varName="parametrosRequest">
+                          <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-648c</con1:id>
+                          <con2:expr>
+                            <con1:xqueryTransform>
+                              <con1:resource ref="ITEL/Core/Resources/XQueries/consultarParametrosEjecucion_Req"/>
+                            </con1:xqueryTransform>
+                          </con2:expr>
+                        </con2:assign>
+                      </con2:requestTransform>
+                      <con2:responseTransform>
+                        <con2:ifThenElse>
+                          <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-648b</con1:id>
+                          <con2:case>
+                            <con2:condition>
+                              <con1:xqueryText>data($parametrosResponse/CODIGO) != "OK"</con1:xqueryText>
+                            </con2:condition>
+                            <con2:actions>
+                              <con2:assign varName="codError">
+                                <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-648a</con1:id>
+                                <con2:expr>
+                                  <con1:xqueryText>"909"</con1:xqueryText>
+                                </con2:expr>
+                              </con2:assign>
+                            </con2:actions>
+                          </con2:case>
+                          <con2:case>
+                            <con2:condition>
+                              <con1:xqueryText>fn:count($parametrosResponse/MENSAJE/PARAMETRO) &lt; 1</con1:xqueryText>
+                            </con2:condition>
+                            <con2:actions>
+                              <con2:assign varName="codError">
+                                <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-6489</con1:id>
+                                <con2:expr>
+                                  <con1:xqueryText>"2"</con1:xqueryText>
+                                </con2:expr>
+                              </con2:assign>
+                            </con2:actions>
+                          </con2:case>
+                          <con2:default>
+                            <con2:assign varName="prefijo">
+                              <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-6488</con1:id>
+                              <con2:expr>
+                                <con1:xqueryText>data($parametrosResponse/MENSAJE/PARAMETRO[NOMBRE='iTEL.PrefijoIN']/VALOR)</con1:xqueryText>
+                              </con2:expr>
+                            </con2:assign>
+                            <con2:assign varName="vigenciaIlimitado">
+                              <con1:id>_ActionId-7619517632386627082-190dd107.139f9f9a39c.-7fab</con1:id>
+                              <con2:expr>
+                                <con1:xqueryText>data($parametrosResponse/MENSAJE/PARAMETRO[NOMBRE='iTEL.VigenciaIlimitado']/VALOR)</con1:xqueryText>
+                              </con2:expr>
+                            </con2:assign>
+                            <con2:assign varName="vigenciaIlimitadoSMS">
+                              <con1:id>_ActionId-7317458019239334770--581e07d7.13afb269b42.-75f6</con1:id>
+                              <con2:expr>
+                                <con1:xqueryText>data($parametrosResponse/MENSAJE/PARAMETRO[NOMBRE='iTEL.VigenciaIlimitadoSMS']/VALOR)</con1:xqueryText>
+                              </con2:expr>
+                            </con2:assign>
+                            <con2:ifThenElse>
+                              <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-6487</con1:id>
+                              <con2:case>
+                                <con2:condition>
+                                  <con1:xqueryText>empty($prefijo) or empty($vigenciaIlimitado)</con1:xqueryText>
+                                </con2:condition>
+                                <con2:actions>
+                                  <con2:assign varName="codError">
+                                    <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-6486</con1:id>
+                                    <con2:expr>
+                                      <con1:xqueryText>"2"</con1:xqueryText>
+                                    </con2:expr>
+                                  </con2:assign>
+                                </con2:actions>
+                              </con2:case>
+                              <con2:case>
+                                <con2:condition>
+                                  <con1:xqueryText>$metodo = ("301","307","309")</con1:xqueryText>
+                                </con2:condition>
+                                <con2:actions>
+                                  <con2:insert varName="validarResponse">
+                                    <con1:id>_ActionId-7619517632386627082-190dd107.139f9f9a39c.-7f7f</con1:id>
+                                    <con2:location>
+                                      <con1:xpathText>./MENSAJE</con1:xpathText>
+                                    </con2:location>
+                                    <con2:where>last-child</con2:where>
+                                    <con2:expr>
+                                      <con1:xqueryText>&lt;VIGENCIA_DEFECTO>{$vigenciaIlimitado}&lt;/VIGENCIA_DEFECTO></con1:xqueryText>
+                                    </con2:expr>
+                                  </con2:insert>
+                                </con2:actions>
+                              </con2:case>
+                              <con2:case>
+                                <con2:condition>
+                                  <con1:xqueryText>$metodo = ("701")</con1:xqueryText>
+                                </con2:condition>
+                                <con2:actions>
+                                  <con2:insert varName="validarResponse">
+                                    <con1:id>_ActionId-7317458019239334770--581e07d7.13afb269b42.-75f9</con1:id>
+                                    <con2:location>
+                                      <con1:xpathText>./MENSAJE</con1:xpathText>
+                                    </con2:location>
+                                    <con2:where>last-child</con2:where>
+                                    <con2:expr>
+                                      <con1:xqueryText>&lt;VIGENCIA_DEFECTO>{$vigenciaIlimitadoSMS}&lt;/VIGENCIA_DEFECTO></con1:xqueryText>
+                                    </con2:expr>
+                                  </con2:insert>
+                                </con2:actions>
+                              </con2:case>
+                              <con2:case>
+                                <con2:condition>
+                                  <con1:xqueryText>$metodo = ("601","604","100","101")</con1:xqueryText>
+                                </con2:condition>
+                                <con2:actions>
+                                  <con2:insert varName="validarResponse">
+                                    <con1:id>_ActionId-3630520219124671809-5f19c7e8.146d49c373a.-6b55</con1:id>
+                                    <con2:location>
+                                      <con1:xpathText>./MENSAJE</con1:xpathText>
+                                    </con2:location>
+                                    <con2:where>last-child</con2:where>
+                                    <con2:expr>
+                                      <con1:xqueryText>&lt;PLANES_SPR_RTC>{data($parametrosResponse/MENSAJE/PARAMETRO[NOMBRE='iTEL.PlanesSPR_RTC']/VALOR)}&lt;/PLANES_SPR_RTC></con1:xqueryText>
+                                    </con2:expr>
+                                  </con2:insert>
+                                  <con2:ifThenElse>
+                                    <con1:id>_ActionId-4021035497520364443--cfdca24.1542ae9decc.-7ed3</con1:id>
+                                    <con2:case>
+                                      <con2:condition>
+                                        <con1:xqueryText>$metodo = ("100","101")</con1:xqueryText>
+                                      </con2:condition>
+                                      <con2:actions>
+                                        <con2:insert varName="validarResponse">
+                                          <con1:id>_ActionId-4021035497520364443--cfdca24.1542ae9decc.-7e7d</con1:id>
+                                          <con2:location>
+                                            <con1:xpathText>./MENSAJE</con1:xpathText>
+                                          </con2:location>
+                                          <con2:where>last-child</con2:where>
+                                          <con2:expr>
+                                            <con1:xqueryText><![CDATA[<MATERIALESRTC>{data($parametrosResponse/MENSAJE/PARAMETRO[NOMBRE='iTEL.MaterialesRTC']/VALOR)}</MATERIALESRTC>,
+<PAQUETERTC>{data($parametrosResponse/MENSAJE/PARAMETRO[NOMBRE='iTEL.PaqueteRTC']/VALOR)}</PAQUETERTC>,
+<MATERIAL>{
+if($metodo = '100') then 
+fn:tokenize(data($validarResponse/MENSAJE/TRAMA/*:CADENA_PARAMETROS),';')[3]
+else
+fn:tokenize(data($validarResponse/MENSAJE/TRAMA/*:CADENA_PARAMETROS),';')[2]
+}</MATERIAL>]]></con1:xqueryText>
+                                          </con2:expr>
+                                        </con2:insert>
+                                      </con2:actions>
+                                    </con2:case>
+                                    <con2:default/>
+                                  </con2:ifThenElse>
+                                </con2:actions>
+                              </con2:case>
+                              <con2:case>
+                                <con2:condition>
+                                  <con1:xqueryText>$metodo = '208'</con1:xqueryText>
+                                </con2:condition>
+                                <con2:actions>
+                                  <con2:insert varName="validarResponse">
+                                    <con1:id>_ActionId-1158617767404687255--5c13eac3.14a34bce876.-7e78</con1:id>
+                                    <con2:location>
+                                      <con1:xpathText>./MENSAJE</con1:xpathText>
+                                    </con2:location>
+                                    <con2:where>last-child</con2:where>
+                                    <con2:expr>
+                                      <con1:xqueryText>&lt;CAMBIOS_GRATIS>{data($parametrosResponse/MENSAJE/PARAMETRO[NOMBRE='iTEL.CantidadCambiosPlanGratis']/VALOR)}&lt;/CAMBIOS_GRATIS></con1:xqueryText>
+                                    </con2:expr>
+                                  </con2:insert>
+                                </con2:actions>
+                              </con2:case>
+                              <con2:case>
+                                <con2:condition>
+                                  <con1:xqueryText>$metodo = ('213','306','310','311','313','314')</con1:xqueryText>
+                                </con2:condition>
+                                <con2:actions>
+                                  <con2:insert varName="validarResponse">
+                                    <con1:id>_ActionId-1259675915633913103-52f096e5.15680daa81f.-7ccc</con1:id>
+                                    <con2:location>
+                                      <con1:xpathText>./MENSAJE</con1:xpathText>
+                                    </con2:location>
+                                    <con2:where>last-child</con2:where>
+                                    <con2:expr>
+                                      <con1:xqueryText>&lt;CAMBIOS_GRATIS>{data($parametrosResponse/MENSAJE/PARAMETRO[NOMBRE='iTEL.CantidadCambiosFnFGratis']/VALOR)}&lt;/CAMBIOS_GRATIS></con1:xqueryText>
+                                    </con2:expr>
+                                  </con2:insert>
+                                </con2:actions>
+                              </con2:case>
+                              <con2:case>
+                                <con2:condition>
+                                  <con1:xqueryText>$metodo = ('400','401','403')</con1:xqueryText>
+                                </con2:condition>
+                                <con2:actions>
+                                  <con2:ifThenElse>
+                                    <con1:id>_ActionId-9136876008661476161--4d26bcbf.13cf3e5ea0b.-7fbd</con1:id>
+                                    <con2:case>
+                                      <con2:condition>
+                                        <con1:xqueryText>number($validarResponse/MENSAJE/IN_DESTINO) &lt; 50</con1:xqueryText>
+                                      </con2:condition>
+                                      <con2:actions>
+                                        <con2:replace contents-only="true" varName="validarResponse">
+                                          <con1:id>_ActionId-9136876008661476161--4d26bcbf.13cf3e5ea0b.-7fbb</con1:id>
+                                          <con2:location>
+                                            <con1:xpathText>./MENSAJE/CONTRATO</con1:xpathText>
+                                          </con2:location>
+                                          <con2:expr>
+                                            <con1:xqueryText>data($parametrosResponse/MENSAJE/PARAMETRO[NOMBRE='iTEL.PlanesNuevosNokia']/VALOR)</con1:xqueryText>
+                                          </con2:expr>
+                                        </con2:replace>
+                                        <con2:replace varName="validarResponse" contents-only="true">
+                                          <con1:id>_ActionId-1785534810374007599--15529676.13d6447c397.-7f2a</con1:id>
+                                          <con2:location>
+                                            <con1:xpathText>./MENSAJE/CATEGORIA</con1:xpathText>
+                                          </con2:location>
+                                          <con2:expr>
+                                            <con1:xqueryText>data($parametrosResponse/MENSAJE/PARAMETRO[NOMBRE='iTEL.PlanesBonoAdicional']/VALOR)</con1:xqueryText>
+                                          </con2:expr>
+                                        </con2:replace>
+                                      </con2:actions>
+                                    </con2:case>
+                                    <con2:default>
+                                      <con2:replace contents-only="true" varName="validarResponse">
+                                        <con1:id>_ActionId-9136876008661476161--4d26bcbf.13cf3e5ea0b.-7fb5</con1:id>
+                                        <con2:location>
+                                          <con1:xpathText>./MENSAJE/CONTRATO</con1:xpathText>
+                                        </con2:location>
+                                        <con2:expr>
+                                          <con1:xqueryText>data($parametrosResponse/MENSAJE/PARAMETRO[NOMBRE='iTEL.PlanesNuevosOCS']/VALOR)</con1:xqueryText>
+                                        </con2:expr>
+                                      </con2:replace>
+                                    </con2:default>
+                                  </con2:ifThenElse>
+                                </con2:actions>
+                              </con2:case>
+                              <con2:case>
+                                <con2:condition>
+                                  <con1:xqueryText>$metodo = '409'</con1:xqueryText>
+                                </con2:condition>
+                                <con2:actions>
+                                  <con2:insert varName="validarResponse">
+                                    <con1:id>_ActionId-5461007279276889299-2e4f5b74.154777e96f3.-719e</con1:id>
+                                    <con2:location>
+                                      <con1:xpathText>./MENSAJE</con1:xpathText>
+                                    </con2:location>
+                                    <con2:where>last-child</con2:where>
+                                    <con2:expr>
+                                      <con1:xqueryText>&lt;MENSAJEACTIVACION>{data($parametrosResponse/MENSAJE/PARAMETRO[NOMBRE='iTEL.SMSPaquete10Activacion']/VALOR)}&lt;/MENSAJEACTIVACION></con1:xqueryText>
+                                    </con2:expr>
+                                  </con2:insert>
+                                  <con2:insert varName="validarResponse">
+                                    <con1:id>_ActionId-5461007279276889299-2e4f5b74.154777e96f3.-715c</con1:id>
+                                    <con2:location>
+                                      <con1:xpathText>./MENSAJE</con1:xpathText>
+                                    </con2:location>
+                                    <con2:where>last-child</con2:where>
+                                    <con2:expr>
+                                      <con1:xqueryText>&lt;PREFIJOSMSPAQUETE>{data($parametrosResponse/MENSAJE/PARAMETRO[NOMBRE='iTEL.PrefijoSMSPaquete']/VALOR)}&lt;/PREFIJOSMSPAQUETE></con1:xqueryText>
+                                    </con2:expr>
+                                  </con2:insert>
+                                </con2:actions>
+                              </con2:case>
+                              <con2:case>
+                                <con2:condition>
+                                  <con1:xqueryText>$metodo = '414'</con1:xqueryText>
+                                </con2:condition>
+                                <con2:actions>
+                                  <con2:insert varName="validarResponse">
+                                    <con1:id>_ActionId-4617964502282859837--56298313.157430e4d22.-7f32</con1:id>
+                                    <con2:location>
+                                      <con1:xpathText>./MENSAJE</con1:xpathText>
+                                    </con2:location>
+                                    <con2:where>last-child</con2:where>
+                                    <con2:expr>
+                                      <con1:xqueryText>&lt;TIPONOTIFICACION>{data($parametrosResponse/MENSAJE/PARAMETRO[NOMBRE='iTEL.TipoNotificacion']/VALOR)}&lt;/TIPONOTIFICACION></con1:xqueryText>
+                                    </con2:expr>
+                                  </con2:insert>
+                                </con2:actions>
+                              </con2:case>
+                              <con2:case>
+                                <con2:condition>
+                                  <con1:xqueryText>$metodo = '502'</con1:xqueryText>
+                                </con2:condition>
+                                <con2:actions>
+                                  <con2:insert varName="validarResponse">
+                                    <con1:id>_ActionId-5461007279276889299-2e4f5b74.154777e96f3.-7171</con1:id>
+                                    <con2:location>
+                                      <con1:xpathText>./MENSAJE</con1:xpathText>
+                                    </con2:location>
+                                    <con2:where>last-child</con2:where>
+                                    <con2:expr>
+                                      <con1:xqueryText>&lt;MENSAJEDESACTIVACION>{data($parametrosResponse/MENSAJE/PARAMETRO[NOMBRE='iTEL.SMSPaquete10Desactivacion']/VALOR)}&lt;/MENSAJEDESACTIVACION></con1:xqueryText>
+                                    </con2:expr>
+                                  </con2:insert>
+                                  <con2:insert varName="validarResponse">
+                                    <con1:id>_ActionId-5461007279276889299-2e4f5b74.154777e96f3.-713c</con1:id>
+                                    <con2:location>
+                                      <con1:xpathText>./MENSAJE</con1:xpathText>
+                                    </con2:location>
+                                    <con2:where>last-child</con2:where>
+                                    <con2:expr>
+                                      <con1:xqueryText>&lt;PREFIJOSMSPAQUETE>{data($parametrosResponse/MENSAJE/PARAMETRO[NOMBRE='iTEL.PrefijoSMSPaquete']/VALOR)}&lt;/PREFIJOSMSPAQUETE></con1:xqueryText>
+                                    </con2:expr>
+                                  </con2:insert>
+                                </con2:actions>
+                              </con2:case>
+                              <con2:default/>
+                            </con2:ifThenElse>
+                          </con2:default>
+                        </con2:ifThenElse>
+                      </con2:responseTransform>
+                    </con2:wsCallout>
+                  </con2:default>
+                </con2:ifThenElse>
+              </con2:actions>
+            </con2:case>
+            <con2:default/>
+          </con2:ifThenElse>
+        </con:actions>
+      </con:stage>
+      <con:stage name="ejecutarReglasNegocio" errorHandler="_onErrorHandler-3166700838857645387--551f9b11.133cb9965be.-6538">
+        <con:context/>
+        <con:actions>
+          <con2:assign varName="tiempoParametros">
+            <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-6480</con1:id>
+            <con2:expr>
+              <con1:xqueryText>fn:current-dateTime()</con1:xqueryText>
+            </con2:expr>
+          </con2:assign>
+          <con2:assign varName="duracionParametros">
+            <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-647f</con1:id>
+            <con2:expr>
+              <con1:xqueryText>fn:seconds-from-duration(xs:dateTime($tiempoParametros) - xs:dateTime($tiempoInicio)) * 1000</con1:xqueryText>
+            </con2:expr>
+          </con2:assign>
+          <con2:ifThenElse>
+            <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-642e</con1:id>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>$codigoError = "1"</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:ifThenElse>
+                  <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-642b</con1:id>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>xs:integer($duracionParametros) >= data($validarResponse/MENSAJE/TIMEOUT_VALIDACION)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:assign varName="codigoError">
+                        <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-642a</con1:id>
+                        <con2:expr>
+                          <con1:xqueryText>"51"</con1:xqueryText>
+                        </con2:expr>
+                      </con2:assign>
+                      <con2:assign varName="reglasNegocioResponse">
+                        <con1:id>_ActionId-1221286005379866550-2eef8a52.133dad8f688.-7fda</con1:id>
+                        <con2:expr>
+                          <con1:xqueryText><![CDATA[<ejec:WS_Result xmlns:ejec="http://www.comcel.com.co/EjecutarReglasNegocio/">
+	<MENSAJE>
+		<SUSCRIPTOR_DESTINO />
+		<SUSCRIPTOR_ORIGEN />
+		<DURREGLASNEGOCIO>0</DURREGLASNEGOCIO>
+		<DURSUSCRIPTOR>0</DURSUSCRIPTOR>
+	</MENSAJE>
+</ejec:WS_Result>]]></con1:xqueryText>
+                        </con2:expr>
+                      </con2:assign>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>number($validarResponse/MENSAJE/IN_DESTINO) &lt; 50 or
+not($metodo = ("100", "101", "400", "411"))
+or ($metodo = "405" and data($validarResponse/MENSAJE/TRAMA/*:PARAMETROS/*:MONTORECARGA) > 0)
+or ($metodo = ("400","411") and data($validarResponse/MENSAJE/TRAMA/*:PARAMETROS/*:MONTORECARGA) &lt; 0)
+or ($metodo = ("401"))</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:wsCallout>
+                        <con1:id>_ActionId-4335493786000560624--5ca78c50.138b4661397.-7ffb</con1:id>
+                        <con2:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/ejecutarReglasNegocioLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>ejecutarReglasNegocio</con2:operation>
+                        <con2:request>
+                          <con2:body>$reglasNegocioRequest</con2:body>
+                        </con2:request>
+                        <con2:response>
+                          <con2:body>reglasNegocioResponse</con2:body>
+                        </con2:response>
+                        <con2:requestTransform>
+                          <con2:assign varName="reglasNegocioRequest">
+                            <con1:id>_ActionId-5226781073812836962-15d53666.139f8e33b25.-3b59</con1:id>
+                            <con2:expr>
+                              <con1:xqueryTransform>
+                                <con1:resource ref="ITEL/Core/Resources/XQueries/ejecutarTrama_Req_ejecutarReglasNegocio"/>
+                                <con1:param name="validarResponse">
+                                  <con1:path>$validarResponse</con1:path>
+                                </con1:param>
+                                <con1:param name="tiempoInicio">
+                                  <con1:path>$tiempoInicio</con1:path>
+                                </con1:param>
+                                <con1:param name="prefijo">
+                                  <con1:path>$prefijo</con1:path>
+                                </con1:param>
+                              </con1:xqueryTransform>
+                            </con2:expr>
+                          </con2:assign>
+                        </con2:requestTransform>
+                        <con2:responseTransform>
+                          <con2:assign varName="codigoError">
+                            <con1:id>_ActionId-4335493786000560624--5ca78c50.138b4661397.-7ffc</con1:id>
+                            <con2:expr>
+                              <con1:xqueryText>data($reglasNegocioResponse/CODIGO)</con1:xqueryText>
+                            </con2:expr>
+                          </con2:assign>
+                        </con2:responseTransform>
+                      </con2:wsCallout>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:default>
+                    <con2:assign varName="reglasNegocioResponse">
+                      <con1:id>_ActionId-4335493786000560624--5ca78c50.138b4661397.-7fe2</con1:id>
+                      <con2:expr>
+                        <con1:xqueryText>&lt;ejec:WS_Result xmlns:ejec="http://www.comcel.com.co/EjecutarReglasNegocio/">
+&lt;/ejec:WS_Result></con1:xqueryText>
+                      </con2:expr>
+                    </con2:assign>
+                  </con2:default>
+                </con2:ifThenElse>
+              </con2:actions>
+            </con2:case>
+            <con2:default>
+              <con2:assign varName="reglasNegocioResponse">
+                <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-6428</con1:id>
+                <con2:expr>
+                  <con1:xqueryText><![CDATA[<ejec:WS_Result xmlns:ejec="http://www.comcel.com.co/EjecutarReglasNegocio/">
+	<MENSAJE>
+		<SUSCRIPTOR_DESTINO />
+		<SUSCRIPTOR_ORIGEN />
+		<DURREGLASNEGOCIO>0</DURREGLASNEGOCIO>
+		<DURSUSCRIPTOR>0</DURSUSCRIPTOR>
+	</MENSAJE>
+</ejec:WS_Result>]]></con1:xqueryText>
+                </con2:expr>
+              </con2:assign>
+            </con2:default>
+          </con2:ifThenElse>
+        </con:actions>
+      </con:stage>
+      <con:stage name="provisionamiento" errorHandler="_onErrorHandler-3166700838857645387--551f9b11.133cb9965be.-652e">
+        <con:context/>
+        <con:actions>
+          <con2:assign varName="tiempoReglasNegocio">
+            <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-641b</con1:id>
+            <con2:expr>
+              <con1:xqueryText>fn:current-dateTime()</con1:xqueryText>
+            </con2:expr>
+          </con2:assign>
+          <con2:assign varName="duracionReglasNegocio">
+            <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-641a</con1:id>
+            <con2:expr>
+              <con1:xqueryText>fn:seconds-from-duration(xs:dateTime($tiempoReglasNegocio) - xs:dateTime($tiempoInicio)) * 1000</con1:xqueryText>
+            </con2:expr>
+          </con2:assign>
+          <con2:ifThenElse>
+            <con1:id>_ActionId-4242700229346518817-3201da9e.1389a7756a8.-7f95</con1:id>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>$codigoError = "1"</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:ifThenElse>
+                  <con1:id>_ActionId-4242700229346518817-3201da9e.1389a7756a8.-7f5a</con1:id>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>xs:integer($duracionReglasNegocio) >= data($validarResponse/MENSAJE/TIMEOUT_CONSULTA)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:assign varName="codigoError">
+                        <con1:id>_ActionId-4242700229346518817-3201da9e.1389a7756a8.-7f58</con1:id>
+                        <con2:expr>
+                          <con1:xqueryText>"3"</con1:xqueryText>
+                        </con2:expr>
+                      </con2:assign>
+                      <con2:assign varName="ejecutadorResponse">
+                        <con1:id>_ActionId-4242700229346518817-3201da9e.1389a7756a8.-7f55</con1:id>
+                        <con2:expr>
+                          <con1:xqueryText><![CDATA[<ejec:WS_Result xmlns:ejec="http://www.comcel.com.co/Ejecutador/">
+	<MENSAJE>
+		<DURREGLASPROVISION>0</DURREGLASPROVISION>
+		<DURSERVICIOSIN2>0</DURSERVICIOSIN2>
+		<DURTXIN>0</DURTXIN>
+		<SERVICIOS_EJECUTADOS />
+	</MENSAJE>
+</ejec:WS_Result>]]></con1:xqueryText>
+                        </con2:expr>
+                      </con2:assign>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>$metodo != "201" and $metodo != "202" and $metodo != "203" and $metodo != "204" and $metodo != "206" and $metodo != "207" and $metodo != "208" and $metodo != "210" and $metodo != "211" and $metodo != "212" and $metodo != "213" and $metodo != "215" and $metodo != "500" and $metodo != "700"</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:wsCallout>
+                        <con1:id>_ActionId-4242700229346518817-3201da9e.1389a7756a8.-7f4f</con1:id>
+                        <con2:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/ejecutadorLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>ejecutador</con2:operation>
+                        <con2:request>
+                          <con2:body>$ejecutadorRequest</con2:body>
+                        </con2:request>
+                        <con2:response>
+                          <con2:body>ejecutadorResponse</con2:body>
+                        </con2:response>
+                        <con2:requestTransform>
+                          <con2:ifThenElse>
+                            <con1:id>_ActionId-5226781073812836962-15d53666.139f8e33b25.-3ae8</con1:id>
+                            <con2:case>
+                              <con2:condition>
+                                <con1:xqueryText>$metodo = "600"
+and (number($validarResponse/MENSAJE/IN_DESTINO) >= 50 or number($validarResponse/MENSAJE/IN_ORIGEN) >= 50)</con1:xqueryText>
+                              </con2:condition>
+                              <con2:actions>
+                                <con2:assign varName="ejecutadorRequest">
+                                  <con1:id>_ActionId-5226781073812836962-15d53666.139f8e33b25.-3a8f</con1:id>
+                                  <con2:expr>
+                                    <con1:xqueryTransform>
+                                      <con1:resource ref="ITEL/Core/Resources/XQueries/ejecutarTrama_Req_ejecutador_600OCS"/>
+                                      <con1:param name="validarResponse">
+                                        <con1:path>$validarResponse</con1:path>
+                                      </con1:param>
+                                      <con1:param name="tiempoInicio">
+                                        <con1:path>$tiempoInicio</con1:path>
+                                      </con1:param>
+                                      <con1:param name="reglasNegocioResponse">
+                                        <con1:path>$reglasNegocioResponse</con1:path>
+                                      </con1:param>
+                                    </con1:xqueryTransform>
+                                  </con2:expr>
+                                </con2:assign>
+                              </con2:actions>
+                            </con2:case>
+                            <con2:default>
+                              <con2:assign varName="ejecutadorRequest">
+                                <con1:id>_ActionId-5226781073812836962-15d53666.139f8e33b25.-3ae5</con1:id>
+                                <con2:expr>
+                                  <con1:xqueryTransform>
+                                    <con1:resource ref="ITEL/Core/Resources/XQueries/ejecutarTrama_Req_ejecutador"/>
+                                    <con1:param name="validarResponse">
+                                      <con1:path>$validarResponse</con1:path>
+                                    </con1:param>
+                                    <con1:param name="tiempoInicio">
+                                      <con1:path>$tiempoInicio</con1:path>
+                                    </con1:param>
+                                    <con1:param name="reglasNegocioResponse">
+                                      <con1:path>$reglasNegocioResponse</con1:path>
+                                    </con1:param>
+                                  </con1:xqueryTransform>
+                                </con2:expr>
+                              </con2:assign>
+                            </con2:default>
+                          </con2:ifThenElse>
+                        </con2:requestTransform>
+                        <con2:responseTransform>
+                          <con2:assign varName="codigoError">
+                            <con1:id>_ActionId-4242700229346518817-3201da9e.1389a7756a8.-7f50</con1:id>
+                            <con2:expr>
+                              <con1:xqueryText>data($ejecutadorResponse/CODIGO)</con1:xqueryText>
+                            </con2:expr>
+                          </con2:assign>
+                        </con2:responseTransform>
+                      </con2:wsCallout>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:default>
+                    <con2:assign varName="ejecutadorResponse">
+                      <con1:id>_ActionId-4242700229346518817-3201da9e.1389a7756a8.-7f4d</con1:id>
+                      <con2:expr>
+                        <con1:xqueryText><![CDATA[<ejec:WS_Result xmlns:ejec="http://www.comcel.com.co/Ejecutador/">
+	<MENSAJE>
+		<DURREGLASPROVISION>0</DURREGLASPROVISION>
+		<DURSERVICIOSIN2>0</DURSERVICIOSIN2>
+		<DURTXIN>0</DURTXIN>
+		<SERVICIOS_EJECUTADOS />
+	</MENSAJE>
+</ejec:WS_Result>]]></con1:xqueryText>
+                      </con2:expr>
+                    </con2:assign>
+                  </con2:default>
+                </con2:ifThenElse>
+              </con2:actions>
+            </con2:case>
+            <con2:default>
+              <con2:assign varName="ejecutadorResponse">
+                <con1:id>_ActionId-4242700229346518817-3201da9e.1389a7756a8.-7f92</con1:id>
+                <con2:expr>
+                  <con1:xqueryText><![CDATA[<ejec:WS_Result xmlns:ejec="http://www.comcel.com.co/Ejecutador/">
+	<MENSAJE>
+		<DURREGLASPROVISION>0</DURREGLASPROVISION>
+		<DURSERVICIOSIN2>0</DURSERVICIOSIN2>
+		<DURTXIN>0</DURTXIN>
+		<SERVICIOS_EJECUTADOS />
+	</MENSAJE>
+</ejec:WS_Result>]]></con1:xqueryText>
+                </con2:expr>
+              </con2:assign>
+            </con2:default>
+          </con2:ifThenElse>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="PipelinePairNode1_response">
+      <con:stage name="consultarRespuesta" errorHandler="_onErrorHandler-2204270597828647040--7c77bcf4.12f6f6971b2.-7d87">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/ConsultarRespuesta/" prefix="con"/>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/EjecutarTrama/" prefix="ejec"/>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/DA_TRAMA" prefix="da"/>
+          <con3:variable name="resRespuesta" path="$resRespuesta" asChild="false">
+            <con3:schema ref="ITEL/Core/Resources/Schemas/PS_ITEL_CONSULTARRESPUESTA" element="WS_Result"/>
+          </con3:variable>
+          <con3:variable name="tramaXML" path="$tramaXML" asChild="false">
+            <con3:schema ref="ITEL/Core/Resources/Schemas/DA_TRAMA" element="TRAMA"/>
+          </con3:variable>
+        </con:context>
+        <con:actions>
+          <con2:assign varName="tiempoProvision">
+            <con1:id>_ActionId-6916122585787862762-7629100f.12fc05d31dc.-7b1b</con1:id>
+            <con2:expr>
+              <con1:xqueryText>fn:current-dateTime()</con1:xqueryText>
+            </con2:expr>
+          </con2:assign>
+          <con2:assign varName="duracionProvision">
+            <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-63cc</con1:id>
+            <con2:expr>
+              <con1:xqueryText>fn:seconds-from-duration(xs:dateTime($tiempoProvision) - xs:dateTime($tiempoInicio)) * 1000</con1:xqueryText>
+            </con2:expr>
+          </con2:assign>
+          <con2:ifThenElse>
+            <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-6383</con1:id>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>$codigoError = "1" and xs:integer($duracionProvision) >= data($validarResponse/MENSAJE/TIMEOUT_FINAL)</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:assign varName="codigoError">
+                  <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-6382</con1:id>
+                  <con2:expr>
+                    <con1:xqueryText>"3"</con1:xqueryText>
+                  </con2:expr>
+                </con2:assign>
+              </con2:actions>
+            </con2:case>
+            <con2:default/>
+          </con2:ifThenElse>
+          <con2:wsCallout>
+            <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-635e</con1:id>
+            <con2:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/consultarRespuestaLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con2:operation>consultarRespuesta</con2:operation>
+            <con2:request>
+              <con2:body>$respuestaRequest</con2:body>
+            </con2:request>
+            <con2:response>
+              <con2:body>respuestaResponse</con2:body>
+            </con2:response>
+            <con2:requestTransform>
+              <con2:assign varName="respuestaRequest">
+                <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-6369</con1:id>
+                <con2:expr>
+                  <con1:xqueryTransform>
+                    <con1:resource ref="ITEL/Core/Resources/XQueries/consultarRespuesta_Req"/>
+                    <con1:param name="codigo">
+                      <con1:path>if(data($codigoError) = "923" and data($metodo) = "100") then "901" else if (data($codigoError) = "923" and data($metodo) = "701") then "1301" else $codigoError</con1:path>
+                    </con1:param>
+                  </con1:xqueryTransform>
+                </con2:expr>
+              </con2:assign>
+            </con2:requestTransform>
+            <con2:responseTransform>
+              <con2:ifThenElse>
+                <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-6368</con1:id>
+                <con2:case>
+                  <con2:condition>
+                    <con1:xqueryText>data($respuestaResponse/CODIGO) != "OK"</con1:xqueryText>
+                  </con2:condition>
+                  <con2:actions>
+                    <con2:assign varName="codigoMapeado">
+                      <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-635b</con1:id>
+                      <con2:expr>
+                        <con1:xqueryText>"909"</con1:xqueryText>
+                      </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="descripcionError">
+                      <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-6359</con1:id>
+                      <con2:expr>
+                        <con1:xqueryText>"Database Error"</con1:xqueryText>
+                      </con2:expr>
+                    </con2:assign>
+                  </con2:actions>
+                </con2:case>
+                <con2:case>
+                  <con2:condition>
+                    <con1:xqueryText>data($respuestaResponse/MENSAJE/CODIGO) = ""</con1:xqueryText>
+                  </con2:condition>
+                  <con2:actions>
+                    <con2:ifThenElse>
+                      <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-6365</con1:id>
+                      <con2:case>
+                        <con2:condition>
+                          <con1:xqueryText>$codigoError = "1"</con1:xqueryText>
+                        </con2:condition>
+                        <con2:actions>
+                          <con2:assign varName="codigoMapeado">
+                            <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-6364</con1:id>
+                            <con2:expr>
+                              <con1:xqueryText>"1"</con1:xqueryText>
+                            </con2:expr>
+                          </con2:assign>
+                          <con2:assign varName="descripcionError">
+                            <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-6363</con1:id>
+                            <con2:expr>
+                              <con1:xqueryText>"Transaction successful"</con1:xqueryText>
+                            </con2:expr>
+                          </con2:assign>
+                        </con2:actions>
+                      </con2:case>
+                      <con2:default>
+                        <con2:assign varName="codigoMapeado">
+                          <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-6362</con1:id>
+                          <con2:expr>
+                            <con1:xqueryText>"903"</con1:xqueryText>
+                          </con2:expr>
+                        </con2:assign>
+                        <con2:assign varName="descripcionError">
+                          <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-6361</con1:id>
+                          <con2:expr>
+                            <con1:xqueryText>"Transaction not processed"</con1:xqueryText>
+                          </con2:expr>
+                        </con2:assign>
+                      </con2:default>
+                    </con2:ifThenElse>
+                  </con2:actions>
+                </con2:case>
+                <con2:default>
+                  <con2:assign varName="codigoMapeado">
+                    <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-6357</con1:id>
+                    <con2:expr>
+                      <con1:xqueryText>data($respuestaResponse/MENSAJE/CODIGO)</con1:xqueryText>
+                    </con2:expr>
+                  </con2:assign>
+                  <con2:assign varName="descripcionError">
+                    <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-6355</con1:id>
+                    <con2:expr>
+                      <con1:xqueryText>data($respuestaResponse/MENSAJE/RESDESCRIPCION)</con1:xqueryText>
+                    </con2:expr>
+                  </con2:assign>
+                </con2:default>
+              </con2:ifThenElse>
+            </con2:responseTransform>
+          </con2:wsCallout>
+        </con:actions>
+      </con:stage>
+      <con:stage name="tramaSalida" errorHandler="_onErrorHandler-1641293207969743559--28a4b30a.12fb0e9a486.-7ed0">
+        <con:context>
+          <con1:userNsDecl namespace="http://www.comcel.com.co/InsertarEtapaDO/" prefix="eta"/>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/EjecutarTrama/" prefix="ejec"/>
+        </con:context>
+        <con:actions>
+          <con2:ifThenElse>
+            <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-7544</con1:id>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>$codigoError != "1"</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:ifThenElse>
+                  <con1:id>_ActionId-7289227227976692718--7360c13a.149cf07ee36.-77b7</con1:id>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>$metodo = '407' and fn:count($ejecutadorResponse/MENSAJE/SERVICIOS_EJECUTADOS/SERVICIO) != 0</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:wsCallout>
+                        <con1:id>_ActionId-7289227227976692718--7360c13a.149cf07ee36.-74a3</con1:id>
+                        <con2:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/consultarRespuestaLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>consultarRespuesta</con2:operation>
+                        <con2:request>
+                          <con2:body>$respuestaRequest</con2:body>
+                        </con2:request>
+                        <con2:response>
+                          <con2:body>respuestaResponse</con2:body>
+                        </con2:response>
+                        <con2:requestTransform>
+                          <con2:assign varName="respuestaRequest">
+                            <con1:id>_ActionId-7289227227976692718--7360c13a.149cf07ee36.-74ae</con1:id>
+                            <con2:expr>
+                              <con1:xqueryTransform>
+                                <con1:resource ref="ITEL/Core/Resources/XQueries/consultarRespuesta_Req"/>
+                                <con1:param name="codigo">
+                                  <con1:path>"55"</con1:path>
+                                </con1:param>
+                              </con1:xqueryTransform>
+                            </con2:expr>
+                          </con2:assign>
+                        </con2:requestTransform>
+                        <con2:responseTransform>
+                          <con2:assign varName="codigoMapeado">
+                            <con1:id>_ActionId-7289227227976692718--7360c13a.149cf07ee36.-7486</con1:id>
+                            <con2:expr>
+                              <con1:xqueryText>data($respuestaResponse/MENSAJE/CODIGO)</con1:xqueryText>
+                            </con2:expr>
+                          </con2:assign>
+                          <con2:assign varName="descripcionError">
+                            <con1:id>_ActionId-7289227227976692718--7360c13a.149cf07ee36.-7484</con1:id>
+                            <con2:expr>
+                              <con1:xqueryText>data($respuestaResponse/MENSAJE/RESDESCRIPCION)</con1:xqueryText>
+                            </con2:expr>
+                          </con2:assign>
+                        </con2:responseTransform>
+                      </con2:wsCallout>
+                      <con2:assign varName="parametrosSalida">
+                        <con1:id>_ActionId-7289227227976692718--7360c13a.149cf07ee36.-775f</con1:id>
+                        <con2:expr>
+                          <con1:xqueryText>""</con1:xqueryText>
+                        </con2:expr>
+                      </con2:assign>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:default>
+                    <con2:assign varName="parametrosSalida">
+                      <con1:id>_ActionId-7289227227976692718--7360c13a.149cf07ee36.-7761</con1:id>
+                      <con2:expr>
+                        <con1:xqueryText>""</con1:xqueryText>
+                      </con2:expr>
+                    </con2:assign>
+                  </con2:default>
+                </con2:ifThenElse>
+              </con2:actions>
+            </con2:case>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>$metodo = "400" or $metodo = "401"</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:ifThenElse>
+                  <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-7542</con1:id>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>number($validarResponse/MENSAJE/IN_DESTINO) >= 50</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:wsCallout>
+                        <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-7540</con1:id>
+                        <con2:service xsi:type="ref:ProxyRef" ref="ITEL/OCS/AIR/Proxies/consultarBalancesOCSLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>consultarBalances</con2:operation>
+                        <con2:request>
+                          <con2:body>$consultarBalancesReq</con2:body>
+                        </con2:request>
+                        <con2:response>
+                          <con2:body>consultarBalancesRes</con2:body>
+                        </con2:response>
+                        <con2:requestTransform>
+                          <con6:assign varName="consultarBalancesReq" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/typesystem/config" xmlns:con6="http://www.bea.com/wli/sb/stages/transform/config">
+                            <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-7541</con1:id>
+                            <con6:expr>
+                              <con1:xqueryTransform>
+                                <con1:resource ref="ITEL/Core/Resources/XQueries/consultarBalancesPS_Req"/>
+                                <con1:param name="min">
+                                  <con1:path>xs:string(data($validarResponse/MENSAJE/TRAMA/*:MIN))</con1:path>
+                                </con1:param>
+                              </con1:xqueryTransform>
+                            </con6:expr>
+                          </con6:assign>
+                        </con2:requestTransform>
+                        <con2:responseTransform/>
+                      </con2:wsCallout>
+                      <con2:wsCallout>
+                        <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-753e</con1:id>
+                        <con2:service xsi:type="ref:ProxyRef" ref="ITEL/OCS/SOI/Proxies/consultarSuscriptorOCSLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>consultarSuscriptorOCS</con2:operation>
+                        <con2:request>
+                          <con2:body>$suscriptorOCSRequest</con2:body>
+                        </con2:request>
+                        <con2:response>
+                          <con2:body>suscriptorOCSResponse</con2:body>
+                        </con2:response>
+                        <con2:requestTransform>
+                          <con6:assign varName="suscriptorOCSRequest" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/typesystem/config" xmlns:con6="http://www.bea.com/wli/sb/stages/transform/config">
+                            <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-753f</con1:id>
+                            <con6:expr>
+                              <con1:xqueryTransform>
+                                <con1:resource ref="ITEL/Core/Resources/XQueries/consultarSuscriptorOCSPS_Req"/>
+                                <con1:param name="timeout">
+                                  <con1:path>2000</con1:path>
+                                </con1:param>
+                                <con1:param name="min">
+                                  <con1:path>data($validarResponse/MENSAJE/TRAMA/*:MIN)</con1:path>
+                                </con1:param>
+                                <con1:param name="in">
+                                  <con1:path>data($validarResponse/MENSAJE/IN_DESTINO)</con1:path>
+                                </con1:param>
+                              </con1:xqueryTransform>
+                            </con6:expr>
+                          </con6:assign>
+                        </con2:requestTransform>
+                        <con2:responseTransform/>
+                      </con2:wsCallout>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-753d</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>number($validarResponse/MENSAJE/TRAMA/*:PARAMETROS/*:MONTORECARGA) > 0</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con2:wsCallout>
+                              <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-7536</con1:id>
+                              <con2:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/consultarRangoRecargaOCSLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                              <con2:operation>ConsultarRangoRecargaOCS</con2:operation>
+                              <con2:request>
+                                <con2:body>$consultarRangoRecargaOCSRequest</con2:body>
+                              </con2:request>
+                              <con2:response>
+                                <con2:body>consultarRangoRecargaOCSResponse</con2:body>
+                              </con2:response>
+                              <con2:requestTransform>
+                                <con2:assign varName="consultarRangoRecargaOCSRequest">
+                                  <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-753c</con1:id>
+                                  <con2:expr>
+                                    <con1:xqueryTransform>
+                                      <con1:resource ref="ITEL/Core/Resources/XQueries/validar_Req_consultarRangoRecargaOCS"/>
+                                      <con1:param name="valor">
+                                        <con1:path>number($validarResponse/MENSAJE/TRAMA/*:PARAMETROS/*:MONTORECARGA)</con1:path>
+                                      </con1:param>
+                                      <con1:param name="regla">
+                                        <con1:path>'1'</con1:path>
+                                      </con1:param>
+                                      <con1:param name="bono">
+                                        <con1:path>if (string($validarResponse/MENSAJE/TRAMA/*:PARAMETROS/*:BONIFICAR)!= "") then
+number($validarResponse/MENSAJE/TRAMA/*:PARAMETROS/*:BONIFICAR)
+else
+number("0")</con1:path>
+                                      </con1:param>
+                                      <con1:param name="sc">
+                                        <con1:path>data($suscriptorOCSResponse/MENSAJE/CONSULTAR_SUSCRIPTOR/*:suscriptor/*:PublicRatePlanCode)</con1:path>
+                                      </con1:param>
+                                    </con1:xqueryTransform>
+                                  </con2:expr>
+                                </con2:assign>
+                              </con2:requestTransform>
+                              <con2:responseTransform>
+                                <con2:ifThenElse>
+                                  <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-753b</con1:id>
+                                  <con2:case>
+                                    <con2:condition>
+                                      <con1:xqueryText>data($consultarRangoRecargaOCSResponse/CODIGO)="OK"</con1:xqueryText>
+                                    </con2:condition>
+                                    <con2:actions>
+                                      <con2:assign varName="cargaInicial">
+                                        <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-753a</con1:id>
+                                        <con2:expr>
+                                          <con1:xqueryText>data($consultarRangoRecargaOCSResponse/MENSAJE/BONO)</con1:xqueryText>
+                                        </con2:expr>
+                                      </con2:assign>
+                                      <con2:assign varName="vigencia">
+                                        <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-7539</con1:id>
+                                        <con2:expr>
+                                          <con1:xqueryText>data($consultarRangoRecargaOCSResponse/MENSAJE/VIGENCIA)</con1:xqueryText>
+                                        </con2:expr>
+                                      </con2:assign>
+                                    </con2:actions>
+                                  </con2:case>
+                                  <con2:default>
+                                    <con2:assign varName="cargaInicial">
+                                      <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-7538</con1:id>
+                                      <con2:expr>
+                                        <con1:xqueryText>0</con1:xqueryText>
+                                      </con2:expr>
+                                    </con2:assign>
+                                    <con2:assign varName="vigencia">
+                                      <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-7537</con1:id>
+                                      <con2:expr>
+                                        <con1:xqueryText>0</con1:xqueryText>
+                                      </con2:expr>
+                                    </con2:assign>
+                                  </con2:default>
+                                </con2:ifThenElse>
+                              </con2:responseTransform>
+                            </con2:wsCallout>
+                            <con2:wsCallout>
+                              <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-7534</con1:id>
+                              <con2:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/consultarContractTemp_ContractLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                              <con2:operation>consultarContractTemp_Contract</con2:operation>
+                              <con2:request>
+                                <con2:body>$consultarContractTempContractRequest</con2:body>
+                              </con2:request>
+                              <con2:response>
+                                <con2:body>consultarContractTempContractResponse</con2:body>
+                              </con2:response>
+                              <con2:requestTransform>
+                                <con6:assign varName="consultarContractTempContractRequest" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/typesystem/config" xmlns:con6="http://www.bea.com/wli/sb/stages/transform/config">
+                                  <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-7535</con1:id>
+                                  <con6:expr>
+                                    <con1:xqueryTransform>
+                                      <con1:resource ref="ITEL/Core/Resources/XQueries/consultarContractTempContractPS_Req"/>
+                                      <con1:param name="serviceClass">
+                                        <con1:path>data($suscriptorOCSResponse/MENSAJE/CONSULTAR_SUSCRIPTOR/*:suscriptor/*:PublicRatePlanCode)</con1:path>
+                                      </con1:param>
+                                      <con1:param name="contract">
+                                        <con1:path>""</con1:path>
+                                      </con1:param>
+                                      <con1:param name="fafidgroup">
+                                        <con1:path>data($suscriptorOCSResponse/MENSAJE/CONSULTAR_SUSCRIPTOR/*:suscriptor/*:AccountGroupID)</con1:path>
+                                      </con1:param>
+                                    </con1:xqueryTransform>
+                                  </con6:expr>
+                                </con6:assign>
+                              </con2:requestTransform>
+                              <con2:responseTransform/>
+                            </con2:wsCallout>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con2:wsCallout>
+                            <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-7532</con1:id>
+                            <con2:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/consultarContractTemp_ContractLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                            <con2:operation>consultarContractTemp_Contract</con2:operation>
+                            <con2:request>
+                              <con2:body>$consultarContractTempContractRequest</con2:body>
+                            </con2:request>
+                            <con2:response>
+                              <con2:body>consultarContractTempContractResponse</con2:body>
+                            </con2:response>
+                            <con2:requestTransform>
+                              <con6:assign varName="consultarContractTempContractRequest" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/typesystem/config" xmlns:con6="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-7533</con1:id>
+                                <con6:expr>
+                                  <con1:xqueryTransform>
+                                    <con1:resource ref="ITEL/Core/Resources/XQueries/consultarContractTempContractPS_Req"/>
+                                    <con1:param name="serviceClass">
+                                      <con1:path>data($suscriptorOCSResponse/MENSAJE/CONSULTAR_SUSCRIPTOR/*:suscriptor/*:PublicRatePlanCode)</con1:path>
+                                    </con1:param>
+                                    <con1:param name="contract">
+                                      <con1:path>""</con1:path>
+                                    </con1:param>
+                                    <con1:param name="fafidgroup">
+                                      <con1:path>data($suscriptorOCSResponse/MENSAJE/CONSULTAR_SUSCRIPTOR/*:suscriptor/*:AccountGroupID)</con1:path>
+                                    </con1:param>
+                                  </con1:xqueryTransform>
+                                </con6:expr>
+                              </con6:assign>
+                            </con2:requestTransform>
+                            <con2:responseTransform/>
+                          </con2:wsCallout>
+                        </con2:default>
+                      </con2:ifThenElse>
+                      <con2:assign varName="parametrosSalida">
+                        <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-7531</con1:id>
+                        <con2:expr>
+                          <con1:xqueryTransform>
+                            <con1:resource ref="ITEL/Core/Resources/XQueries/adaptarParametrosSalidaTrama400OCS"/>
+                            <con1:param name="montoBonos">
+                              <con1:path>if(exists($cargaInicial)) then
+	data($cargaInicial)
+else
+	"0"</con1:path>
+                            </con1:param>
+                            <con1:param name="diasVigencia">
+                              <con1:path>if(exists($vigencia) and (number($validarResponse/MENSAJE/TRAMA/*:PARAMETROS/*:BONIFICAR) = 1 
+or ($validarResponse/MENSAJE/TRAMA/*:PARAMETROS/*:DIASVIGENCIA !="" 
+and number($validarResponse/MENSAJE/TRAMA/*:PARAMETROS/*:DIASVIGENCIA) >0 ))) then
+	data($vigencia)
+else
+	"0"</con1:path>
+                            </con1:param>
+                            <con1:param name="monto">
+                              <con1:path>if(number($validarResponse/MENSAJE/TRAMA/*:PARAMETROS/*:MONTORECARGA) > 0 and number($validarResponse/MENSAJE/TRAMA/*:PARAMETROS/*:BONIFICAR) > 0) then
+	data($ejecutadorResponse/MENSAJE/BALANCES/BALANCE[CUENTA="0"]/VALOR)
+else
+	data($validarResponse/MENSAJE/TRAMA/*:PARAMETROS/*:MONTORECARGA)</con1:path>
+                            </con1:param>
+                            <con1:param name="cuentasDA">
+                              <con1:path>data($validarResponse/MENSAJE/TRAMA/*:PARAMETROS/*:CUENTASDA)</con1:path>
+                            </con1:param>
+                            <con1:param name="contrato">
+                              <con1:path>data($consultarContractTempContractResponse/MENSAJE/CONTRACT)</con1:path>
+                            </con1:param>
+                            <con1:param name="wS_Result1">
+                              <con1:path>$consultarBalancesRes</con1:path>
+                            </con1:param>
+                          </con1:xqueryTransform>
+                        </con2:expr>
+                      </con2:assign>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:default>
+                    <con2:ifThenElse>
+                      <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-7530</con1:id>
+                      <con2:case>
+                        <con2:condition>
+                          <con1:xqueryText>$validarResponse/MENSAJE/PLATAFORMA != '408'</con1:xqueryText>
+                        </con2:condition>
+                        <con2:actions>
+                          <con2:assign varName="parametrosSalida">
+                            <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-752f</con1:id>
+                            <con2:expr>
+                              <con1:xqueryTransform>
+                                <con1:resource ref="ITEL/Core/Resources/XQueries/adaptarParametrosSalidaTrama400"/>
+                                <con1:param name="reglasNegocioResponse">
+                                  <con1:path>$reglasNegocioResponse</con1:path>
+                                </con1:param>
+                              </con1:xqueryTransform>
+                            </con2:expr>
+                          </con2:assign>
+                        </con2:actions>
+                      </con2:case>
+                      <con2:default>
+                        <con2:assign varName="parametrosSalida">
+                          <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-752e</con1:id>
+                          <con2:expr>
+                            <con1:xqueryTransform>
+                              <con1:resource ref="ITEL/Core/Resources/XQueries/adaptarParametrosSalidaTrama408"/>
+                              <con1:param name="reglasNegocioResponse">
+                                <con1:path>$reglasNegocioResponse</con1:path>
+                              </con1:param>
+                            </con1:xqueryTransform>
+                          </con2:expr>
+                        </con2:assign>
+                      </con2:default>
+                    </con2:ifThenElse>
+                  </con2:default>
+                </con2:ifThenElse>
+                <con2:ifThenElse>
+                  <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-752d</con1:id>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>$validarResponse/MENSAJE/PLATAFORMA = '408'</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:replace contents-only="true" varName="validarResponse">
+                        <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-752c</con1:id>
+                        <con2:location>
+                          <con1:xpathText>./MENSAJE/TRAMA/*:METODO</con1:xpathText>
+                        </con2:location>
+                        <con2:expr>
+                          <con1:xqueryText>"408"</con1:xqueryText>
+                        </con2:expr>
+                      </con2:replace>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:default/>
+                </con2:ifThenElse>
+              </con2:actions>
+            </con2:case>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>$metodo = "402"</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:ifThenElse>
+                  <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-752b</con1:id>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>number($validarResponse/MENSAJE/IN_DESTINO) >= 50</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:wsCallout>
+                        <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-7529</con1:id>
+                        <con2:service xsi:type="ref:ProxyRef" ref="ITEL/OCS/AIR/Proxies/consultarBalancesOCSLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>consultarBalances</con2:operation>
+                        <con2:request>
+                          <con2:body>$consultarBalancesReq</con2:body>
+                        </con2:request>
+                        <con2:response>
+                          <con2:body>consultarBalancesRes</con2:body>
+                        </con2:response>
+                        <con2:requestTransform>
+                          <con6:assign varName="consultarBalancesReq" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/typesystem/config" xmlns:con6="http://www.bea.com/wli/sb/stages/transform/config">
+                            <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-752a</con1:id>
+                            <con6:expr>
+                              <con1:xqueryTransform>
+                                <con1:resource ref="ITEL/Core/Resources/XQueries/consultarBalancesPS_Req"/>
+                                <con1:param name="min">
+                                  <con1:path>xs:string(data($validarResponse/MENSAJE/TRAMA/*:MIN))</con1:path>
+                                </con1:param>
+                              </con1:xqueryTransform>
+                            </con6:expr>
+                          </con6:assign>
+                        </con2:requestTransform>
+                        <con2:responseTransform/>
+                      </con2:wsCallout>
+                      <con2:wsCallout>
+                        <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-7527</con1:id>
+                        <con2:service xsi:type="ref:ProxyRef" ref="ITEL/OCS/SOI/Proxies/consultarSuscriptorOCSLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>consultarSuscriptorOCS</con2:operation>
+                        <con2:request>
+                          <con2:body>$suscriptorOCSRequest</con2:body>
+                        </con2:request>
+                        <con2:response>
+                          <con2:body>suscriptorOCSResponse</con2:body>
+                        </con2:response>
+                        <con2:requestTransform>
+                          <con6:assign varName="suscriptorOCSRequest" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/typesystem/config" xmlns:con6="http://www.bea.com/wli/sb/stages/transform/config">
+                            <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-7528</con1:id>
+                            <con6:expr>
+                              <con1:xqueryTransform>
+                                <con1:resource ref="ITEL/Core/Resources/XQueries/consultarSuscriptorOCSPS_Req"/>
+                                <con1:param name="timeout">
+                                  <con1:path>2000</con1:path>
+                                </con1:param>
+                                <con1:param name="min">
+                                  <con1:path>data($validarResponse/MENSAJE/TRAMA/*:MIN)</con1:path>
+                                </con1:param>
+                                <con1:param name="in">
+                                  <con1:path>data($validarResponse/MENSAJE/IN_DESTINO)</con1:path>
+                                </con1:param>
+                              </con1:xqueryTransform>
+                            </con6:expr>
+                          </con6:assign>
+                        </con2:requestTransform>
+                        <con2:responseTransform/>
+                      </con2:wsCallout>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-7526</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>data($validarResponse/MENSAJE/IN_DESTINO) >= 50 and number($validarResponse/MENSAJE/TRAMA/*:PARAMETROS/*:MONTORECARGA) > 0</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con2:wsCallout>
+                              <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-751f</con1:id>
+                              <con2:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/consultarRangoRecargaOCSLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                              <con2:operation>ConsultarRangoRecargaOCS</con2:operation>
+                              <con2:request>
+                                <con2:body>$consultarRangoRecargaOCSRequest</con2:body>
+                              </con2:request>
+                              <con2:response>
+                                <con2:body>consultarRangoRecargaOCSResponse</con2:body>
+                              </con2:response>
+                              <con2:requestTransform>
+                                <con2:assign varName="consultarRangoRecargaOCSRequest">
+                                  <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-7525</con1:id>
+                                  <con2:expr>
+                                    <con1:xqueryTransform>
+                                      <con1:resource ref="ITEL/Core/Resources/XQueries/validar_Req_consultarRangoRecargaOCS"/>
+                                      <con1:param name="valor">
+                                        <con1:path>number($validarResponse/MENSAJE/TRAMA/*:PARAMETROS/*:MONTORECARGA)</con1:path>
+                                      </con1:param>
+                                      <con1:param name="regla">
+                                        <con1:path>'2'</con1:path>
+                                      </con1:param>
+                                      <con1:param name="bono">
+                                        <con1:path>if (string($validarResponse/MENSAJE/TRAMA/*:PARAMETROS/*:BONIFICAR)!="")then
+number($validarResponse/MENSAJE/TRAMA/*:PARAMETROS/*:BONIFICAR)
+else
+number("0")</con1:path>
+                                      </con1:param>
+                                      <con1:param name="sc">
+                                        <con1:path>data($suscriptorOCSResponse/MENSAJE/CONSULTAR_SUSCRIPTOR/*:suscriptor/*:PublicRatePlanCode)</con1:path>
+                                      </con1:param>
+                                    </con1:xqueryTransform>
+                                  </con2:expr>
+                                </con2:assign>
+                              </con2:requestTransform>
+                              <con2:responseTransform>
+                                <con2:ifThenElse>
+                                  <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-7524</con1:id>
+                                  <con2:case>
+                                    <con2:condition>
+                                      <con1:xqueryText>data($consultarRangoRecargaOCSResponse/CODIGO)="OK"</con1:xqueryText>
+                                    </con2:condition>
+                                    <con2:actions>
+                                      <con2:assign varName="cargaInicial">
+                                        <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-7523</con1:id>
+                                        <con2:expr>
+                                          <con1:xqueryText>data($consultarRangoRecargaOCSResponse/MENSAJE/BONO)</con1:xqueryText>
+                                        </con2:expr>
+                                      </con2:assign>
+                                      <con2:assign varName="vigencia">
+                                        <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-7522</con1:id>
+                                        <con2:expr>
+                                          <con1:xqueryText>data($consultarRangoRecargaOCSResponse/MENSAJE/VIGENCIA)</con1:xqueryText>
+                                        </con2:expr>
+                                      </con2:assign>
+                                    </con2:actions>
+                                  </con2:case>
+                                  <con2:default>
+                                    <con2:assign varName="cargaInicial">
+                                      <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-7521</con1:id>
+                                      <con2:expr>
+                                        <con1:xqueryText>0</con1:xqueryText>
+                                      </con2:expr>
+                                    </con2:assign>
+                                    <con2:assign varName="vigencia">
+                                      <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-7520</con1:id>
+                                      <con2:expr>
+                                        <con1:xqueryText>0</con1:xqueryText>
+                                      </con2:expr>
+                                    </con2:assign>
+                                  </con2:default>
+                                </con2:ifThenElse>
+                              </con2:responseTransform>
+                            </con2:wsCallout>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default/>
+                      </con2:ifThenElse>
+                      <con2:wsCallout>
+                        <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-751d</con1:id>
+                        <con2:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/consultarContractTemp_ContractLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>consultarContractTemp_Contract</con2:operation>
+                        <con2:request>
+                          <con2:body>$consultarContractTempContractRequest</con2:body>
+                        </con2:request>
+                        <con2:response>
+                          <con2:body>consultarContractTempContractResponse</con2:body>
+                        </con2:response>
+                        <con2:requestTransform>
+                          <con6:assign varName="consultarContractTempContractRequest" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/typesystem/config" xmlns:con6="http://www.bea.com/wli/sb/stages/transform/config">
+                            <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-751e</con1:id>
+                            <con6:expr>
+                              <con1:xqueryTransform>
+                                <con1:resource ref="ITEL/Core/Resources/XQueries/consultarContractTempContractPS_Req"/>
+                                <con1:param name="serviceClass">
+                                  <con1:path>data($suscriptorOCSResponse/MENSAJE/CONSULTAR_SUSCRIPTOR/*:suscriptor/*:PublicRatePlanCode)</con1:path>
+                                </con1:param>
+                                <con1:param name="contract">
+                                  <con1:path>""</con1:path>
+                                </con1:param>
+                                <con1:param name="fafidgroup">
+                                  <con1:path>data($suscriptorOCSResponse/MENSAJE/CONSULTAR_SUSCRIPTOR/*:suscriptor/*:AccountGroupID)</con1:path>
+                                </con1:param>
+                              </con1:xqueryTransform>
+                            </con6:expr>
+                          </con6:assign>
+                        </con2:requestTransform>
+                        <con2:responseTransform/>
+                      </con2:wsCallout>
+                      <con2:assign varName="parametrosSalida">
+                        <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-751c</con1:id>
+                        <con2:expr>
+                          <con1:xqueryTransform>
+                            <con1:resource ref="ITEL/Core/Resources/XQueries/adaptarParametrosSalidaTrama402OCS"/>
+                            <con1:param name="diasVigencia">
+                              <con1:path>if(exists($vigencia)) then
+	data($vigencia)
+else
+	"0"</con1:path>
+                            </con1:param>
+                            <con1:param name="monto">
+                              <con1:path>if(number($validarResponse/MENSAJE/TRAMA/*:PARAMETROS/*:MONTORECARGA) > 0) then
+	data($ejecutadorResponse/MENSAJE/BALANCES/BALANCE[CUENTA="0"]/VALOR)
+else
+	data($validarResponse/MENSAJE/TRAMA/*:PARAMETROS/*:MONTORECARGA)</con1:path>
+                            </con1:param>
+                            <con1:param name="cuentasDA">
+                              <con1:path>data($validarResponse/MENSAJE/TRAMA/*:PARAMETROS/*:CUENTASDA)</con1:path>
+                            </con1:param>
+                            <con1:param name="contrato">
+                              <con1:path>data($consultarContractTempContractResponse/MENSAJE/CONTRACT)</con1:path>
+                            </con1:param>
+                            <con1:param name="wS_Result1">
+                              <con1:path>$consultarBalancesRes</con1:path>
+                            </con1:param>
+                          </con1:xqueryTransform>
+                        </con2:expr>
+                      </con2:assign>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:default>
+                    <con2:assign varName="parametrosSalida">
+                      <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-751b</con1:id>
+                      <con2:expr>
+                        <con1:xqueryTransform>
+                          <con1:resource ref="ITEL/Core/Resources/XQueries/adaptarParametrosSalidaTrama402"/>
+                          <con1:param name="reglasNegocioResponse">
+                            <con1:path>$reglasNegocioResponse</con1:path>
+                          </con1:param>
+                        </con1:xqueryTransform>
+                      </con2:expr>
+                    </con2:assign>
+                  </con2:default>
+                </con2:ifThenElse>
+              </con2:actions>
+            </con2:case>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>$metodo = "403"</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:ifThenElse>
+                  <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-751a</con1:id>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>number($validarResponse/MENSAJE/IN_DESTINO) >= 50</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:wsCallout>
+                        <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-7518</con1:id>
+                        <con2:service xsi:type="ref:ProxyRef" ref="ITEL/OCS/AIR/Proxies/consultarBalancesOCSLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>consultarBalances</con2:operation>
+                        <con2:request>
+                          <con2:body>$consultarBalancesReq</con2:body>
+                        </con2:request>
+                        <con2:response>
+                          <con2:body>consultarBalancesRes</con2:body>
+                        </con2:response>
+                        <con2:requestTransform>
+                          <con6:assign varName="consultarBalancesReq" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/typesystem/config" xmlns:con6="http://www.bea.com/wli/sb/stages/transform/config">
+                            <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-7519</con1:id>
+                            <con6:expr>
+                              <con1:xqueryTransform>
+                                <con1:resource ref="ITEL/Core/Resources/XQueries/consultarBalancesPS_Req"/>
+                                <con1:param name="min">
+                                  <con1:path>xs:string(data($validarResponse/MENSAJE/TRAMA/*:MIN))</con1:path>
+                                </con1:param>
+                              </con1:xqueryTransform>
+                            </con6:expr>
+                          </con6:assign>
+                        </con2:requestTransform>
+                        <con2:responseTransform/>
+                      </con2:wsCallout>
+                      <con2:wsCallout>
+                        <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-7516</con1:id>
+                        <con2:service xsi:type="ref:ProxyRef" ref="ITEL/OCS/SOI/Proxies/consultarSuscriptorOCSLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>consultarSuscriptorOCS</con2:operation>
+                        <con2:request>
+                          <con2:body>$suscriptorOCSRequest</con2:body>
+                        </con2:request>
+                        <con2:response>
+                          <con2:body>suscriptorOCSResponse</con2:body>
+                        </con2:response>
+                        <con2:requestTransform>
+                          <con6:assign varName="suscriptorOCSRequest" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/typesystem/config" xmlns:con6="http://www.bea.com/wli/sb/stages/transform/config">
+                            <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-7517</con1:id>
+                            <con6:expr>
+                              <con1:xqueryTransform>
+                                <con1:resource ref="ITEL/Core/Resources/XQueries/consultarSuscriptorOCSPS_Req"/>
+                                <con1:param name="timeout">
+                                  <con1:path>2000</con1:path>
+                                </con1:param>
+                                <con1:param name="min">
+                                  <con1:path>data($validarResponse/MENSAJE/TRAMA/*:MIN)</con1:path>
+                                </con1:param>
+                                <con1:param name="in">
+                                  <con1:path>data($validarResponse/MENSAJE/IN_DESTINO)</con1:path>
+                                </con1:param>
+                              </con1:xqueryTransform>
+                            </con6:expr>
+                          </con6:assign>
+                        </con2:requestTransform>
+                        <con2:responseTransform/>
+                      </con2:wsCallout>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-7515</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>data($validarResponse/MENSAJE/IN_DESTINO) >= 50 and number($validarResponse/MENSAJE/TRAMA/*:PARAMETROS/*:MONTORECARGA) > 0</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con2:wsCallout>
+                              <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-750e</con1:id>
+                              <con2:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/consultarRangoRecargaOCSLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                              <con2:operation>ConsultarRangoRecargaOCS</con2:operation>
+                              <con2:request>
+                                <con2:body>$consultarRangoRecargaOCSRequest</con2:body>
+                              </con2:request>
+                              <con2:response>
+                                <con2:body>consultarRangoRecargaOCSResponse</con2:body>
+                              </con2:response>
+                              <con2:requestTransform>
+                                <con2:assign varName="consultarRangoRecargaOCSRequest">
+                                  <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-7514</con1:id>
+                                  <con2:expr>
+                                    <con1:xqueryTransform>
+                                      <con1:resource ref="ITEL/Core/Resources/XQueries/validar_Req_consultarRangoRecargaOCS"/>
+                                      <con1:param name="valor">
+                                        <con1:path>number($validarResponse/MENSAJE/TRAMA/*:PARAMETROS/*:MONTORECARGA)</con1:path>
+                                      </con1:param>
+                                      <con1:param name="regla">
+                                        <con1:path>'1'</con1:path>
+                                      </con1:param>
+                                      <con1:param name="bono">
+                                        <con1:path>if (string($validarResponse/MENSAJE/TRAMA/*:PARAMETROS/*:BONIFICAR)!= "")then
+number($validarResponse/MENSAJE/TRAMA/*:PARAMETROS/*:BONIFICAR)
+else
+number("0")</con1:path>
+                                      </con1:param>
+                                      <con1:param name="sc">
+                                        <con1:path>data($suscriptorOCSResponse/MENSAJE/CONSULTAR_SUSCRIPTOR/*:suscriptor/*:PublicRatePlanCode)</con1:path>
+                                      </con1:param>
+                                    </con1:xqueryTransform>
+                                  </con2:expr>
+                                </con2:assign>
+                              </con2:requestTransform>
+                              <con2:responseTransform>
+                                <con2:ifThenElse>
+                                  <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-7513</con1:id>
+                                  <con2:case>
+                                    <con2:condition>
+                                      <con1:xqueryText>data($consultarRangoRecargaOCSResponse/CODIGO)="OK"</con1:xqueryText>
+                                    </con2:condition>
+                                    <con2:actions>
+                                      <con2:assign varName="cargaInicial">
+                                        <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-7512</con1:id>
+                                        <con2:expr>
+                                          <con1:xqueryText>data($consultarRangoRecargaOCSResponse/MENSAJE/BONO)</con1:xqueryText>
+                                        </con2:expr>
+                                      </con2:assign>
+                                      <con2:assign varName="vigencia">
+                                        <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-7511</con1:id>
+                                        <con2:expr>
+                                          <con1:xqueryText>data($consultarRangoRecargaOCSResponse/MENSAJE/VIGENCIA)</con1:xqueryText>
+                                        </con2:expr>
+                                      </con2:assign>
+                                    </con2:actions>
+                                  </con2:case>
+                                  <con2:default>
+                                    <con2:assign varName="cargaInicial">
+                                      <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-7510</con1:id>
+                                      <con2:expr>
+                                        <con1:xqueryText>0</con1:xqueryText>
+                                      </con2:expr>
+                                    </con2:assign>
+                                    <con2:assign varName="vigencia">
+                                      <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-750f</con1:id>
+                                      <con2:expr>
+                                        <con1:xqueryText>0</con1:xqueryText>
+                                      </con2:expr>
+                                    </con2:assign>
+                                  </con2:default>
+                                </con2:ifThenElse>
+                              </con2:responseTransform>
+                            </con2:wsCallout>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default/>
+                      </con2:ifThenElse>
+                      <con2:wsCallout>
+                        <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-750c</con1:id>
+                        <con2:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/consultarContractTemp_ContractLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>consultarContractTemp_Contract</con2:operation>
+                        <con2:request>
+                          <con2:body>$consultarContractTempContractRequest</con2:body>
+                        </con2:request>
+                        <con2:response>
+                          <con2:body>consultarContractTempContractResponse</con2:body>
+                        </con2:response>
+                        <con2:requestTransform>
+                          <con6:assign varName="consultarContractTempContractRequest" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/typesystem/config" xmlns:con6="http://www.bea.com/wli/sb/stages/transform/config">
+                            <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-750d</con1:id>
+                            <con6:expr>
+                              <con1:xqueryTransform>
+                                <con1:resource ref="ITEL/Core/Resources/XQueries/consultarContractTempContractPS_Req"/>
+                                <con1:param name="serviceClass">
+                                  <con1:path>data($suscriptorOCSResponse/MENSAJE/CONSULTAR_SUSCRIPTOR/*:suscriptor/*:PublicRatePlanCode)</con1:path>
+                                </con1:param>
+                                <con1:param name="contract">
+                                  <con1:path>""</con1:path>
+                                </con1:param>
+                                <con1:param name="fafidgroup">
+                                  <con1:path>data($suscriptorOCSResponse/MENSAJE/CONSULTAR_SUSCRIPTOR/*:suscriptor/*:AccountGroupID)</con1:path>
+                                </con1:param>
+                              </con1:xqueryTransform>
+                            </con6:expr>
+                          </con6:assign>
+                        </con2:requestTransform>
+                        <con2:responseTransform/>
+                      </con2:wsCallout>
+                      <con2:assign varName="parametrosSalida">
+                        <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-750b</con1:id>
+                        <con2:expr>
+                          <con1:xqueryTransform>
+                            <con1:resource ref="ITEL/Core/Resources/XQueries/adaptarParametrosSalidaTrama400OCS"/>
+                            <con1:param name="montoBonos">
+                              <con1:path>if(exists($cargaInicial)) then
+	data($cargaInicial)
+else
+	"0"</con1:path>
+                            </con1:param>
+                            <con1:param name="diasVigencia">
+                              <con1:path>if(exists($vigencia)) then
+	data($vigencia)
+else
+	"0"</con1:path>
+                            </con1:param>
+                            <con1:param name="monto">
+                              <con1:path>if(number($validarResponse/MENSAJE/TRAMA/*:PARAMETROS/*:MONTORECARGA) > 0 ) then
+	data($ejecutadorResponse/MENSAJE/BALANCES/BALANCE[CUENTA="0"]/VALOR)
+else
+	data($validarResponse/MENSAJE/TRAMA/*:PARAMETROS/*:MONTORECARGA)</con1:path>
+                            </con1:param>
+                            <con1:param name="cuentasDA">
+                              <con1:path>data($validarResponse/MENSAJE/TRAMA/*:PARAMETROS/*:CUENTASDA)</con1:path>
+                            </con1:param>
+                            <con1:param name="contrato">
+                              <con1:path>data($consultarContractTempContractResponse/MENSAJE/CONTRACT)</con1:path>
+                            </con1:param>
+                            <con1:param name="wS_Result1">
+                              <con1:path>$consultarBalancesRes</con1:path>
+                            </con1:param>
+                          </con1:xqueryTransform>
+                        </con2:expr>
+                      </con2:assign>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:default>
+                    <con2:assign varName="parametrosSalida">
+                      <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-750a</con1:id>
+                      <con2:expr>
+                        <con1:xqueryTransform>
+                          <con1:resource ref="ITEL/Core/Resources/XQueries/adaptarParametrosSalidaTrama403"/>
+                          <con1:param name="reglasNegocioResponse">
+                            <con1:path>$reglasNegocioResponse</con1:path>
+                          </con1:param>
+                        </con1:xqueryTransform>
+                      </con2:expr>
+                    </con2:assign>
+                  </con2:default>
+                </con2:ifThenElse>
+              </con2:actions>
+            </con2:case>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>$metodo = "407"</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:wsCallout>
+                  <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-7508</con1:id>
+                  <con2:service xsi:type="ref:ProxyRef" ref="ITEL/OCS/AIR/Proxies/consultarBalancesOCSLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con2:operation>consultarBalances</con2:operation>
+                  <con2:request>
+                    <con2:body>$consultarBalancesReq</con2:body>
+                  </con2:request>
+                  <con2:response>
+                    <con2:body>consultarBalancesRes</con2:body>
+                  </con2:response>
+                  <con2:requestTransform>
+                    <con6:assign varName="consultarBalancesReq" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/typesystem/config" xmlns:con6="http://www.bea.com/wli/sb/stages/transform/config">
+                      <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-7509</con1:id>
+                      <con6:expr>
+                        <con1:xqueryTransform>
+                          <con1:resource ref="ITEL/Core/Resources/XQueries/consultarBalancesPS_Req"/>
+                          <con1:param name="min">
+                            <con1:path>xs:string(data($validarResponse/MENSAJE/TRAMA/*:MIN))</con1:path>
+                          </con1:param>
+                        </con1:xqueryTransform>
+                      </con6:expr>
+                    </con6:assign>
+                  </con2:requestTransform>
+                  <con2:responseTransform/>
+                </con2:wsCallout>
+                <con2:assign varName="parametrosSalida">
+                  <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-7507</con1:id>
+                  <con2:expr>
+                    <con1:xqueryTransform>
+                      <con1:resource ref="ITEL/Core/Resources/XQueries/adaptarParametrosSalidaTrama407OCS"/>
+                      <con1:param name="cuentasDA">
+                        <con1:path>data($validarResponse/MENSAJE/TRAMA/*:PARAMETROS/*:CUENTASDA)</con1:path>
+                      </con1:param>
+                      <con1:param name="wS_Result1">
+                        <con1:path>$consultarBalancesRes</con1:path>
+                      </con1:param>
+                    </con1:xqueryTransform>
+                  </con2:expr>
+                </con2:assign>
+              </con2:actions>
+            </con2:case>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>$metodo = "500"</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:assign varName="parametrosSalida">
+                  <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-7506</con1:id>
+                  <con2:expr>
+                    <con1:xqueryText>data($reglasNegocioResponse/MENSAJE/PARAMETROS_REGLAS/PARAMETRO[NOMBRE="TRAMA"]/VALOR)</con1:xqueryText>
+                  </con2:expr>
+                </con2:assign>
+              </con2:actions>
+            </con2:case>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>$metodo = "200"</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:ifThenElse>
+                  <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-7505</con1:id>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>number($validarResponse/MENSAJE/IN_DESTINO) >= 50</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:assign varName="parametrosSalida">
+                        <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-7504</con1:id>
+                        <con2:expr>
+                          <con1:xqueryTransform>
+                            <con1:resource ref="ITEL/Core/Resources/XQueries/adaptarParametrosSalidaTrama200OCS"/>
+                            <con1:param name="reglasNegocio">
+                              <con1:path>$reglasNegocioResponse</con1:path>
+                            </con1:param>
+                            <con1:param name="ejecutador">
+                              <con1:path>$ejecutadorResponse</con1:path>
+                            </con1:param>
+                            <con1:param name="cuentasDA">
+                              <con1:path>data($validarResponse/MENSAJE/TRAMA/*:PARAMETROS/*:CUENTASDA)</con1:path>
+                            </con1:param>
+                          </con1:xqueryTransform>
+                        </con2:expr>
+                      </con2:assign>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:default>
+                    <con2:assign varName="parametrosSalida">
+                      <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-7503</con1:id>
+                      <con2:expr>
+                        <con1:xqueryTransform>
+                          <con1:resource ref="ITEL/Core/Resources/XQueries/adaptarParametrosSalidaTrama200"/>
+                          <con1:param name="reglasNegocio">
+                            <con1:path>$reglasNegocioResponse</con1:path>
+                          </con1:param>
+                          <con1:param name="ejecutador">
+                            <con1:path>$ejecutadorResponse</con1:path>
+                          </con1:param>
+                        </con1:xqueryTransform>
+                      </con2:expr>
+                    </con2:assign>
+                  </con2:default>
+                </con2:ifThenElse>
+              </con2:actions>
+            </con2:case>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>$metodo = "205"</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:assign varName="parametrosSalida">
+                  <con1:id>_ActionId-3368756310733439854--499449dc.144d6366532.-7da0</con1:id>
+                  <con2:expr>
+                    <con1:xqueryTransform>
+                      <con1:resource ref="ITEL/Core/Resources/XQueries/adaptarParametrosSalidaTrama205OCS"/>
+                      <con1:param name="reglasNegocio">
+                        <con1:path>$reglasNegocioResponse</con1:path>
+                      </con1:param>
+                    </con1:xqueryTransform>
+                  </con2:expr>
+                </con2:assign>
+              </con2:actions>
+            </con2:case>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>$metodo = "201"</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:ifThenElse>
+                  <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-7502</con1:id>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>number($validarResponse/MENSAJE/IN_DESTINO) >= 50</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:assign varName="parametrosSalida">
+                        <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-7501</con1:id>
+                        <con2:expr>
+                          <con1:xqueryTransform>
+                            <con1:resource ref="ITEL/Core/Resources/XQueries/adaptarParametrosSalidaTrama201OCS"/>
+                            <con1:param name="cuentasDA">
+                              <con1:path>data($validarResponse/MENSAJE/TRAMA/*:PARAMETROS/*:CUENTASDA)</con1:path>
+                            </con1:param>
+                            <con1:param name="wS_Result">
+                              <con1:path>$reglasNegocioResponse</con1:path>
+                            </con1:param>
+                          </con1:xqueryTransform>
+                        </con2:expr>
+                      </con2:assign>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:default>
+                    <con2:assign varName="parametrosSalida">
+                      <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-7500</con1:id>
+                      <con2:expr>
+                        <con1:xqueryTransform>
+                          <con1:resource ref="ITEL/Core/Resources/XQueries/adaptarParametrosSalidaTrama201"/>
+                          <con1:param name="wS_Result">
+                            <con1:path>$reglasNegocioResponse</con1:path>
+                          </con1:param>
+                        </con1:xqueryTransform>
+                      </con2:expr>
+                    </con2:assign>
+                  </con2:default>
+                </con2:ifThenElse>
+              </con2:actions>
+            </con2:case>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>$metodo = "207"</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:assign varName="parametrosSalida">
+                  <con1:id>_ActionId-8795499483238389029-b1ad959.147c57f1002.-7da4</con1:id>
+                  <con2:expr>
+                    <con1:xqueryTransform>
+                      <con1:resource ref="ITEL/Core/Resources/XQueries/adaptarParametrosSalidaTrama207OCS"/>
+                      <con1:param name="wS_Result">
+                        <con1:path>$reglasNegocioResponse</con1:path>
+                      </con1:param>
+                    </con1:xqueryTransform>
+                  </con2:expr>
+                </con2:assign>
+              </con2:actions>
+            </con2:case>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>$metodo = '208'</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:assign varName="parametrosSalida">
+                  <con1:id>_ActionId-1158617767404687255--5c13eac3.14a34bce876.-7d2d</con1:id>
+                  <con2:expr>
+                    <con1:xqueryTransform>
+                      <con1:resource ref="ITEL/Core/Resources/XQueries/adaptarParametrosSalidaTrama208OCS"/>
+                      <con1:param name="cantidadCambiosGratis">
+                        <con1:path>data($validarResponse/*:MENSAJE/*:CAMBIOS_GRATIS)</con1:path>
+                      </con1:param>
+                      <con1:param name="cantidadCambiosPlan">
+                        <con1:path>data($reglasNegocioResponse/MENSAJE/PARAMETROS_REGLAS/PARAMETRO[NOMBRE='CAMBIOSDEPLAN']/VALOR)</con1:path>
+                      </con1:param>
+                    </con1:xqueryTransform>
+                  </con2:expr>
+                </con2:assign>
+              </con2:actions>
+            </con2:case>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>$metodo = '210'</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:assign varName="parametrosSalida">
+                  <con1:id>_ActionId-3020866163893850678-69c90c7a.153a455b390.-7c88</con1:id>
+                  <con2:expr>
+                    <con1:xqueryTransform>
+                      <con1:resource ref="ITEL/Core/Resources/XQueries/adaptarParametrosSalidaTrama210"/>
+                      <con1:param name="wS_Result1">
+                        <con1:path>$reglasNegocioResponse</con1:path>
+                      </con1:param>
+                    </con1:xqueryTransform>
+                  </con2:expr>
+                </con2:assign>
+              </con2:actions>
+            </con2:case>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>$metodo = '211'</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:assign varName="parametrosSalida">
+                  <con1:id>_ActionId-8096952212429106120-1bbaa577.15405e544f1.-763d</con1:id>
+                  <con2:expr>
+                    <con1:xqueryTransform>
+                      <con1:resource ref="ITEL/Core/Resources/XQueries/adaptarParametrosSalidaTrama211"/>
+                      <con1:param name="wS_Result1">
+                        <con1:path>$reglasNegocioResponse</con1:path>
+                      </con1:param>
+                    </con1:xqueryTransform>
+                  </con2:expr>
+                </con2:assign>
+              </con2:actions>
+            </con2:case>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>$metodo = '212'</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:assign varName="parametrosSalida">
+                  <con1:id>_ActionId-2842682608366208598-67589bc8.15632675ce6.-6e52</con1:id>
+                  <con2:expr>
+                    <con1:xqueryTransform>
+                      <con1:resource ref="ITEL/Core/Resources/XQueries/adaptarParametrosSalidaTrama212OCS"/>
+                      <con1:param name="cuentasDA">
+                        <con1:path>data($validarResponse/MENSAJE/TRAMA/*:PARAMETROS/*:CUENTASDA)</con1:path>
+                      </con1:param>
+                      <con1:param name="wS_Result">
+                        <con1:path>$reglasNegocioResponse</con1:path>
+                      </con1:param>
+                    </con1:xqueryTransform>
+                  </con2:expr>
+                </con2:assign>
+              </con2:actions>
+            </con2:case>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>$metodo = '213'</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:assign varName="parametrosSalida">
+                  <con1:id>_ActionId-1259675915633913103-52f096e5.15680daa81f.-7bdb</con1:id>
+                  <con2:expr>
+                    <con1:xqueryTransform>
+                      <con1:resource ref="ITEL/Core/Resources/XQueries/adaptarParametrosSalidaTrama213OCS"/>
+                      <con1:param name="cantidadCambiosGratis">
+                        <con1:path>data($validarResponse/*:MENSAJE/*:CAMBIOS_GRATIS)</con1:path>
+                      </con1:param>
+                      <con1:param name="cantidadCambiosFNF">
+                        <con1:path>data($reglasNegocioResponse/MENSAJE/PARAMETROS_REGLAS/PARAMETRO[NOMBRE='CAMBIOSDEFNF']/VALOR)</con1:path>
+                      </con1:param>
+                    </con1:xqueryTransform>
+                  </con2:expr>
+                </con2:assign>
+              </con2:actions>
+            </con2:case>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>$metodo = '215'</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:assign varName="parametrosSalida">
+                  <con1:id>_ActionId-3645351208375448940--14cfe84a.158f89cfacf.-4bac</con1:id>
+                  <con2:expr>
+                    <con1:xqueryTransform>
+                      <con1:resource ref="ITEL/Core/Resources/XQueries/adaptarParametrosSalidaTrama215"/>
+                      <con1:param name="wS_Result1">
+                        <con1:path>$reglasNegocioResponse</con1:path>
+                      </con1:param>
+                    </con1:xqueryTransform>
+                  </con2:expr>
+                </con2:assign>
+              </con2:actions>
+            </con2:case>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>$metodo = "202"</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:ifThenElse>
+                  <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-74ff</con1:id>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>number($validarResponse/MENSAJE/IN_DESTINO) >= 50</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:assign varName="parametrosSalida">
+                        <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-74fe</con1:id>
+                        <con2:expr>
+                          <con1:xqueryTransform>
+                            <con1:resource ref="ITEL/Core/Resources/XQueries/adaptarParametrosSalidaTrama202OCS"/>
+                            <con1:param name="wS_Result">
+                              <con1:path>$reglasNegocioResponse</con1:path>
+                            </con1:param>
+                          </con1:xqueryTransform>
+                        </con2:expr>
+                      </con2:assign>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:default>
+                    <con2:assign varName="parametrosSalida">
+                      <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-74fd</con1:id>
+                      <con2:expr>
+                        <con1:xqueryTransform>
+                          <con1:resource ref="ITEL/Core/Resources/XQueries/adaptarParametrosSalidaTrama202"/>
+                          <con1:param name="wS_Result">
+                            <con1:path>$reglasNegocioResponse</con1:path>
+                          </con1:param>
+                        </con1:xqueryTransform>
+                      </con2:expr>
+                    </con2:assign>
+                  </con2:default>
+                </con2:ifThenElse>
+              </con2:actions>
+            </con2:case>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>$metodo = "203"</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:ifThenElse>
+                  <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-74fc</con1:id>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>number($validarResponse/MENSAJE/IN_DESTINO) >= 50</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:assign varName="parametrosSalida">
+                        <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-74fb</con1:id>
+                        <con2:expr>
+                          <con1:xqueryTransform>
+                            <con1:resource ref="ITEL/Core/Resources/XQueries/adaptarParametrosSalidaTrama203OCS"/>
+                            <con1:param name="wS_Result">
+                              <con1:path>$reglasNegocioResponse</con1:path>
+                            </con1:param>
+                          </con1:xqueryTransform>
+                        </con2:expr>
+                      </con2:assign>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:default>
+                    <con2:assign varName="parametrosSalida">
+                      <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-74fa</con1:id>
+                      <con2:expr>
+                        <con1:xqueryTransform>
+                          <con1:resource ref="ITEL/Core/Resources/XQueries/adaptarParametrosSalidaTrama203"/>
+                          <con1:param name="wS_Result">
+                            <con1:path>$reglasNegocioResponse</con1:path>
+                          </con1:param>
+                        </con1:xqueryTransform>
+                      </con2:expr>
+                    </con2:assign>
+                  </con2:default>
+                </con2:ifThenElse>
+              </con2:actions>
+            </con2:case>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>$metodo = "204"</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:ifThenElse>
+                  <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-74f9</con1:id>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>number($validarResponse/MENSAJE/IN_DESTINO) >= 50</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:assign varName="parametrosSalida">
+                        <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-74f8</con1:id>
+                        <con2:expr>
+                          <con1:xqueryTransform>
+                            <con1:resource ref="ITEL/Core/Resources/XQueries/adaptarParametrosSalidaTrama204OCS"/>
+                            <con1:param name="wS_Result">
+                              <con1:path>$reglasNegocioResponse</con1:path>
+                            </con1:param>
+                          </con1:xqueryTransform>
+                        </con2:expr>
+                      </con2:assign>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:default>
+                    <con2:assign varName="parametrosSalida">
+                      <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-74f7</con1:id>
+                      <con2:expr>
+                        <con1:xqueryTransform>
+                          <con1:resource ref="ITEL/Core/Resources/XQueries/adaptarParametrosSalidaTrama204"/>
+                          <con1:param name="wS_Result1">
+                            <con1:path>$reglasNegocioResponse</con1:path>
+                          </con1:param>
+                        </con1:xqueryTransform>
+                      </con2:expr>
+                    </con2:assign>
+                  </con2:default>
+                </con2:ifThenElse>
+              </con2:actions>
+            </con2:case>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>$metodo = "206"</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:assign varName="parametrosSalida">
+                  <con1:id>_ActionId-3185886423666138863--164d42.144e0737270.-7c21</con1:id>
+                  <con2:expr>
+                    <con1:xqueryTransform>
+                      <con1:resource ref="ITEL/Core/Resources/XQueries/adaptarParametrosSalidaTrama206OCS"/>
+                      <con1:param name="wS_Result">
+                        <con1:path>$reglasNegocioResponse</con1:path>
+                      </con1:param>
+                    </con1:xqueryTransform>
+                  </con2:expr>
+                </con2:assign>
+              </con2:actions>
+            </con2:case>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>$metodo = "700"</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:ifThenElse>
+                  <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-74f6</con1:id>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>number($validarResponse/MENSAJE/IN_DESTINO) >= 50</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:assign varName="parametrosSalida">
+                        <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-74f5</con1:id>
+                        <con2:expr>
+                          <con1:xqueryTransform>
+                            <con1:resource ref="ITEL/Core/Resources/XQueries/adaptarParametrosSalidaTrama700OCS"/>
+                            <con1:param name="suscriptor">
+                              <con1:path>$reglasNegocioResponse</con1:path>
+                            </con1:param>
+                          </con1:xqueryTransform>
+                        </con2:expr>
+                      </con2:assign>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:default>
+                    <con2:assign varName="parametrosSalida">
+                      <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-74f4</con1:id>
+                      <con2:expr>
+                        <con1:xqueryTransform>
+                          <con1:resource ref="ITEL/Core/Resources/XQueries/adaptarParametrosSalidaTrama700"/>
+                          <con1:param name="suscriptor">
+                            <con1:path>$reglasNegocioResponse/MENSAJE/SUSCRIPTOR_DESTINO</con1:path>
+                          </con1:param>
+                        </con1:xqueryTransform>
+                      </con2:expr>
+                    </con2:assign>
+                  </con2:default>
+                </con2:ifThenElse>
+              </con2:actions>
+            </con2:case>
+            <con2:default>
+              <con2:assign varName="parametrosSalida">
+                <con1:id>_ActionId-2833620797410019156-752443eb.143e049f9ba.-74f3</con1:id>
+                <con2:expr>
+                  <con1:xqueryText>""</con1:xqueryText>
+                </con2:expr>
+              </con2:assign>
+            </con2:default>
+          </con2:ifThenElse>
+          <con2:ifThenElse>
+            <con1:id>_ActionId-1038524880265652484--1e0839f3.142b3ef9a5a.-755b</con1:id>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>$validarResponse/MENSAJE/PLATAFORMA = '408'</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:replace contents-only="true" varName="validarResponse">
+                  <con1:id>_ActionId-1038524880265652484--1e0839f3.142b3ef9a5a.-755a</con1:id>
+                  <con2:location>
+                    <con1:xpathText>./MENSAJE/TRAMA/*:METODO</con1:xpathText>
+                  </con2:location>
+                  <con2:expr>
+                    <con1:xqueryText>"408"</con1:xqueryText>
+                  </con2:expr>
+                </con2:replace>
+              </con2:actions>
+            </con2:case>
+            <con2:default/>
+          </con2:ifThenElse>
+          <con2:assign varName="respuesta">
+            <con1:id>_ActionId-1038524880265652484--1e0839f3.142b3ef9a5a.-7558</con1:id>
+            <con2:expr>
+              <con1:xqueryTransform>
+                <con1:resource ref="ITEL/Core/Resources/XQueries/adaptarTramaSalida"/>
+                <con1:param name="validarResponse">
+                  <con1:path>$validarResponse</con1:path>
+                </con1:param>
+                <con1:param name="descripcion">
+                  <con1:path>$descripcionError</con1:path>
+                </con1:param>
+                <con1:param name="codigo">
+                  <con1:path>$codigoMapeado</con1:path>
+                </con1:param>
+                <con1:param name="parametros">
+                  <con1:path>$parametrosSalida</con1:path>
+                </con1:param>
+              </con1:xqueryTransform>
+            </con2:expr>
+          </con2:assign>
+          <con2:assign varName="tiempoFinal">
+            <con1:id>_ActionId-8581632527075336554--189622b9.133281344a2.-75db</con1:id>
+            <con2:expr>
+              <con1:xqueryText>fn:current-dateTime()</con1:xqueryText>
+            </con2:expr>
+          </con2:assign>
+          <con2:assign varName="duracionFinal">
+            <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-629a</con1:id>
+            <con2:expr>
+              <con1:xqueryText>fn:seconds-from-duration(xs:dateTime($tiempoFinal) - xs:dateTime($tiempoInicio)) * 1000</con1:xqueryText>
+            </con2:expr>
+          </con2:assign>
+          <con2:replace varName="body" contents-only="true">
+            <con1:id>_ActionId-1641293207969743559--28a4b30a.12fb0e9a486.-7ed7</con1:id>
+            <con2:expr>
+              <con1:xqueryTransform>
+                <con1:resource ref="ITEL/Core/Resources/XQueries/ejecutarTrama_Res"/>
+                <con1:param name="codigoError">
+                  <con1:path>$codigoError</con1:path>
+                </con1:param>
+                <con1:param name="respuesta">
+                  <con1:path>$respuesta</con1:path>
+                </con1:param>
+                <con1:param name="duracion">
+                  <con1:path>if($metodo = '201' and $codigoError = '1' and number($validarResponse/MENSAJE/IN_DESTINO) > 50) then
+	data($reglasNegocioResponse/MENSAJE/SUSCRIPTOR_OCS/DATOS_SUSCRIPTOR/*:ActivationDate)	
+else
+	$duracionFinal</con1:path>
+                </con1:param>
+              </con1:xqueryTransform>
+            </con2:expr>
+          </con2:replace>
+        </con:actions>
+      </con:stage>
+      <con:stage name="auditoria" errorHandler="_onErrorHandler-4228383408135898017-56974e5.1338db8796b.-7d0d">
+        <con:context/>
+        <con:actions>
+          <con2:assign varName="duracionUltimaEtapa">
+            <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-61f5</con1:id>
+            <con2:expr>
+              <con1:xqueryText>fn:seconds-from-duration(xs:dateTime($tiempoFinal) - xs:dateTime($tiempoProvision)) * 1000</con1:xqueryText>
+            </con2:expr>
+          </con2:assign>
+          <con2:ifThenElse>
+            <con1:id>_ActionId-2845619068158666846-6f23b718.13423c3457c.-7f94</con1:id>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>$codigoError != "913" or ($codigoError = "913" and fn:not(fn:contains(data($validarResponse/MENSAJE/TRAMA/*:USUARIO), "GET / HTTP/1.1")))</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:wsCallout>
+                  <con1:id>_ActionId-2845619068158666846-6f23b718.13423c3457c.-7f90</con1:id>
+                  <con2:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/enviarAuditoriaLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con2:operation>auditoriaITEL</con2:operation>
+                  <con2:request>
+                    <con2:body>$auditoriaRequest</con2:body>
+                  </con2:request>
+                  <con2:response>
+                    <con2:body>auditoriaResponse</con2:body>
+                  </con2:response>
+                  <con2:requestTransform>
+                    <con2:assign varName="auditoriaRequest">
+                      <con1:id>_ActionId-2845619068158666846-6f23b718.13423c3457c.-7f91</con1:id>
+                      <con2:expr>
+                        <con1:xqueryTransform>
+                          <con1:resource ref="ITEL/Core/Resources/XQueries/ejecutarTrama_Req_Auditoria"/>
+                          <con1:param name="codigoError">
+                            <con1:path>$codigoError</con1:path>
+                          </con1:param>
+                          <con1:param name="duracionFinal">
+                            <con1:path>$duracionUltimaEtapa</con1:path>
+                          </con1:param>
+                          <con1:param name="ip">
+                            <con1:path>$ipOrigen</con1:path>
+                          </con1:param>
+                          <con1:param name="validarResponse">
+                            <con1:path>$validarResponse</con1:path>
+                          </con1:param>
+                          <con1:param name="fechaSalida">
+                            <con1:path>$tiempoFinal</con1:path>
+                          </con1:param>
+                          <con1:param name="tramaSalida">
+                            <con1:path>$respuesta</con1:path>
+                          </con1:param>
+                          <con1:param name="reglasNegocioResponse">
+                            <con1:path>$reglasNegocioResponse</con1:path>
+                          </con1:param>
+                          <con1:param name="fechaEntrada">
+                            <con1:path>$tiempoInicio</con1:path>
+                          </con1:param>
+                          <con1:param name="host">
+                            <con1:path>$ipLocal</con1:path>
+                          </con1:param>
+                          <con1:param name="ejecutadorResponse">
+                            <con1:path>$ejecutadorResponse</con1:path>
+                          </con1:param>
+                        </con1:xqueryTransform>
+                      </con2:expr>
+                    </con2:assign>
+                  </con2:requestTransform>
+                  <con2:responseTransform/>
+                </con2:wsCallout>
+              </con2:actions>
+            </con2:case>
+            <con2:default/>
+          </con2:ifThenElse>
+        </con:actions>
+      </con:stage>
+      <con:stage name="compensacion" errorHandler="_onErrorHandler-5174370892286694528-6956db40.133a81e5a33.-7d86">
+        <con:context/>
+        <con:actions>
+          <con2:ifThenElse>
+            <con1:id>_ActionId-5174370892286694528-6956db40.133a81e5a33.-7dad</con1:id>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>$codigoError != "1" and fn:count($ejecutadorResponse/MENSAJE/SERVICIOS_EJECUTADOS/SERVICIO) != 0</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:wsCallout>
+                  <con1:id>_ActionId-5174370892286694528-6956db40.133a81e5a33.-7dab</con1:id>
+                  <con2:service xsi:type="ref:ProxyRef" ref="ITEL/Compensacion/Proxies/enviarCompensacionLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con2:operation>compensacionITEL</con2:operation>
+                  <con2:request>
+                    <con2:body>$compensacionRequest</con2:body>
+                  </con2:request>
+                  <con2:response>
+                    <con2:body>compensacionResponse</con2:body>
+                  </con2:response>
+                  <con2:requestTransform>
+                    <con2:assign varName="compensacionRequest">
+                      <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-7bdc</con1:id>
+                      <con2:expr>
+                        <con1:xqueryTransform>
+                          <con1:resource ref="ITEL/Core/Resources/XQueries/ejecutarTrama_Req_compensacion"/>
+                          <con1:param name="reglasNegocioResponse">
+                            <con1:path>$reglasNegocioResponse</con1:path>
+                          </con1:param>
+                          <con1:param name="metodo">
+                            <con1:path>$metodo</con1:path>
+                          </con1:param>
+                          <con1:param name="ejecutadorResponse">
+                            <con1:path>$ejecutadorResponse</con1:path>
+                          </con1:param>
+                        </con1:xqueryTransform>
+                      </con2:expr>
+                    </con2:assign>
+                  </con2:requestTransform>
+                  <con2:responseTransform/>
+                </con2:wsCallout>
+              </con2:actions>
+            </con2:case>
+            <con2:default/>
+          </con2:ifThenElse>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="error" name="_onErrorHandler-2204270597828647040--7c77bcf4.12f6f6971b2.-7d89">
+      <con:stage name="error">
+        <con:context/>
+        <con:actions>
+          <con2:assign varName="ipLocal">
+            <con1:id>_ActionId-2204270597828647040--7c77bcf4.12f6f6971b2.-7cf4</con1:id>
+            <con2:expr>
+              <con1:xqueryText>"Unknow"</con1:xqueryText>
+            </con2:expr>
+          </con2:assign>
+          <con1:resume>
+            <con1:id>_ActionId-6747189505024254998--11e6dee5.13008f06097.-7f03</con1:id>
+          </con1:resume>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="error" name="_onErrorHandler-2204270597828647040--7c77bcf4.12f6f6971b2.-7d87">
+      <con:stage name="error">
+        <con:context/>
+        <con:actions>
+          <con2:ifThenElse>
+            <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-62a1</con1:id>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>$codigoError = "1"</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:assign varName="codigoMapeado">
+                  <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-62a0</con1:id>
+                  <con2:expr>
+                    <con1:xqueryText>"1"</con1:xqueryText>
+                  </con2:expr>
+                </con2:assign>
+                <con2:assign varName="descripcionError">
+                  <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-629f</con1:id>
+                  <con2:expr>
+                    <con1:xqueryText>"Transaction successful"</con1:xqueryText>
+                  </con2:expr>
+                </con2:assign>
+              </con2:actions>
+            </con2:case>
+            <con2:default>
+              <con2:assign varName="codigoMapeado">
+                <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-629e</con1:id>
+                <con2:expr>
+                  <con1:xqueryText>"903"</con1:xqueryText>
+                </con2:expr>
+              </con2:assign>
+              <con2:assign varName="descripcionError">
+                <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-629d</con1:id>
+                <con2:expr>
+                  <con1:xqueryText>"Transaction not processed"</con1:xqueryText>
+                </con2:expr>
+              </con2:assign>
+            </con2:default>
+          </con2:ifThenElse>
+          <con1:resume>
+            <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-631b</con1:id>
+          </con1:resume>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="error" name="_onErrorHandler-1641293207969743559--28a4b30a.12fb0e9a486.-7ed0">
+      <con:stage name="error">
+        <con:context/>
+        <con:actions>
+          <con2:assign varName="tiempoFinal">
+            <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-624a</con1:id>
+            <con2:expr>
+              <con1:xqueryText>fn:current-dateTime()</con1:xqueryText>
+            </con2:expr>
+          </con2:assign>
+          <con2:assign varName="duracionFinal">
+            <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-6249</con1:id>
+            <con2:expr>
+              <con1:xqueryText>fn:seconds-from-duration(xs:dateTime($tiempoFinal) - xs:dateTime($tiempoInicio)) * 1000</con1:xqueryText>
+            </con2:expr>
+          </con2:assign>
+          <con2:assign varName="codigoError">
+            <con1:id>_ActionId-7289227227976692718--7360c13a.149cf07ee36.-7581</con1:id>
+            <con2:expr>
+              <con1:xqueryText>"54"</con1:xqueryText>
+            </con2:expr>
+          </con2:assign>
+          <con2:ifThenElse>
+            <con1:id>_ActionId-7289227227976692718--7360c13a.149cf07ee36.-764e</con1:id>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>$metodo = '407' and fn:count($ejecutadorResponse/MENSAJE/SERVICIOS_EJECUTADOS/SERVICIO) != 0</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:wsCallout>
+                  <con1:id>_ActionId-7289227227976692718--7360c13a.149cf07ee36.-73ce</con1:id>
+                  <con2:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/consultarRespuestaLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con2:operation>consultarRespuesta</con2:operation>
+                  <con2:request>
+                    <con2:body>$respuestaRequest</con2:body>
+                  </con2:request>
+                  <con2:response>
+                    <con2:body>respuestaResponse</con2:body>
+                  </con2:response>
+                  <con2:requestTransform>
+                    <con2:assign varName="respuestaRequest">
+                      <con1:id>_ActionId-7289227227976692718--7360c13a.149cf07ee36.-73d1</con1:id>
+                      <con2:expr>
+                        <con1:xqueryTransform>
+                          <con1:resource ref="ITEL/Core/Resources/XQueries/consultarRespuesta_Req"/>
+                          <con1:param name="codigo">
+                            <con1:path>"55"</con1:path>
+                          </con1:param>
+                        </con1:xqueryTransform>
+                      </con2:expr>
+                    </con2:assign>
+                  </con2:requestTransform>
+                  <con2:responseTransform>
+                    <con2:assign varName="codigoMapeado">
+                      <con1:id>_ActionId-7289227227976692718--7360c13a.149cf07ee36.-73d0</con1:id>
+                      <con2:expr>
+                        <con1:xqueryText>data($respuestaResponse/MENSAJE/CODIGO)</con1:xqueryText>
+                      </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="descripcionError">
+                      <con1:id>_ActionId-7289227227976692718--7360c13a.149cf07ee36.-73cf</con1:id>
+                      <con2:expr>
+                        <con1:xqueryText>data($respuestaResponse/MENSAJE/RESDESCRIPCION)</con1:xqueryText>
+                      </con2:expr>
+                    </con2:assign>
+                  </con2:responseTransform>
+                </con2:wsCallout>
+                <con2:assign varName="respuesta">
+                  <con1:id>_ActionId-7289227227976692718--7360c13a.149cf07ee36.-75d7</con1:id>
+                  <con2:expr>
+                    <con1:xqueryText>concat($validarResponse/MENSAJE/TRAMA/*:USUARIO, "!",$validarResponse/MENSAJE/TRAMA/*:METODO,"!",$codigoMapeado,"!",$descripcionError,"!!*")</con1:xqueryText>
+                  </con2:expr>
+                </con2:assign>
+              </con2:actions>
+            </con2:case>
+            <con2:default>
+              <con2:assign varName="respuesta">
+                <con1:id>_ActionId-7289227227976692718--7360c13a.149cf07ee36.-7648</con1:id>
+                <con2:expr>
+                  <con1:xqueryText>concat($validarResponse/MENSAJE/TRAMA/*:USUARIO, "!",$validarResponse/MENSAJE/TRAMA/*:METODO,"!903!Transaction not processed!!*")</con1:xqueryText>
+                </con2:expr>
+              </con2:assign>
+            </con2:default>
+          </con2:ifThenElse>
+          <con2:replace varName="body" contents-only="true">
+            <con1:id>_ActionId-6747189505024254998--11e6dee5.13008f06097.-7e6c</con1:id>
+            <con2:expr>
+              <con1:xqueryTransform>
+                <con1:resource ref="ITEL/Core/Resources/XQueries/ejecutarTrama_Res"/>
+                <con1:param name="codigoError">
+                  <con1:path>$codigoError</con1:path>
+                </con1:param>
+                <con1:param name="respuesta">
+                  <con1:path>$respuesta</con1:path>
+                </con1:param>
+                <con1:param name="duracion">
+                  <con1:path>$duracionFinal</con1:path>
+                </con1:param>
+              </con1:xqueryTransform>
+            </con2:expr>
+          </con2:replace>
+          <con1:resume>
+            <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-626a</con1:id>
+          </con1:resume>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="error" name="_onErrorHandler-4228383408135898017-56974e5.1338db8796b.-7d0d">
+      <con:stage name="error">
+        <con:context/>
+        <con:actions>
+          <con1:resume>
+            <con1:id>_ActionId-5174370892286694528-6956db40.133a81e5a33.-7a87</con1:id>
+          </con1:resume>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="error" name="_onErrorHandler-5174370892286694528-6956db40.133a81e5a33.-7d86">
+      <con:stage name="error">
+        <con:context/>
+        <con:actions>
+          <con1:reply>
+            <con1:id>_ActionId-5174370892286694528-6956db40.133a81e5a33.-7bab</con1:id>
+          </con1:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="error" name="_onErrorHandler-3166700838857645387--551f9b11.133cb9965be.-6976">
+      <con:stage name="error">
+        <con:context>
+          <con1:userNsDecl namespace="http://www.comcel.com.co/ValidarTrama/" prefix="val"/>
+          <con1:userNsDecl namespace="http://www.comcel.com.co/DA_TRAMA" prefix="da"/>
+        </con:context>
+        <con:actions>
+          <con2:assign varName="codigoError">
+            <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-695f</con1:id>
+            <con2:expr>
+              <con1:xqueryText>"913"</con1:xqueryText>
+            </con2:expr>
+          </con2:assign>
+          <con2:assign varName="validarResponse">
+            <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-690f</con1:id>
+            <con2:expr>
+              <con1:xqueryText><![CDATA[<val:WS_Result>
+	<CODIGO>913</CODIGO>
+	<MENSAJE>
+		<TRAMA>
+			<da:TRAMA />
+			<da:USUARIO />
+			<da:CLAVE />
+			<da:METODO />
+			<da:MIN />
+			<da:CADENA_PARAMETROS />
+			<da:PARAMETROS />
+		</TRAMA>
+		<IN_DESTINO />
+		<IN_ORIGEN />
+		<TIMEOUT_VALIDACION>0</TIMEOUT_VALIDACION>
+		<TIMEOUT_CONSULTA>0</TIMEOUT_CONSULTA>
+		<TIMEOUT_PROVISION>0</TIMEOUT_PROVISION>
+		<TIMEOUT_FINAL>0</TIMEOUT_FINAL>
+		<DURACION_GENERAL>0</DURACION_GENERAL>
+		<DURACION_ESPECIFICA>0</DURACION_ESPECIFICA>
+	</MENSAJE>
+	<DESCRIPCION>Error en validacion</DESCRIPCION>
+</val:WS_Result>]]></con1:xqueryText>
+            </con2:expr>
+          </con2:assign>
+          <con2:assign varName="metodo">
+            <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-616c</con1:id>
+            <con2:expr>
+              <con1:xqueryText>""</con1:xqueryText>
+            </con2:expr>
+          </con2:assign>
+          <con1:resume>
+            <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-6151</con1:id>
+          </con1:resume>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="error" name="_onErrorHandler-3166700838857645387--551f9b11.133cb9965be.-67c8">
+      <con:stage name="error">
+        <con:context>
+          <con1:userNsDecl namespace="http://www.comcel.com.co/ConsultarParametrosEjecucion/" prefix="par"/>
+        </con:context>
+        <con:actions>
+          <con2:assign varName="codigoError">
+            <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-67b2</con1:id>
+            <con2:expr>
+              <con1:xqueryText>"2"</con1:xqueryText>
+            </con2:expr>
+          </con2:assign>
+          <con2:assign varName="parametrosResponse">
+            <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-675f</con1:id>
+            <con2:expr>
+              <con1:xqueryText><![CDATA[<par:WS_Result>
+	<CODIGO>2</CODIGO>
+	<MENSAJE />
+	<DESCRIPCION>Error cargando parametros</DESCRIPCION>
+</par:WS_Result>]]></con1:xqueryText>
+            </con2:expr>
+          </con2:assign>
+          <con1:resume>
+            <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-6138</con1:id>
+          </con1:resume>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="error" name="_onErrorHandler-3166700838857645387--551f9b11.133cb9965be.-6538">
+      <con:stage name="error">
+        <con:context/>
+        <con:actions>
+          <con2:assign varName="codigoError">
+            <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-645f</con1:id>
+            <con2:expr>
+              <con1:xqueryText>"7"</con1:xqueryText>
+            </con2:expr>
+          </con2:assign>
+          <con2:assign varName="reglasNegocioResponse">
+            <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-6533</con1:id>
+            <con2:expr>
+              <con1:xqueryText><![CDATA[<ejec:WS_Result xmlns:ejec="http://www.comcel.com.co/EjecutarReglasNegocio/">
+	<MENSAJE>
+		<SUSCRIPTOR_DESTINO />
+		<SUSCRIPTOR_ORIGEN />
+		<DURREGLASNEGOCIO>0</DURREGLASNEGOCIO>
+		<DURSUSCRIPTOR>0</DURSUSCRIPTOR>
+	</MENSAJE>
+</ejec:WS_Result>]]></con1:xqueryText>
+            </con2:expr>
+          </con2:assign>
+          <con1:resume>
+            <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-611a</con1:id>
+          </con1:resume>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="error" name="_onErrorHandler-3166700838857645387--551f9b11.133cb9965be.-652e">
+      <con:stage name="error">
+        <con:context/>
+        <con:actions>
+          <con2:assign varName="codigoError">
+            <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-63fa</con1:id>
+            <con2:expr>
+              <con1:xqueryText>"6"</con1:xqueryText>
+            </con2:expr>
+          </con2:assign>
+          <con2:assign varName="ejecutadorResponse">
+            <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-64d8</con1:id>
+            <con2:expr>
+              <con1:xqueryText><![CDATA[<ejec:WS_Result xmlns:ejec="http://www.comcel.com.co/Ejecutador/">
+	<MENSAJE>
+		<DURREGLASPROVISION>0</DURREGLASPROVISION>
+		<DURSERVICIOSIN2>0</DURSERVICIOSIN2>
+		<DURTXIN>0</DURTXIN>
+		<SERVICIOS_EJECUTADOS />
+	</MENSAJE>
+</ejec:WS_Result>]]></con1:xqueryText>
+            </con2:expr>
+          </con2:assign>
+          <con1:resume>
+            <con1:id>_ActionId-3166700838857645387--551f9b11.133cb9965be.-6100</con1:id>
+          </con1:resume>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:flow>
+      <con:pipeline-node name="PipelinePairNode1">
+        <con:request>PipelinePairNode1_request</con:request>
+        <con:response>PipelinePairNode1_response</con:response>
+      </con:pipeline-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

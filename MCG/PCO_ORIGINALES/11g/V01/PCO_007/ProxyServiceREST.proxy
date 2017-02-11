@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+  <ser:coreEntry isProxy="true" isEnabled="true">
+    <ser:binding type="Mixed" xsi:type="con:MixedBindingType" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config">
+      <con:request type="Text"/>
+      <con:response type="Text"/>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>http</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:URI>
+      <env:value>/OSB_Project_PCO_007/ProxyServiceREST</env:value>
+    </tran:URI>
+    <tran:inbound-properties/>
+    <tran:all-headers>false</tran:all-headers>
+    <tran:provider-specific>
+      <http:inbound-properties/>
+    </tran:provider-specific>
+  </ser:endpointConfig>
+  <ser:router>
+    <con:pipeline type="request" name="PipelinePairNode_POST_request"/>
+    <con:pipeline type="response" name="PipelinePairNode_POST_response">
+      <con:stage name="stage1">
+        <con:context/>
+        <con:actions>
+          <con1:replace varName="body" contents-only="true">
+            <con2:id>_ActionId-5539756764240179818--40579788.158462f41a3.-7f3b</con2:id>
+            <con1:expr>
+              <con2:xqueryTransform>
+                <con2:resource ref="OSB_Project_PCO_007/XQueryResponse"/>
+              </con2:xqueryTransform>
+            </con1:expr>
+          </con1:replace>
+          <con1:transport-headers>
+            <con2:id>_ActionId-5539756764240179818--40579788.158462f41a3.-7f23</con2:id>
+            <con1:header-set>inbound-response</con1:header-set>
+            <con1:header name="Content-Type" value="expression">
+              <con2:xqueryText>'text/xml; charset=utf-8'</con2:xqueryText>
+            </con1:header>
+            <con1:header name="Content-Length" value="expression">
+              <con2:xqueryText>string-length($body)</con2:xqueryText>
+            </con1:header>
+            <con1:header value="expression" name="Date">
+              <con2:xqueryText>fn-bea:dateTime-to-string-with-format("E, dd MMM yyyy hh:mm:ss",fn:current-dateTime())</con2:xqueryText>
+            </con1:header>
+            <con1:header name="Content-Encoding" value="expression">
+              <con2:xqueryText>'UTF-8'</con2:xqueryText>
+            </con1:header>
+            <con1:header name="Allow" value="expression">
+              <con2:xqueryText>'GET, POST, PUT, DELETE'</con2:xqueryText>
+            </con1:header>
+          </con1:transport-headers>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:flow>
+      <con:branch-node type="condition" name="BranchNodeREST">
+        <con:context/>
+        <con:branch-table variable="inbound">
+          <con:xpath>
+            <con2:xpathText>./ctx:transport/ctx:request/http:http-method/text()</con2:xpathText>
+          </con:xpath>
+          <con:branch name="POST">
+            <con:operator>equals</con:operator>
+            <con:value>'POST'</con:value>
+            <con:flow>
+              <con:pipeline-node name="PipelinePairNode_POST">
+                <con:request>PipelinePairNode_POST_request</con:request>
+                <con:response>PipelinePairNode_POST_response</con:response>
+              </con:pipeline-node>
+            </con:flow>
+          </con:branch>
+          <con:default-branch>
+            <con:flow/>
+          </con:default-branch>
+        </con:branch-table>
+      </con:branch-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

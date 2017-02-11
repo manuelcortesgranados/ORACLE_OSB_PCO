@@ -1,0 +1,285 @@
+<xs:schema targetNamespace="http://www.comcel.com.co/ActualizarBalanceFechaOCS/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.comcel.com.co/ActualizarBalanceFechaOCS/" xmlns:oper="http://www.comcel.com.co/OCS/OperacionOCS_AIR">
+
+	<xs:import namespace="http://www.comcel.com.co/OCS/OperacionOCS_AIR" schemaLocation="DA_ITEL_OPERACION_OCS_AIR.xsd"/>
+
+	<xs:element name="Input_Parameters" type="tns:Input_Parameters"/>
+	<xs:element name="WS_Result" type="tns:WS_Result"/>
+
+	<xs:complexType name="Input_Parameters">
+		<xs:sequence>
+			<!-- originNodeType -->
+			<xs:element name="TIPO_NODO" type="xs:string"/> <!-- AIR, IVR, ADM , EXT -->
+			<!-- originHostName -->
+			<xs:element name="HOST_ORIGEN" type="xs:string"/>
+			<!-- originOperatorID -->
+			<xs:element name="ID_TRANSACCION" type="xs:string"/>
+			<!-- originTimeStamp -->
+			<xs:element name="FECHA_TRANSACCION" type="xs:string"/>
+			<!-- subscriberNumber -->
+			<xs:element name="MIN" type="xs:string"/>
+			<!-- transactionCurrency -->
+			<xs:element name="MONEDA" type="xs:string"/>
+			<!-- originTransactionID -->
+			<xs:element name="HOSTID" type="xs:string"/>
+			<!-- externalData1 -->
+			<xs:element name="COMENTARIO" type="xs:string" minOccurs="0"/>
+			
+			<xs:element name="ACTIVAR_LINEA" type="xs:string" minOccurs="0"/>
+			<!-- lista Ajustes -->
+			
+			<!-- adjustmentAmountRelative -->
+			<xs:element name="VALOR_RELATIVO1" type="xs:string" minOccurs="0"/>
+			<!-- mainAccountValueNew -->
+			<xs:element name="VALOR_ABSOLUTO1" type="xs:string" minOccurs="0"/>
+			<!-- serviceFeeExpiryDateRelative -->
+			<xs:element name="FECHA_EXPIRACION_RELATIVA1" type="xs:string" minOccurs="0"/>
+			<!-- serviceFeeExpiryDate -->
+			<xs:element name="FECHA_EXPIRACION_ABSOLUTA1" type="xs:string" minOccurs="0"/>
+			<!-- dedicatedAccountID -->
+			<xs:element name="ID_CUENTA_DEDICADA1" type="xs:string" minOccurs="0"/>
+			<!-- dedicatedAccountUnitType -->
+			<xs:element name="UNIT_TYPE_CUENTA_DEDICADA1" type="xs:string" minOccurs="0"/>
+			
+			<xs:element name="VALOR_RELATIVO2" type="xs:string" minOccurs="0"/>
+			<xs:element name="VALOR_ABSOLUTO2" type="xs:string" minOccurs="0"/>
+			<xs:element name="FECHA_EXPIRACION_RELATIVA2" type="xs:string" minOccurs="0"/>
+			<xs:element name="FECHA_EXPIRACION_ABSOLUTA2" type="xs:string" minOccurs="0"/>
+			<xs:element name="ID_CUENTA_DEDICADA2" type="xs:string" minOccurs="0"/>
+			<xs:element name="UNIT_TYPE_CUENTA_DEDICADA2" type="xs:string" minOccurs="0"/>
+			
+			<xs:element name="VALOR_RELATIVO3" type="xs:string" minOccurs="0"/>
+			<xs:element name="VALOR_ABSOLUTO3" type="xs:string" minOccurs="0"/>
+			<xs:element name="FECHA_EXPIRACION_RELATIVA3" type="xs:string" minOccurs="0"/>
+			<xs:element name="FECHA_EXPIRACION_ABSOLUTA3" type="xs:string" minOccurs="0"/>
+			<xs:element name="ID_CUENTA_DEDICADA3" type="xs:string" minOccurs="0"/>
+			<xs:element name="UNIT_TYPE_CUENTA_DEDICADA3" type="xs:string" minOccurs="0"/>
+			
+			<xs:element name="VALOR_RELATIVO4" type="xs:string" minOccurs="0"/>
+			<xs:element name="VALOR_ABSOLUTO4" type="xs:string" minOccurs="0"/>
+			<xs:element name="FECHA_EXPIRACION_RELATIVA4" type="xs:string" minOccurs="0"/>
+			<xs:element name="FECHA_EXPIRACION_ABSOLUTA4" type="xs:string" minOccurs="0"/>
+			<xs:element name="ID_CUENTA_DEDICADA4" type="xs:string" minOccurs="0"/>
+			<xs:element name="UNIT_TYPE_CUENTA_DEDICADA4" type="xs:string" minOccurs="0"/>
+			
+			<xs:element name="VALOR_RELATIVO5" type="xs:string" minOccurs="0"/>
+			<xs:element name="VALOR_ABSOLUTO5" type="xs:string" minOccurs="0"/>
+			<xs:element name="FECHA_EXPIRACION_RELATIVA5" type="xs:string" minOccurs="0"/>
+			<xs:element name="FECHA_EXPIRACION_ABSOLUTA5" type="xs:string" minOccurs="0"/>
+			<xs:element name="ID_CUENTA_DEDICADA5" type="xs:string" minOccurs="0"/>
+			<xs:element name="UNIT_TYPE_CUENTA_DEDICADA5" type="xs:string" minOccurs="0"/>
+			
+			<xs:element name="VALOR_RELATIVO6" type="xs:string" minOccurs="0"/>
+			<xs:element name="VALOR_ABSOLUTO6" type="xs:string" minOccurs="0"/>
+			<xs:element name="FECHA_EXPIRACION_RELATIVA6" type="xs:string" minOccurs="0"/>
+			<xs:element name="FECHA_EXPIRACION_ABSOLUTA6" type="xs:string" minOccurs="0"/>
+			<xs:element name="ID_CUENTA_DEDICADA6" type="xs:string" minOccurs="0"/>
+			<xs:element name="UNIT_TYPE_CUENTA_DEDICADA6" type="xs:string" minOccurs="0"/>
+			
+			<xs:element name="VALOR_RELATIVO7" type="xs:string" minOccurs="0"/>
+			<xs:element name="VALOR_ABSOLUTO7" type="xs:string" minOccurs="0"/>
+			<xs:element name="FECHA_EXPIRACION_RELATIVA7" type="xs:string" minOccurs="0"/>
+			<xs:element name="FECHA_EXPIRACION_ABSOLUTA7" type="xs:string" minOccurs="0"/>
+			<xs:element name="ID_CUENTA_DEDICADA7" type="xs:string" minOccurs="0"/>
+			<xs:element name="UNIT_TYPE_CUENTA_DEDICADA7" type="xs:string" minOccurs="0"/>
+			
+			<xs:element name="VALOR_RELATIVO8" type="xs:string" minOccurs="0"/>
+			<xs:element name="VALOR_ABSOLUTO8" type="xs:string" minOccurs="0"/>
+			<xs:element name="FECHA_EXPIRACION_RELATIVA8" type="xs:string" minOccurs="0"/>
+			<xs:element name="FECHA_EXPIRACION_ABSOLUTA8" type="xs:string" minOccurs="0"/>
+			<xs:element name="ID_CUENTA_DEDICADA8" type="xs:string" minOccurs="0"/>
+			<xs:element name="UNIT_TYPE_CUENTA_DEDICADA8" type="xs:string" minOccurs="0"/>
+			
+			<xs:element name="VALOR_RELATIVO9" type="xs:string" minOccurs="0"/>
+			<xs:element name="VALOR_ABSOLUTO9" type="xs:string" minOccurs="0"/>
+			<xs:element name="FECHA_EXPIRACION_RELATIVA9" type="xs:string" minOccurs="0"/>
+			<xs:element name="FECHA_EXPIRACION_ABSOLUTA9" type="xs:string" minOccurs="0"/>
+			<xs:element name="ID_CUENTA_DEDICADA9" type="xs:string" minOccurs="0"/>
+			<xs:element name="UNIT_TYPE_CUENTA_DEDICADA9" type="xs:string" minOccurs="0"/>
+			
+			<xs:element name="VALOR_RELATIVO10" type="xs:string" minOccurs="0"/>
+			<xs:element name="VALOR_ABSOLUTO10" type="xs:string" minOccurs="0"/>
+			<xs:element name="FECHA_EXPIRACION_RELATIVA10" type="xs:string" minOccurs="0"/>
+			<xs:element name="FECHA_EXPIRACION_ABSOLUTA10" type="xs:string" minOccurs="0"/>
+			<xs:element name="ID_CUENTA_DEDICADA10" type="xs:string" minOccurs="0"/>
+			<xs:element name="UNIT_TYPE_CUENTA_DEDICADA10" type="xs:string" minOccurs="0"/>
+						
+			<xs:element name="VALOR_RELATIVO11" type="xs:string" minOccurs="0"/>
+			<xs:element name="VALOR_ABSOLUTO11" type="xs:string" minOccurs="0"/>
+			<xs:element name="FECHA_EXPIRACION_RELATIVA11" type="xs:string" minOccurs="0"/>
+			<xs:element name="FECHA_EXPIRACION_ABSOLUTA11" type="xs:string" minOccurs="0"/>
+			<xs:element name="ID_CUENTA_DEDICADA11" type="xs:string" minOccurs="0"/>
+			<xs:element name="UNIT_TYPE_CUENTA_DEDICADA11" type="xs:string" minOccurs="0"/>
+						
+			<xs:element name="VALOR_RELATIVO12" type="xs:string" minOccurs="0"/>
+			<xs:element name="VALOR_ABSOLUTO12" type="xs:string" minOccurs="0"/>
+			<xs:element name="FECHA_EXPIRACION_RELATIVA12" type="xs:string" minOccurs="0"/>
+			<xs:element name="FECHA_EXPIRACION_ABSOLUTA12" type="xs:string" minOccurs="0"/>
+			<xs:element name="ID_CUENTA_DEDICADA12" type="xs:string" minOccurs="0"/>
+			<xs:element name="UNIT_TYPE_CUENTA_DEDICADA12" type="xs:string" minOccurs="0"/>
+						
+			<xs:element name="VALOR_RELATIVO13" type="xs:string" minOccurs="0"/>
+			<xs:element name="VALOR_ABSOLUTO13" type="xs:string" minOccurs="0"/>
+			<xs:element name="FECHA_EXPIRACION_RELATIVA13" type="xs:string" minOccurs="0"/>
+			<xs:element name="FECHA_EXPIRACION_ABSOLUTA13" type="xs:string" minOccurs="0"/>
+			<xs:element name="ID_CUENTA_DEDICADA13" type="xs:string" minOccurs="0"/>
+			<xs:element name="UNIT_TYPE_CUENTA_DEDICADA13" type="xs:string" minOccurs="0"/>
+						
+			<xs:element name="VALOR_RELATIVO14" type="xs:string" minOccurs="0"/>
+			<xs:element name="VALOR_ABSOLUTO14" type="xs:string" minOccurs="0"/>
+			<xs:element name="FECHA_EXPIRACION_RELATIVA14" type="xs:string" minOccurs="0"/>
+			<xs:element name="FECHA_EXPIRACION_ABSOLUTA14" type="xs:string" minOccurs="0"/>
+			<xs:element name="ID_CUENTA_DEDICADA14" type="xs:string" minOccurs="0"/>
+			<xs:element name="UNIT_TYPE_CUENTA_DEDICADA14" type="xs:string" minOccurs="0"/>
+						
+			<xs:element name="VALOR_RELATIVO15" type="xs:string" minOccurs="0"/>
+			<xs:element name="VALOR_ABSOLUTO15" type="xs:string" minOccurs="0"/>
+			<xs:element name="FECHA_EXPIRACION_RELATIVA15" type="xs:string" minOccurs="0"/>
+			<xs:element name="FECHA_EXPIRACION_ABSOLUTA15" type="xs:string" minOccurs="0"/>
+			<xs:element name="ID_CUENTA_DEDICADA15" type="xs:string" minOccurs="0"/>
+			<xs:element name="UNIT_TYPE_CUENTA_DEDICADA15" type="xs:string" minOccurs="0"/>
+						
+			<xs:element name="VALOR_RELATIVO16" type="xs:string" minOccurs="0"/>
+			<xs:element name="VALOR_ABSOLUTO16" type="xs:string" minOccurs="0"/>
+			<xs:element name="FECHA_EXPIRACION_RELATIVA16" type="xs:string" minOccurs="0"/>
+			<xs:element name="FECHA_EXPIRACION_ABSOLUTA16" type="xs:string" minOccurs="0"/>
+			<xs:element name="ID_CUENTA_DEDICADA16" type="xs:string" minOccurs="0"/>
+			<xs:element name="UNIT_TYPE_CUENTA_DEDICADA16" type="xs:string" minOccurs="0"/>
+						
+			<xs:element name="VALOR_RELATIVO17" type="xs:string" minOccurs="0"/>
+			<xs:element name="VALOR_ABSOLUTO17" type="xs:string" minOccurs="0"/>
+			<xs:element name="FECHA_EXPIRACION_RELATIVA17" type="xs:string" minOccurs="0"/>
+			<xs:element name="FECHA_EXPIRACION_ABSOLUTA17" type="xs:string" minOccurs="0"/>
+			<xs:element name="ID_CUENTA_DEDICADA17" type="xs:string" minOccurs="0"/>
+			<xs:element name="UNIT_TYPE_CUENTA_DEDICADA17" type="xs:string" minOccurs="0"/>
+						
+			<xs:element name="VALOR_RELATIVO18" type="xs:string" minOccurs="0"/>
+			<xs:element name="VALOR_ABSOLUTO18" type="xs:string" minOccurs="0"/>
+			<xs:element name="FECHA_EXPIRACION_RELATIVA18" type="xs:string" minOccurs="0"/>
+			<xs:element name="FECHA_EXPIRACION_ABSOLUTA18" type="xs:string" minOccurs="0"/>
+			<xs:element name="ID_CUENTA_DEDICADA18" type="xs:string" minOccurs="0"/>
+			<xs:element name="UNIT_TYPE_CUENTA_DEDICADA18" type="xs:string" minOccurs="0"/>
+						
+			<xs:element name="VALOR_RELATIVO19" type="xs:string" minOccurs="0"/>
+			<xs:element name="VALOR_ABSOLUTO19" type="xs:string" minOccurs="0"/>
+			<xs:element name="FECHA_EXPIRACION_RELATIVA19" type="xs:string" minOccurs="0"/>
+			<xs:element name="FECHA_EXPIRACION_ABSOLUTA19" type="xs:string" minOccurs="0"/>
+			<xs:element name="ID_CUENTA_DEDICADA19" type="xs:string" minOccurs="0"/>
+			<xs:element name="UNIT_TYPE_CUENTA_DEDICADA19" type="xs:string" minOccurs="0"/>
+						
+			<xs:element name="VALOR_RELATIVO20" type="xs:string" minOccurs="0"/>
+			<xs:element name="VALOR_ABSOLUTO20" type="xs:string" minOccurs="0"/>
+			<xs:element name="FECHA_EXPIRACION_RELATIVA20" type="xs:string" minOccurs="0"/>
+			<xs:element name="FECHA_EXPIRACION_ABSOLUTA20" type="xs:string" minOccurs="0"/>
+			<xs:element name="ID_CUENTA_DEDICADA20" type="xs:string" minOccurs="0"/>
+			<xs:element name="UNIT_TYPE_CUENTA_DEDICADA20" type="xs:string" minOccurs="0"/>
+						
+			<xs:element name="VALOR_RELATIVO21" type="xs:string" minOccurs="0"/>
+			<xs:element name="VALOR_ABSOLUTO21" type="xs:string" minOccurs="0"/>
+			<xs:element name="FECHA_EXPIRACION_RELATIVA21" type="xs:string" minOccurs="0"/>
+			<xs:element name="FECHA_EXPIRACION_ABSOLUTA21" type="xs:string" minOccurs="0"/>
+			<xs:element name="ID_CUENTA_DEDICADA21" type="xs:string" minOccurs="0"/>
+			<xs:element name="UNIT_TYPE_CUENTA_DEDICADA21" type="xs:string" minOccurs="0"/>
+						
+			<xs:element name="VALOR_RELATIVO22" type="xs:string" minOccurs="0"/>
+			<xs:element name="VALOR_ABSOLUTO22" type="xs:string" minOccurs="0"/>
+			<xs:element name="FECHA_EXPIRACION_RELATIVA22" type="xs:string" minOccurs="0"/>
+			<xs:element name="FECHA_EXPIRACION_ABSOLUTA22" type="xs:string" minOccurs="0"/>
+			<xs:element name="ID_CUENTA_DEDICADA22" type="xs:string" minOccurs="0"/>
+			<xs:element name="UNIT_TYPE_CUENTA_DEDICADA22" type="xs:string" minOccurs="0"/>
+						
+			<xs:element name="VALOR_RELATIVO23" type="xs:string" minOccurs="0"/>
+			<xs:element name="VALOR_ABSOLUTO23" type="xs:string" minOccurs="0"/>
+			<xs:element name="FECHA_EXPIRACION_RELATIVA23" type="xs:string" minOccurs="0"/>
+			<xs:element name="FECHA_EXPIRACION_ABSOLUTA23" type="xs:string" minOccurs="0"/>
+			<xs:element name="ID_CUENTA_DEDICADA23" type="xs:string" minOccurs="0"/>
+			<xs:element name="UNIT_TYPE_CUENTA_DEDICADA23" type="xs:string" minOccurs="0"/>
+						
+			<xs:element name="VALOR_RELATIVO24" type="xs:string" minOccurs="0"/>
+			<xs:element name="VALOR_ABSOLUTO24" type="xs:string" minOccurs="0"/>
+			<xs:element name="FECHA_EXPIRACION_RELATIVA24" type="xs:string" minOccurs="0"/>
+			<xs:element name="FECHA_EXPIRACION_ABSOLUTA24" type="xs:string" minOccurs="0"/>
+			<xs:element name="ID_CUENTA_DEDICADA24" type="xs:string" minOccurs="0"/>
+			<xs:element name="UNIT_TYPE_CUENTA_DEDICADA24" type="xs:string" minOccurs="0"/>
+						
+			<xs:element name="VALOR_RELATIVO25" type="xs:string" minOccurs="0"/>
+			<xs:element name="VALOR_ABSOLUTO25" type="xs:string" minOccurs="0"/>
+			<xs:element name="FECHA_EXPIRACION_RELATIVA25" type="xs:string" minOccurs="0"/>
+			<xs:element name="FECHA_EXPIRACION_ABSOLUTA25" type="xs:string" minOccurs="0"/>
+			<xs:element name="ID_CUENTA_DEDICADA25" type="xs:string" minOccurs="0"/>
+			<xs:element name="UNIT_TYPE_CUENTA_DEDICADA25" type="xs:string" minOccurs="0"/>
+						
+			<xs:element name="VALOR_RELATIVO26" type="xs:string" minOccurs="0"/>
+			<xs:element name="VALOR_ABSOLUTO26" type="xs:string" minOccurs="0"/>
+			<xs:element name="FECHA_EXPIRACION_RELATIVA26" type="xs:string" minOccurs="0"/>
+			<xs:element name="FECHA_EXPIRACION_ABSOLUTA26" type="xs:string" minOccurs="0"/>
+			<xs:element name="ID_CUENTA_DEDICADA26" type="xs:string" minOccurs="0"/>
+			<xs:element name="UNIT_TYPE_CUENTA_DEDICADA26" type="xs:string" minOccurs="0"/>
+						
+			<xs:element name="VALOR_RELATIVO27" type="xs:string" minOccurs="0"/>
+			<xs:element name="VALOR_ABSOLUTO27" type="xs:string" minOccurs="0"/>
+			<xs:element name="FECHA_EXPIRACION_RELATIVA27" type="xs:string" minOccurs="0"/>
+			<xs:element name="FECHA_EXPIRACION_ABSOLUTA27" type="xs:string" minOccurs="0"/>
+			<xs:element name="ID_CUENTA_DEDICADA27" type="xs:string" minOccurs="0"/>
+			<xs:element name="UNIT_TYPE_CUENTA_DEDICADA27" type="xs:string" minOccurs="0"/>
+						
+			<xs:element name="VALOR_RELATIVO28" type="xs:string" minOccurs="0"/>
+			<xs:element name="VALOR_ABSOLUTO28" type="xs:string" minOccurs="0"/>
+			<xs:element name="FECHA_EXPIRACION_RELATIVA28" type="xs:string" minOccurs="0"/>
+			<xs:element name="FECHA_EXPIRACION_ABSOLUTA28" type="xs:string" minOccurs="0"/>
+			<xs:element name="ID_CUENTA_DEDICADA28" type="xs:string" minOccurs="0"/>
+			<xs:element name="UNIT_TYPE_CUENTA_DEDICADA28" type="xs:string" minOccurs="0"/>
+						
+			<xs:element name="VALOR_RELATIVO29" type="xs:string" minOccurs="0"/>
+			<xs:element name="VALOR_ABSOLUTO29" type="xs:string" minOccurs="0"/>
+			<xs:element name="FECHA_EXPIRACION_RELATIVA29" type="xs:string" minOccurs="0"/>
+			<xs:element name="FECHA_EXPIRACION_ABSOLUTA29" type="xs:string" minOccurs="0"/>
+			<xs:element name="ID_CUENTA_DEDICADA29" type="xs:string" minOccurs="0"/>
+			<xs:element name="UNIT_TYPE_CUENTA_DEDICADA29" type="xs:string" minOccurs="0"/>
+						
+			<xs:element name="VALOR_RELATIVO30" type="xs:string" minOccurs="0"/>
+			<xs:element name="VALOR_ABSOLUTO30" type="xs:string" minOccurs="0"/>
+			<xs:element name="FECHA_EXPIRACION_RELATIVA30" type="xs:string" minOccurs="0"/>
+			<xs:element name="FECHA_EXPIRACION_ABSOLUTA30" type="xs:string" minOccurs="0"/>
+			<xs:element name="ID_CUENTA_DEDICADA30" type="xs:string" minOccurs="0"/>
+			<xs:element name="UNIT_TYPE_CUENTA_DEDICADA30" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="AjustesType">
+		<xs:sequence>
+			<xs:element name="AJUSTE" type="tns:AjusteType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="AjusteType">
+		<xs:sequence>
+			<!-- adjustmentAmountRelative -->
+			<xs:element name="VALOR_RELATIVO" type="xs:string" minOccurs="0"/>
+			<!-- mainAccountValueNew -->
+			<xs:element name="VALOR_ABSOLUTO" type="xs:string" minOccurs="0"/>
+			<!-- serviceFeeExpiryDateRelative -->
+			<xs:element name="FECHA_EXPIRACION_RELATIVA" type="xs:string" minOccurs="0"/>
+			<!-- serviceFeeExpiryDate -->
+			<xs:element name="FECHA_EXPIRACION_ABSOLUTA" type="xs:string" minOccurs="0"/>
+			<!-- dedicatedAccountID -->
+			<xs:element name="ID_CUENTA_DEDICADA" type="xs:string"/>
+			<!-- dedicatedAccountUnitType -->
+			<xs:element name="UNIT_TYPE_CUENTA_DEDICADA" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="WS_Result">
+		<xs:sequence>
+			<xs:element name="CODIGO" type="xs:string"/>
+			<xs:element name="MENSAJE" type="tns:MensajeType"/>
+			<xs:element name="DESCRIPCION" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="MensajeType">
+		<xs:sequence>
+			<xs:element name="ACTUALIZAR_BALANCE_FECHA" type="oper:ActualizarBalanceFechaResponse"/>
+		</xs:sequence>
+	</xs:complexType>
+
+</xs:schema>

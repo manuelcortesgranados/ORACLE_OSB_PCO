@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+  <ser:coreEntry isProxy="true" isEnabled="true" isAutoPublish="false" isTracingEnabled="false">
+    <ser:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config">
+      <con:wsdl ref="ITEL/Core/Resources/WSDLs/ejecutarTramaAMDOCS_PS"/>
+      <con:port>
+        <con:name>EjecutarTramaSOAP</con:name>
+        <con:namespace>http://www.comcel.com.co/EjecutarTramaAMDOCS/</con:namespace>
+      </con:port>
+      <con:selector type="SOAP body"/>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+    <ser:ws-policy>
+      <ser:binding-mode>wsdl-policy-attachments</ser:binding-mode>
+    </ser:ws-policy>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>local</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:inbound-properties/>
+    <tran:all-headers>true</tran:all-headers>
+  </ser:endpointConfig>
+  <ser:router>
+    <con:pipeline type="request" name="PipelinePairNode1_request">
+      <con:stage name="init">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/EjecutarTramaAMDOCS/" prefix="ejec"/>
+        </con:context>
+        <con:actions>
+          <con2:assign varName="metodo">
+            <con1:id>_ActionId-4323707603318088004--d185c36.140e439cadd.-7b79</con1:id>
+            <con2:expr>
+              <con1:xqueryText>let $split1 := fn:tokenize(data($body/ejec:Input_Parameters/TRAMA),"!")
+return
+$split1[3]</con1:xqueryText>
+            </con2:expr>
+          </con2:assign>
+          <con2:assign varName="offer">
+            <con1:id>_ActionId-4323707603318088004--d185c36.140e439cadd.-7bee</con1:id>
+            <con2:expr>
+              <con1:xqueryText>if ($metodo='100') then
+let $split1 := fn:tokenize(data($body/ejec:Input_Parameters/TRAMA),"!")
+let $split2 := fn:tokenize(data($split1[5]),";")
+return 
+$split2[1] 
+else if ($metodo='601') then
+      let $split1 := fn:tokenize(data($body/ejec:Input_Parameters/TRAMA),"!")
+      let $split2 := fn:tokenize(data($split1[5]),";")
+      return 
+      $split2[2]
+       else 
+        ()</con1:xqueryText>
+            </con2:expr>
+          </con2:assign>
+          <con2:assign varName="countParams">
+            <con1:id>_ActionId-6971402820734004040--70927c1b.1413310ec35.-7ff2</con1:id>
+            <con2:expr>
+              <con1:xqueryText>if ($metodo='100') then
+let $split1 := fn:tokenize(data($body/ejec:Input_Parameters/TRAMA),"!")
+let $valor := count(fn:tokenize(data($split1[5]),";"))
+return 
+ $valor
+else ()</con1:xqueryText>
+            </con2:expr>
+          </con2:assign>
+          <con2:ifThenElse>
+            <con1:id>_ActionId-6971402820734004040--70927c1b.1413310ec35.-7fc6</con1:id>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>$countParams > '2' and $metodo = '100'</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:assign varName="tramaNueva">
+                  <con1:id>_ActionId-6971402820734004040--70927c1b.1413310ec35.-7fab</con1:id>
+                  <con2:expr>
+                    <con1:xqueryText>let $split1 := fn:tokenize(data($body/ejec:Input_Parameters/TRAMA),"!")
+let $split2 := fn:tokenize(data($split1[5]),";")
+let $tramaConcatenada := fn:concat($split1[1], '!', $split1[2], '!', $split1[3], '!', $split1[4], '!', $split2[1], ';', $split2[2],'!*')
+return 
+$tramaConcatenada</con1:xqueryText>
+                  </con2:expr>
+                </con2:assign>
+              </con2:actions>
+            </con2:case>
+            <con2:default>
+              <con2:ifThenElse>
+                <con1:id>_ActionId-6971402820734004040--70927c1b.1413310ec35.-7fc2</con1:id>
+                <con2:case>
+                  <con2:condition>
+                    <con1:xqueryText>($metodo = ('100', '601') )</con1:xqueryText>
+                  </con2:condition>
+                  <con2:actions>
+                    <con2:wsCallout>
+                      <con1:id>_ActionId-6971402820734004040--70927c1b.1413310ec35.-7fc0</con1:id>
+                      <con2:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/consultarOfferAMDOCSLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                      <con2:operation>consultarOfferAmdocs</con2:operation>
+                      <con2:request>
+                        <con2:body>$consultarOfferAmdocsReq</con2:body>
+                      </con2:request>
+                      <con2:response>
+                        <con2:body>consultarOfferAmdocsRes</con2:body>
+                      </con2:response>
+                      <con2:requestTransform>
+                        <con2:assign varName="consultarOfferAmdocsReq">
+                          <con1:id>_ActionId-6971402820734004040--70927c1b.1413310ec35.-7fc1</con1:id>
+                          <con2:expr>
+                            <con1:xqueryTransform>
+                              <con1:resource ref="ITEL/Core/Resources/XQueries/consultarOfferAmdocs_Req_ejecutarTramaAmdocs"/>
+                              <con1:param name="offerIN">
+                                <con1:path>$offer</con1:path>
+                              </con1:param>
+                            </con1:xqueryTransform>
+                          </con2:expr>
+                        </con2:assign>
+                      </con2:requestTransform>
+                      <con2:responseTransform/>
+                    </con2:wsCallout>
+                  </con2:actions>
+                </con2:case>
+                <con2:default/>
+              </con2:ifThenElse>
+              <con2:assign varName="tramaNueva">
+                <con1:id>_ActionId-6971402820734004040--70927c1b.1413310ec35.-7fbe</con1:id>
+                <con2:expr>
+                  <con1:xqueryText>if($metodo='100') then
+let $split1 := fn:tokenize(data($body/ejec:Input_Parameters/TRAMA),"!")
+let $split2 := fn:tokenize(data($split1[5]),";")
+let $tramaConcatenada := fn:concat($split1[1], '!', $split1[2], '!', $split1[3], '!', $split1[4], '!', $consultarOfferAmdocsRes/MENSAJE/TMCODE, ';', $consultarOfferAmdocsRes/MENSAJE/SPCODE, ';', $split2[2],  '!*')
+return 
+$tramaConcatenada
+else if($metodo='601') then
+let $split1 := fn:tokenize(data($body/ejec:Input_Parameters/TRAMA),"!")
+let $split2 := fn:tokenize(data($split1[5]),";")
+let $tramaConcatenada := fn:concat($split1[1], '!', $split1[2], '!', $split1[3], '!', $split1[4], '!', $split2[1], ';' , $consultarOfferAmdocsRes/MENSAJE/TMCODE, ';', $consultarOfferAmdocsRes/MENSAJE/SPCODE, '!*')
+return 
+$tramaConcatenada
+else
+ let $split1 := fn:tokenize(data($body/ejec:Input_Parameters/TRAMA),"!")
+ let $tramaConcatenada := fn:concat($split1[1],'!',$split1[2],'!','999','!',$split1[4],'!',$split1[5],'!',$split1[6])
+ return 
+ $tramaConcatenada</con1:xqueryText>
+                </con2:expr>
+              </con2:assign>
+            </con2:default>
+          </con2:ifThenElse>
+        </con:actions>
+      </con:stage>
+      <con:stage name="execute">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/EjecutarTramaAMDOCS/" prefix="ejec"/>
+        </con:context>
+        <con:actions>
+          <con2:wsCallout>
+            <con1:id>_ActionId-4323707603318088004--d185c36.140e439cadd.-7c72</con1:id>
+            <con2:service ref="ITEL/Core/Proxies/ejecutarTramaLocal_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con2:operation>ejecutarTrama</con2:operation>
+            <con2:request>
+              <con2:body wrapped="false">$ejecutarTramaRequest</con2:body>
+              <con2:header/>
+            </con2:request>
+            <con2:response>
+              <con2:body wrapped="false">ejecutarTramaResponse</con2:body>
+              <con2:header/>
+            </con2:response>
+            <con2:requestTransform>
+              <con2:assign varName="ejecutarTramaRequest">
+                <con1:id>_ActionId-4323707603318088004--d185c36.140e439cadd.-7c57</con1:id>
+                <con2:expr>
+                  <con1:xqueryTransform>
+                    <con1:resource ref="ITEL/Core/Resources/XQueries/ejecutadorAMDOCS_Req_ejecutador"/>
+                    <con1:param name="ipIN">
+                      <con1:path>data($body/ejec:Input_Parameters/IP_ORIGEN)</con1:path>
+                    </con1:param>
+                    <con1:param name="tramaIN">
+                      <con1:path>$tramaNueva</con1:path>
+                    </con1:param>
+                  </con1:xqueryTransform>
+                </con2:expr>
+              </con2:assign>
+            </con2:requestTransform>
+            <con2:responseTransform/>
+          </con2:wsCallout>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="PipelinePairNode1_response">
+      <con:stage name="Respuesta">
+        <con:context/>
+        <con:actions>
+          <con2:replace contents-only="true" varName="body">
+            <con1:id>_ActionId-4323707603318088004--d185c36.140e439cadd.-7ab4</con1:id>
+            <con2:expr>
+              <con1:xqueryTransform>
+                <con1:resource ref="ITEL/Core/Resources/XQueries/ejecutadorAMDOCS_Res_ejecutador"/>
+                <con1:param name="metodo">
+                  <con1:path>$metodo</con1:path>
+                </con1:param>
+                <con1:param name="wS_Result1">
+                  <con1:path>$ejecutarTramaResponse</con1:path>
+                </con1:param>
+              </con1:xqueryTransform>
+            </con2:expr>
+          </con2:replace>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:flow>
+      <con:pipeline-node name="PipelinePairNode1">
+        <con:request>PipelinePairNode1_request</con:request>
+        <con:response>PipelinePairNode1_response</con:response>
+      </con:pipeline-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

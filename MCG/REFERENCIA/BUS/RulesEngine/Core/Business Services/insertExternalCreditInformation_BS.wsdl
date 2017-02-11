@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/prueba2/Project1/bd_insertExternalCreditInformation" name="bd_insertExternalCreditInformation-concrete" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/prueba2/Project1/bd_insertExternalCreditInformation" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/prueba2/Project1/bd_insertExternalCreditInformation" location="../Resources/WSDLs/insertExternalCreditInformation_BD.wsdl"/>
+  <binding name="bd_insertExternalCreditInformation_ptt-binding" type="tns:bd_insertExternalCreditInformation_ptt">
+    <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+    <operation name="bd_insertExternalCreditInformation">
+      <soap:operation soapAction="bd_insertExternalCreditInformation"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="bd_insertExternalCreditInformation-service">
+    <port name="bd_insertExternalCreditInformation-port" binding="tns:bd_insertExternalCreditInformation_ptt-binding">
+      <soap:address location="jca://eis/DB/Rules_Engine"/>
+    </port>
+  </service>
+</definitions>

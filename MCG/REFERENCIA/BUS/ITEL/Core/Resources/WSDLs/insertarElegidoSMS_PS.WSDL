@@ -1,0 +1,51 @@
+<wsdl:definitions name="InsertarElegidoSMS" targetNamespace="http://www.comcel.com.co/InsertarElegidoSMS/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.comcel.com.co/InsertarElegidoSMS/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsd1="http://www.comcel.com.co/InsertarElegidoSMS">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://www.comcel.com.co/InsertarElegidoSMS/">
+      <xsd:element name="insertarElegidoSMS">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="in" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="insertarElegidoSMSResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="out" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+    <xsd:schema>
+    	<xsd:import namespace="http://www.comcel.com.co/InsertarElegidoSMS" schemaLocation="../Schemas/PS_ITEL_INSERTAR_ELEGIDOSMS.xsd">
+    	</xsd:import></xsd:schema></wsdl:types>
+  <wsdl:message name="insertarElegidoSMSRequest">
+    <wsdl:part element="xsd1:Input_Parameters" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="insertarElegidoSMSResponse">
+    <wsdl:part element="xsd1:WS_Result" name="parameters"/>
+  </wsdl:message>
+  <wsdl:portType name="insertarElegidoSMS">
+    <wsdl:operation name="insertarElegidoSMS">
+      <wsdl:input message="tns:insertarElegidoSMSRequest"/>
+      <wsdl:output message="tns:insertarElegidoSMSResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="insertarElegidoSMSSOAP" type="tns:insertarElegidoSMS">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="insertarElegidoSMS">
+      <soap:operation soapAction="http://www.comcel.com.co/insertarElegidoSMS_PS/insertarElegidoSMS"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="insertarElegidoSMS">
+    <wsdl:port binding="tns:insertarElegidoSMSSOAP" name="insertarElegidoSMSSOAP">
+      <soap:address location="http://www.comcel.com.co"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

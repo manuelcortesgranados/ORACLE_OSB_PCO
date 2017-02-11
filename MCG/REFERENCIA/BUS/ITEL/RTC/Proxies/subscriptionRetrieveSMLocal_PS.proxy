@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://www.bea.com/wli/sb/pipeline/config">
+  <ser:coreEntry isProxy="true" isEnabled="true">
+    <ser:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config">
+      <con:wsdl ref="ITEL/RTC/Resources/WSDLs/consultarPaqueteDatosSM_PS"/>
+      <con:port>
+        <con:name>SubscriptionRetrieveSMSOAP</con:name>
+        <con:namespace>http://www.comcel.com.co/SubscriptionRetrieveSM/</con:namespace>
+      </con:port>
+      <con:selector type="SOAP body"/>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+    <ser:ws-policy>
+      <ser:binding-mode>wsdl-policy-attachments</ser:binding-mode>
+    </ser:ws-policy>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>local</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:inbound-properties/>
+    <tran:all-headers>true</tran:all-headers>
+  </ser:endpointConfig>
+  <ser:router>
+    <con:pipeline type="request" name="PipelinePairNode1_request">
+      <con:stage name="validacion" errorHandler="_onErrorHandler-5429436496356940486-ae968d6.1552b8c8808.-65e1" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.claro.com.co/AprovisionadorSOA/addSubscriptionToSubscriber/" prefix="add"/>
+          <con1:varNsDecl namespace="http://www.claro.com.co/AprovisionadorSOA/provisionPaqueteDatosRTC/" prefix="prov"/>
+          <con1:varNsDecl prefix="prov1" namespace="http://www.comcel.com.co/ITEL/provisionPaqueteDatosRTC/"/>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/ProvisionPaqueteDatosRTC/" prefix="prov2"/>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/ProvisionPaqueteDatosSM/" prefix="prov3"/>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/SuscriptionAddRequestSM/" prefix="sus"/>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/SubscriptionRetrieveSM/" prefix="sub"/>
+        </con:context>
+        <con:actions>
+          <con2:validate>
+            <con1:id>_ActionId-5429436496356940486-ae968d6.1552b8c8808.-65e2</con1:id>
+            <con2:schema ref="ITEL/RTC/Resources/Schemas/PS_CONSULTAR_PAQUETE_DATOS_SM"/>
+            <con2:schemaElement xmlns:ins="http://www.claro.com.co/AprovisionadorSOA/insertarRegistroAuditoria/" xmlns:ins1="http://www.claro.com.co/AprovisionadorSOA/insertarRegistroRepositorio/" xmlns:con4="http://www.claro.com.co/AprovisionadorSOA/consultarResgistrosCICLOP9/" xmlns:con5="http://www.claro.com.co/AprovisionadorSOA/consultarAuditoriaCICLOP9/" xmlns:get="http://www.claro.com.co/AprovisionadorSOA/getActiveSubscriberProductsByMSISDN/" xmlns:add="http://www.claro.com.co/AprovisionadorSOA/addSubscriptionToSubscriber/" xmlns:prov="http://www.claro.com.co/AprovisionadorSOA/provisionPaqueteDatosRTC/" xmlns:prov1="http://www.comcel.com.co/ITEL/provisionPaqueteDatosRTC/" xmlns:prov2="http://www.comcel.com.co/ProvisionPaqueteDatosRTC/" xmlns:prov3="http://www.comcel.com.co/ProvisionPaqueteDatosSM/" xmlns:sus="http://www.comcel.com.co/SuscriptionAddRequestSM/" xmlns:sub="http://www.comcel.com.co/SubscriptionRetrieveSM/">sub:Input_Parameters</con2:schemaElement>
+            <con2:varName>body</con2:varName>
+            <con2:location>
+              <con1:xpathText>./sub:Input_Parameters</con1:xpathText>
+            </con2:location>
+            <con2:resultVarName/>
+          </con2:validate>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="PipelinePairNode1_response"/>
+    <con:pipeline type="error" name="_onErrorHandler-5429436496356940486-ae968d6.1552b8c8808.-65e1">
+      <con:stage name="error" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config">
+        <con:context/>
+        <con:actions>
+          <con2:replace contents-only="true" varName="body">
+            <con1:id>_ActionId-5429436496356940486-ae968d6.1552b8c8808.-65e0</con1:id>
+            <con2:expr>
+              <con1:xqueryTransform>
+                <con1:resource ref="ITEL/RTC/Resources/XQueries/consultarPaqueteDatosSM_Error"/>
+                <con1:param name="codigo">
+                  <con1:path>"ERROR"</con1:path>
+                </con1:param>
+                <con1:param name="descripcion">
+                  <con1:path>data($fault/*:reason)</con1:path>
+                </con1:param>
+                <con1:param name="mensaje">
+                  <con1:path>"Error validando parametros"</con1:path>
+                </con1:param>
+              </con1:xqueryTransform>
+            </con2:expr>
+          </con2:replace>
+          <con1:reply>
+            <con1:id>_ActionId-5429436496356940486-ae968d6.1552b8c8808.-65df</con1:id>
+          </con1:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="error" name="_onErrorHandler-5429436496356940486-ae968d6.1552b8c8808.-6527">
+      <con:stage name="error" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+        <con:context xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+        <con:actions xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config">
+          <con2:replace contents-only="true" varName="body">
+            <con1:id>_ActionId-5429436496356940486-ae968d6.1552b8c8808.-6526</con1:id>
+            <con2:expr>
+              <con1:xqueryTransform>
+                <con1:resource ref="ITEL/RTC/Resources/XQueries/consultarPaqueteDatosSM_Error"/>
+                <con1:param name="codigo">
+                  <con1:path>"64"</con1:path>
+                </con1:param>
+                <con1:param name="descripcion">
+                  <con1:path>data($fault/*:reason)</con1:path>
+                </con1:param>
+                <con1:param name="mensaje">
+                  <con1:path>"Error procesando transaccion"</con1:path>
+                </con1:param>
+              </con1:xqueryTransform>
+            </con2:expr>
+          </con2:replace>
+          <con1:reply>
+            <con1:id>_ActionId-5429436496356940486-ae968d6.1552b8c8808.-6525</con1:id>
+          </con1:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:flow>
+      <con:pipeline-node name="PipelinePairNode1">
+        <con:request>PipelinePairNode1_request</con:request>
+        <con:response>PipelinePairNode1_response</con:response>
+      </con:pipeline-node>
+      <con:route-node name="RouteNode1" error-handler="_onErrorHandler-5429436496356940486-ae968d6.1552b8c8808.-6527">
+        <con:context xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+          <con2:varNsDecl namespace="http://www.comcel.com.co/ProvisionPaqueteDatosSM/" prefix="prov"/>
+          <con2:varNsDecl namespace="http://www.comcel.com.co/SuscriptionAddRequestSM/" prefix="sus"/>
+          <con2:varNsDecl namespace="http://www.comcel.com.co/SubscriptionRetrieveSM/" prefix="sub"/>
+        </con:context>
+        <con:actions xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+          <con1:route>
+            <con2:id>_ActionId-5429436496356940486-ae968d6.1552b8c8808.-652a</con2:id>
+            <con1:service ref="ITEL/RTC/Business Services/subscriptionRetrieveSM_BS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con1:outboundTransform>
+              <con3:replace varName="body" contents-only="true">
+                <con2:id>_ActionId-5429436496356940486-ae968d6.1552b8c8808.-6529</con2:id>
+                <con3:expr>
+                  <con2:xqueryTransform>
+                    <con2:resource ref="ITEL/RTC/Resources/XQueries/consultarPaqueteDatosSM_Req"/>
+                    <con2:param name="input_Parameters1">
+                      <con2:path>$body/sub:Input_Parameters</con2:path>
+                    </con2:param>
+                  </con2:xqueryTransform>
+                </con3:expr>
+              </con3:replace>
+            </con1:outboundTransform>
+            <con1:responseTransform>
+              <con3:replace varName="body" contents-only="true">
+                <con2:id>_ActionId-5429436496356940486-ae968d6.1552b8c8808.-6528</con2:id>
+                <con3:expr>
+                  <con2:xqueryTransform>
+                    <con2:resource ref="ITEL/RTC/Resources/XQueries/consultarPaqueteDatosSM_Res"/>
+                    <con2:param name="response">
+                      <con2:path>data($body)</con2:path>
+                    </con2:param>
+                    <con2:param name="descripcion">
+                      <con2:path>"Operacion ejecutada correctamente"</con2:path>
+                    </con2:param>
+                  </con2:xqueryTransform>
+                </con3:expr>
+              </con3:replace>
+            </con1:responseTransform>
+          </con1:route>
+        </con:actions>
+      </con:route-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

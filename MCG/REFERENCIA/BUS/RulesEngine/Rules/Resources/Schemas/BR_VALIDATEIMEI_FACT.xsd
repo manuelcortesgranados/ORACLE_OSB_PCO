@@ -1,0 +1,24 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://www.claro.com.co/rulesEngine/ValidateImeiFact"
+	xmlns:cd="http://www.claro.com.co/rulesEngine/canonicalModel/CustomerDomain"
+	xmlns:pd="http://www.claro.com.co/rulesEngine/canonicalModel/ProductDomain"
+	xmlns:cbe="http://www.claro.com.co/rulesEngine/canonicalModel/CommonBusinessEntities"
+	targetNamespace="http://www.claro.com.co/rulesEngine/ValidateImeiFact">
+	
+	<xs:import schemaLocation="../../../Core/Resources/Schemas/CanonicalModel/CustomerDomain.xsd"
+         namespace="http://www.claro.com.co/rulesEngine/canonicalModel/CustomerDomain"/>
+		
+	<xs:element name="ValidateImeiFactRequest" type="tns:ValidateImeiFactRequestType" />
+	<xs:element name="ValidateImeiFactResponse" type="tns:ValidateImeiFactResponseType" />
+	
+	<xs:complexType name="ValidateImeiFactRequestType">
+		<xs:sequence>
+			<xs:element name="Product" type="pd:Product" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ValidateImeiFactResponseType">
+		<xs:sequence>
+			<xs:element name="Product" type="pd:Product" />
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

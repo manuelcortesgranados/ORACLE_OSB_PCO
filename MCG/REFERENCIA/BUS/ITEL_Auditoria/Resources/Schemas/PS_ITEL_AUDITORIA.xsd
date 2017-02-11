@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.comcel.com.co/AuditoriaITEL/"
+	xmlns:tns="http://www.comcel.com.co/AuditoriaITEL/">
+	
+	<xs:element name="Input_Parameters" type="tns:Input_Paramaters" />
+	
+	<xs:complexType name="Input_Paramaters">
+		<xs:sequence>
+			<xs:element name="USUARIO" type="xs:string" />
+			<xs:element name="METODO" type="xs:string" />
+			<xs:element name="MIN_DESTINO" type="xs:string" />
+			<xs:element name="IN_DESTINO" type="xs:string" />
+			<xs:element name="IN_ORIGEN" type="xs:string" />
+			<xs:element name="TRAMA_IN" type="xs:string" />
+			<xs:element name="FECHA_IN" type="xs:dateTime" />
+			<xs:element name="TRAMA_OUT" type="xs:string" />
+			<xs:element name="FECHA_OUT" type="xs:dateTime" />
+			<xs:element name="COD_RESPUESTA" type="xs:string" />
+			<xs:element name="PARAMETROS_TRAMA" type="tns:parametrosType" />
+			<xs:element name="PARAMETROS_NEGOCIO" type="tns:parametrosType" />
+			<xs:element name="IP" type="xs:string" />
+			<xs:element name="HOST" type="xs:string" />
+			<xs:element name="DURACION_1" type="xs:integer" />
+			<xs:element name="DURACION_2" type="xs:integer" />
+			<xs:element name="DURACION_3" type="xs:integer" />
+			<xs:element name="DURACION_4" type="xs:integer" />
+			<xs:element name="DURACION_5" type="xs:integer" />
+			<xs:element name="DURACION_6" type="xs:integer" />
+			<xs:element name="DURACION_7" type="xs:integer" />
+			<xs:element name="DURACION_SUSCRIPTOR" type="xs:integer" />
+			<xs:element name="DURACION_TRANSACCION" type="xs:integer" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="parametrosType">
+		<xs:sequence>
+			<xs:element name="PARAMETRO" type="tns:parametroType" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="parametroType">
+		<xs:sequence>
+			<xs:element name="NOMBRE" type="xs:string" />
+			<xs:element name="TIPO" type="xs:string" />
+			<xs:element name="VALOR" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+
+</xs:schema>

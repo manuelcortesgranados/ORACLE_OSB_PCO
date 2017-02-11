@@ -1,0 +1,20 @@
+<definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/SOA/DBAdapter/bd_consultarParametrosEjecucion" name="bd_consultarParametrosEjecucion-concrete" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/SOA/DBAdapter/bd_consultarParametrosEjecucion" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/SOA/DBAdapter/bd_consultarParametrosEjecucion" location="../Resources/WSDLs/consultarParametrosEjecucion_BD.wsdl"/>
+  <binding name="bd_consultarParametrosEjecucion_ptt-binding" type="tns:bd_consultarParametrosEjecucion_ptt">
+    <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+    <operation name="bd_consultarParametrosEjecucion">
+      <soap:operation soapAction="bd_consultarParametrosEjecucion"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="bd_consultarParametrosEjecucion-service">
+    <port name="bd_consultarParametrosEjecucion-port" binding="tns:bd_consultarParametrosEjecucion_ptt-binding">
+      <soap:address location="jca://eis/DB/ITEL_SOA"/>
+    </port>
+  </service>
+</definitions>

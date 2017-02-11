@@ -1,0 +1,22 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:cbe="http://www.claro.com.co/rulesEngine/canonicalModel/CommonBusinessEntities"
+	xmlns:tns="http://www.claro.com.co/rulesEngine/CreditExceptionssFact/"
+	targetNamespace="http://www.claro.com.co/rulesEngine/CreditExceptionssFact/">
+	
+	<xs:import
+		namespace="http://www.claro.com.co/rulesEngine/canonicalModel/CommonBusinessEntities"
+		schemaLocation="../../../Core/Resources/Schemas/CanonicalModel/CommonBusinessEntities.xsd" />
+		
+	<xs:element name="CreditExceptionsFactRequest" type="tns:CreditExceptionsFactRequestType" />
+	<xs:element name="CreditExceptionsFactResponse" type="tns:CreditExceptionsFactResponseType" />
+	<xs:complexType name="CreditExceptionsFactRequestType">
+		<xs:sequence>
+			<xs:element name="ExceptionBusinessCollection" type="cbe:ExceptionBusinessCollection"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CreditExceptionsFactResponseType">
+		<xs:sequence>
+			<xs:element name="ExceptionBusinessCollection" type="cbe:ExceptionBusinessCollection"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

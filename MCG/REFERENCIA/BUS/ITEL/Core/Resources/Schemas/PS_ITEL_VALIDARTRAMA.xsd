@@ -1,0 +1,44 @@
+<xs:schema targetNamespace="http://www.comcel.com.co/ValidarTrama/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.comcel.com.co/ValidarTrama/" xmlns:tra="http://www.comcel.com.co/DA_TRAMA">
+	
+	<xs:import namespace="http://www.comcel.com.co/DA_TRAMA" schemaLocation="DA_TRAMA.xsd"/>
+	
+	<xs:element name="Input_Parameters" type="tns:Input_Paramaters"/>
+	<xs:element name="WS_Result" type="tns:WS_Result"/>
+
+	<xs:complexType name="Input_Paramaters">
+		<xs:sequence>
+			<xs:element name="TRAMA" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="WS_Result">
+		<xs:sequence>
+			<xs:element name="CODIGO" type="xs:string"/>
+			<xs:element name="MENSAJE" type="tns:mensajeType"/>
+			<xs:element name="DESCRIPCION" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="mensajeType">
+		<xs:sequence>
+			<xs:element name="TRAMA" type="tra:tramaType"/>
+			<xs:element name="IN_DESTINO" type="xs:string"/>
+			<xs:element name="IN_ORIGEN" type="xs:string"/>
+			<xs:element name="CONTRATO" type="xs:string"/>
+			<xs:element name="CONTRATOESPOSTPAGO" type="xs:string"/>
+			<xs:element name="CATEGORIA" type="xs:string"/>
+			<xs:element name="CARGAINICIAL" type="xs:string"/>
+			<xs:element name="BLOQUEA" type="xs:string"/>
+			<xs:element name="VIGENCIA" type="xs:string"/>
+			<xs:element name="TIMEOUT_VALIDACION" type="xs:integer"/>
+			<xs:element name="TIMEOUT_CONSULTA" type="xs:integer"/>
+			<xs:element name="TIMEOUT_PROVISION" type="xs:integer"/>
+			<xs:element name="TIMEOUT_FINAL" type="xs:integer"/>
+			<xs:element name="DURACION_GENERAL" type="xs:integer"/>
+			<xs:element name="DURACION_ESPECIFICA" type="xs:integer"/>
+			<xs:element name="PLATAFORMA" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	
+</xs:schema>

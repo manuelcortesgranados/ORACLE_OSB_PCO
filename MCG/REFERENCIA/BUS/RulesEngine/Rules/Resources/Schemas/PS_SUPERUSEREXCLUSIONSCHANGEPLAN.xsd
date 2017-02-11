@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.claro.com.co/rulesEngine/superUserExclusionsChangePlan"
+	xmlns:tns="http://www.claro.com.co/rulesEngine/superUserExclusionsChangePlan"
+	xmlns:pd="http://www.claro.com.co/rulesEngine/canonicalModel/ProductDomain"
+	xmlns:cd="http://www.claro.com.co/rulesEngine/canonicalModel/CustomerDomain"
+	xmlns:msd="http://www.claro.com.co/rulesEngine/canonicalModel/MarketSalesDomain"
+	xmlns:cbe="http://www.claro.com.co/rulesEngine/canonicalModel/CommonBusinessEntities">
+
+	<import schemaLocation="../../../Core/Resources/Schemas/CanonicalModel/CommonBusinessEntities.xsd"
+		namespace="http://www.claro.com.co/rulesEngine/canonicalModel/CommonBusinessEntities" />
+	<import schemaLocation="../../../Core/Resources/Schemas/CanonicalModel/CustomerDomain.xsd"
+         namespace="http://www.claro.com.co/rulesEngine/canonicalModel/CustomerDomain"/>
+    <import schemaLocation="../../../Core/Resources/Schemas/CanonicalModel/MarketSalesDomain.xsd"
+         namespace="http://www.claro.com.co/rulesEngine/canonicalModel/MarketSalesDomain"/>
+
+	<element name="Input_Parameters" type="tns:Input_Parameters"></element>
+	<element name="WS_Result" type="tns:WS_Result"></element>
+
+	<complexType name="Input_Parameters">
+		<sequence>
+			<element name="exceptionBusinessCollection" type="cbe:ExceptionBusinessCollection" />
+			<element name="salesChannel" type="msd:SalesChannel" />
+		</sequence>
+	</complexType>
+
+	<complexType name="WS_Result">
+		<sequence>
+			<element name="code" type="string" />
+			<element name="message" type="tns:responseType" />
+			<element name="description" type="string" />
+		</sequence>
+	</complexType>
+
+	<complexType name="responseType">
+		<sequence>
+			<element name="exceptionBusinessCollection" type="cbe:ExceptionBusinessCollection" />
+		</sequence>
+	</complexType>
+
+</schema>

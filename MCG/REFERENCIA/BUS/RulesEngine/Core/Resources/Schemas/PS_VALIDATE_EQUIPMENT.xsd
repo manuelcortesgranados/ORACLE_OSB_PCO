@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://validateequipment.equipmentmanagement.schema.amx.com" targetNamespace="http://validateequipment.equipmentmanagement.schema.amx.com" elementFormDefault="qualified">
+	<xs:element name="ValidateEquipmentRequest" type="tns:ValidateEquipmentRequest"/>
+	<xs:element name="ValidateEquipmentResponse" type="tns:ValidateEquipmentResponse"/>
+	<xs:complexType name="ValidateEquipmentRequest">
+		<xs:sequence>
+			<xs:element name="Equipment" type="tns:EquipmentRequest" minOccurs="1" maxOccurs="unbounded"/>
+			<xs:element name="dealerId" type="xs:string" minOccurs="1"/>
+			<xs:element name="salesChannel" type="xs:string" minOccurs="1"/>
+			<xs:element name="AffiliateInformation" type="tns:AffiliateInformation" minOccurs="1"/>
+			<xs:element name="region" type="xs:string" minOccurs="1"/>
+			<xs:element name="FlexibleAttribute" type="tns:FlexibleAttribute" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ValidateEquipmentResponse">
+		<xs:sequence>
+			<xs:element name="Equipment" type="tns:EquipmentResponse" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EquipmentRequest">
+		<xs:sequence>
+			<xs:element name="equipmentType" type="xs:string" minOccurs="0"/>
+			<xs:element name="materialCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="equipmentIdentifier" type="xs:string" minOccurs="1"/>
+			<xs:element name="orderActionType" type="xs:string" minOccurs="1"/>
+			<xs:element name="acquisitionType" type="xs:string" minOccurs="0"/>
+			<xs:element name="reasoncode" type="xs:string" minOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EquipmentResponse">
+		<xs:sequence>
+			<xs:element name="equipmentType" type="xs:string" minOccurs="1"/>
+			<xs:element name="materialCode" type="xs:string" minOccurs="1"/>
+			<xs:element name="equipmentIdentifier" type="xs:string" minOccurs="1"/>
+			<xs:element name="status" type="xs:boolean" minOccurs="1"/>
+			<xs:element name="isComcel" type="xs:boolean" minOccurs="1"/>
+			<xs:element name="make" type="xs:string" minOccurs="0"/>
+			<xs:element name="model" type="xs:string" minOccurs="0"/>
+			<xs:element name="validationMessage" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AffiliateInformation">
+		<xs:sequence>
+			<xs:element name="affiliate" type="xs:string" minOccurs="1"/>
+			<xs:element name="market" type="xs:string" minOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FlexibleAttribute">
+		<xs:sequence>
+			<xs:element name="attributeName" type="xs:string" minOccurs="1"/>
+			<xs:element name="attributeValue" type="xs:string" minOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

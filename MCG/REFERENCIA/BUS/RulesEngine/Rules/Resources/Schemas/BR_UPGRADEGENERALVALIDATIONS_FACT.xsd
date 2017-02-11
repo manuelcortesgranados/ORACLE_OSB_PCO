@@ -1,0 +1,28 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:pd="http://www.claro.com.co/rulesEngine/canonicalModel/ProductDomain"
+	xmlns:cd="http://www.claro.com.co/rulesEngine/canonicalModel/CustomerDomain"
+	xmlns:cbe="http://www.claro.com.co/rulesEngine/canonicalModel/CommonBusinessEntities"
+	xmlns:tns="http://www.claro.com.co/rulesEngine/UpgradeGeneralValidationsFact/"
+	targetNamespace="http://www.claro.com.co/rulesEngine/UpgradeGeneralValidationsFact/">
+	
+	
+	<xs:import schemaLocation="../../../Core/Resources/Schemas/CanonicalModel/CustomerDomain.xsd"
+		namespace="http://www.claro.com.co/rulesEngine/canonicalModel/CustomerDomain" />
+			
+	<xs:element name="UpgradeGeneralValidationsFactRequest"
+		type="tns:UpgradeGeneralValidationsFactRequestType" />
+	<xs:element name="UpgradeGeneralValidationsFactResponse"
+		type="tns:UpgradeGeneralValidationsFactResponseType" />
+		
+	<xs:complexType name="UpgradeGeneralValidationsFactRequestType">
+		<xs:sequence>
+			<xs:element name="InternalAccountBehavior" type="cd:InternalAccountBehavior" />
+			<xs:element name="Product" type="pd:Product" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="UpgradeGeneralValidationsFactResponseType">
+		<xs:sequence>
+			<xs:element name="ExceptionBusinessCollection" type="cbe:ExceptionBusinessCollection"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

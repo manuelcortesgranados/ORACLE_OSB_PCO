@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:jms="http://www.bea.com/wli/sb/transports/jms" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <ser:coreEntry isProxy="true" isEnabled="true">
+    <ser:binding type="SOAP" isSoap12="false" xsi:type="con3:SoapBindingType" xmlns:con3="http://www.bea.com/wli/sb/services/bindings/config">
+      <con3:wsdl ref="ITEL/Core/Resources/WSDLs/consumirAuditoriaPromoPaqTATJMS_PS"/>
+      <con3:binding>
+        <con3:name>consumirAuditoriaPromoPaquetesTAT_ptt-binding</con3:name>
+        <con3:namespace>http://xmlns.oracle.com/pcbpel/adapter/jms/Comcel/ITEL/consumirAuditoriaPromoPaquetesTATJMS</con3:namespace>
+      </con3:binding>
+      <con3:selector type="SOAP action"/>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+    <ser:ws-policy>
+      <ser:binding-mode>wsdl-policy-attachments</ser:binding-mode>
+    </ser:ws-policy>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>jms</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:URI>
+      <env:value>jms://172.22.85.117:8013/weblogic.jms.ConnectionFactory/jms/auditoriaPromoRecargaPaqTATQueue</env:value>
+    </tran:URI>
+    <tran:inbound-properties/>
+    <tran:all-headers>false</tran:all-headers>
+    <tran:provider-specific>
+      <jms:is-queue>true</jms:is-queue>
+      <jms:is-secure>false</jms:is-secure>
+      <jms:inbound-properties>
+        <jms:response-required>false</jms:response-required>
+        <jms:XA-required>false</jms:XA-required>
+        <jms:transaction-timeout>600</jms:transaction-timeout>
+      </jms:inbound-properties>
+      <jms:request-encoding>UTF-8</jms:request-encoding>
+      <jms:jndi-timeout>0</jms:jndi-timeout>
+    </tran:provider-specific>
+  </ser:endpointConfig>
+  <ser:router>
+    <con:pipeline type="request" name="PipelinePairNode1_request">
+      <con:stage name="ValidarPromoPaquetesTAT" errorHandler="_onErrorHandler-3470943002047099957--418cceee.158795bf213.-7eef">
+        <con:context>
+          <con2:varNsDecl namespace="http://www.comcel.com.co/AuditoriaITEL/" prefix="aud"/>
+        </con:context>
+        <con:actions>
+          <con1:wsCallout>
+            <con2:id>_ActionId-3470943002047099957--418cceee.158795bf213.-7b2c</con2:id>
+            <con1:service xsi:type="ref:BusinessServiceRef" ref="ITEL/Core/Business Services/consultarPromoPaquetesTAT_BS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con1:operation>bd_consultarPromoPaquetesTAT</con1:operation>
+            <con1:request>
+              <con1:body>$promoPaqTATRequest</con1:body>
+            </con1:request>
+            <con1:response>
+              <con1:body>promoPaqTATResponse</con1:body>
+            </con1:response>
+            <con1:requestTransform>
+              <con1:assign varName="promoPaqTATRequest">
+                <con2:id>_ActionId-3470943002047099957--418cceee.158795bf213.-7b2d</con2:id>
+                <con1:expr>
+                  <con2:xqueryTransform>
+                    <con2:resource ref="ITEL/Core/Resources/XQueries/consumirAuditoriaPromoPaqTAT_consultarPromoPaquetesTAT_Req"/>
+                    <con2:param name="input_Parameters1">
+                      <con2:path>$body/aud:Input_Parameters</con2:path>
+                    </con2:param>
+                  </con2:xqueryTransform>
+                </con1:expr>
+              </con1:assign>
+            </con1:requestTransform>
+            <con1:responseTransform/>
+          </con1:wsCallout>
+          <con1:ifThenElse>
+            <con2:id>_ActionId-3470943002047099957--418cceee.158795bf213.-7b27</con2:id>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText>data($promoPaqTATResponse/*:P_BONO) = '1'</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con1:wsCallout>
+                  <con2:id>_ActionId-3470943002047099957--418cceee.158795bf213.-690a</con2:id>
+                  <con1:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/consultarParametrosEjecucionLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con1:operation>consultarParametrosEjecucion</con1:operation>
+                  <con1:request>
+                    <con1:body>$parametrosRequest</con1:body>
+                  </con1:request>
+                  <con1:response>
+                    <con1:body>parametrosResponse</con1:body>
+                  </con1:response>
+                  <con1:requestTransform>
+                    <con1:assign varName="parametrosRequest">
+                      <con2:id>_ActionId-3470943002047099957--418cceee.158795bf213.-6892</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consultarParametrosEjecucion_Req"/>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:assign>
+                  </con1:requestTransform>
+                  <con1:responseTransform/>
+                </con1:wsCallout>
+                <con1:assign varName="comentarioPromo">
+                  <con2:id>_ActionId-3470943002047099957--418cceee.158795bf213.-67bf</con2:id>
+                  <con1:expr>
+                    <con2:xqueryText>data($parametrosResponse/MENSAJE/PARAMETRO[NOMBRE='iTEL.MensajePromoBundle']/VALOR)</con2:xqueryText>
+                  </con1:expr>
+                </con1:assign>
+                <con1:assign varName="usuarioPromo">
+                  <con2:id>_ActionId-3470943002047099957--418cceee.158795bf213.-68e4</con2:id>
+                  <con1:expr>
+                    <con2:xqueryText>data($parametrosResponse/MENSAJE/PARAMETRO[NOMBRE='iTEL.UsuarioPromoBundle']/VALOR)</con2:xqueryText>
+                  </con1:expr>
+                </con1:assign>
+                <con1:wsCallout>
+                  <con2:id>_ActionId-3470943002047099957--418cceee.158795bf213.-7b25</con2:id>
+                  <con1:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/ejecutarTramaLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con1:operation>ejecutarTrama</con1:operation>
+                  <con1:request>
+                    <con1:body>$ejecutarTramaRequest</con1:body>
+                  </con1:request>
+                  <con1:response>
+                    <con1:body>ejecutarTramaResponse</con1:body>
+                  </con1:response>
+                  <con1:requestTransform>
+                    <con1:assign varName="ejecutarTramaRequest">
+                      <con2:id>_ActionId-3470943002047099957--418cceee.158795bf213.-7b26</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consumirAuditoriaPromoPaqTAT_ejecutarTrama"/>
+                          <con2:param name="input_Parameters1">
+                            <con2:path>$body/aud:Input_Parameters</con2:path>
+                          </con2:param>
+                          <con2:param name="usuarioPromo">
+                            <con2:path>$usuarioPromo</con2:path>
+                          </con2:param>
+                          <con2:param name="comentarioPromo">
+                            <con2:path>$comentarioPromo</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:assign>
+                  </con1:requestTransform>
+                  <con1:responseTransform/>
+                </con1:wsCallout>
+                <con1:ifThenElse>
+                  <con2:id>_ActionId-3470943002047099957--418cceee.158795bf213.-7b24</con2:id>
+                  <con1:case>
+                    <con1:condition>
+                      <con2:xqueryText>data($ejecutarTramaResponse/*:CODIGO) = 1</con2:xqueryText>
+                    </con1:condition>
+                    <con1:actions>
+                      <con1:assign varName="estadoPromo">
+                        <con2:id>_ActionId-3470943002047099957--418cceee.158795bf213.-681c</con2:id>
+                        <con1:expr>
+                          <con2:xqueryText>'1'</con2:xqueryText>
+                        </con1:expr>
+                      </con1:assign>
+                      <con1:assign varName="mensajePromo">
+                        <con2:id>_ActionId-3470943002047099957--418cceee.158795bf213.-68bd</con2:id>
+                        <con1:expr>
+                          <con2:xqueryText>data($parametrosResponse/MENSAJE/PARAMETRO[NOMBRE='iTEL.SMSPromoBundle']/VALOR)</con2:xqueryText>
+                        </con1:expr>
+                      </con1:assign>
+                      <con1:wsCallout>
+                        <con2:id>_ActionId-3470943002047099957--418cceee.158795bf213.-6a12</con2:id>
+                        <con1:service xsi:type="ref:ProxyRef" ref="ITEL/Core/Proxies/enviaSMSLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:operation>enviarSMS</con1:operation>
+                        <con1:request>
+                          <con1:body>$enviarSMSRequest</con1:body>
+                        </con1:request>
+                        <con1:response>
+                          <con1:body>enviarSMSRespose</con1:body>
+                        </con1:response>
+                        <con1:requestTransform>
+                          <con1:assign varName="enviarSMSRequest">
+                            <con2:id>_ActionId-3470943002047099957--418cceee.158795bf213.-698d</con2:id>
+                            <con1:expr>
+                              <con2:xqueryTransform>
+                                <con2:resource ref="ITEL/Core/Resources/XQueries/consumirAuditoriaPromoPaqTAT_enviaSMSPromoPaqTAT"/>
+                                <con2:param name="input_Parameters1">
+                                  <con2:path>$body/aud:Input_Parameters</con2:path>
+                                </con2:param>
+                                <con2:param name="mensaje">
+                                  <con2:path>$mensajePromo</con2:path>
+                                </con2:param>
+                              </con2:xqueryTransform>
+                            </con1:expr>
+                          </con1:assign>
+                        </con1:requestTransform>
+                        <con1:responseTransform/>
+                      </con1:wsCallout>
+                    </con1:actions>
+                  </con1:case>
+                  <con1:default>
+                    <con1:assign varName="estadoPromo">
+                      <con2:id>_ActionId-3470943002047099957--418cceee.158795bf213.-680c</con2:id>
+                      <con1:expr>
+                        <con2:xqueryText>'2'</con2:xqueryText>
+                      </con1:expr>
+                    </con1:assign>
+                  </con1:default>
+                </con1:ifThenElse>
+                <con1:wsCallout>
+                  <con2:id>_ActionId-3470943002047099957--418cceee.158795bf213.-6808</con2:id>
+                  <con1:service xsi:type="ref:BusinessServiceRef" ref="ITEL/Core/Business Services/actualizarPromoPaquetesTAT_BS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con1:operation>bd_actualizarPromoPaquetesTAT</con1:operation>
+                  <con1:request>
+                    <con1:body>$actualizarPromoRequest</con1:body>
+                  </con1:request>
+                  <con1:response>
+                    <con1:body>actualizarPromoResponse</con1:body>
+                  </con1:response>
+                  <con1:requestTransform>
+                    <con1:assign varName="actualizarPromoRequest">
+                      <con2:id>_ActionId-3470943002047099957--418cceee.158795bf213.-67df</con2:id>
+                      <con1:expr>
+                        <con2:xqueryTransform>
+                          <con2:resource ref="ITEL/Core/Resources/XQueries/consumirAuditoriaPromoPaqTAT_actualizarPromoPaqTAT"/>
+                          <con2:param name="input_Parameters1">
+                            <con2:path>$body/aud:Input_Parameters</con2:path>
+                          </con2:param>
+                          <con2:param name="estadoPromo">
+                            <con2:path>$estadoPromo</con2:path>
+                          </con2:param>
+                          <con2:param name="descripcionRta">
+                            <con2:path>data($ejecutarTramaResponse/*:MENSAJE)</con2:path>
+                          </con2:param>
+                          <con2:param name="codigoRta">
+                            <con2:path>data($ejecutarTramaResponse/*:CODIGO)</con2:path>
+                          </con2:param>
+                        </con2:xqueryTransform>
+                      </con1:expr>
+                    </con1:assign>
+                  </con1:requestTransform>
+                  <con1:responseTransform/>
+                </con1:wsCallout>
+              </con1:actions>
+            </con1:case>
+            <con1:default/>
+          </con1:ifThenElse>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="PipelinePairNode1_response"/>
+    <con:pipeline type="error" name="_onErrorHandler-3470943002047099957--418cceee.158795bf213.-7eef">
+      <con:stage name="Error">
+        <con:context xmlns:jca="http://www.bea.com/wli/sb/transports/jca" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con4="http://www.bea.com/wli/sb/stages/publish/config"/>
+        <con:actions xmlns:jca="http://www.bea.com/wli/sb/transports/jca" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con4="http://www.bea.com/wli/sb/stages/publish/config">
+          <con1:log xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config">
+            <con2:id>_ActionId-3470943002047099957--418cceee.158795bf213.-7e7e</con2:id>
+            <con1:logLevel>error</con1:logLevel>
+            <con1:expr>
+              <con5:xqueryText xmlns:con5="http://www.bea.com/wli/sb/stages/config">$fault/ctx:reason</con5:xqueryText>
+            </con1:expr>
+          </con1:log>
+          <con2:reply>
+            <con2:id>_ActionId-3470943002047099957--418cceee.158795bf213.-7e7d</con2:id>
+          </con2:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:flow>
+      <con:pipeline-node name="PipelinePairNode1">
+        <con:request>PipelinePairNode1_request</con:request>
+        <con:response>PipelinePairNode1_response</con:response>
+      </con:pipeline-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

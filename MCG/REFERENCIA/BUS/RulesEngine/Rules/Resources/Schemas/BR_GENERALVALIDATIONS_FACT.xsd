@@ -1,0 +1,27 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:pd="http://www.claro.com.co/rulesEngine/canonicalModel/ProductDomain"
+	xmlns:cd="http://www.claro.com.co/rulesEngine/canonicalModel/CustomerDomain"
+	xmlns:cbe="http://www.claro.com.co/rulesEngine/canonicalModel/CommonBusinessEntities"
+	xmlns:tns="http://www.claro.com.co/rulesEngine/GeneralValidationsFact/"
+	targetNamespace="http://www.claro.com.co/rulesEngine/GeneralValidationsFact/">
+	<xs:import
+		namespace="http://www.claro.com.co/rulesEngine/canonicalModel/CustomerDomain"
+		schemaLocation="../../../Core/Resources/Schemas/CanonicalModel/CustomerDomain.xsd" />
+		
+	<xs:element name="GeneralValidationsFactRequest" type="tns:GeneralValidationsFactRequestType" />
+	<xs:element name="GeneralValidationsFactResponse" type="tns:GeneralValidationsFactResponseType" />
+	 <xs:complexType name="GeneralValidationsFactRequestType">
+        <xs:sequence>
+            <xs:element name="InternalAccountBehavior" type="cd:InternalAccountBehavior" minOccurs="0"
+                 maxOccurs="unbounded"/>
+            <xs:element name="Product" type="pd:Product" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="CustomerOrder" type="cd:CustomerOrder" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="CustomerDocument" type="cd:CustomerDocument"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="GeneralValidationsFactResponseType">
+        <xs:sequence>
+            <xs:element name="ExceptionBusinessCollection" type="cbe:ExceptionBusinessCollection"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

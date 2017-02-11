@@ -1,0 +1,18 @@
+<adapter-config name="db_VerificarPermisoUsuario"
+	adapter="Database Adapter" wsdlLocation="../WSDLs/verificarPermisoUsuario_BD.wsdl"
+	xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+
+	<connection-factory location="eis/DB/ITEL_SOA"
+		UIConnectionName="SOADES" adapterRef="" />
+	<endpoint-interaction portType="db_VerificarPermisoUsuario_ptt"
+		operation="db_VerificarPermisoUsuario">
+		<interaction-spec
+			className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
+			<property name="PackageName" value="PKG_SOA_ITEL" />
+			<property name="ProcedureName" value="PRC_VERIFICAR_PERMISOS_USUARIO" />
+			<property name="GetActiveUnitOfWork" value="false" />
+		</interaction-spec>
+		<output />
+	</endpoint-interaction>
+
+</adapter-config>

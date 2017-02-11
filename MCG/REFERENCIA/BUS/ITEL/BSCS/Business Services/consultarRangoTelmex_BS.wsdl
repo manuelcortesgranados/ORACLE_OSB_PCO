@@ -1,0 +1,20 @@
+<definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/ITEL/Adaptadores/bd_consultarRangoTelmex" name="bd_consultarRangoTelmex-concrete" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/ITEL/Adaptadores/bd_consultarRangoTelmex" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/ITEL/Adaptadores/bd_consultarRangoTelmex" location="../Resources/WSDLs/consultarRangoTelmex_BD.wsdl"/>
+  <binding name="bd_consultarRangoTelmex_ptt-binding" type="tns:bd_consultarRangoTelmex_ptt">
+    <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+    <operation name="bd_consultarRangoTelmex">
+      <soap:operation soapAction="bd_consultarRangoTelmex"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="bd_consultarRangoTelmex-service">
+    <port name="bd_consultarRangoTelmex-port" binding="tns:bd_consultarRangoTelmex_ptt-binding">
+      <soap:address location="jca://eis/DB/BSCSQA"/>
+    </port>
+  </service>
+</definitions>

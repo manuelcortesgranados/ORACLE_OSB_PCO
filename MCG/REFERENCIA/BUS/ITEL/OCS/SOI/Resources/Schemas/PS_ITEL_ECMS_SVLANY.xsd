@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://lhsgroup.com/lhsws/svlany"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:lhsws="http://lhsgroup.com/lhsws/svlany"
+	attributeFormDefault="unqualified" elementFormDefault="qualified">
+
+	<xs:complexType name="svlany">
+		<xs:sequence>
+			<xs:element name="content" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+
+
+</schema>

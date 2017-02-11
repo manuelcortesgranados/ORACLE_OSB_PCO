@@ -1,0 +1,20 @@
+<definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/ITEL/Adaptadores/bd_consultarRespuestaProvision" name="bd_consultarRespuestaProvision-concrete" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/ITEL/Adaptadores/bd_consultarRespuestaProvision" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/ITEL/Adaptadores/bd_consultarRespuestaProvision" location="../Resources/WSDLs/consultarRespuestaProvision_BD.wsdl"/>
+  <binding name="bd_consultarRespuestaProvision_ptt-binding" type="tns:bd_consultarRespuestaProvision_ptt">
+    <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+    <operation name="bd_consultarRespuestaProvision">
+      <soap:operation soapAction="bd_consultarRespuestaProvision"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="bd_consultarRespuestaProvision-service">
+    <port name="bd_consultarRespuestaProvision-port" binding="tns:bd_consultarRespuestaProvision_ptt-binding">
+      <soap:address location="jca://eis/DB/ITEL_SOA"/>
+    </port>
+  </service>
+</definitions>

@@ -1,0 +1,20 @@
+<definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/Application1/conecel/insertarConsecutivo" name="insertarConsecutivo-concrete" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/Application1/conecel/insertarConsecutivo" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/Application1/conecel/insertarConsecutivo" location="../Resources/WSDLs/insertarConsecutivo_BD.wsdl"/>
+  <binding name="insertarConsecutivo_ptt-binding" type="tns:insertarConsecutivo_ptt">
+    <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+    <operation name="insertarConsecutivo">
+      <soap:operation soapAction="insertarConsecutivo"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="insertarConsecutivo-service">
+    <port name="insertarConsecutivo-port" binding="tns:insertarConsecutivo_ptt-binding">
+      <soap:address location="jca://eis/DB/ITEL_SOA"/>
+    </port>
+  </service>
+</definitions>

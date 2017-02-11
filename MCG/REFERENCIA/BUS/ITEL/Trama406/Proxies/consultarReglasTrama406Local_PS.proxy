@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config">
+  <ser:coreEntry isProxy="true" isEnabled="true" isAutoPublish="false" isTracingEnabled="false">
+    <ser:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config">
+      <con:wsdl ref="ITEL/Trama406/Resources/WSDLs/consultarReglasTrama406_PS"/>
+      <con:port>
+        <con:name>consultarReglasTrama406_PSSOAP</con:name>
+        <con:namespace>http://www.comcel.com.co/consultarReglasTrama406_PS/</con:namespace>
+      </con:port>
+      <con:selector type="SOAP body"/>
+      <con:WSI-compliant>false</con:WSI-compliant>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+    <ser:ws-policy>
+      <ser:binding-mode>wsdl-policy-attachments</ser:binding-mode>
+    </ser:ws-policy>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>local</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:inbound-properties/>
+    <tran:all-headers>true</tran:all-headers>
+  </ser:endpointConfig>
+  <ser:router>
+    <con:pipeline type="request" name="PipelinePairNode1_request" xmlns:con="http://www.bea.com/wli/sb/pipeline/config">
+      <con:stage name="validacion" errorHandler="_onErrorHandler-7862649613963372859-4c0f20d5.133cb5b547d.-7bc3">
+        <con:context>
+          <con4:varNsDecl namespace="http://www.comcel.com.co/ConsultarReglasTrama406/" prefix="con" xmlns:con4="http://www.bea.com/wli/sb/stages/config"/>
+        </con:context>
+        <con:actions>
+          <con1:assign varName="tiempo">
+            <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-7862649613963372859-4c0f20d5.133cb5b547d.-7c03</con2:id>
+            <con1:expr>
+              <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">fn:current-time()</con2:xqueryText>
+            </con1:expr>
+          </con1:assign>
+          <con1:validate>
+            <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-7862649613963372859-4c0f20d5.133cb5b547d.-7bc4</con4:id>
+            <con1:schema ref="ITEL/Trama406/Resources/Schemas/PS_ITEL_CONSULTARREGLASTRAMA406"/>
+            <con4:schemaElement xmlns:con1="http://www.comcel.com.co/ConsultarReglasTrama406/" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config">con1:Input_Parameters</con4:schemaElement>
+            <con1:varName>body</con1:varName>
+            <con1:location>
+              <con4:xpathText xmlns:con4="http://www.bea.com/wli/sb/stages/config">./con:Input_Parameters</con4:xpathText>
+            </con1:location>
+          </con1:validate>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="PipelinePairNode1_response" xmlns:con="http://www.bea.com/wli/sb/pipeline/config"/>
+    <con2:pipeline type="error" name="_onErrorHandler-7862649613963372859-4c0f20d5.133cb5b547d.-7bc3">
+      <con2:stage name="error">
+        <con2:context/>
+        <con2:actions>
+          <con1:replace varName="body" contents-only="true">
+            <con:id>_ActionId-7862649613963372859-4c0f20d5.133cb5b547d.-7bae</con:id>
+            <con1:expr>
+              <con:xqueryTransform>
+                <con:resource ref="ITEL/Trama406/Resources/XQueries/consultarReglasTrama406_Error"/>
+                <con:param name="descripcion">
+                  <con:path>$fault/ctx:reason/text()</con:path>
+                </con:param>
+                <con:param name="codigo">
+                  <con:path>"ERROR"</con:path>
+                </con:param>
+              </con:xqueryTransform>
+            </con1:expr>
+          </con1:replace>
+          <con:reply>
+            <con:id>_ActionId-7862649613963372859-4c0f20d5.133cb5b547d.-7b9b</con:id>
+          </con:reply>
+        </con2:actions>
+      </con2:stage>
+    </con2:pipeline>
+    <con2:pipeline type="error" name="_onErrorHandler-7862649613963372859-4c0f20d5.133cb5b547d.-7b38">
+      <con2:stage name="error">
+        <con2:context/>
+        <con2:actions>
+          <con1:replace varName="body" contents-only="true">
+            <con:id>_ActionId-7862649613963372859-4c0f20d5.133cb5b547d.-7b22</con:id>
+            <con1:expr>
+              <con:xqueryTransform>
+                <con:resource ref="ITEL/Trama406/Resources/XQueries/consultarReglasTrama406_Error"/>
+                <con:param name="descripcion">
+                  <con:path>$fault/ctx:reason/text()</con:path>
+                </con:param>
+                <con:param name="codigo">
+                  <con:path>"ERROR"</con:path>
+                </con:param>
+              </con:xqueryTransform>
+            </con1:expr>
+          </con1:replace>
+          <con:reply>
+            <con:id>_ActionId-7862649613963372859-4c0f20d5.133cb5b547d.-7b0b</con:id>
+          </con:reply>
+        </con2:actions>
+      </con2:stage>
+    </con2:pipeline>
+    <con:flow xmlns:con="http://www.bea.com/wli/sb/pipeline/config">
+      <con:pipeline-node name="PipelinePairNode1">
+        <con:request>PipelinePairNode1_request</con:request>
+        <con:response>PipelinePairNode1_response</con:response>
+      </con:pipeline-node>
+      <con:route-node name="RouteToConsultarReglas_BS" error-handler="_onErrorHandler-7862649613963372859-4c0f20d5.133cb5b547d.-7b38">
+        <con:context>
+          <con4:varNsDecl namespace="http://www.comcel.com.co/ConsultarReglasTrama406/" prefix="con" xmlns:con4="http://www.bea.com/wli/sb/stages/config"/>
+        </con:context>
+        <con:actions>
+          <con3:route>
+            <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-7862649613963372859-4c0f20d5.133cb5b547d.-7b70</con4:id>
+            <con3:service ref="ITEL/Trama406/Business Services/consultarTrama406_BS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con3:operation>callFunctionStateless</con3:operation>
+            <con3:outboundTransform>
+              <con1:replace varName="body" contents-only="true">
+                <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-7862649613963372859-4c0f20d5.133cb5b547d.-7b54</con4:id>
+                <con1:expr>
+                  <con4:xqueryTransform xmlns:con4="http://www.bea.com/wli/sb/stages/config">
+                    <con4:resource ref="ITEL/Trama406/Resources/XQueries/consultarReglasTrama406_Req"/>
+                    <con4:param name="input_Parameters1">
+                      <con4:path>$body/con:Input_Parameters</con4:path>
+                    </con4:param>
+                  </con4:xqueryTransform>
+                </con1:expr>
+              </con1:replace>
+            </con3:outboundTransform>
+            <con3:responseTransform>
+              <con1:replace varName="body" contents-only="true">
+                <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-7862649613963372859-4c0f20d5.133cb5b547d.-7b39</con4:id>
+                <con1:expr>
+                  <con4:xqueryTransform xmlns:con4="http://www.bea.com/wli/sb/stages/config">
+                    <con4:resource ref="ITEL/Trama406/Resources/XQueries/consultarReglasTrama406_Res"/>
+                    <con4:param name="tiempoI">
+                      <con4:path>$tiempo</con4:path>
+                    </con4:param>
+                    <con4:param name="descripcion">
+                      <con4:path>"Consulta realiza con exito"</con4:path>
+                    </con4:param>
+                    <con4:param name="callFunctionStatelessDecision1">
+                      <con4:path>$body/*:callFunctionStatelessDecision</con4:path>
+                    </con4:param>
+                  </con4:xqueryTransform>
+                </con1:expr>
+              </con1:replace>
+            </con3:responseTransform>
+          </con3:route>
+        </con:actions>
+      </con:route-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

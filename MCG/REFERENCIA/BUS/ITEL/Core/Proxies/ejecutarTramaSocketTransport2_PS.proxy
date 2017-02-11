@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sock="http://www.bea.com/alsb/transports/sock" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+  <ser:coreEntry isProxy="true" isEnabled="true">
+    <ser:binding type="Mixed" xsi:type="con:MixedBindingType" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config">
+      <con:request type="Text"/>
+      <con:response type="Text"/>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>socket</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:URI>
+      <env:value>7055</env:value>
+    </tran:URI>
+    <tran:inbound-properties/>
+    <tran:all-headers>false</tran:all-headers>
+    <tran:provider-specific>
+      <sock:inbound-properties>
+        <sock:backlog>5</sock:backlog>
+        <sock:timeout>3000</sock:timeout>
+        <sock:enable-nagle-algorithm>true</sock:enable-nagle-algorithm>
+      </sock:inbound-properties>
+      <sock:request-response>true</sock:request-response>
+      <sock:dispatch-policy>default</sock:dispatch-policy>
+    </tran:provider-specific>
+  </ser:endpointConfig>
+  <ser:router errorHandler="_onErrorHandler-964988380704538613--c7501ec.142c887919e.-731e">
+    <con:pipeline type="error" name="_onErrorHandler-964988380704538613--c7501ec.142c887919e.-731e">
+      <con:stage name="error">
+        <con:context xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config"/>
+        <con:actions xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config">
+          <con1:log>
+            <con2:id>_ActionId-964988380704538613--c7501ec.142c887919e.-7277</con2:id>
+            <con1:logLevel>error</con1:logLevel>
+            <con1:expr>
+              <con2:xqueryText>$body</con2:xqueryText>
+            </con1:expr>
+            <con1:message>Request received</con1:message>
+          </con1:log>
+          <con1:log>
+            <con2:id>_ActionId-964988380704538613--c7501ec.142c887919e.-7276</con2:id>
+            <con1:logLevel>error</con1:logLevel>
+            <con1:expr>
+              <con2:xqueryText>$fault</con2:xqueryText>
+            </con1:expr>
+          </con1:log>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:flow>
+      <con:route-node name="RouteNode1">
+        <con:context/>
+        <con:actions>
+          <con1:route>
+            <con2:id>_ActionId-3934824822421917998--294bf466.139b596c98e.-7ed9</con2:id>
+            <con1:service ref="ITEL/Core/Proxies/ejecutarTramaLocal_PS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con1:operation>ejecutarTrama</con1:operation>
+            <con1:outboundTransform>
+              <con3:replace varName="body" contents-only="true">
+                <con2:id>_ActionId-3934824822421917998--294bf466.139b596c98e.-7ec1</con2:id>
+                <con3:expr>
+                  <con2:xqueryTransform>
+                    <con2:resource ref="ITEL/Core/Resources/XQueries/ejecutarTramaSocketTransport_Req_ejecutarTramaLocal"/>
+                    <con2:param name="trama">
+                      <con2:path>$body/text()</con2:path>
+                    </con2:param>
+                    <con2:param name="ipOrigen">
+                      <con2:path>$inbound/ctx:transport/ctx:request/sock:client-host/text()</con2:path>
+                    </con2:param>
+                  </con2:xqueryTransform>
+                </con3:expr>
+              </con3:replace>
+            </con1:outboundTransform>
+            <con1:responseTransform>
+              <con3:replace varName="body" contents-only="true">
+                <con2:id>_ActionId-3934824822421917998--294bf466.139b596c98e.-7eaf</con2:id>
+                <con3:expr>
+                  <con2:xqueryTransform>
+                    <con2:resource ref="ITEL/Core/Resources/XQueries/ejecutarTramaSocketTransport_Res"/>
+                    <con2:param name="tramaSalida">
+                      <con2:path>$body/*</con2:path>
+                    </con2:param>
+                  </con2:xqueryTransform>
+                </con3:expr>
+              </con3:replace>
+            </con1:responseTransform>
+          </con1:route>
+        </con:actions>
+      </con:route-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

@@ -1,0 +1,20 @@
+<definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/SOA/DBAdapter/bd_insertarAuditoriaRecarga" name="bd_insertarAuditoriaRecarga-concrete" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/SOA/DBAdapter/bd_insertarAuditoriaRecarga" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/SOA/DBAdapter/bd_insertarAuditoriaRecarga" location="../Resources/WSDLs/insertarAuditoriaRecarga_BD.wsdl"/>
+  <binding name="bd_insertarAuditoriaRecarga_ptt-binding" type="tns:bd_insertarAuditoriaRecarga_ptt">
+    <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+    <operation name="bd_insertarAuditoriaRecarga">
+      <soap:operation soapAction="bd_insertarAuditoriaRecarga"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="bd_insertarAuditoriaRecarga-service">
+    <port name="bd_insertarAuditoriaRecarga-port" binding="tns:bd_insertarAuditoriaRecarga_ptt-binding">
+      <soap:address location="jca://eis/DB/ITEL_SOA"/>
+    </port>
+  </service>
+</definitions>

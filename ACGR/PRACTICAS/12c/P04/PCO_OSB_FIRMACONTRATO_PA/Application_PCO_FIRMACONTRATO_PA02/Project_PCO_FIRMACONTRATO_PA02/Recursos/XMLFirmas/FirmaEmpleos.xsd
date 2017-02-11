@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.firEmpleo.org"
+            targetNamespace="http://www.firEmpleo.org" elementFormDefault="qualified">
+  <xsd:complexType name="EmpleoRequestType">
+    <xsd:sequence>
+      <xsd:element name="codigoEmpleoInicial" type="xsd:integer"/>
+      <xsd:element name="codigoEmpleoFinal" type="xsd:integer"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="EmpleoResponseType">
+    <xsd:sequence>
+      <xsd:element name="element1" type="EmpleosType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="EmpleosType">
+    <xsd:sequence>
+      <xsd:element name="idEmpleo" type="xsd:string"/>
+      <xsd:element name="tituloEmpleo" type="xsd:string"/>
+      <xsd:element name="salarioMinimo" type="xsd:double"/>
+      <xsd:element name="salarioMaximo" type="xsd:double"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="empleoRequest" type="EmpleoRequestType"/>
+  <xsd:element name="empleoResponse" type="EmpleoResponseType"/>
+</xsd:schema>

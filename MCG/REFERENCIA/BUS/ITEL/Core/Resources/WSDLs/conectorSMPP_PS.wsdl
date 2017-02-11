@@ -1,0 +1,51 @@
+<wsdl:definitions name="conectorSMPP_PS" targetNamespace="http://www.comcel.com.co/conectorSMPP_PS/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.comcel.com.co/conectorSMPP_PS/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsd1="http://www.comcel.com.co/ConectorSMPP/" xmlns:xsd2="http://www.comcel.com.co/conectorSMPP/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://www.comcel.com.co/conectorSMPP_PS/">
+      <xsd:element name="NewOperation">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="in" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="NewOperationResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="out" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+    <xsd:schema>
+    	<xsd:import namespace="http://www.comcel.com.co/conectorSMPP/" schemaLocation="../Schemas/PS_ITEL_CONECTOR_SMPP.xsd">
+    	</xsd:import></xsd:schema></wsdl:types>
+  <wsdl:message name="bd_conectorSMPPRequest">
+    <wsdl:part element="xsd2:Input_Parameters" name="Input_Parameters"/>
+  </wsdl:message>
+  <wsdl:message name="bd_conectorSMPPResponse">
+    <wsdl:part element="xsd2:WS_Result" name="WS_Result"/>
+  </wsdl:message>
+  <wsdl:portType name="conectorSMPP_PS">
+    <wsdl:operation name="bd_conectorSMPP">
+      <wsdl:input message="tns:bd_conectorSMPPRequest"/>
+      <wsdl:output message="tns:bd_conectorSMPPResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="conectorSMPP_PSSOAP" type="tns:conectorSMPP_PS">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="bd_conectorSMPP">
+      <soap:operation soapAction="http://www.comcel.com.co/conectorSMPP_PS/bd_conectorSMPP"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="conectorSMPP_PS">
+    <wsdl:port binding="tns:conectorSMPP_PSSOAP" name="conectorSMPP_PSSOAP">
+      <soap:address location="http://www.comcel.com.co/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

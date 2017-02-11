@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" 
+		targetNamespace="http://www.comcel.com.co/AuditoriaITEL/" 
+		xmlns:tns="http://www.comcel.com.co/AuditoriaITEL/">
+
+    <element name="Input_Parameters" type="tns:Input_Parameters" />
+    <complexType name="Input_Parameters">
+      <sequence>
+      <element name="CONTRATO" type="string"></element> 
+      </sequence>
+    </complexType>
+    
+    <element name="WS_Result" type="tns:WS_Result" />
+    <complexType name="WS_Result">
+      <sequence>
+      <element name="CODIGO" type="string"></element> 
+      <element name="MENSAJE" type="tns:Mensaje_Type"></element>
+      <element name="DESCRIPCION" type="string"></element>
+      </sequence>
+    </complexType>
+    
+    <complexType name="Mensaje_Type">
+      <sequence>
+            <element name="TARIFA_VOZ" type="decimal" />
+            <element name="TARIFA_SMS" type="decimal" />
+            <element name="TARIFA_DATOS" type="decimal" />
+         </sequence>
+    </complexType>
+    
+</schema>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/FirmaFormRegistroAutomotor03" xmlns:tns="http://www.example.org/FirmaFormRegistroAutomotor03" elementFormDefault="qualified">
+
+    <complexType name="FormEntradaTipo03">
+    	<sequence>
+    		<element name="tramiteSolicitado3" type="tns:TramiteSolicitadoTipo03"></element>
+    		<element name="claseVehiculo3" type="tns:ClaseVehiculoTipo03"></element>
+    	</sequence>
+    </complexType>
+    
+    <complexType name="FormRetornoTipo03">
+    	<sequence>
+    		<element name="formRetorno3" type="string"></element>
+    	</sequence>
+    </complexType>
+    
+    <complexType name="TramiteSolicitadoTipo03">
+    	<sequence>
+    		<element name="tramiteSolicitado3">
+    			<simpleType>
+    				<restriction base="string">
+    					<enumeration value="MATRICULA"></enumeration>
+    					<enumeration value="TRASPASO"></enumeration>
+    					<enumeration value="TRASLADO MATRICULA"></enumeration>
+    					<enumeration value="RADICADO MATRICULA"></enumeration>
+    					<enumeration value="CAMBIO COLOR"></enumeration>
+    					<enumeration value="CAMBIO SERVICIO"></enumeration>
+    					<enumeration value="REGRABAR MOTOR"></enumeration>
+    					<enumeration value="REGRABAR CHASIS"></enumeration>
+    					<enumeration value="TRASFORMACION"></enumeration>
+    					<enumeration
+    						value="DUPLICACO LICENCIA TRANSITO">
+    					</enumeration>
+    					<enumeration value="INSCRIPCION PRENDA"></enumeration>
+    					<enumeration value="LEVANTA PRENDA"></enumeration>
+    					<enumeration value="CANCELACION MATRICULA"></enumeration>
+    					<enumeration value="CAMBIO PLACAS"></enumeration>
+    					<enumeration value="REMATRICULA"></enumeration>
+    					<enumeration value="OTRO"></enumeration>
+    				</restriction>
+    			</simpleType>
+    		</element>
+    	</sequence>
+    </complexType>
+    
+    <complexType name="ClaseVehiculoTipo03">
+    	<sequence>
+    		<element name="claseVehiculo3">
+    			<simpleType>
+    				<restriction base="string">
+    					<enumeration value="AUTOMOVIL"></enumeration>
+    					<enumeration value="BUS"></enumeration>
+    					<enumeration value="BUSETA"></enumeration>
+    					<enumeration value="CAMION"></enumeration>
+    					<enumeration value="CAMIONETA"></enumeration>
+    					<enumeration value="CAMPERO"></enumeration>
+    					<enumeration value="MICROBUS"></enumeration>
+    					<enumeration value="OTRO"></enumeration>
+    				</restriction>
+    			</simpleType>
+    		</element>
+    	</sequence>
+    </complexType>
+    
+
+    <element name="formEntrada03" type="tns:FormEntradaTipo03"></element>
+
+    <element name="formRetorno03" type="tns:FormRetornoTipo03"></element>
+</schema>

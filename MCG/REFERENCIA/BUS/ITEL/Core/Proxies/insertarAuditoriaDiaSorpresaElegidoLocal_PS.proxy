@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config">
+  <ser:coreEntry isProxy="true" isEnabled="true" isAutoPublish="false" isTracingEnabled="false">
+    <ser:binding type="SOAP" isSoap12="false" xsi:type="con4:SoapBindingType" xmlns:con4="http://www.bea.com/wli/sb/services/bindings/config">
+      <con4:wsdl ref="ITEL/Core/Resources/WSDLs/insertarAuditoriaDiaSorpresaElegido_PS"/>
+      <con4:port>
+        <con4:name>insertarAuditoriaDiaSorpresaElegidoSOAP</con4:name>
+        <con4:namespace>http://www.comcel.com.co/insertarAuditoriaDiaSorpresaElegido/</con4:namespace>
+      </con4:port>
+      <con4:selector type="SOAP body"/>
+      <con4:WSI-compliant>false</con4:WSI-compliant>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+    <ser:ws-policy>
+      <ser:binding-mode>wsdl-policy-attachments</ser:binding-mode>
+    </ser:ws-policy>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>local</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:inbound-properties/>
+    <tran:all-headers>true</tran:all-headers>
+  </ser:endpointConfig>
+  <ser:router>
+    <con:pipeline type="response" name="PipelinePairNode11_response"/>
+    <con:pipeline type="error" name="_onErrorHandler-1684014731205898325-31ea59a0.14d71d54256.-7c56">
+      <con:stage name="errores">
+        <con:context xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con4="http://www.bea.com/wli/sb/stages/routing/config"/>
+        <con:actions xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con4="http://www.bea.com/wli/sb/stages/routing/config">
+          <con2:replace varName="body" contents-only="true">
+            <con1:id>_ActionId-1684014731205898325-31ea59a0.14d71d54256.-7c00</con1:id>
+            <con2:expr>
+              <con1:xqueryTransform>
+                <con1:resource ref="ITEL/Core/Resources/XQueries/insertarAuditoriaDiaSorpresaElegido_Error"/>
+                <con1:param name="codigo">
+                  <con1:path>""</con1:path>
+                </con1:param>
+                <con1:param name="descripcion">
+                  <con1:path>"Error insertando registro"</con1:path>
+                </con1:param>
+                <con1:param name="mensaje">
+                  <con1:path>$fault/ctx:reason/text()</con1:path>
+                </con1:param>
+              </con1:xqueryTransform>
+            </con2:expr>
+          </con2:replace>
+          <con1:reply>
+            <con1:id>_ActionId-1684014731205898325-31ea59a0.14d71d54256.-7c54</con1:id>
+          </con1:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="request" name="PipelinePairNode11_request">
+      <con:stage name="validar" errorHandler="_onErrorHandler-1684014731205898325-31ea59a0.14d71d54256.-7c5c">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/ConsultarDiaSorpresaRecarga/" prefix="con"/>
+          <con1:varNsDecl prefix="ins" namespace="http://www.comcel.com.co/InsertarAuditoriaDiaSorpresaRecarga"/>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/InsertarAuditoriaDiaSorpresaElegido" prefix="ins1"/>
+        </con:context>
+        <con:actions>
+          <con2:validate>
+            <con1:id>_ActionId-1684014731205898325-31ea59a0.14d71d54256.-7c5d</con1:id>
+            <con2:schema ref="ITEL/Core/Resources/Schemas/PS_ITEL_INSERTAR_AUDITORIADIASORPRESAELEGIDO"/>
+            <con2:schemaElement xmlns:con="http://www.comcel.com.co/ConsultarDiaSorpresaRecarga/" xmlns:ins="http://www.comcel.com.co/InsertarAuditoriaDiaSorpresaRecarga" xmlns:ins1="http://www.comcel.com.co/InsertarAuditoriaDiaSorpresaElegido">ins1:Input_Parameters</con2:schemaElement>
+            <con2:varName>body</con2:varName>
+            <con2:location>
+              <con1:xpathText>./ins1:Input_Parameters</con1:xpathText>
+            </con2:location>
+            <con2:resultVarName/>
+          </con2:validate>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="error" name="_onErrorHandler-1684014731205898325-31ea59a0.14d71d54256.-7c5c">
+      <con:stage name="errores">
+        <con:context xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con4="http://www.bea.com/wli/sb/stages/routing/config"/>
+        <con:actions xmlns:con3="http://www.bea.com/wli/sb/typesystem/config" xmlns:con4="http://www.bea.com/wli/sb/stages/routing/config">
+          <con2:replace varName="body" contents-only="true">
+            <con1:id>_ActionId-1684014731205898325-31ea59a0.14d71d54256.-7c5b</con1:id>
+            <con2:expr>
+              <con1:xqueryTransform>
+                <con1:resource ref="ITEL/Core/Resources/XQueries/insertarAuditoriaDiaSorpresaElegido_Error"/>
+                <con1:param name="codigo">
+                  <con1:path>""</con1:path>
+                </con1:param>
+                <con1:param name="descripcion">
+                  <con1:path>"Error validando parametros"</con1:path>
+                </con1:param>
+                <con1:param name="mensaje">
+                  <con1:path>$fault/ctx:reason/text()</con1:path>
+                </con1:param>
+              </con1:xqueryTransform>
+            </con2:expr>
+          </con2:replace>
+          <con1:reply>
+            <con1:id>_ActionId-1684014731205898325-31ea59a0.14d71d54256.-7c5a</con1:id>
+          </con1:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:flow>
+      <con:pipeline-node name="PipelinePairNode11">
+        <con:request>PipelinePairNode11_request</con:request>
+        <con:response>PipelinePairNode11_response</con:response>
+      </con:pipeline-node>
+      <con:route-node name="RouteToInsertarAuditoriaDiaSorpresaRecarga_BS" error-handler="_onErrorHandler-1684014731205898325-31ea59a0.14d71d54256.-7c56">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/ConsultarDiaSorpresaRecarga/" prefix="con"/>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/InsertarAuditoriaDiaSorpresaRecarga" prefix="ins"/>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/InsertarAuditoriaDiaSorpresaElegido" prefix="ins1"/>
+        </con:context>
+        <con:actions>
+          <con3:route>
+            <con1:id>_ActionId-1684014731205898325-31ea59a0.14d71d54256.-7c59</con1:id>
+            <con3:service ref="ITEL/Core/Business Services/insertarAuditoriaDiaSorpresaElegido_BS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con3:operation>bd_insertarAuditoriaDiaSorpresaElegido</con3:operation>
+            <con3:outboundTransform>
+              <con2:replace varName="body" contents-only="true">
+                <con1:id>_ActionId-1684014731205898325-31ea59a0.14d71d54256.-7c58</con1:id>
+                <con2:expr>
+                  <con1:xqueryTransform>
+                    <con1:resource ref="ITEL/Core/Resources/XQueries/insertarAuditoriaDiaSorpresaElegido_Req"/>
+                    <con1:param name="input_Parameters1">
+                      <con1:path>$body/ins1:Input_Parameters</con1:path>
+                    </con1:param>
+                  </con1:xqueryTransform>
+                </con2:expr>
+              </con2:replace>
+            </con3:outboundTransform>
+            <con3:responseTransform>
+              <con2:replace varName="body" contents-only="true">
+                <con1:id>_ActionId-1684014731205898325-31ea59a0.14d71d54256.-7c57</con1:id>
+                <con2:expr>
+                  <con1:xqueryTransform>
+                    <con1:resource ref="ITEL/Core/Resources/XQueries/insertarAuditoriaDiaSorpresaElegido_Res"/>
+                    <con1:param name="outputParameters1">
+                      <con1:path>$body/*:OutputParameters</con1:path>
+                    </con1:param>
+                    <con1:param name="descripcion">
+                      <con1:path>"Registro ejecutado correctamente"</con1:path>
+                    </con1:param>
+                  </con1:xqueryTransform>
+                </con2:expr>
+              </con2:replace>
+            </con3:responseTransform>
+          </con3:route>
+        </con:actions>
+      </con:route-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

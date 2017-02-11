@@ -1,0 +1,696 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://ericsson.com/services/ws_cma3/customerread"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://ericsson.com/services/ws_cma3/customerread"
+	xmlns:pref="http://lhsgroup.com/lhsws/money"
+	elementFormDefault="qualified">
+
+	<xs:import schemaLocation="DA_ITEL_OPERACION_OCS_ECMS_MONEY.xsd" namespace="http://lhsgroup.com/lhsws/money" />
+
+		<xs:complexType name="partyRoleAssignmentsListpartResponse">
+		<xs:all>
+			<xs:element name="partyRoleId" type="xs:long" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+													&lt;p&gt;party role private key&lt;/p&gt;
+											</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="partyRoleShname" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+													&lt;p&gt;party role public key&lt;/p&gt;
+											</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="partyRoleName" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+													&lt;p&gt;party role public key&lt;/p&gt;
+											</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="partyRoleDescription" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+													&lt;p&gt;&lt;/p&gt;
+											</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="partyRoleAssignmentsResponse">
+		<xs:sequence>
+			<xs:element name="item" type="tns:partyRoleAssignmentsListpartResponse" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="listOfAssignmentsListpartResponse">
+		<xs:all>
+			<xs:element name="familyId" type="xs:long" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+													&lt;p&gt;id of family&lt;/p&gt;
+											</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="completionStatus" type="xs:long" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+													&lt;p&gt;completion status: -1=initial status, 0=completed, 1,2,3...=error code&lt;/p&gt;
+											</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="validFrom" type="xs:date" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+													&lt;p&gt;valid from date&lt;/p&gt;
+											</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="listOfAssignmentsResponse">
+		<xs:sequence>
+			<xs:element name="item" type="tns:listOfAssignmentsListpartResponse" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="customerReadResponse">
+		<xs:all>
+			<xs:annotation>
+				<xs:documentation>
+						&lt;p&gt;Identifies a dealer with the public or private key.&lt;/p&gt;
+				</xs:documentation>
+			</xs:annotation>
+			<xs:element name="tbAmount" type="pref:money" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;Threshold amount for threshold billing&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="createdByUser" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;user of creation&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="tbMode" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;Threshold mode for threshold billing: "IM" immediate request or "OD" for on demand request.&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="tbPurpose" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;Threshold purpose for threshold billing: "SIM" for simulation bill run, "INF" for information bill run, "REG" for regular bill run.&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isIndividualOverdiscDisabled" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;Indicates whether the generation of so-called posting items shall be disabled within traditional promotion actions&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="familyId" type="xs:long" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;id of current family&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="listOfAssignments" type="tns:listOfAssignmentsResponse" minOccurs="0"/>
+			<xs:element name="csId" type="xs:long" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;Private BSCS customer ID.&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="csIdPub" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;Public BSCS customer ID&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="csCode" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;customer code&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="csStatus" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;status of the customer/dealer&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="csStatusDate" type="xs:dateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;status date of the customer (dependend on the status CSDEACTIVATED, CSACTIVATED, SUSPENDE,REACTIVATED)&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="csActivationDate" type="xs:dateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;activation date of the customer (It is only set if the status is active.)&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="csIdHigh" type="xs:long" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;id of parent level of the customer&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="csIdHighPub" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;Customers public key&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="csLevelCode" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;level of the customer&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="paymentResp" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;payment responsibility&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="prgCode" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;pricegroup of the customer/dealer&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="rpcode" type="xs:long" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;rateplan for other credits and charges of the customer&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="rpcodePub" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;Public key of the rateplan&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="tradeCode" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;trade code of the customer/dealer&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="areaCode" type="xs:long" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;area code of the customer/dealer&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="costId" type="xs:long" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;costcenter of the customer&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="costCodePub" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;Public key of the cost center&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="csPassword" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;password of the customer/dealer&lt;/p&gt;&lt;p&gt;The cloumn CUSTOMER_ALL.BTX_PASSWORD is mapped and the property is bTXPassword for the dealer.&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="rsCode" type="xs:long" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;reason for the status change&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="wpCode" type="xs:long" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;welcome procedure of the customer/dealer&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="srCode" type="xs:long" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;subscription reduction of the customer&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="csRemark1" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;remark 1 about the customer&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="csRemark2" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;remark 2 about the customer&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="csBillInformation" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;bill information run flag&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="expectPayCurrencyId" type="xs:long" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;home currency code for expected payment&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="expectPayCurrencyIdPub" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;Public key of the currency&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="csConvratetypePayment" type="xs:long" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;conversion rate type for expected payment&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="csConvratetypePaymentPub" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;Public key of the conversion rate type&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="refundCurrencyId" type="xs:long" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;foreign currency code for expected refund&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="refundCurrencyIdPub" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;Public key of the currency&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="csConvratetypeRefund" type="xs:long" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;conversion rate type for refund&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="csConvratetypeRefundPub" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;Public key of the conversion rate type&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="csCrcheckAgreed" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;external credit check agreed&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="custcatCode" type="xs:long" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;category code of the customer's current individual taxation&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="custcatCodePub" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;Public key of the customer category&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="csJurisdictionId" type="xs:long" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;Tax geo code id.&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="csJurisdictionCode" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;Tax geo code. Usually provided by external address validation system.&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="csIncorporatedInd" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;Indicates that a city area is incorporated to levy taxes. Usually provided by external address validation system.&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="csBillcycle" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;billing cycle of the customer&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="csLimitTr1" type="xs:long" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;open amount threshold 1 of the customer&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="csLimitTr1Pub" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;Public key of the threshold&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="csLimitTr2" type="xs:long" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;open amount threshold 2 of the customer&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="csLimitTr2Pub" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;Public key of the threshold&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="csLimitTr3" type="xs:long" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;open amount threshold 3 of the customer&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="csLimitTr3Pub" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;Public key of the threshold&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="csClimit" type="pref:money" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;credit limit of the customer&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="csContresp" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;customer responsibility for contract&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="csLastBcDate" type="xs:date" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;last billing cycle date of the customer&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="csDeposit" type="pref:money" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;deposit amount of the customer&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="csCreditscore" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;credit score&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="csCscreditStatus" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;credit status&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="csCscreditRemark" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;credit remark about the customer&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="csCscreditDate" type="xs:date" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;Date of Credit Scoring&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="csDunning" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;dunning enabled&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="csPrepayment" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;prepayment required&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="csCollector" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;cash collector of the customer&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="csFcId" type="xs:long" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;currency of credit, deposit, current balance, and previous balance of the customer.
+							The CS_FC_ID is needed to show the HOME currency.&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="csFcIdPub" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;Public key of the currency&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="csCscurbalance" type="pref:money" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;current balance of the customer&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="csPrevbalance" type="pref:money" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;previous balance of the customer&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="csUnbilledAmount" type="pref:money" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;unbilled amount of the customer&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="csPaybehaviour" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;payment behaviour of the customer&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="csNoBouncePay" type="xs:integer" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;number of the bounced payments.&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="csDealerid" type="xs:long" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;dealer id&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="csDealeridPub" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;Dealers public key&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="csInitPrepaidContrOwner" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;Flag indicating that this customer has been created in order to be used as the initial owner of a batch of preactivated prepaid contracts.
+							This kind of customer must have the party role preactive subscriber.
+							&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="csCreationDate" type="xs:dateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;Creation date&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="csDeactivationDate" type="xs:dateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;Deactivation date&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="csSuspensionDate" type="xs:dateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;Suspension date&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="csReactivationDate" type="xs:dateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;Reactivation date&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="lastModificationUser" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;Last modification user&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="paymentRespId" type="xs:long" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;Customer id of the payment responsible.&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="csPaymntRespCode" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;Customer code of the payment responsible.&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="partyRoleAssignments" type="tns:partyRoleAssignmentsResponse" minOccurs="0"/>
+			<xs:element name="partyType" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;party type identifier. c: cusotmer, b: business partner, o: operator&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="collInd" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;true if customer is in collection process, otherwise false.&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="markedForRerating" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;Indicates whether the customer is marked as a candidate for re-rating&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="customerReadRequest">
+		<xs:all>
+			<xs:annotation>
+				<xs:documentation>
+						&lt;p&gt;Customer identifier. If not explicitly passed then the customer ID is taken from the context&lt;/p&gt;
+				</xs:documentation>
+			</xs:annotation>
+			<xs:element name="csId" type="xs:long" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;Private BSCS customer ID.&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="csIdPub" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;Public BSCS customer ID&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="syncWithDb" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+							&lt;p&gt;true if a database read is forced. In case the customer was already loaded in the server cache, the customer data is refreshed.&lt;/p&gt;
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+
+</schema>

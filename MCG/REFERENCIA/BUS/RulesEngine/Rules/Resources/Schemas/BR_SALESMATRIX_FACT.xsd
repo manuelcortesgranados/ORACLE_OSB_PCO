@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.claro.com.co/rulesEngine/SalesMatrixFact"
+     targetNamespace="http://www.claro.com.co/rulesEngine/SalesMatrixFact" xmlns:cd="http://www.claro.com.co/rulesEngine/canonicalModel/CustomerDomain"
+     xmlns:msd="http://www.claro.com.co/rulesEngine/canonicalModel/MarketSalesDomain" xmlns:fd="http://www.claro.com.co/rulesEngine/canonicalModel/FrameworkDomain">
+    <xs:import schemaLocation="../../../Core/Resources/Schemas/CanonicalModel/CustomerDomain.xsd"
+         namespace="http://www.claro.com.co/rulesEngine/canonicalModel/CustomerDomain"/>
+    <xs:import schemaLocation="../../../Core/Resources/Schemas/CanonicalModel/MarketSalesDomain.xsd"
+         namespace="http://www.claro.com.co/rulesEngine/canonicalModel/MarketSalesDomain"/>
+    <xs:import schemaLocation="../../../Core/Resources/Schemas/CanonicalModel/FrameworkDomain.xsd"
+         namespace="http://www.claro.com.co/rulesEngine/canonicalModel/FrameworkDomain"/>
+    <xs:element name="SalesMatrixFactRequest" type="tns:SalesMatrixFactRequestType"/>
+    <xs:element name="SalesMatrixFactResponse" type="tns:SalesMatrixFactResponseType"/>
+    <xs:complexType name="SalesMatrixFactRequestType">
+        <xs:sequence>
+            <xs:element name="CustomerBillingBehavior" type="cd:CustomerBillingBehavior"/>
+            <xs:element name="SalesChannel" type="msd:SalesChannel"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="SalesMatrixFactResponseType">
+        <xs:sequence>
+            <xs:element name="Plan" type="fd:Plan"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

@@ -1,0 +1,20 @@
+<definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/Application1/conecel/consultarConsecutivo" name="consultarConsecutivo-concrete" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/Application1/conecel/consultarConsecutivo" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/Application1/conecel/consultarConsecutivo" location="../Resources/WSDLs/consultarConsecutivo_BD.wsdl"/>
+  <binding name="consultarConsecutivo_ptt-binding" type="tns:consultarConsecutivo_ptt">
+    <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+    <operation name="consultarConsecutivo">
+      <soap:operation soapAction="consultarConsecutivo"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="consultarConsecutivo-service">
+    <port name="consultarConsecutivo-port" binding="tns:consultarConsecutivo_ptt-binding">
+      <soap:address location="jca://eis/DB/ITEL_SOA"/>
+    </port>
+  </service>
+</definitions>

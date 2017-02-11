@@ -1,0 +1,12 @@
+<adapter-config name="dbReference02" adapter="db" wsdlLocation="dbReference02.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory UIConnectionName="HRCon02" location="eis/DB/HRCon02"/>
+  <endpoint-interaction portType="dbReference02_ptt" operation="dbReference02">
+    <interaction-spec className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
+      <property name="SchemaName" value="HR"/>
+      <property name="ProcedureName" value="CONSULTAR_PAISES"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+  </endpoint-interaction>
+
+</adapter-config>

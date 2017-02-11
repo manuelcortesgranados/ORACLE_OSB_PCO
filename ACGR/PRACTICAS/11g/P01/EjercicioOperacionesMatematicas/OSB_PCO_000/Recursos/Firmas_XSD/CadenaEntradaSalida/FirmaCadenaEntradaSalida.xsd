@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/FirmaCadenaEntradaSalida" xmlns:tns="http://www.example.org/FirmaCadenaEntradaSalida" elementFormDefault="qualified">
+
+    <complexType name="CadenaEntradaSalidaRequestType">
+    	<sequence>
+    		<element name="cadenaEntrada" type="string"></element>
+    	</sequence>
+    </complexType>
+    
+    <complexType name="CadenaEntradaSalidaResponseType">
+    	<sequence>
+    		<element name="cadenaSalida" type="string"></element>
+    	</sequence>
+    </complexType>
+
+    <element name="CadenaEntradaSalidaRequest" type="tns:CadenaEntradaSalidaRequestType"></element>
+
+    <element name="CadenaEntradaSalidaResponse" type="tns:CadenaEntradaSalidaResponseType"></element>
+</schema>

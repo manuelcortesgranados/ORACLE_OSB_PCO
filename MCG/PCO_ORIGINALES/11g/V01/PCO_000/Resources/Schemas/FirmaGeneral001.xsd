@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/FirmaGeneral001" xmlns:tns="http://www.example.org/FirmaGeneral001" elementFormDefault="qualified">
+
+    <complexType name="FirmaGeneral001RequestType">
+    	<sequence>
+    		<element name="cadenaEntrada" type="string"></element>
+    	</sequence>
+    </complexType>
+
+    <complexType name="FirmaGeneral002ResponseType">
+    	<sequence>
+    		<element name="cadenaSalida" type="string"></element>
+    	</sequence>
+    </complexType>
+</schema>

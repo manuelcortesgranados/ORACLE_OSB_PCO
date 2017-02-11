@@ -1,0 +1,12 @@
+<adapter-config name="BSReferenceRegiones" adapter="db" wsdlLocation="BSReferenceRegiones.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory UIConnectionName="HRCon05" location="eis/DB/HRCon05"/>
+  <endpoint-interaction portType="BSReferenceRegiones_ptt" operation="BSReferenceRegiones">
+    <interaction-spec className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
+      <property name="SchemaName" value="HR"/>
+      <property name="ProcedureName" value="CONSULTAR_REGIONES2"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+  </endpoint-interaction>
+
+</adapter-config>

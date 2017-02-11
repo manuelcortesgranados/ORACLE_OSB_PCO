@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.claro.com.co/rulesEngine/canonicalModel/ProductDomain"
+	xmlns:pd="http://www.claro.com.co/rulesEngine/canonicalModel/ProductDomain"
+	xmlns:sd="http://www.claro.com.co/rulesEngine/canonicalModel/SupplierDomain"
+	xmlns:cbe="http://www.claro.com.co/rulesEngine/canonicalModel/CommonBusinessEntities">
+	<import
+		namespace="http://www.claro.com.co/rulesEngine/canonicalModel/CommonBusinessEntities"
+		schemaLocation="CommonBusinessEntities.xsd" />
+	<import
+		namespace="http://www.claro.com.co/rulesEngine/canonicalModel/SupplierDomain"
+		schemaLocation="SupplierDomain.xsd" />
+	<annotation>
+		<documentation>
+   <![CDATA[
+			Canonical representation of the InventoryProduct.
+      de lineas y planes
+			]]>
+		</documentation>
+	</annotation>
+
+	<complexType name="Product">
+		<sequence>
+			<element name="id" type="integer" minOccurs="0" />
+			<element name="code" type="string" minOccurs="0" />
+			<element name="description" type="string" minOccurs="0" />
+			<element name="number" type="integer" minOccurs="0" />
+			<element name="usage" type="pd:ProductUsage" minOccurs="0" />
+			<element name="status" type="pd:ProductStatus" minOccurs="0" />
+			<element name="platformStatus" type="pd:PlatformStatus" minOccurs="0" />
+			<element name="type" type="pd:ProductType" minOccurs="0" />
+			<element name="validationMessage" type="string" minOccurs="0" />
+			<element name="classification" type="pd:ProductClassification" minOccurs="0" />
+			<element name="stockInventory" type="pd:StockInventory" minOccurs="0" />
+			<element name="supplier" type="sd:Supplier" minOccurs="0" />
+			<element name="productDiffInfo" type="pd:ProductDiffInfo" minOccurs="0" maxOccurs="unbounded" />
+		</sequence>
+	</complexType>
+	<complexType name="ProductDiffInfo">
+		<sequence>
+			<element name="id" type="integer" minOccurs="0" />
+			<element name="code" type="string" minOccurs="0" />
+			<element name="description" type="string" minOccurs="0" />
+			<element name="componentDiffInfoList" type="pd:ComponentDiffInfo"
+				minOccurs="0" maxOccurs="unbounded" />
+			<element name="offerName" type="string" minOccurs="0" />
+			<element name="orderActionInfo" type="pd:OrderActionInfo"
+				minOccurs="0" />
+			<element name="sumOfOC" type="string" minOccurs="0" />
+			<element name="sumOfCurrentRC" type="string" minOccurs="0" />
+			<element name="campaignId" type="string" minOccurs="0" />
+			<element name="campaignDescription" type="string" minOccurs="0" />
+		</sequence>
+	</complexType>
+	<complexType name="ComponentDiffInfo">
+		<sequence>
+			<element name="id" type="integer" minOccurs="0" />
+			<element name="code" type="string" minOccurs="0" />
+			<element name="description" type="string" minOccurs="0" />
+			<element name="componentName" type="string" minOccurs="0" />
+			<element name="componentCID" type="string" minOccurs="0" />
+			<element name="subComponents" type="pd:ComponentDiffInfo"
+				minOccurs="0" maxOccurs="unbounded" />
+			<element name="diffAction" type="pd:DiffActionDomain"
+				minOccurs="0" />
+			<element name="attributeDiffInfo" type="pd:AttributeDiffInfo"
+				minOccurs="0" maxOccurs="unbounded" />
+			<element name="chargesInfo" type="pd:ChargesInfo"
+				minOccurs="0" maxOccurs="unbounded" />
+		</sequence>
+	</complexType>
+	<complexType name="DiffActionDomain">
+		<sequence>
+			<element name="id" type="integer" minOccurs="0" />
+			<element name="code" type="string" minOccurs="0" />
+			<element name="description" type="string" minOccurs="0" />
+		</sequence>
+	</complexType>
+	<complexType name="AttributeDiffInfo">
+		<sequence>
+			<element name="id" type="integer" minOccurs="0" />
+			<element name="code" type="string" minOccurs="0" />
+			<element name="description" type="string" minOccurs="0" />
+			<element name="attributeName" type="string" minOccurs="0" />
+			<element name="attributePropertyID" type="string" minOccurs="0" />
+			<element name="attributeValue" type="string" minOccurs="0" />
+			<element name="attributeOldValue" type="string" minOccurs="0" />
+			<element name="diffActionDomain" type="pd:DiffActionDomain"
+				minOccurs="0" />
+		</sequence>
+	</complexType>
+	<complexType name="ChargesInfo">
+		<sequence>
+			<element name="id" type="integer" minOccurs="0" />
+			<element name="code" type="string" minOccurs="0" />
+			<element name="description" type="string" minOccurs="0" />
+			<element name="actualAmount" type="string" minOccurs="0" />
+			<element name="chargeType" type="string" minOccurs="0" />
+			<element name="aPID" type="string" minOccurs="0" />
+			<element name="isWaived" type="string" minOccurs="0" />
+		</sequence>
+	</complexType>
+	<complexType name="OrderActionInfo">
+		<sequence>
+			<element name="id" type="integer" minOccurs="0" />
+			<element name="code" type="string" minOccurs="0" />
+			<element name="description" type="string" minOccurs="0" />
+			<element name="orderActionID" type="string" minOccurs="0" />
+			<element name="orderActionType" type="string" minOccurs="0" />
+			<element name="oASRD" type="date" minOccurs="0" />
+		</sequence>
+	</complexType>
+	<complexType name="AffiliateInformation">
+		<sequence>
+			<element name="id" type="integer" minOccurs="0" />
+			<element name="code" type="string" minOccurs="0" />
+			<element name="description" type="string" minOccurs="0" />
+			<element name="affiliate" type="string" minOccurs="0" />
+			<element name="market" type="string" minOccurs="0" />
+		</sequence>
+	</complexType>
+	<complexType name="ProductClassification">
+		<sequence>
+			<element name="id" type="integer" minOccurs="0" />
+			<element name="code" type="string" minOccurs="0" />
+			<element name="description" type="string" minOccurs="0" />
+		</sequence>
+	</complexType>
+	<complexType name="SalesMatrixResult">
+		<sequence>
+			<element name="id" type="integer" minOccurs="0" />
+			<element name="code" type="string" minOccurs="0" />
+			<element name="description" type="string" minOccurs="0" />
+			<element name="gama" type="string" minOccurs="0" />
+			<element name="plan" type="string" minOccurs="0" />
+			<element name="linesNumber" type="string" minOccurs="0" />
+			<element name="linesNumberTotal" type="string" minOccurs="0" />
+			<element name="cfm" type="string" minOccurs="0" />
+		</sequence>
+	</complexType>
+
+	<complexType name="ProductType">
+		<sequence>
+			<element name="id" type="integer" minOccurs="0" />
+			<element name="code" type="string" minOccurs="0" />
+			<element name="description" type="string" minOccurs="0" />
+		</sequence>
+	</complexType>
+	<complexType name="StockInventory">
+		<sequence>
+			<element name="id" type="integer" minOccurs="0" />
+			<element name="code" type="string" minOccurs="0" />
+			<element name="description" type="string" minOccurs="0" />
+			<element name="status" type="cbe:Status" minOccurs="0" />
+			<element name="type" type="string" minOccurs="0" />
+			<element name="belongSupplier" type="boolean" minOccurs="0" />
+			<element name="assessment" type="string" minOccurs="0" />
+			<element name="material" type="string" minOccurs="0" />
+			<element name="stock" type="string" minOccurs="0" />
+		</sequence>
+	</complexType>
+
+	<complexType name="PlatformStatus">
+		<sequence>
+			<element name="activa" type="string" minOccurs="0" />
+			<element name="amdocs" type="string" minOccurs="0" />
+			<element name="bscs" type="string" minOccurs="0" />
+			<element name="whiteLists" type="string" minOccurs="0" />
+			<element name="blackLists" type="string" minOccurs="0" />
+		</sequence>
+	</complexType>
+
+	<complexType name="ProductStatus">
+		<sequence>
+			<element name="id" type="integer" minOccurs="0" />
+			<element name="code" type="string" minOccurs="0" />
+			<element name="description" type="string" minOccurs="0" />
+			<element name="status" type="cbe:Status" minOccurs="0" />
+			<element name="daysStatus" type="string" minOccurs="0" />
+		</sequence>
+	</complexType>
+
+	<complexType name="ProductUsage">
+		<sequence>
+			<element name="id" type="integer" minOccurs="0" />
+			<element name="code" type="string" minOccurs="0" />
+			<element name="description" type="string" minOccurs="0" />
+			<element name="timeWithProducts" type="string" minOccurs="0" />
+		</sequence>
+	</complexType>
+
+	<complexType name="RequiredDocuments">
+		<sequence>
+			<element name="id" type="integer" minOccurs="0" />
+			<element name="code" type="string" minOccurs="0" />
+			<element name="description" type="string" minOccurs="0" />
+			<element name="productType" type="pd:ProductType" minOccurs="0" />
+			<element name="minimunLinesNumber" type="string" minOccurs="0" />
+			<element name="maximumLinesNumber" type="string" minOccurs="0" />
+			<element name="documentType" type="cbe:DocumentType"
+				minOccurs="0" maxOccurs="unbounded" />
+		</sequence>
+	</complexType>
+</schema>

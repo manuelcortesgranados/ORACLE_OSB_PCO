@@ -1,0 +1,12 @@
+<adapter-config name="BSReferenceEmpleos" adapter="db" wsdlLocation="BSReferenceEmpleos.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory UIConnectionName="HRCon02" location="eis/DB/HRCon02"/>
+  <endpoint-interaction portType="BSReferenceEmpleos_ptt" operation="BSReferenceEmpleos">
+    <interaction-spec className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
+      <property name="SchemaName" value="HR"/>
+      <property name="ProcedureName" value="CONSULTAR_EMPLEOS_02"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+  </endpoint-interaction>
+
+</adapter-config>

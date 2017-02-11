@@ -1,0 +1,101 @@
+<wsdl:definitions targetNamespace="http://getcreditscorebycustomer.performancemanagement.amx.com" xmlns:tns="http://getcreditscorebycustomer.performancemanagement.amx.com" xmlns:cli="http://getcreditscorebycustomer.performancemanagement.schema.amx.com" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:commonexception="http://commonsexceptions.schema.amx.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:apachesoap="http://xml.apache.org/xml-soap">
+				  
+	
+	<wsdl:documentation>
+		Author: Jorge Enrique Garrido
+		email: 	jorge.garridovergara@tcs.com
+		Date: 	22/04/2013
+		Version: 1.1
+		Objective: Request credit system with customer details and get a set of parameters for filtering out the product offerings.
+					  This interface will be called in order to conduct a get the credit check results on customer level, as part of creating a new order.
+        Capabilities: GetCreditScoreByCustomer
+        Changes: CR Post signed off
+	</wsdl:documentation>
+	
+	<wsdl:types>
+		<xs:schema>
+			<xs:import namespace="http://getcreditscorebycustomer.performancemanagement.schema.amx.com" schemaLocation="../Schemas/PS_GET_CREDITSCOREBYCUSTOMER.xsd"/>
+			<xs:import namespace="http://commonsexceptions.schema.amx.com" schemaLocation="../../../Amdocs/Resources/Schemas/COMMON_EXCEPTIONS.xsd"/>
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="GetCreditScoreByCustomerRequest">
+		<wsdl:part name="body" element="cli:GetCreditScoreByCustomerRequest"/>
+	</wsdl:message>
+	<wsdl:message name="GetCreditScoreByCustomerResponse">
+		<wsdl:part name="body" element="cli:GetCreditScoreByCustomerResponse"/>
+	</wsdl:message>
+
+	  <wsdl:message name="ExternalSystemNotAvailableException">
+	    <wsdl:part name="fault" element="commonexception:ExternalSystemNotAvailableException"/>
+	  </wsdl:message>
+
+	  <wsdl:message name="MandatoryDataMissingException">
+	    <wsdl:part name="fault" element="commonexception:MandatoryDataMissingException"/>
+	  </wsdl:message>
+
+	  <wsdl:message name="ReferenceDataMissingException">
+	    <wsdl:part name="fault" element="commonexception:ReferenceDataMissingException"/>
+	  </wsdl:message>
+
+	  <wsdl:message name="InternalSystemErrorException">
+	    <wsdl:part name="fault" element="commonexception:InternalSystemErrorException"/>
+	  </wsdl:message>
+	
+	<wsdl:message name="BusinessExceptionFault">
+		<wsdl:part name="fault" element="commonexception:BusinessExceptionFault"/>
+	</wsdl:message>
+	
+	<wsdl:portType name="GetCreditScoreByCustomer">
+		<wsdl:operation name="GetCreditScoreByCustomer">
+			<wsdl:documentation>
+			This interface will be called in order to conduct a get the credit check results on customer level, as part of creating a new order.
+			</wsdl:documentation>
+			<wsdl:input name="GetCreditScoreByCustomerInput" message="tns:GetCreditScoreByCustomerRequest"/>
+			<wsdl:output name="GetCreditScoreByCustomerOutput" message="tns:GetCreditScoreByCustomerResponse"/>
+			<wsdl:fault name="MandatoryDataMissingException" message="tns:MandatoryDataMissingException"/>
+			<wsdl:fault name="ExternalSystemNotAvailableException" message="tns:ExternalSystemNotAvailableException"/>
+			<wsdl:fault name="InternalSystemErrorException" message="tns:InternalSystemErrorException"/>
+			<wsdl:fault name="ReferenceDataMissingException" message="tns:ReferenceDataMissingException"/>
+			<wsdl:fault name="BusinessExceptionFault" message="tns:BusinessExceptionFault"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	
+	<wsdl:binding name="GetCreditScoreByCustomerSoapBinding" type="tns:GetCreditScoreByCustomer">
+		<wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="GetCreditScoreByCustomer">
+			<wsdlsoap:operation soapAction="http://getcreditscorebycustomer.performancemanagement.amx.com/GetCreditScoreByCustomer" style="document"/>
+			<wsdl:input>
+				<wsdlsoap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body use="literal"/>
+			</wsdl:output>
+
+			<wsdl:fault name="MandatoryDataMissingException">
+				<wsdlsoap:fault name="MandatoryDataMissingException" use="literal"/>
+			</wsdl:fault>	
+			
+			<wsdl:fault name="ExternalSystemNotAvailableException">
+				<wsdlsoap:fault name="ExternalSystemNotAvailableException" use="literal"/>
+			</wsdl:fault>
+			
+			<wsdl:fault name="InternalSystemErrorException">
+				<wsdlsoap:fault name="InternalSystemErrorException" use="literal"/>
+			</wsdl:fault>
+
+			<wsdl:fault name="ReferenceDataMissingException">
+				<wsdlsoap:fault name="ReferenceDataMissingException" use="literal"/>
+			</wsdl:fault>
+
+			<wsdl:fault name="BusinessExceptionFault">
+				<wsdlsoap:fault name="BusinessExceptionFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+	</wsdl:binding>
+	
+	<wsdl:service name="GetCreditScoreByCustomerService">
+		<wsdl:port name="GetCreditScoreByCustomerPort" binding="tns:GetCreditScoreByCustomerSoapBinding">
+			<wsdlsoap:address location="http://www.example.com"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

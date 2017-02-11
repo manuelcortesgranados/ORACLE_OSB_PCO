@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<definitions targetNamespace="urn:ContratoEmpleado" xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:tns="urn:ContratoEmpleado" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+             xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:firEmpl ="http://www.firmaEmpl.org" >
+  <types>
+    <xsd:schema>
+      <xsd:import schemaLocation="../XMLFirmas/FirmaEmpleados.xsd" namespace="http://www.firmaEmpl.org"/>
+    </xsd:schema>
+  </types>
+  <message name="mensajeEntradaEmpleado">
+    <part name="partMensajeEntradaEmpleado" element="firEmpl:empleadoRequest"/>
+  </message>
+  <message name="mensajeSalidaEmpleado">
+    <part name="partMensajeSalidaEmpleado" element="firEmpl:empleadoResponse"/>
+  </message>
+  <portType name="puertoTipoEmpleado">
+    <operation name="operacionEmpleado">
+      <input message="tns:mensajeEntradaEmpleado"/>
+      <output message="tns:mensajeSalidaEmpleado"/>
+    </operation>
+  </portType>
+  <binding name="puertoTipoEmpleadoSOAP11Binding" type="tns:puertoTipoEmpleado">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="operacionEmpleado">
+      <soap:operation style="document" soapAction="urn:ContratoEmpleado/operacionEmpleado"/>
+      <input>
+        <soap:body use="literal" parts="partMensajeEntradaEmpleado"/>
+      </input>
+      <output>
+        <soap:body use="literal" parts="partMensajeSalidaEmpleado"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="servicioEmpleado">
+    <port name="puertoTipoEmpleado" binding="tns:puertoTipoEmpleadoSOAP11Binding">
+      <soap:address location="http://www.example.com"/>
+    </port>
+  </service>
+</definitions>

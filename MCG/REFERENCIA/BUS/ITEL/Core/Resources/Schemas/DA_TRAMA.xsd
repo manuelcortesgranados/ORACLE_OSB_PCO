@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.comcel.com.co/DA_TRAMA" xmlns:tns="http://www.comcel.com.co/DA_TRAMA"
+	elementFormDefault="qualified">
+
+	<xs:element name="TRAMA" type="tns:tramaType" />
+
+	<xs:complexType name="tramaType">
+		<xs:sequence>
+			<xs:element name="TRAMA" type="xs:string" />
+			<xs:element name="USUARIO" type="xs:string" />
+			<xs:element name="CLAVE" type="xs:string" />
+			<xs:element name="METODO" type="xs:string" />
+			<xs:element name="MIN" type="xs:string" />
+			<xs:element name="CADENA_PARAMETROS" type="xs:string" />
+			<xs:element name="PARAMETROS" type="tns:parametrosType" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="parametrosType">
+		<xs:sequence>
+			<xs:element name="MINORIGEN" type="xs:string" />
+			<xs:element name="COMENTARIO" type="xs:string" />
+			<xs:element name="HOSTID" type="xs:string" />
+			<xs:element name="CONSECUTIVO" type="xs:string" />
+			<xs:element name="MONTORECARGA" type="xs:string" />
+			<xs:element name="BONIFICAR" type="xs:string" />
+			<xs:element name="DIASVIGENCIA" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+
+</xs:schema>

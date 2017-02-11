@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/FirmaServicioGeneral" xmlns:tns="http://www.example.org/FirmaServicioGeneral" elementFormDefault="qualified">
+
+    <complexType name="FirmaServicioGeneralRequestType">
+    	<sequence>
+    		<element name="idFuenteAplicacion" type="string"></element>
+    		<element name="usuario" type="string"></element>
+    		<element name="metodo" type="string"></element>
+    	</sequence>
+    </complexType>
+    
+    <complexType name="FirmaServicioGeneralResponseType">
+    	<sequence>
+    		<element name="codigo" type="string"></element>
+    		<element name="descripcion" type="string"></element>
+    	</sequence>
+    </complexType>
+
+    <element name="firmaServicioGeneralRequest" type="tns:FirmaServicioGeneralRequestType"></element>
+
+    <element name="firmaServicioGeneralResponse" type="tns:FirmaServicioGeneralResponseType"></element>
+</schema>

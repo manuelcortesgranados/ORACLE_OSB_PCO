@@ -1,0 +1,20 @@
+<definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/Ensayo/Reglas/bd_insertarAuditoriaElegido" name="bd_insertarAuditoriaElegido-concrete" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/Ensayo/Reglas/bd_insertarAuditoriaElegido" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/Ensayo/Reglas/bd_insertarAuditoriaElegido" location="../Resources/WSDLs/insertarAuditoriaElegido_BD.wsdl"/>
+  <binding name="bd_insertarAuditoriaElegido_ptt-binding" type="tns:bd_insertarAuditoriaElegido_ptt">
+    <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+    <operation name="bd_insertarAuditoriaElegido">
+      <soap:operation soapAction="bd_insertarAuditoriaElegido"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="bd_insertarAuditoriaElegido-service">
+    <port name="bd_insertarAuditoriaElegido-port" binding="tns:bd_insertarAuditoriaElegido_ptt-binding">
+      <soap:address location="jca://eis/DB/ITEL_SOA"/>
+    </port>
+  </service>
+</definitions>

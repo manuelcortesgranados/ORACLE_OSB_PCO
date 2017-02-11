@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<composite xmlns="http://xmlns.oracle.com/sca/1.0" xmlns:ui="http://xmlns.oracle.com/soa/designer/" name="PE_OSB_002_Project" label="PE_OSB_002_Project" ui:displayName="PE_OSB_002_Project"/>

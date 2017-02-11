@@ -1,0 +1,24 @@
+<?binding.jca bd_consultarRangoTelmex_db.jca?><wsdl:definitions name="bd_consultarRangoTelmex" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/ITEL/Adaptadores/bd_consultarRangoTelmex" xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/SYSADM/SP_RANGO_TELMEX/" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/ITEL/Adaptadores/bd_consultarRangoTelmex" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/">
+    <plt:partnerLinkType name="bd_consultarRangoTelmex_plt">
+        <plt:role name="bd_consultarRangoTelmex_role">
+            <plt:portType name="tns:bd_consultarRangoTelmex_ptt"/>
+        </plt:role>
+    </plt:partnerLinkType>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/SYSADM/SP_RANGO_TELMEX/" schemaLocation="../Schemas/BD_ITEL_RANGOTELMEX.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="args_in_msg">
+        <wsdl:part name="InputParameters" element="db:InputParameters"/>
+    </wsdl:message>
+    <wsdl:message name="args_out_msg">
+        <wsdl:part name="OutputParameters" element="db:OutputParameters"/>
+    </wsdl:message>
+    <wsdl:portType name="bd_consultarRangoTelmex_ptt">
+        <wsdl:operation name="bd_consultarRangoTelmex">
+            <wsdl:input message="tns:args_in_msg"/>
+            <wsdl:output message="tns:args_out_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

@@ -1,0 +1,89 @@
+<!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is 
+	Oracle JAX-WS 2.1.5. -->
+<xs:schema xmlns:tb="http://ws.imei.iecisa.co/tiposBasicos"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0"
+	targetNamespace="http://ws.imei.iecisa.co/tiposBasicos">
+	<xs:simpleType name="tipoIMEI">
+		<xs:annotation>
+			<xs:documentation>
+				Formato: XXXXXXYYZZZZZZW donde XXXXXX: se denomina Type Allocation Code
+				(TAC) YY: se denomina Final Assembly Code (FAC) e indica el
+				fabricante del equipo. ZZZZZZ: es el número de serie del teléfono.
+				W: es el dígito verificador, usado para verificar que el IMEI es
+				correcto.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="14" />
+			<xs:maxLength value="15" />
+			<xs:pattern value="[0-9]*" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="tipoTipoUsuario">
+		<xs:annotation>
+			<xs:documentation>1: Natural 2: Jurídico</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="1" />
+			<xs:pattern value="1|2" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="tipoIdentificacion">
+		<xs:annotation>
+			<xs:documentation>
+				1: Cedula ciudadanía 2: Pasaporte 3: Número de identificación
+				Tributaria NIT 4:Cedula de extranjería CE
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="1" />
+			<xs:pattern value="1|2|3|4" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="tipoNumeroIdentificacion">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1" />
+			<xs:maxLength value="20" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="tipoDireccion">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1" />
+			<xs:maxLength value="80" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="tipoImsi">
+		<xs:annotation>
+			<xs:documentation>
+				Formato: XXXYYZZZZZZZZZZ donde XXX: Código del país YY: Código de la red
+				móvil. Estará formado 2 o 3 dígitos, en cuyo caso los siguientes
+				dígitos serán 9 ZZZZZZZZZZ: Número de 9 ó 10 dígitos como máximo que
+				contiene la identificación de la estación móvil
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="15" />
+			<xs:pattern value="[0-9]*" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="tipoNumero">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1" />
+			<xs:maxLength value="15" />
+			<xs:pattern value="[0-9]*" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="tipoNombreRazonSocial">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1" />
+			<xs:maxLength value="80" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="tipoEquipoTraido">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1" />
+			<xs:maxLength value="1" />
+			<xs:pattern value="S|N" />
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

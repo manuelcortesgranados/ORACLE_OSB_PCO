@@ -1,0 +1,16 @@
+<xs:schema xmlns:tns="http://ws.conectorSMPP.claro.com.co/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://ws.conectorSMPP.claro.com.co/">
+<xs:element name="enviarSMS" type="tns:enviarSMS"/>
+<xs:element name="enviarSMSResponse" type="tns:enviarSMSResponse"/>
+<xs:complexType name="enviarSMS">
+<xs:sequence>
+<xs:element name="origen" type="xs:string" minOccurs="0"/>
+<xs:element name="destino" type="xs:string" minOccurs="0"/>
+<xs:element name="mensaje" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="enviarSMSResponse">
+<xs:sequence>
+<xs:element name="envia" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

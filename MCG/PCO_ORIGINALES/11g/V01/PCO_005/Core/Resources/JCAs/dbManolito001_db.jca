@@ -1,0 +1,13 @@
+<adapter-config name="dbManolito001" adapter="Database Adapter" wsdlLocation="../../../JDEV/OSB_Project_PCO_005_JDEV/dbManolito001.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/DB/ItelSoaDatasource" UIConnectionName="ItelSoaDatasource" adapterRef=""/>
+  <endpoint-interaction portType="dbManolito001_ptt" operation="dbManolito001">
+    <interaction-spec className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
+      <property name="PackageName" value="MANOLITO_OSB_PCO"/>
+      <property name="ProcedureName" value="PRC_MANOLITO_001"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+    <output/>
+  </endpoint-interaction>
+
+</adapter-config>

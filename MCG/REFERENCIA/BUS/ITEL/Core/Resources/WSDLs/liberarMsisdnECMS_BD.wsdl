@@ -1,0 +1,20 @@
+<?binding.jca bd_liberarMsisdnECMS_db.jca?><wsdl:definitions name="bd_liberarMsisdnECMS" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/ITEL/Adaptadores/bd_liberarMsisdnECMS" xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/sp/bd_liberarMsisdnECMS" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/ITEL/Adaptadores/bd_liberarMsisdnECMS" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/">
+    <plt:partnerLinkType name="bd_liberarMsisdnECMS_plt">
+        <plt:role name="bd_liberarMsisdnECMS_role">
+            <plt:portType name="tns:bd_liberarMsisdnECMS_ptt"/>
+        </plt:role>
+    </plt:partnerLinkType>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/sp/bd_liberarMsisdnECMS" schemaLocation="../Schemas/BD_ITEL_LIBERARMSISDN_ECMS.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="args_in_msg">
+        <wsdl:part name="InputParameters" element="db:InputParameters"/>
+    </wsdl:message>
+    <wsdl:portType name="bd_liberarMsisdnECMS_ptt">
+        <wsdl:operation name="bd_liberarMsisdnECMS">
+            <wsdl:input message="tns:args_in_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

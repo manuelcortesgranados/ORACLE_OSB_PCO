@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/pipeline/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config">
+  <ser:coreEntry isProxy="true" isEnabled="true" isAutoPublish="false" isTracingEnabled="false">
+    <ser:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config">
+      <con:wsdl ref="ITEL/Core/Resources/WSDLs/consultarContratoEsPostpago_PS"/>
+      <con:port>
+        <con:name>consultarContratoEsPostpago_PSSOAP</con:name>
+        <con:namespace>http://www.comcel.com.co/consultarContratoEsPostpago_PS/</con:namespace>
+      </con:port>
+      <con:selector type="SOAP body"/>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+    <ser:ws-policy>
+      <ser:binding-mode>wsdl-policy-attachments</ser:binding-mode>
+    </ser:ws-policy>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>local</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:inbound-properties/>
+    <tran:all-headers>true</tran:all-headers>
+  </ser:endpointConfig>
+  <ser:router>
+    <con:pipeline type="request" name="PipelinePairNode1_request" xmlns:con="http://www.bea.com/wli/sb/pipeline/config">
+      <con:stage name="validacion" errorHandler="_onErrorHandler-1145601977861204864-1e8ed72e.134379a4e9f.-7923">
+        <con:context>
+          <con4:varNsDecl namespace="http://www.comcel.com.co/ConsultarContractEsPostPago" prefix="con" xmlns:con4="http://www.bea.com/wli/sb/stages/config"/>
+        </con:context>
+        <con:actions>
+          <con1:assign varName="tiempo" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+            <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-1145601977861204864-1e8ed72e.134379a4e9f.-7963</con2:id>
+            <con1:expr>
+              <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">fn:current-time()</con2:xqueryText>
+            </con1:expr>
+          </con1:assign>
+          <con1:validate xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+            <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-1145601977861204864-1e8ed72e.134379a4e9f.-798f</con2:id>
+            <con1:schema ref="ITEL/Core/Resources/Schemas/PS_ITEL_CONSULTARCONTRATOESPOSTPAGO"/>
+            <con4:schemaElement xmlns:con2="http://www.comcel.com.co/ConsultarContractEsPostPago" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config">con2:Input_Parameters</con4:schemaElement>
+            <con1:varName>body</con1:varName>
+            <con1:location>
+              <con4:xpathText xmlns:con4="http://www.bea.com/wli/sb/stages/config">./con:Input_Parameters</con4:xpathText>
+            </con1:location>
+          </con1:validate>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="PipelinePairNode1_response" xmlns:con="http://www.bea.com/wli/sb/pipeline/config"/>
+    <con1:pipeline type="error" name="_onErrorHandler-1145601977861204864-1e8ed72e.134379a4e9f.-7923">
+      <con1:stage name="error">
+        <con1:context/>
+        <con1:actions>
+          <con2:replace varName="body" contents-only="true">
+            <con:id>_ActionId-1145601977861204864-1e8ed72e.134379a4e9f.-7909</con:id>
+            <con2:expr>
+              <con:xqueryTransform>
+                <con:resource ref="ITEL/Core/Resources/XQueries/consultarContratoEsPostpago_Error"/>
+                <con:param name="descripcion">
+                  <con:path>$fault/ctx:reason/text()</con:path>
+                </con:param>
+                <con:param name="codigo">
+                  <con:path>"ERROR"</con:path>
+                </con:param>
+              </con:xqueryTransform>
+            </con2:expr>
+          </con2:replace>
+          <con:reply>
+            <con:id>_ActionId-1145601977861204864-1e8ed72e.134379a4e9f.-78f3</con:id>
+          </con:reply>
+        </con1:actions>
+      </con1:stage>
+    </con1:pipeline>
+    <con1:pipeline type="error" name="_onErrorHandler-1145601977861204864-1e8ed72e.134379a4e9f.-78f2">
+      <con1:stage name="error">
+        <con1:context/>
+        <con1:actions>
+          <con2:replace varName="body" contents-only="true">
+            <con:id>_ActionId-1145601977861204864-1e8ed72e.134379a4e9f.-78d6</con:id>
+            <con2:expr>
+              <con:xqueryTransform>
+                <con:resource ref="ITEL/Core/Resources/XQueries/consultarContratoEsPostpago_Error"/>
+                <con:param name="descripcion">
+                  <con:path>$fault/ctx:reason/text()</con:path>
+                </con:param>
+                <con:param name="codigo">
+                  <con:path>"ERROR"</con:path>
+                </con:param>
+              </con:xqueryTransform>
+            </con2:expr>
+          </con2:replace>
+          <con:reply>
+            <con:id>_ActionId-1145601977861204864-1e8ed72e.134379a4e9f.-78a8</con:id>
+          </con:reply>
+        </con1:actions>
+      </con1:stage>
+    </con1:pipeline>
+    <con:flow xmlns:con="http://www.bea.com/wli/sb/pipeline/config">
+      <con:pipeline-node name="PipelinePairNode1">
+        <con:request>PipelinePairNode1_request</con:request>
+        <con:response>PipelinePairNode1_response</con:response>
+      </con:pipeline-node>
+      <con:route-node name="RouteNode1" error-handler="_onErrorHandler-1145601977861204864-1e8ed72e.134379a4e9f.-78f2">
+        <con:context>
+          <con4:varNsDecl namespace="http://www.comcel.com.co/ConsultarContractEsPostPago" prefix="con" xmlns:con4="http://www.bea.com/wli/sb/stages/config"/>
+        </con:context>
+        <con:actions>
+          <con3:route>
+            <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1145601977861204864-1e8ed72e.134379a4e9f.-794e</con4:id>
+            <con3:service ref="ITEL/Core/Business Services/consultarContratoEsPostpago_BS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con3:operation>bd_consultarContratoEsPostpago</con3:operation>
+            <con3:outboundTransform>
+              <con2:replace varName="body" contents-only="true">
+                <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1145601977861204864-1e8ed72e.134379a4e9f.-793b</con4:id>
+                <con2:expr>
+                  <con4:xqueryTransform xmlns:con4="http://www.bea.com/wli/sb/stages/config">
+                    <con4:resource ref="ITEL/Core/Resources/XQueries/consultarContratoEsPostpago_Req"/>
+                    <con4:param name="input_Parameters1">
+                      <con4:path>$body/con:Input_Parameters</con4:path>
+                    </con4:param>
+                  </con4:xqueryTransform>
+                </con2:expr>
+              </con2:replace>
+            </con3:outboundTransform>
+            <con3:responseTransform>
+              <con2:replace varName="body" contents-only="true">
+                <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1145601977861204864-1e8ed72e.134379a4e9f.-7924</con4:id>
+                <con2:expr>
+                  <con4:xqueryTransform xmlns:con4="http://www.bea.com/wli/sb/stages/config">
+                    <con4:resource ref="ITEL/Core/Resources/XQueries/consultarContratoEsPostpago_Res"/>
+                    <con4:param name="outputParameters1">
+                      <con4:path>$body/*:OutputParameters</con4:path>
+                    </con4:param>
+                  </con4:xqueryTransform>
+                </con2:expr>
+              </con2:replace>
+            </con3:responseTransform>
+          </con3:route>
+        </con:actions>
+      </con:route-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

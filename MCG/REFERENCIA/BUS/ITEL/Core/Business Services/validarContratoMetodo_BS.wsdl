@@ -1,0 +1,20 @@
+<definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/ITEL/Adaptadores/bd_validarContratoMetodo" name="bd_validarContratoMetodo-concrete" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/ITEL/Adaptadores/bd_validarContratoMetodo" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/ITEL/Adaptadores/bd_validarContratoMetodo" location="../Resources/WSDLs/validarContratoMetodo_BD.wsdl"/>
+  <binding name="bd_validarContratoMetodo_ptt-binding" type="tns:bd_validarContratoMetodo_ptt">
+    <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+    <operation name="bd_validarContratoMetodo">
+      <soap:operation soapAction="bd_validarContratoMetodo"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="bd_validarContratoMetodo-service">
+    <port name="bd_validarContratoMetodo-port" binding="tns:bd_validarContratoMetodo_ptt-binding">
+      <soap:address location="jca://eis/DB/ITEL_SOA"/>
+    </port>
+  </service>
+</definitions>

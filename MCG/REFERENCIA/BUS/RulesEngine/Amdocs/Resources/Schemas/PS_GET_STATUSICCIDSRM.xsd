@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.claro.com.co/rulesEngine/getStatusIccidSrm" 
+	xmlns:tns="http://www.claro.com.co/rulesEngine/getStatusIccidSrm"
+	xmlns:pd="http://www.claro.com.co/rulesEngine/canonicalModel/ProductDomain"
+	>
+
+	<import namespace="http://www.claro.com.co/rulesEngine/canonicalModel/ProductDomain"
+		schemaLocation="../../../Core/Resources/Schemas/CanonicalModel/ProductDomain.xsd" />
+	
+
+    <element name="Input_Parameters" type="tns:Input_Parameters"></element>
+	<element name="WS_Result" type="tns:WS_Result"></element>
+
+	<complexType name="Input_Parameters">
+		<sequence>
+			<!--<element name="iccid" type="pd:Product" />  -->
+			<element name="product" type="pd:Product" />		
+		</sequence>
+	</complexType>
+
+	<complexType name="WS_Result">
+		<sequence>
+			<element name="code" type="string" />
+			<element name="message" type="tns:responseType" />
+			<element name="description" type="string" />
+		</sequence>
+	</complexType>
+
+	<complexType name="responseType">
+		<sequence>
+			<!--<element name="datosIccid" type="pd:ProductStatus" />-->
+<!-- 			<element name="stockInventory" type="pd:StockInventory" /> -->
+			<element name="platformStatus" type="pd:PlatformStatus" />
+		</sequence>
+	</complexType>
+
+</schema>

@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.claro.com.co/rulesEngine/canonicalModel/CommonBusinessEntities"
+	xmlns:cbe="http://www.claro.com.co/rulesEngine/canonicalModel/CommonBusinessEntities">
+	<annotation>
+		<documentation>
+   <![CDATA[
+        Canonical representation of CommonBusinessEntities Domain.
+  ]]>
+		</documentation>
+	</annotation>
+	<complexType name="Country">
+		<sequence>
+			<element name="id" type="integer" minOccurs="0" />
+			<element name="code" type="string" minOccurs="0" />
+			<element name="description" type="string" minOccurs="0" />
+		</sequence>
+	</complexType>
+	<complexType name="Department">
+		<sequence>
+			<element name="id" type="integer" minOccurs="0" />
+			<element name="code" type="string" minOccurs="0" />
+			<element name="description" type="string" minOccurs="0" />
+			<element name="country" type="cbe:Country" minOccurs="0" />
+		</sequence>
+	</complexType>
+	<complexType name="City">
+		<sequence>
+			<element name="id" type="integer" minOccurs="0" />
+			<element name="code" type="string" minOccurs="0" />
+			<element name="description" type="string" minOccurs="0" />
+			<element name="department" type="cbe:Department" minOccurs="0" />
+		</sequence>
+	</complexType>
+	<complexType name="Zone">
+		<sequence>
+			<element name="id" type="integer" minOccurs="0" />
+			<element name="code" type="string" minOccurs="0" />
+			<element name="description" type="string" minOccurs="0" />
+			<element name="caseId" type="string" minOccurs="0" />
+			<element name="cBPId" type="string" minOccurs="0" />
+			<element name="caseTypeLevels" type="string" minOccurs="0" maxOccurs="unbounded"/>
+			<element name="closeStatus" type="cbe:Status" minOccurs="0" />
+			<element name="resolutionCode1" type="string" minOccurs="0" />
+			<element name="resolutionCode2" type="string" minOccurs="0" />
+			<element name="flexibleAttributes" type="cbe:FlexibleAttributes" minOccurs="0" maxOccurs="unbounded" />
+			<element name="agentId" type="string" minOccurs="0" />
+			<element name="closeDate" type="dateTime" minOccurs="0" />
+		</sequence>
+	</complexType>
+	<complexType name="FlexibleAttributes">
+		<sequence>
+			<element name="id" type="integer" minOccurs="0" />
+			<element name="code" type="string" minOccurs="0" />
+			<element name="description" type="string" minOccurs="0" />
+			<element name="flexAttrName" type="string" minOccurs="0" />
+			<element name="flexAttriValue" type="string" minOccurs="0" />
+		</sequence>
+	</complexType>
+	<complexType name="Location">
+		<sequence>
+			<element name="id" type="integer" minOccurs="0" />
+			<element name="code" type="string" minOccurs="0" />
+			<element name="description" type="string" minOccurs="0" />
+			<element name="addressText" type="string" minOccurs="0" />
+			<element name="city" type="cbe:City" minOccurs="0" />
+			<element name="district" type="string" minOccurs="0" />
+			<element name="state" type="cbe:Department" minOccurs="0" />
+			<element name="costCenterRegion" type="cbe:Zone" minOccurs="0" />
+			<element name="area" type="string" minOccurs="0" />
+			<element name="quarter" type="string" minOccurs="0" />
+			<element name="streetType" type="string" minOccurs="0" />
+			<element name="streetName" type="string" minOccurs="0" />
+			<element name="streetPrefix" type="string" minOccurs="0" />
+			<element name="streetNumber" type="string" minOccurs="0" />
+			<element name="streetSuffix" type="string" minOccurs="0" />
+			<element name="streetIntersection" type="string" minOccurs="0" />
+			<element name="streetIntersectionSuffix" type="string" minOccurs="0" />
+			<element name="additionalInfo" type="string" minOccurs="0" />
+			<element name="buildingType" type="string" minOccurs="0" />
+			<element name="buildingNumber" type="string" minOccurs="0" />
+			<element name="internalBuildingNumber" type="string" minOccurs="0" />
+			<element name="internalBuildingNumberSuffix" type="string" minOccurs="0" />
+			<element name="apartmentNumber" type="string" minOccurs="0" />
+			<element name="totalNumOfFloors" type="string" minOccurs="0" />
+			<element name="neighborhood" type="string" minOccurs="0" />
+			<element name="pOBox" type="string" minOccurs="0" />
+			<element name="postalCode" type="string" minOccurs="0" />
+			<element name="socioEconomicalRank" type="string" minOccurs="0" />
+		</sequence>
+	</complexType>
+	<complexType name="DocumentType">
+		<sequence>
+			<element name="id" type="integer" minOccurs="0" />
+			<element name="code" type="string" minOccurs="0" />
+			<element name="description" type="string" minOccurs="0" />
+		</sequence>
+	</complexType>
+	<complexType name="ExceptionBusinessCollection">
+		<sequence>
+			<element name="businessException" type="cbe:ExceptionBusiness" minOccurs="0" maxOccurs="unbounded" />
+			<element name="approvedException" type="cbe:ExceptionBusiness" minOccurs="0" maxOccurs="unbounded" />
+		</sequence>
+	</complexType>
+	<complexType name="ExceptionBusiness">
+		<sequence>
+			<element name="id" type="integer" minOccurs="0" />
+			<element name="code" type="string" minOccurs="0" />
+			<element name="description" type="string" minOccurs="0" />
+			<element name="exceptionBusinessType" type="cbe:ExceptionBusinessType" minOccurs="0" />
+			<element name="causalOrder" type="string" minOccurs="0" />
+			<element name="caseId" type="string" minOccurs="0" />
+			<element name="cBPId" type="string" minOccurs="0" />
+			<element name="caseTypeLevels" type="string" minOccurs="0" maxOccurs="unbounded"/>
+			<element name="closeStatus" type="cbe:Status" minOccurs="0" />
+			<element name="resolutionCode1" type="string" minOccurs="0" />
+			<element name="resolutionCode2" type="string" minOccurs="0" />
+			<element name="flexibleAttributes" type="cbe:FlexibleAttributes" minOccurs="0" maxOccurs="unbounded" />
+			<element name="agentId" type="string" minOccurs="0" />
+			<element name="closeDate" type="dateTime" minOccurs="0" />
+		</sequence>
+	</complexType>
+	<complexType name="ExceptionBusinessType">
+		<sequence>
+			<element name="id" type="integer" minOccurs="0" />
+			<element name="code" type="string" minOccurs="0" />
+			<element name="description" type="string" minOccurs="0" />
+		</sequence>
+	</complexType>
+	<complexType name="ParameterCollection">
+		<sequence>
+			<element name="parameter" type="cbe:Parameter" minOccurs="0" maxOccurs="unbounded" />
+		</sequence>
+	</complexType>
+	<complexType name="Parameter">
+		<sequence>
+			<element name="name" type="string" />
+			<element name="value" type="string" />
+		</sequence>
+	</complexType>
+	<complexType name="CreditReference">
+		<sequence>
+			<element name="id" type="integer" minOccurs="0" />
+			<element name="code" type="string" minOccurs="0" />
+			<element name="description" type="string" minOccurs="0" />
+			<element name="creditRefNumber" type="string" minOccurs="0" />
+			<element name="creditRefType" type="cbe:CreditRefType" minOccurs="0" />
+		</sequence>
+	</complexType>
+	<complexType name="Conditions">
+		<sequence>
+			<element name="id" type="integer" minOccurs="0" />
+			<element name="code" type="string" minOccurs="0" />
+			<element name="description" type="string" minOccurs="0" />
+			<element name="orderActionID" type="string" minOccurs="0" />
+			<element name="numRCInAdvanced" type="string" minOccurs="0" />
+			<element name="installmentZero" type="string" minOccurs="0" />
+			<element name="numOfInstallments" type="string" minOccurs="0" />
+			<element name="installmentAmount" type="string" minOccurs="0" />
+			<element name="deposit" type="string" minOccurs="0" />
+		</sequence>
+	</complexType>
+	<complexType name="CreditCheckQuestions">
+		<sequence>
+			<element name="id" type="integer" minOccurs="0" />
+			<element name="code" type="string" minOccurs="0" />
+			<element name="description" type="string" minOccurs="0" />
+			<element name="questionnaireID" type="string" minOccurs="0" />
+			<element name="questions" type="cbe:Questions" minOccurs="0" />
+			<element name="answers" type="cbe:Answers" minOccurs="0" />
+		</sequence>
+	</complexType>
+	<complexType name="Questions">
+		<sequence>
+			<element name="id" type="integer" minOccurs="0" />
+			<element name="code" type="string" minOccurs="0" />
+			<element name="description" type="string" minOccurs="0" />
+			<element name="questionText" type="string" minOccurs="0" />
+			<element name="questionID" type="string" minOccurs="0" />
+		</sequence>
+	</complexType>
+	<complexType name="Answers">
+		<sequence>
+			<element name="id" type="integer" minOccurs="0" />
+			<element name="code" type="string" minOccurs="0" />
+			<element name="description" type="string" minOccurs="0" />
+			<element name="answerText" type="string" minOccurs="0" />
+			<element name="answerID" type="string" minOccurs="0" />
+		</sequence>
+	</complexType>
+	<complexType name="Status">
+		<sequence>
+			<element name="id" type="integer" minOccurs="0" />
+			<element name="code" type="string" minOccurs="0" />
+			<element name="description" type="string" minOccurs="0" />
+			<element name="statusType" type="cbe:StatusType" minOccurs="0" />
+		</sequence>
+	</complexType>
+	<complexType name="StatusType">
+		<sequence>
+			<element name="id" type="integer" minOccurs="0" />
+			<element name="code" type="string" minOccurs="0" />
+			<element name="description" type="string" minOccurs="0" />
+		</sequence>
+	</complexType>
+	<complexType name="CreditRefType">
+		<sequence>
+			<element name="id" type="integer" minOccurs="0" />
+			<element name="code" type="string" minOccurs="0" />
+			<element name="description" type="string" minOccurs="0" />
+		</sequence>
+	</complexType>
+</schema>

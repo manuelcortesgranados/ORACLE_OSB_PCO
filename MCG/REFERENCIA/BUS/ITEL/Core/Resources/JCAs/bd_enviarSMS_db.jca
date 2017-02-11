@@ -1,0 +1,13 @@
+<adapter-config name="bd_enviarSMS" adapter="Database Adapter" wsdlLocation="../WSDLs/enviarSMS_BD.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/DB/SMSSERV" UIConnectionName="Des_Itel" adapterRef=""/>
+  <endpoint-interaction portType="bd_enviarSMS_ptt" operation="bd_enviarSMS">
+    <interaction-spec className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
+      <property name="ProcedureName" value="inh_smo.prcins_envia_ndcmin"/>
+      <property name="QueryTimeout" value="1"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+    <output/>
+  </endpoint-interaction>
+
+</adapter-config>

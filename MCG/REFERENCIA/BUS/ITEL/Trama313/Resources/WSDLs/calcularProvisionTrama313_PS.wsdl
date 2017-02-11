@@ -1,0 +1,36 @@
+<wsdl:definitions name="calcularProvisionTrama313_PS" targetNamespace="http://www.example.org/calcularProvisionTrama313_PS/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.example.org/calcularProvisionTrama313_PS/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsd1="http://www.comcel.com.co/CalcularProvisionTrama313/">
+  <wsdl:types>
+    <xsd:schema>
+    	<xsd:import namespace="http://www.comcel.com.co/CalcularProvisionTrama313/" schemaLocation="../Schemas/PS_ITEL_CALCULARPROVISIONTRAMA313.xsd">
+    	</xsd:import></xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="Input_Parameters">
+    <wsdl:part element="xsd1:Input_Parameters" name="Input_Parameters"/>
+  </wsdl:message>
+  <wsdl:message name="WS_Result">
+    <wsdl:part element="xsd1:WS_Result" name="Output_Parameters"/>
+  </wsdl:message>
+  <wsdl:portType name="calcularProvisionTrama313_PS">
+    <wsdl:operation name="calcularProvision">
+      <wsdl:input message="tns:Input_Parameters"/>
+      <wsdl:output message="tns:WS_Result"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="calcularProvisionTrama313_PSSOAP" type="tns:calcularProvisionTrama313_PS">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="calcularProvision">
+      <soap:operation soapAction="http://www.example.org/calcularProvisionTrama313_PS/calcularProvision"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="calcularProvisionTrama313_PS">
+    <wsdl:port binding="tns:calcularProvisionTrama313_PSSOAP" name="calcularProvisionTrama313_PSSOAP">
+      <soap:address location="http://www.comcel.com.co/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

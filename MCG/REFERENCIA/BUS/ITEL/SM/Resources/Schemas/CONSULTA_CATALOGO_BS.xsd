@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema targetNamespace="http://www.comcel.com.co/ITEL/subscriptionManager" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.comcel.com.co/ITEL/subscriptionManager">
+	
+	<element name="SubscriptionManagerRequest" type="tns:SubscriptionManagerRequest"/>
+	<element name="SubscriptionManagerResponse" type="tns:SubscriptionManagerResponse"/>
+
+	<complexType name="SubscriptionManagerRequest">
+		<sequence>
+			<element name="operacionSM" type="string" minOccurs="1"/>
+			<element name="requestSM" type="string" minOccurs="1"/>		 
+		</sequence>
+	</complexType>
+
+	<complexType name="SubscriptionManagerResponse">
+		<sequence>
+			<element name="codigo" type="string"/>
+			<element name="descripcion" type="string"/>
+			<element name="resultado" type="anySimpleType"/> 
+		</sequence>
+	</complexType>  
+</schema>

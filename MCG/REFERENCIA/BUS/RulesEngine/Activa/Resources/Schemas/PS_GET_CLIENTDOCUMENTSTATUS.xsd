@@ -1,0 +1,34 @@
+<schema targetNamespace="http://www.claro.com.co/rulesEngine/getClientDocumentStatus"
+	xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.claro.com.co/rulesEngine/getClientDocumentStatus"
+	xmlns:cd="http://www.claro.com.co/rulesEngine/canonicalModel/CustomerDomain">
+
+	<import
+		namespace="http://www.claro.com.co/rulesEngine/canonicalModel/CustomerDomain"
+		schemaLocation="../../../Core/Resources/Schemas/CanonicalModel/CustomerDomain.xsd" />
+	
+
+	<element name="Input_Parameters" type="tns:Input_Parameters" />
+	<element name="WS_Result" type="tns:WS_Result" />
+
+	<complexType name="Input_Parameters">
+		<sequence>
+			<element name="customer" type="cd:Customer" />
+		</sequence>
+	</complexType>
+
+	<complexType name="WS_Result">
+		<sequence>
+			<element name="code" type="string" />
+			<element name="message" type="tns:responseType" />
+			<element name="description" type="string" />
+		</sequence>
+	</complexType>
+
+	<complexType name="responseType">
+		<sequence>
+			<element name="customerDocumentStatus" type="cd:CustomerDocument" />
+		</sequence>
+	</complexType>
+
+
+</schema>

@@ -1,0 +1,20 @@
+<definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/Ensayo/Reglas/bd_insertrtcrequesterror" name="bd_insertrtcrequesterror-concrete" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/Ensayo/Reglas/bd_insertrtcrequesterror" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/Ensayo/Reglas/bd_insertrtcrequesterror" location="../Resources/WSDLs/insertRTCRequestError_BD.wsdl"/>
+  <binding name="bd_insertrtcrequesterror_ptt-binding" type="tns:bd_insertrtcrequesterror_ptt">
+    <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+    <operation name="bd_insertrtcrequesterror">
+      <soap:operation soapAction="bd_insertrtcrequesterror"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="bd_insertrtcrequesterror-service">
+    <port name="bd_insertrtcrequesterror-port" binding="tns:bd_insertrtcrequesterror_ptt-binding">
+      <soap:address location="jca://eis/DB/ITEL_SOA"/>
+    </port>
+  </service>
+</definitions>

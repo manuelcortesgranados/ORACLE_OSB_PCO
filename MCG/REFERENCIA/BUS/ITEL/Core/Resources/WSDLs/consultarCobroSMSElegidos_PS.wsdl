@@ -1,0 +1,51 @@
+<wsdl:definitions name="consultarCobroSMSElegidos_PS" targetNamespace="http://www.comcel.com.co/consultarCobroSMSElegidos_PS/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.comcel.com.co/consultarCobroSMSElegidos_PS/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsd1="http://www.comcel.com.co/ConsultarCobroSMSElegidos">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://www.comcel.com.co/consultarCobroSMSElegidos_PS/">
+      <xsd:element name="consultarCobroSMSElegidos">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="in" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="consultarCobroSMSElegidosResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="out" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+    <xsd:schema>
+    	<xsd:import namespace="http://www.comcel.com.co/ConsultarCobroSMSElegidos" schemaLocation="../Schemas/PS_ITEL_CONSULTARCOBROSMSELEGIDOS.xsd">
+    	</xsd:import></xsd:schema></wsdl:types>
+  <wsdl:message name="consultarCobroSMSElegidosRequest">
+    <wsdl:part element="xsd1:Input_Parameters" name="Input_Parameters"/>
+  </wsdl:message>
+  <wsdl:message name="consultarCobroSMSElegidosResponse">
+    <wsdl:part element="xsd1:WS_Result" name="WS_Result"/>
+  </wsdl:message>
+  <wsdl:portType name="consultarCobroSMSElegidos_PS">
+    <wsdl:operation name="consultarCobroSMSElegidos">
+      <wsdl:input message="tns:consultarCobroSMSElegidosRequest"/>
+      <wsdl:output message="tns:consultarCobroSMSElegidosResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="consultarCobroSMSElegidos_PSSOAP" type="tns:consultarCobroSMSElegidos_PS">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="consultarCobroSMSElegidos">
+      <soap:operation soapAction="http://www.comcel.com.co/consultarCobroSMSElegidos_PS/consultarCobroSMSElegidos"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="consultarCobroSMSElegidos_PS">
+    <wsdl:port binding="tns:consultarCobroSMSElegidos_PSSOAP" name="consultarCobroSMSElegidos_PSSOAP">
+      <soap:address location="http://www.comcel.com.co/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

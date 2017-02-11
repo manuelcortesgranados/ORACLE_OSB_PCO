@@ -1,0 +1,20 @@
+<definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/appSoa/pSOA/bd_consultarSMSOffersOCS" name="bd_consultarSMSOffersOCS-concrete" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/appSoa/pSOA/bd_consultarSMSOffersOCS" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/appSoa/pSOA/bd_consultarSMSOffersOCS" location="../Resources/WSDLs/consultarSMSOffersOCS_BD.wsdl"/>
+  <binding name="bd_consultarSMSOffersOCS_ptt-binding" type="tns:bd_consultarSMSOffersOCS_ptt">
+    <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+    <operation name="bd_consultarSMSOffersOCS">
+      <soap:operation soapAction="bd_consultarSMSOffersOCS"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="bd_consultarSMSOffersOCS-service">
+    <port name="bd_consultarSMSOffersOCS-port" binding="tns:bd_consultarSMSOffersOCS_ptt-binding">
+      <soap:address location="jca://eis/DB/ITEL_SOA"/>
+    </port>
+  </service>
+</definitions>

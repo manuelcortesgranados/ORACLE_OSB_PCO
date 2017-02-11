@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+  <ser:coreEntry isProxy="true" isEnabled="true">
+    <ser:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config">
+      <con:wsdl ref="OSB_Project_PCO_006/OSB/Resources/WSDL/ContratoServicioGeneral"/>
+      <con:port>
+        <con:name>ContratoPort</con:name>
+        <con:namespace>http://www.example.org/ContratoServicioGeneral/</con:namespace>
+      </con:port>
+      <con:selector type="SOAP body"/>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+    <ser:ws-policy>
+      <ser:binding-mode>wsdl-policy-attachments</ser:binding-mode>
+    </ser:ws-policy>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>http</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:URI>
+      <env:value>/OSB_Project_PCO_006/OSB/Proxies/Local/Default/verificarPermisoUsuarioLocal_SP</env:value>
+    </tran:URI>
+    <tran:inbound-properties/>
+    <tran:all-headers>false</tran:all-headers>
+    <tran:provider-specific>
+      <http:inbound-properties/>
+    </tran:provider-specific>
+  </ser:endpointConfig>
+  <ser:router>
+    <con:pipeline type="request" name="PipelinePairNode1_request">
+      <con:stage name="STG_Request2Target">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.example.org/FirmaServicioGeneral" prefix="fir"/>
+        </con:context>
+        <con:actions>
+          <con2:wsCallout>
+            <con1:id>_ActionId-296308369567803669--2e27b472.15844b719d1.-7861</con1:id>
+            <con2:service xsi:type="ref:ProxyRef" ref="OSB_Project_PCO_006/OSB/Proxies/Local/Business/verificarPermisoUsuarioLocal_SP_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con2:operation>dbVerificarPermisosUsuario</con2:operation>
+            <con2:request>
+              <con2:body>$miVariablePermisoRequest</con2:body>
+            </con2:request>
+            <con2:response>
+              <con2:body>miVariablePermisoResponse</con2:body>
+            </con2:response>
+            <con2:requestTransform>
+              <con2:replace varName="miVariablePermisoRequest" contents-only="false">
+                <con1:id>_ActionId-296308369567803669--2e27b472.15844b719d1.-785f</con1:id>
+                <con2:expr>
+                  <con1:xqueryTransform>
+                    <con1:resource ref="OSB_Project_PCO_006/OSB/Resources/XQueries/verificarPermisoUsuarioLocal_SP_Request2Target"/>
+                    <con1:param name="usuario1">
+                      <con1:path>data($body/fir:firmaServicioGeneralRequest/fir:usuario)</con1:path>
+                    </con1:param>
+                    <con1:param name="idFuenteAplicacion1">
+                      <con1:path>data($body/fir:firmaServicioGeneralRequest/fir:idFuenteAplicacion)</con1:path>
+                    </con1:param>
+                    <con1:param name="metodo1">
+                      <con1:path>data($body/fir:firmaServicioGeneralRequest/fir:metodo)</con1:path>
+                    </con1:param>
+                  </con1:xqueryTransform>
+                </con2:expr>
+              </con2:replace>
+            </con2:requestTransform>
+            <con2:responseTransform>
+              <con2:replace varName="body" contents-only="true">
+                <con1:id>_ActionId-296308369567803669--2e27b472.15844b719d1.-7751</con1:id>
+                <con2:expr>
+                  <con1:xqueryTransform>
+                    <con1:resource ref="OSB_Project_PCO_006/OSB/Resources/XQueries/verificarPermisoUsuarioLocal_SP_Target2Response"/>
+                    <con1:param name="p_OUT_DESCRIPCION1">
+                      <con1:path>data($miVariablePermisoResponse/*:P_OUT_DESCRIPCION)</con1:path>
+                    </con1:param>
+                    <con1:param name="p_OUT_CODIGO1">
+                      <con1:path>data($miVariablePermisoResponse/*:P_OUT_CODIGO)</con1:path>
+                    </con1:param>
+                  </con1:xqueryTransform>
+                </con2:expr>
+              </con2:replace>
+            </con2:responseTransform>
+          </con2:wsCallout>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="PipelinePairNode1_response">
+      <con:stage name="STG_Respuesta">
+        <con:context/>
+        <con:actions>
+          <con1:reply>
+            <con1:id>_ActionId-296308369567803669--2e27b472.15844b719d1.-7876</con1:id>
+          </con1:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:flow>
+      <con:pipeline-node name="PipelinePairNode1">
+        <con:request>PipelinePairNode1_request</con:request>
+        <con:response>PipelinePairNode1_response</con:response>
+      </con:pipeline-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

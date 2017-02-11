@@ -1,0 +1,484 @@
+<wsdl:definitions targetNamespace="http://www.comcel.com.co/IN/OperacionCorba" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="http://www.comcel.com.co/IN/OperacionCorba" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.comcel.com.co/IN/OperacionCorba"> 
+    <wsdl:types> 
+        <schema elementFormDefault="qualified" targetNamespace="http://www.comcel.com.co/IN/OperacionCorba" xmlns="http://www.w3.org/2001/XMLSchema">
+        	<include schemaLocation="../Schemas/DA_ITEL_OPERACION_CORBA.xsd"/> 
+        </schema>
+    </wsdl:types> 
+    <wsdl:message name="CrearSuscriptorRequest"> 
+        <wsdl:part element="tns:CrearSuscriptorRequest" name="CrearSuscriptorRequest"/> 
+    </wsdl:message> 
+    <wsdl:message name="CrearSuscriptorResponse"> 
+        <wsdl:part element="tns:CrearSuscriptorResponse" name="CrearSuscriptorResponse"/> 
+    </wsdl:message> 
+    <wsdl:message name="ConsultarSuscriptorRequest"> 
+        <wsdl:part element="tns:ConsultarSuscriptorRequest" name="ConsultarSuscriptorRequest"/> 
+    </wsdl:message> 
+    <wsdl:message name="ConsultarSuscriptorResponse"> 
+        <wsdl:part element="tns:ConsultarSuscriptorResponse" name="ConsultarSuscriptorResponse"/> 
+    </wsdl:message> 
+    <wsdl:message name="EliminarSuscriptorRequest"> 
+        <wsdl:part element="tns:EliminarSuscriptorRequest" name="EliminarSuscriptorRequest"/> 
+    </wsdl:message> 
+    <wsdl:message name="EliminarSuscriptorResponse"> 
+        <wsdl:part element="tns:EliminarSuscriptorResponse" name="EliminarSuscriptorResponse"/> 
+    </wsdl:message> 
+    <wsdl:message name="BloquearSuscriptorRequest"> 
+        <wsdl:part element="tns:BloquearSuscriptorRequest" name="BloquearSuscriptorRequest"/> 
+    </wsdl:message> 
+    <wsdl:message name="BloquearSuscriptorResponse"> 
+        <wsdl:part element="tns:BloquearSuscriptorResponse" name="BloquearSuscriptorResponse"/> 
+    </wsdl:message> 
+    <wsdl:message name="CambiarMinRequest"> 
+        <wsdl:part element="tns:CambiarMinRequest" name="CambiarMinRequest"/> 
+    </wsdl:message> 
+    <wsdl:message name="CambiarMinResponse"> 
+        <wsdl:part element="tns:CambiarMinResponse" name="CambiarMinResponse"/> 
+    </wsdl:message> 
+    <wsdl:message name="CambiarPlanRequest"> 
+        <wsdl:part element="tns:CambiarPlanRequest" name="CambiarPlanRequest"/> 
+    </wsdl:message> 
+    <wsdl:message name="CambiarPlanResponse"> 
+        <wsdl:part element="tns:CambiarPlanResponse" name="CambiarPlanResponse"/> 
+    </wsdl:message>  
+    <wsdl:message name="RegistrarElegidosRequest"> 
+        <wsdl:part element="tns:RegistrarElegidosRequest" name="RegistrarElegidosRequest"/> 
+    </wsdl:message> 
+    <wsdl:message name="RegistrarElegidosResponse"> 
+        <wsdl:part element="tns:RegistrarElegidosResponse" name="RegistrarElegidosResponse"/> 
+    </wsdl:message>  
+    <wsdl:message name="ModificarElegidosRequest"> 
+        <wsdl:part element="tns:ModificarElegidosRequest" name="ModificarElegidosRequest"/> 
+    </wsdl:message> 
+    <wsdl:message name="ModificarElegidosResponse"> 
+        <wsdl:part element="tns:ModificarElegidosResponse" name="ModificarElegidosResponse"/> 
+    </wsdl:message>  
+    <wsdl:message name="CargarRequest"> 
+        <wsdl:part element="tns:CargarRequest" name="CargarRequest"/> 
+    </wsdl:message> 
+    <wsdl:message name="CargarResponse"> 
+        <wsdl:part element="tns:CargarResponse" name="CargarResponse"/> 
+    </wsdl:message> 
+    <wsdl:message name="RecargarRequest"> 
+        <wsdl:part element="tns:RecargarRequest" name="RecargarRequest"/> 
+    </wsdl:message> 
+    <wsdl:message name="RecargarResponse"> 
+        <wsdl:part element="tns:RecargarResponse" name="RecargarResponse"/> 
+    </wsdl:message> 
+     <wsdl:message name="ConsultarSMSElegidosRequest"> 
+        <wsdl:part element="tns:ConsultarSMSElegidosRequest" name="ConsultarSMSElegidosRequest"/> 
+    </wsdl:message> 
+    <wsdl:message name="ConsultarSMSElegidosResponse"> 
+        <wsdl:part element="tns:ConsultarSMSElegidosResponse" name="ConsultarSMSElegidosResponse"/> 
+    </wsdl:message>
+    <wsdl:message name="RegistrarSMSElegidosRequest"> 
+        <wsdl:part element="tns:RegistrarSMSElegidosRequest" name="RegistrarSMSElegidosRequest"/> 
+    </wsdl:message> 
+    <wsdl:message name="RegistrarSMSElegidosResponse"> 
+        <wsdl:part element="tns:RegistrarSMSElegidosResponse" name="RegistrarSMSElegidosResponse"/> 
+    </wsdl:message> 
+    <wsdl:message name="ModificarSMSElegidosRequest"> 
+        <wsdl:part element="tns:ModificarSMSElegidosRequest" name="ModificarSMSElegidosRequest"/> 
+    </wsdl:message> 
+    <wsdl:message name="ModificarSMSElegidosResponse"> 
+        <wsdl:part element="tns:ModificarSMSElegidosResponse" name="ModificarSMSElegidosResponse"/> 
+    </wsdl:message>
+    <wsdl:message name="EliminarSMSElegidosRequest"> 
+        <wsdl:part element="tns:EliminarSMSElegidosRequest" name="EliminarSMSElegidosRequest"/> 
+    </wsdl:message> 
+    <wsdl:message name="EliminarSMSElegidosResponse"> 
+        <wsdl:part element="tns:EliminarSMSElegidosResponse" name="EliminarSMSElegidosResponse"/> 
+    </wsdl:message>
+    <wsdl:message name="RegistrarFARequest"> 
+        <wsdl:part element="tns:RegistrarFARequest" name="RegistrarFARequest"/> 
+    </wsdl:message> 
+    <wsdl:message name="RegistrarFAResponse"> 
+        <wsdl:part element="tns:RegistrarFAResponse" name="RegistrarFAResponse"/> 
+    </wsdl:message> 
+    <wsdl:message name="ModificarFARequest"> 
+        <wsdl:part element="tns:ModificarFARequest" name="ModificarFARequest"/> 
+    </wsdl:message> 
+    <wsdl:message name="ModificarFAResponse"> 
+        <wsdl:part element="tns:ModificarFAResponse" name="ModificarFAResponse"/> 
+    </wsdl:message>
+    <wsdl:message name="CompensarCargarRequest">
+		<wsdl:part element="tns:CompensarCargarRequest" name="CompensarCargarRequest"/>
+	</wsdl:message>
+	<wsdl:message name="CompensarRecargarRequest">
+		<wsdl:part element="tns:CompensarRecargarRequest" name="CompensarRecargarRequest"/>
+	</wsdl:message>
+	<wsdl:message name="CompensarCrearSuscriptorRequest">
+		<wsdl:part element="tns:CompensarCrearSuscriptorRequest" name="CompensarCrearSuscriptorRequest"/>
+	</wsdl:message>
+	<wsdl:message name="CompensarCambiarPlanRequest">
+		<wsdl:part element="tns:CompensarCambiarPlanRequest" name="CompensarCambiarPlanRequest"/>
+	</wsdl:message>
+	<wsdl:message name="CompensarCambiarMinRequest">
+		<wsdl:part element="tns:CompensarCambiarMinRequest" name="CompensarCambiarMinRequest"/>
+	</wsdl:message>
+	<wsdl:message name="CompensarRegistrarElegidosRequest">
+		<wsdl:part element="tns:CompensarRegistrarElegidosRequest" name="CompensarRegistrarElegidosRequest"/>
+	</wsdl:message>
+	<wsdl:message name="CompensarRegistrarSMSElegidosRequest">
+		<wsdl:part element="tns:CompensarRegistrarSMSElegidosRequest" name="CompensarRegistrarSMSElegidosRequest"/>
+	</wsdl:message>
+	<wsdl:message name="CompensarModificarElegidosRequest">
+		<wsdl:part element="tns:CompensarModificarElegidosRequest" name="CompensarModificarElegidosRequest"/>
+	</wsdl:message>
+	<wsdl:message name="CompensarModificarFARequest">
+		<wsdl:part element="tns:CompensarModificarFARequest" name="CompensarModificarFARequest"/>
+	</wsdl:message>
+	<wsdl:message name="CompensarModificarSMSElegidosRequest">
+		<wsdl:part element="tns:CompensarModificarSMSElegidosRequest" name="CompensarModificarSMSElegidosRequest"/>
+	</wsdl:message>
+    <wsdl:message name="CompensacionResponse"> 
+        <wsdl:part element="tns:CompensacionResponse" name="CompensacionResponse"/> 
+    </wsdl:message> 
+    <wsdl:portType name="OperacionCorba"> 
+        <wsdl:operation name="CrearSuscriptor"> 
+            <wsdl:input message="tns:CrearSuscriptorRequest" name="CrearSuscriptorRequest"/> 
+            <wsdl:output message="tns:CrearSuscriptorResponse" name="CrearSuscriptorResponse"/> 
+        </wsdl:operation> 
+        <wsdl:operation name="ConsultarSuscriptor"> 
+            <wsdl:input message="tns:ConsultarSuscriptorRequest" name="ConsultarSuscriptorRequest"/> 
+            <wsdl:output message="tns:ConsultarSuscriptorResponse" name="ConsultarSuscriptorResponse"/> 
+        </wsdl:operation> 
+        <wsdl:operation name="EliminarSuscriptor"> 
+            <wsdl:input message="tns:EliminarSuscriptorRequest" name="EliminarSuscriptorRequest"/> 
+            <wsdl:output message="tns:EliminarSuscriptorResponse" name="EliminarSuscriptorResponse"/> 
+        </wsdl:operation> 
+        <wsdl:operation name="BloquearSuscriptor"> 
+            <wsdl:input message="tns:BloquearSuscriptorRequest" name="BloquearSuscriptorRequest"/> 
+            <wsdl:output message="tns:BloquearSuscriptorResponse" name="BloquearSuscriptorResponse"/> 
+        </wsdl:operation> 
+        <wsdl:operation name="CambiarMin"> 
+            <wsdl:input message="tns:CambiarMinRequest" name="CambiarMinRequest"/> 
+            <wsdl:output message="tns:CambiarMinResponse" name="CambiarMinResponse"/> 
+        </wsdl:operation> 
+        <wsdl:operation name="CambiarPlan"> 
+            <wsdl:input message="tns:CambiarPlanRequest" name="CambiarPlanRequest"/> 
+            <wsdl:output message="tns:CambiarPlanResponse" name="CambiarPlanResponse"/> 
+        </wsdl:operation> 
+        <wsdl:operation name="RegistrarElegidos"> 
+            <wsdl:input message="tns:RegistrarElegidosRequest" name="RegistrarElegidosRequest"/> 
+            <wsdl:output message="tns:RegistrarElegidosResponse" name="RegistrarElegidosResponse"/> 
+        </wsdl:operation> 
+        <wsdl:operation name="ModificarElegidos"> 
+            <wsdl:input message="tns:ModificarElegidosRequest" name="ModificarElegidosRequest"/> 
+            <wsdl:output message="tns:ModificarElegidosResponse" name="ModificarElegidosResponse"/> 
+        </wsdl:operation> 
+        <wsdl:operation name="Cargar"> 
+            <wsdl:input message="tns:CargarRequest" name="CargarRequest"/> 
+            <wsdl:output message="tns:CargarResponse" name="CargarResponse"/> 
+        </wsdl:operation> 
+        <wsdl:operation name="Recargar"> 
+            <wsdl:input message="tns:RecargarRequest" name="RecargarRequest"/> 
+            <wsdl:output message="tns:RecargarResponse" name="RecargarResponse"/> 
+        </wsdl:operation>
+        <wsdl:operation name="ConsultarSMSElegidos"> 
+            <wsdl:input message="tns:ConsultarSMSElegidosRequest" name="ConsultarSMSElegidosRequest"/> 
+            <wsdl:output message="tns:ConsultarSMSElegidosResponse" name="ConsultarSMSElegidosResponse"/> 
+        </wsdl:operation>
+        <wsdl:operation name="RegistrarSMSElegidos"> 
+            <wsdl:input message="tns:RegistrarSMSElegidosRequest" name="RegistrarSMSElegidosRequest"/> 
+            <wsdl:output message="tns:RegistrarSMSElegidosResponse" name="RegistrarSMSElegidosResponse"/> 
+        </wsdl:operation>
+        <wsdl:operation name="ModificarSMSElegidos"> 
+            <wsdl:input message="tns:ModificarSMSElegidosRequest" name="ModificarSMSElegidosRequest"/> 
+            <wsdl:output message="tns:ModificarSMSElegidosResponse" name="ModificarSMSElegidosResponse"/> 
+        </wsdl:operation>
+        <wsdl:operation name="EliminarSMSElegidos"> 
+            <wsdl:input message="tns:EliminarSMSElegidosRequest" name="EliminarSMSElegidosRequest"/> 
+            <wsdl:output message="tns:EliminarSMSElegidosResponse" name="EliminarSMSElegidosResponse"/> 
+        </wsdl:operation>
+        <wsdl:operation name="RegistrarElegidosFijos"> 
+            <wsdl:input message="tns:RegistrarFARequest" name="RegistrarFARequest"/> 
+            <wsdl:output message="tns:RegistrarFAResponse" name="RegistrarFAResponse"/> 
+        </wsdl:operation>
+        <wsdl:operation name="ModificarElegidosFijos"> 
+            <wsdl:input message="tns:ModificarFARequest" name="ModificarFARequest"/> 
+            <wsdl:output message="tns:ModificarFAResponse" name="ModificarFAResponse"/> 
+        </wsdl:operation>
+        <wsdl:operation name="CompensarCargar">
+			<wsdl:input message="tns:CompensarCargarRequest" name="CompensarCargarRequest"/>
+			<wsdl:output message="tns:CompensacionResponse" name="CompensacionResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="CompensarRecargar">
+			<wsdl:input message="tns:CompensarRecargarRequest" name="CompensarRecargarRequest"/>
+			<wsdl:output message="tns:CompensacionResponse" name="CompensacionResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="CompensarCrearSuscriptor">
+			<wsdl:input message="tns:CompensarCrearSuscriptorRequest" name="CompensarCrearSuscriptorRequest"/>
+			<wsdl:output message="tns:CompensacionResponse" name="CompensacionResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="CompensarCambiarPlan">
+			<wsdl:input message="tns:CompensarCambiarPlanRequest" name="CompensarCambiarPlanRequest"/>
+			<wsdl:output message="tns:CompensacionResponse" name="CompensacionResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="CompensarCambiarMin">
+			<wsdl:input message="tns:CompensarCambiarMinRequest" name="CompensarCambiarMinRequest"/>
+			<wsdl:output message="tns:CompensacionResponse" name="CompensacionResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="CompensarRegistrarElegidos">
+			<wsdl:input message="tns:CompensarRegistrarElegidosRequest" name="CompensarRegistrarElegidosRequest"/>
+			<wsdl:output message="tns:CompensacionResponse" name="CompensacionResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="CompensarRegistrarSMSElegidos">
+			<wsdl:input message="tns:CompensarRegistrarSMSElegidosRequest" name="CompensarRegistrarSMSElegidosRequest"/>
+			<wsdl:output message="tns:CompensacionResponse" name="CompensacionResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="CompensarModificarElegidos">
+			<wsdl:input message="tns:CompensarModificarElegidosRequest" name="CompensarModificarElegidosRequest"/>
+			<wsdl:output message="tns:CompensacionResponse" name="CompensacionResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="CompensarModificarFA">
+			<wsdl:input message="tns:CompensarModificarFARequest" name="CompensarModificarFARequest"/>
+			<wsdl:output message="tns:CompensacionResponse" name="CompensacionResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="CompensarModificarSMSElegidos">
+			<wsdl:input message="tns:CompensarModificarSMSElegidosRequest" name="CompensarModificarSMSElegidosRequest"/>
+			<wsdl:output message="tns:CompensacionResponse" name="CompensacionResponse"/>
+		</wsdl:operation>
+    </wsdl:portType> 
+    <wsdl:binding name="OperacionCorbaSoap11" type="tns:OperacionCorba"> 
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/> 
+        <wsdl:operation name="CrearSuscriptor"> 
+            <soap:operation soapAction=""/> 
+            <wsdl:input name="CrearSuscriptorRequest"> 
+                <soap:body use="literal"/> 
+            </wsdl:input> 
+            <wsdl:output name="CrearSuscriptorResponse"> 
+                <soap:body use="literal"/> 
+            </wsdl:output> 
+        </wsdl:operation> 
+        <wsdl:operation name="ConsultarSuscriptor"> 
+            <soap:operation soapAction=""/> 
+            <wsdl:input name="ConsultarSuscriptorRequest"> 
+                <soap:body use="literal"/> 
+            </wsdl:input> 
+            <wsdl:output name="ConsultarSuscriptorResponse"> 
+                <soap:body use="literal"/> 
+            </wsdl:output> 
+        </wsdl:operation> 
+        <wsdl:operation name="EliminarSuscriptor"> 
+            <soap:operation soapAction=""/> 
+            <wsdl:input name="EliminarSuscriptorRequest"> 
+                <soap:body use="literal"/> 
+            </wsdl:input> 
+            <wsdl:output name="EliminarSuscriptorResponse"> 
+                <soap:body use="literal"/> 
+            </wsdl:output> 
+        </wsdl:operation> 
+        <wsdl:operation name="BloquearSuscriptor"> 
+            <soap:operation soapAction=""/> 
+            <wsdl:input name="BloquearSuscriptorRequest"> 
+                <soap:body use="literal"/> 
+            </wsdl:input> 
+            <wsdl:output name="BloquearSuscriptorResponse"> 
+                <soap:body use="literal"/> 
+            </wsdl:output> 
+        </wsdl:operation> 
+        <wsdl:operation name="CambiarMin"> 
+            <soap:operation soapAction=""/> 
+            <wsdl:input name="CambiarMinRequest"> 
+                <soap:body use="literal"/> 
+            </wsdl:input> 
+            <wsdl:output name="CambiarMinResponse"> 
+                <soap:body use="literal"/> 
+            </wsdl:output> 
+        </wsdl:operation> 
+        <wsdl:operation name="CambiarPlan"> 
+            <soap:operation soapAction=""/> 
+            <wsdl:input name="CambiarPlanRequest"> 
+                <soap:body use="literal"/> 
+            </wsdl:input> 
+            <wsdl:output name="CambiarPlanResponse"> 
+                <soap:body use="literal"/> 
+            </wsdl:output> 
+        </wsdl:operation> 
+        <wsdl:operation name="RegistrarElegidos"> 
+            <soap:operation soapAction=""/> 
+            <wsdl:input name="RegistrarElegidosRequest"> 
+                <soap:body use="literal"/> 
+            </wsdl:input> 
+            <wsdl:output name="RegistrarElegidosResponse"> 
+                <soap:body use="literal"/> 
+            </wsdl:output> 
+        </wsdl:operation> 
+        <wsdl:operation name="ModificarElegidos"> 
+            <soap:operation soapAction=""/> 
+            <wsdl:input name="ModificarElegidosRequest"> 
+                <soap:body use="literal"/> 
+            </wsdl:input> 
+            <wsdl:output name="ModificarElegidosResponse"> 
+                <soap:body use="literal"/> 
+            </wsdl:output> 
+        </wsdl:operation> 
+        <wsdl:operation name="Cargar"> 
+            <soap:operation soapAction=""/> 
+            <wsdl:input name="CargarRequest"> 
+                <soap:body use="literal"/> 
+            </wsdl:input> 
+            <wsdl:output name="CargarResponse"> 
+                <soap:body use="literal"/> 
+            </wsdl:output> 
+        </wsdl:operation> 
+        <wsdl:operation name="Recargar"> 
+            <soap:operation soapAction=""/> 
+            <wsdl:input name="RecargarRequest"> 
+                <soap:body use="literal"/> 
+            </wsdl:input> 
+            <wsdl:output name="RecargarResponse"> 
+                <soap:body use="literal"/> 
+            </wsdl:output> 
+        </wsdl:operation> 
+        <wsdl:operation name="ConsultarSMSElegidos"> 
+            <soap:operation soapAction=""/> 
+            <wsdl:input name="ConsultarSMSElegidosRequest"> 
+                <soap:body use="literal"/> 
+            </wsdl:input> 
+            <wsdl:output name="ConsultarSMSElegidosResponse"> 
+                <soap:body use="literal"/> 
+            </wsdl:output> 
+        </wsdl:operation>
+        <wsdl:operation name="RegistrarSMSElegidos"> 
+            <soap:operation soapAction=""/> 
+            <wsdl:input name="RegistrarSMSElegidosRequest"> 
+                <soap:body use="literal"/> 
+            </wsdl:input> 
+            <wsdl:output name="RegistrarSMSElegidosResponse"> 
+                <soap:body use="literal"/> 
+            </wsdl:output> 
+        </wsdl:operation>
+        <wsdl:operation name="ModificarSMSElegidos"> 
+            <soap:operation soapAction=""/> 
+            <wsdl:input name="ModificarSMSElegidosRequest"> 
+                <soap:body use="literal"/> 
+            </wsdl:input> 
+            <wsdl:output name="ModificarSMSElegidosResponse"> 
+                <soap:body use="literal"/> 
+            </wsdl:output> 
+        </wsdl:operation>
+        <wsdl:operation name="EliminarSMSElegidos"> 
+            <soap:operation soapAction=""/> 
+            <wsdl:input name="EliminarSMSElegidosRequest"> 
+                <soap:body use="literal"/> 
+            </wsdl:input> 
+            <wsdl:output name="EliminarSMSElegidosResponse"> 
+                <soap:body use="literal"/> 
+            </wsdl:output> 
+        </wsdl:operation>        
+        <wsdl:operation name="RegistrarElegidosFijos"> 
+            <soap:operation soapAction=""/> 
+            <wsdl:input name="RegistrarFARequest"> 
+                <soap:body use="literal"/> 
+            </wsdl:input> 
+            <wsdl:output name="RegistrarFAResponse"> 
+                <soap:body use="literal"/> 
+            </wsdl:output> 
+        </wsdl:operation>
+        <wsdl:operation name="ModificarElegidosFijos"> 
+            <soap:operation soapAction=""/> 
+            <wsdl:input name="ModificarFARequest"> 
+                <soap:body use="literal"/> 
+            </wsdl:input> 
+            <wsdl:output name="ModificarFAResponse"> 
+                <soap:body use="literal"/> 
+            </wsdl:output> 
+        </wsdl:operation>
+        <wsdl:operation name="CompensarCargar">
+			<soap:operation soapAction="http://www.comcel.com.co/IN/OperacionCorba/CompensarCargar"/>
+			<wsdl:input name="CompensarCargarRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="CompensacionResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="CompensarRecargar">
+			<soap:operation soapAction="http://www.comcel.com.co/IN/OperacionCorba/CompensarRecargar"/>
+			<wsdl:input name="CompensarRecargarRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="CompensacionResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="CompensarCrearSuscriptor">
+			<soap:operation soapAction="http://www.comcel.com.co/IN/OperacionCorba/CompensarCrearSuscriptor"/>
+			<wsdl:input name="CompensarCrearSuscriptorRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="CompensacionResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="CompensarCambiarPlan">
+			<soap:operation soapAction="http://www.comcel.com.co/IN/OperacionCorba/CompensarCambiarPlan"/>
+			<wsdl:input name="CompensarCambiarPlanRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="CompensacionResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="CompensarCambiarMin">
+			<soap:operation soapAction="http://www.comcel.com.co/IN/OperacionCorba/CompensarCambiarMin"/>
+			<wsdl:input name="CompensarCambiarMinRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="CompensacionResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="CompensarRegistrarElegidos">
+			<soap:operation soapAction="http://www.comcel.com.co/IN/OperacionCorba/CompensarRegistrarElegidos"/>
+			<wsdl:input name="CompensarRegistrarElegidosRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="CompensacionResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="CompensarRegistrarSMSElegidos">
+			<soap:operation soapAction="http://www.comcel.com.co/IN/OperacionCorba/CompensarRegistrarSMSElegidos"/>
+			<wsdl:input name="CompensarRegistrarSMSElegidosRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="CompensacionResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="CompensarModificarElegidos">
+			<soap:operation soapAction="http://www.comcel.com.co/IN/OperacionCorba/CompensarModificarElegidos"/>
+			<wsdl:input name="CompensarModificarElegidosRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="CompensacionResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="CompensarModificarFA">
+			<soap:operation soapAction="http://www.comcel.com.co/IN/OperacionCorba/CompensarModificarFA"/>
+			<wsdl:input name="CompensarModificarFARequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="CompensacionResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="CompensarModificarSMSElegidos">
+			<soap:operation soapAction="http://www.comcel.com.co/IN/OperacionCorba/CompensarModificarSMSElegidos"/>
+			<wsdl:input name="CompensarModificarSMSElegidosRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="CompensacionResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+    </wsdl:binding> 
+    <wsdl:service name="OperacionCorbaService"> 
+        <wsdl:port binding="tns:OperacionCorbaSoap11" name="OperacionCorbaSoap11"> 
+            <soap:address location="http://www.comcel.com.co"/> 
+        </wsdl:port> 
+    </wsdl:service> 
+</wsdl:definitions>

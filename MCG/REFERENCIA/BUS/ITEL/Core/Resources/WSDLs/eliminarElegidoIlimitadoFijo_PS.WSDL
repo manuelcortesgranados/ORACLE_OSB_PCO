@@ -1,0 +1,37 @@
+<wsdl:definitions name="eliminarElegidoIlimitadoFijo_PS" targetNamespace="http://www.comcel.com.co/eliminarElegidoIlimitadoFijo_PS/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.comcel.com.co/eliminarElegidoIlimitadoFijo_PS/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsd1="http://www.comcel.com.co/PS_ELIMINAR_ELEGIDOILIMITADO_FIJO">
+	<wsdl:types>
+		<xsd:schema>
+			<xsd:import namespace="http://www.comcel.com.co/PS_ELIMINAR_ELEGIDOILIMITADO_FIJO" schemaLocation="../Schemas/PS_ITEL_ELIMINAR_ELEGIDOILIMITADO_FIJO.xsd">
+			</xsd:import>
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="eliminarElegidoIlimitadoFijoRequest">
+		<wsdl:part element="xsd1:Input_Parameters" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="eliminarElegidoIlimitadoFijoResponse">
+		<wsdl:part element="xsd1:WS_Result" name="parameters"/>
+	</wsdl:message>
+	<wsdl:portType name="eliminarElegidoIlimitadoFijo_PS">
+		<wsdl:operation name="eliminarElegidoIlimitadoFijo">
+			<wsdl:input message="tns:eliminarElegidoIlimitadoFijoRequest"/>
+			<wsdl:output message="tns:eliminarElegidoIlimitadoFijoResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="eliminarElegidoIlimitadoFijo_PSSOAP" type="tns:eliminarElegidoIlimitadoFijo_PS">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="eliminarElegidoIlimitadoFijo">
+			<soap:operation soapAction="http://www.comcel.com.co/eliminarElegidoIlimitadoFijo_PS/eliminarElegidoIlimitadoFijo"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="eliminarElegidoIlimitadoFijo_PS">
+		<wsdl:port binding="tns:eliminarElegidoIlimitadoFijo_PSSOAP" name="eliminarElegidoIlimitadoFijo_PSSOAP">
+			<soap:address location="http://www.comcel.com.co"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

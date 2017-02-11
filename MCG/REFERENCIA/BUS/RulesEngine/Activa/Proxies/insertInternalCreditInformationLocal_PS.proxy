@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config">
+  <ser:coreEntry isProxy="true" isEnabled="true">
+    <ser:binding type="SOAP" isSoap12="false" xsi:type="con4:SoapBindingType" xmlns:con4="http://www.bea.com/wli/sb/services/bindings/config">
+      <con4:wsdl ref="RulesEngine/Activa/Resources/WSDLs/insertInternalCreditInformation_PS"/>
+      <con4:port>
+        <con4:name>InsertInternalCreditInformationSOAP</con4:name>
+        <con4:namespace>http://www.claro.com.co/rulesEngine/insertInternalCreditInformation</con4:namespace>
+      </con4:port>
+      <con4:selector type="SOAP body"/>
+      <con4:WSI-compliant>false</con4:WSI-compliant>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+    <ser:ws-policy>
+      <ser:binding-mode>wsdl-policy-attachments</ser:binding-mode>
+    </ser:ws-policy>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>local</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:inbound-properties/>
+    <tran:all-headers>true</tran:all-headers>
+  </ser:endpointConfig>
+  <ser:router>
+    <con:pipeline type="request" name="PipelinePairNode1_request">
+      <con:stage name="validate" errorHandler="_onErrorHandler-4638306234930340428--5e2eb15a.13ed78d6d10.-7f45">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.claro.com.co/rulesEngine/insertInternalCreditInformation" prefix="ins"/>
+        </con:context>
+        <con:actions>
+          <con2:assign varName="namespace">
+            <con1:id>_ActionId-19937711684209005-38ddb681.13feeb5eb0e.-7b42</con1:id>
+            <con2:expr>
+              <con1:xqueryText>fn:namespace-uri($body/*:Input_Parameters)</con1:xqueryText>
+            </con2:expr>
+          </con2:assign>
+          <con2:validate>
+            <con1:id>_ActionId-171956477758306968-1f978e85.14053efc2aa.-7ffe</con1:id>
+            <con2:schema ref="RulesEngine/Activa/Resources/Schemas/PS_INSERT_INTERNALINFOCREDIT"/>
+            <con2:schemaElement xmlns:ins="http://www.claro.com.co/rulesEngine/insertInternalCreditInformation" xmlns:prc="http://xmlns.oracle.com/pcbpel/adapter/db/RULESENGINE/PKG_RULESENGINE/PRC_INSERT_INTERNALINFOCREDIT/" xmlns:get="http://www.claro.com.co/rulesEngine/getInternalCreditInformation">ins:Input_Parameters</con2:schemaElement>
+            <con2:varName>body</con2:varName>
+            <con2:location>
+              <con1:xpathText>./ins:Input_Parameters</con1:xpathText>
+            </con2:location>
+          </con2:validate>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="PipelinePairNode1_response"/>
+    <con:pipeline type="error" name="_onErrorHandler-4638306234930340428--5e2eb15a.13ed78d6d10.-7f45">
+      <con:stage name="validateError">
+        <con:context/>
+        <con:actions>
+          <con2:replace contents-only="true" varName="body">
+            <con1:id>_ActionId-4638306234930340428--5e2eb15a.13ed78d6d10.-7ea1</con1:id>
+            <con2:expr>
+              <con1:xqueryTransform>
+                <con1:resource ref="RulesEngine/Util/Resources/XQueries/genericError"/>
+                <con1:param name="targetNamespace">
+                  <con1:path>$namespace</con1:path>
+                </con1:param>
+                <con1:param name="fault">
+                  <con1:path>$fault</con1:path>
+                </con1:param>
+                <con1:param name="code">
+                  <con1:path>"23"</con1:path>
+                </con1:param>
+              </con1:xqueryTransform>
+            </con2:expr>
+          </con2:replace>
+          <con1:reply isError="true">
+            <con1:id>_ActionId-4638306234930340428--5e2eb15a.13ed78d6d10.-7e84</con1:id>
+          </con1:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="error" name="_onErrorHandler-4638306234930340428--5e2eb15a.13ed78d6d10.-7ddc">
+      <con:stage name="routingError">
+        <con:context/>
+        <con:actions>
+          <con2:replace varName="body" contents-only="true">
+            <con1:id>_ActionId-4638306234930340428--5e2eb15a.13ed78d6d10.-7da4</con1:id>
+            <con2:expr>
+              <con1:xqueryTransform>
+                <con1:resource ref="RulesEngine/Util/Resources/XQueries/genericError"/>
+                <con1:param name="targetNamespace">
+                  <con1:path>$namespace</con1:path>
+                </con1:param>
+                <con1:param name="fault">
+                  <con1:path>$fault</con1:path>
+                </con1:param>
+                <con1:param name="code">
+                  <con1:path>"20"</con1:path>
+                </con1:param>
+              </con1:xqueryTransform>
+            </con2:expr>
+          </con2:replace>
+          <con1:reply isError="true">
+            <con1:id>_ActionId-4638306234930340428--5e2eb15a.13ed78d6d10.-7d87</con1:id>
+          </con1:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:flow>
+      <con:pipeline-node name="PipelinePairNode1">
+        <con:request>PipelinePairNode1_request</con:request>
+        <con:response>PipelinePairNode1_response</con:response>
+      </con:pipeline-node>
+      <con:route-node name="insertInternalCreditInformation" error-handler="_onErrorHandler-4638306234930340428--5e2eb15a.13ed78d6d10.-7ddc">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.claro.com.co/rulesEngine/insertInternalCreditInformation" prefix="ins"/>
+        </con:context>
+        <con:actions>
+          <con3:route>
+            <con1:id>_ActionId-4638306234930340428--5e2eb15a.13ed78d6d10.-7e4d</con1:id>
+            <con3:service ref="RulesEngine/Activa/Business services/insertInternalCreditInformation_BS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con3:operation>bd_insertInternalCreditInformation</con3:operation>
+            <con3:outboundTransform>
+              <con2:replace varName="body" contents-only="true">
+                <con1:id>_ActionId-24755856419545226-714fd06a.13f58bf540c.-7fc9</con1:id>
+                <con2:expr>
+                  <con1:xqueryTransform>
+                    <con1:resource ref="RulesEngine/Activa/Resources/XQueries/insertInternalCreditInformation_Req"/>
+                    <con1:param name="input_Parameters">
+                      <con1:path>$body/ins:Input_Parameters</con1:path>
+                    </con1:param>
+                  </con1:xqueryTransform>
+                </con2:expr>
+              </con2:replace>
+            </con3:outboundTransform>
+            <con3:responseTransform></con3:responseTransform>
+          </con3:route>
+        </con:actions>
+      </con:route-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

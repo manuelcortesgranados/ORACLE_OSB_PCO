@@ -1,0 +1,28 @@
+<schema targetNamespace="http://www.claro.com.co/rulesEngine/services" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.claro.com.co/rulesEngine/services" xmlns:fd="http://www.claro.com.co/rulesEngine/canonicalModel/FrameworkDomain">
+	
+	<import namespace="http://www.claro.com.co/rulesEngine/canonicalModel/FrameworkDomain" schemaLocation="../../../Core/Resources/Schemas/CanonicalModel/FrameworkDomain.xsd"/>
+	
+	<element name="Input_Parameters" type="tns:Input_Parameters"/>
+	
+	<complexType name="Input_Parameters">
+		<sequence>
+			<element name="plan" type="fd:Plan"/>
+		</sequence>
+	</complexType>
+	
+	<element name="WS_Result" type="tns:WS_Result"/>
+
+	<complexType name="WS_Result">
+		<sequence>
+			<element name="code" type="string"/>
+			<element name="message" type="tns:resultType"/>
+			<element name="description" type="string"/>
+		</sequence>
+	</complexType>
+	
+	<complexType name="resultType">
+		<sequence>
+			<element name="service" type="fd:Service" minOccurs="0" maxOccurs="unbounded"/>
+		</sequence>
+	</complexType>	
+</schema>

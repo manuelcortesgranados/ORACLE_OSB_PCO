@@ -1,0 +1,42 @@
+<wsdl:definitions name="upgradePlanChangeAsses"
+	targetNamespace="http://www.claro.com.co/rulesEngine/upgradePlanChangeAsses"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.claro.com.co/rulesEngine/upgradePlanChangeAsses"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<wsdl:types>
+		<schema xmlns="http://www.w3.org/2001/XMLSchema">
+			<import namespace="http://www.claro.com.co/rulesEngine/upgradePlanChangeAsses"
+				schemaLocation="../Schemas/PS_UPGRADEPLANCHANGEASSES.xsd" />
+		</schema>
+	</wsdl:types>
+	<wsdl:message name="Input_Parameters">
+		<wsdl:part element="tns:Input_Parameters" name="Input_Parameters" />
+	</wsdl:message>
+	<wsdl:message name="WS_Result">
+		<wsdl:part element="tns:WS_Result" name="WS_Result" />
+	</wsdl:message>
+	<wsdl:portType name="upgradePlanChangeAssesInterface">
+		<wsdl:operation name="upgradePlanChangeAsses">
+			<wsdl:input message="tns:Input_Parameters" />
+			<wsdl:output message="tns:WS_Result" />
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="upgradePlanChangeAssesSOAP" type="tns:upgradePlanChangeAssesInterface">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="upgradePlanChangeAsses">
+			<soap:operation
+				soapAction="http://www.claro.com.co/upgradePlanChangeAsses/upgradePlanChangeAsses" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="upgradePlanChangeAsses">
+		<wsdl:port binding="tns:upgradePlanChangeAssesSOAP" name="upgradePlanChangeAssesSOAP">
+			<soap:address location="http://www.claro.com.co/" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

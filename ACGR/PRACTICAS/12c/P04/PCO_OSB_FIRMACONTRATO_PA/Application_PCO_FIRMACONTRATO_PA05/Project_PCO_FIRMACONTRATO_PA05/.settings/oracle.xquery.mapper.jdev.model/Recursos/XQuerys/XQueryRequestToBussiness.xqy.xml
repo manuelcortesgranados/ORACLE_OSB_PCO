@@ -1,0 +1,6 @@
+<view_states>
+   <function arity="1" name="funcionTransformadora">
+      <source_tree_view last.visible.row="2" last.visible.path="/sourceRoot[[0]]/regionesRequest[[0]]/idRegionFinal[[1]]" first.visible.path="/sourceRoot[[0]]/regionesRequest[[0]]" expanded.paths="/sourceRoot[[0]]/regionesRequest[[0]]" first.visible.row="0" selected.paths="/sourceRoot[[0]]/regionesRequest[[0]]/idRegionFinal[[1]]"/>
+      <target_tree_view last.visible.row="2" last.visible.path="/TargetRoot[[0]]/InputParameters[[0]]/P_ID_REGION_FINAL[[1]]" first.visible.path="/TargetRoot[[0]]/InputParameters[[0]]" expanded.paths="/TargetRoot[[0]]/InputParameters[[0]]" first.visible.row="0" selected.paths="/TargetRoot[[0]]/InputParameters[[0]]/P_ID_REGION_FINAL[[1]]"/>
+   </function>
+</view_states>

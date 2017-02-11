@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:cd="http://www.claro.com.co/rulesEngine/canonicalModel/CustomerDomain" xmlns:msd="http://www.claro.com.co/rulesEngine/canonicalModel/MarketSalesDomain" xmlns:cbe="http://www.claro.com.co/rulesEngine/canonicalModel/CommonBusinessEntities" xmlns:tns="http://www.claro.com.co/rulesEngine/CreditExclusionsFact/" targetNamespace="http://www.claro.com.co/rulesEngine/CreditExclusionsFact/">
+   <xs:import namespace="http://www.claro.com.co/rulesEngine/canonicalModel/CustomerDomain" schemaLocation="../../../Core/Resources/Schemas/CanonicalModel/CustomerDomain.xsd"></xs:import>
+   <xs:import namespace="http://www.claro.com.co/rulesEngine/canonicalModel/MarketSalesDomain" schemaLocation="../../../Core/Resources/Schemas/CanonicalModel/MarketSalesDomain.xsd"></xs:import>
+   <xs:element name="CreditExclusionsFactRequest" type="tns:CreditExclusionsFactRequestType"></xs:element>
+   <xs:element name="CreditExclusionsFactResponse" type="tns:CreditExclusionsFactResponseType"></xs:element>
+   <xs:complexType name="CreditExclusionsFactRequestType">
+      <xs:sequence>
+         <xs:element name="ExceptionBusinessCollection" type="cbe:ExceptionBusinessCollection"></xs:element>
+         <xs:element name="Customer" type="cd:Customer"></xs:element>
+         <xs:element name="SalesChannel" type="msd:SalesChannel"></xs:element>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="CreditExclusionsFactResponseType">
+      <xs:sequence>
+         <xs:element name="ExceptionBusinessCollection" type="cbe:ExceptionBusinessCollection"></xs:element>
+      </xs:sequence>
+   </xs:complexType>
+</xs:schema>

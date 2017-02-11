@@ -1,0 +1,36 @@
+<wsdl:definitions name="ConsultarRangoRecargaOCS" targetNamespace="http://www.comcel.com.co/ConsultarRangoRecargaOCS/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.comcel.com.co/ConsultarRangoRecargaOCS/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<wsdl:types>
+			<schema xmlns="http://www.w3.org/2001/XMLSchema">
+				<import namespace="http://www.comcel.com.co/ConsultarRangoRecargaOCS/" schemaLocation="../Schemas/PS_ITEL_CONSULTAR_RANGORECARGA_OCS.xsd"/>
+			</schema>
+	</wsdl:types>
+	<wsdl:message name="Input_Parameters">
+		<wsdl:part element="tns:Input_Parameters" name="Input_Parameters"/>
+	</wsdl:message>
+	<wsdl:message name="WS_Result">
+		<wsdl:part element="tns:WS_Result" name="WS_Result"/>
+	</wsdl:message>
+	<wsdl:portType name="ConsultarRangoRecargaOCS">
+		<wsdl:operation name="ConsultarRangoRecargaOCS">
+			<wsdl:input message="tns:Input_Parameters"/>
+			<wsdl:output message="tns:WS_Result"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="ConsultarRangoRecargaOCSSOAP" type="tns:ConsultarRangoRecargaOCS">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="ConsultarRangoRecargaOCS">
+			<soap:operation soapAction="http://www.comcel.com.co/ConsultarRangoRecargaOCS/ConsultarRangoRecargaOCS"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="ConsultarRangoRecargaOCS">
+		<wsdl:port binding="tns:ConsultarRangoRecargaOCSSOAP" name="ConsultarRangoRecargaOCSSOAP">
+			<soap:address location="http://www.comcel.com.co/"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

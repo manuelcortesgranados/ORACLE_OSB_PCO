@@ -1,0 +1,14 @@
+<adapter-config name="bd_actualizarMinRecargaEsc" adapter="Database Adapter" wsdlLocation="../WSDLs/actualizarMinRecargaEsc_BD.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/DB/ITEL_SOA_CENT" UIConnectionName="Des_Itel" adapterRef=""/>
+  <endpoint-interaction portType="bd_actualizarMinRecargaEsc_ptt" operation="bd_actualizarMinRecargaEsc">
+    <interaction-spec className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
+      <property name="PackageName" value="PKG_SOA_ITEL"/>
+      <property name="ProcedureName" value="PRC_ACTUALIZAR_RECESC_MIN"/>
+      <property name="QueryTimeout" value="1"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+    <output/>
+  </endpoint-interaction>
+
+</adapter-config>

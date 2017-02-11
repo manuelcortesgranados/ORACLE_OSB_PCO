@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://www.comcel.com.co/trama309Fact/"
+           xmlns:tns="http://www.comcel.com.co/trama309Fact/">
+   <xs:element name="TRAMA" type="tns:tramaType"/>
+   <xs:complexType name="tramaType">
+      <xs:sequence>
+         <xs:element name="HEADER" type="tns:headerType"/>
+         <xs:element name="PARAMETERS" type="tns:parametersType"/>
+         <xs:element name="RESULTADO" type="tns:resultadoType"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="headerType">
+      <xs:sequence>
+         <xs:element name="METODO" type="xs:string"/>
+         <xs:element name="MIN" type="xs:string"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="parametersType">
+      <xs:sequence>
+         <xs:element name="CODIGO_COBRO" type="xs:decimal"/>
+         <xs:element name="VIGENCIA" type="xs:string" nillable="true"/>
+         <xs:element name="FECHA_REGISTRO" type="xs:string" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="resultadoType">
+      <xs:sequence>
+         <xs:element name="ERROR" type="xs:string" nillable="true"/>
+         <xs:element name="CONSULTASUSCRIPTOR" type="xs:string" nillable="false"/>
+         <xs:element name="FECHA_REGISTRO_ILIMITADO" type="xs:string" nillable="false"/>
+         <xs:element name="ACREDITACUENTA" type="xs:string" nillable="true"/>
+         <xs:element name="MONTOCUENTA" type="xs:decimal"/>
+         <xs:element name="VIGENCIA_ILIMITADO_MESES" type="xs:decimal"/>
+         <xs:element name="VALIDA_MIN_COMCEL" type="xs:boolean"/>
+      </xs:sequence>
+   </xs:complexType>
+</xs:schema>

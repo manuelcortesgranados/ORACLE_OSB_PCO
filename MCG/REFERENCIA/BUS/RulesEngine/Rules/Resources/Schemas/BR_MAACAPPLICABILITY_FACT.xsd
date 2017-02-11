@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.claro.com.co/rulesEngine/MAACApplicabilityFact/"
+     xmlns:msd="http://www.claro.com.co/rulesEngine/canonicalModel/MarketSalesDomain" xmlns:fd="http://www.claro.com.co/rulesEngine/canonicalModel/FrameworkDomain"
+     xmlns:tns="http://www.claro.com.co/rulesEngine/MAACApplicabilityFact/">
+    <xs:import namespace="http://www.claro.com.co/rulesEngine/canonicalModel/MarketSalesDomain" schemaLocation="../../../Core/Resources/Schemas/CanonicalModel/MarketSalesDomain.xsd"/>
+    <xs:import namespace="http://www.claro.com.co/rulesEngine/canonicalModel/FrameworkDomain"
+         schemaLocation="../../../Core/Resources/Schemas/CanonicalModel/FrameworkDomain.xsd"/>
+    <xs:element name="MAACApplicabilityFactRequest" type="tns:MAACApplicabilityFactRequestType"/>
+    <xs:element name="MAACApplicabilityFactResponse" type="tns:MAACApplicabilityFactResponseType"/>
+    <xs:complexType name="MAACApplicabilityFactRequestType">
+        <xs:sequence>
+            <xs:element name="SalesChannel" type="msd:SalesChannel"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="MAACApplicabilityFactResponseType">
+        <xs:sequence>
+            <xs:element name="Plan" type="fd:Plan"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

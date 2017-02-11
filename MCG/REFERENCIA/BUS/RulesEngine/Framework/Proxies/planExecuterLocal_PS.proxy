@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con3="http://www.bea.com/wli/sb/typesystem/config">
+  <ser:coreEntry isProxy="true" isEnabled="true">
+    <ser:binding type="SOAP" isSoap12="false" xsi:type="con4:SoapBindingType" xmlns:con4="http://www.bea.com/wli/sb/services/bindings/config">
+      <con4:wsdl ref="RulesEngine/Framework/Resources/WSDLs/planExecuter_PS"/>
+      <con4:port>
+        <con4:name>PlanExecuterSOAP</con4:name>
+        <con4:namespace>http://www.claro.com.co/rulesEngine/planExecuter</con4:namespace>
+      </con4:port>
+      <con4:selector type="SOAP body"/>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+    <ser:ws-policy>
+      <ser:binding-mode>wsdl-policy-attachments</ser:binding-mode>
+    </ser:ws-policy>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>local</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:inbound-properties/>
+    <tran:all-headers>true</tran:all-headers>
+  </ser:endpointConfig>
+  <ser:router errorHandler="_onErrorHandler-5996326725224727243-60b4a733.13f332dfd26.-79a0">
+    <con:pipeline type="request" name="PipelinePairNode1_request">
+      <con:stage name="init">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.claro.com.co/rulesEngine/planExecuter" prefix="plan"/>
+        </con:context>
+        <con:actions>
+          <con2:assign varName="namespace">
+            <con1:id>_ActionId-3291257757385435203--2922c5c8.13ff1be0442.-7fc5</con1:id>
+            <con2:expr>
+              <con1:xqueryText>fn:namespace-uri($body/*:Input_Parameters)</con1:xqueryText>
+            </con2:expr>
+          </con2:assign>
+          <con2:assign varName="entities">
+            <con1:id>_ActionId-5996326725224727243-60b4a733.13f332dfd26.-73a1</con1:id>
+            <con2:expr>
+              <con1:xqueryText>$body/plan:Input_Parameters/entities</con1:xqueryText>
+            </con2:expr>
+          </con2:assign>
+          <con2:assign varName="executions">
+            <con1:id>_ActionId-6579656155472162578--6cb34971.13f761faf4b.-7770</con1:id>
+            <con2:expr>
+              <con1:xqueryText>&lt;executions /></con1:xqueryText>
+            </con2:expr>
+          </con2:assign>
+        </con:actions>
+      </con:stage>
+      <con:stage name="loadServices">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.claro.com.co/rulesEngine/planExecuter" prefix="plan"/>
+          <con1:varNsDecl namespace="http://www.claro.com.co/rulesEngine/services" prefix="ser"/>
+          <con3:variable name="loadResponse" path="$loadResponse" asChild="false">
+            <con3:schema ref="RulesEngine/Framework/Resources/Schemas/PS_LOAD_SERVICES" element="WS_Result"/>
+          </con3:variable>
+          <con3:variable name="loadRequest" path="$loadRequest" asChild="false">
+            <con3:schema ref="RulesEngine/Framework/Resources/Schemas/PS_LOAD_SERVICES" element="Input_Parameters"/>
+          </con3:variable>
+        </con:context>
+        <con:actions>
+          <con2:wsCallout>
+            <con1:id>_ActionId-5996326725224727243-60b4a733.13f332dfd26.-7ab0</con1:id>
+            <con2:service xsi:type="ref:ProxyRef" ref="RulesEngine/Framework/Proxies/loadServicesLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con2:operation>load</con2:operation>
+            <con2:request>
+              <con2:body>$loadRequest</con2:body>
+            </con2:request>
+            <con2:response>
+              <con2:body>loadResponse</con2:body>
+            </con2:response>
+            <con2:requestTransform>
+              <con2:assign varName="loadRequest">
+                <con1:id>_ActionId-5996326725224727243-60b4a733.13f332dfd26.-7a7e</con1:id>
+                <con2:expr>
+                  <con1:xqueryTransform>
+                    <con1:resource ref="RulesEngine/Framework/Resources/XQueries/loadServicesRequest"/>
+                    <con1:param name="plan">
+                      <con1:path>$body/plan:Input_Parameters/plan</con1:path>
+                    </con1:param>
+                  </con1:xqueryTransform>
+                </con2:expr>
+              </con2:assign>
+            </con2:requestTransform>
+            <con2:responseTransform/>
+          </con2:wsCallout>
+          <con2:ifThenElse>
+            <con1:id>_ActionId-6579656155472162578--6cb34971.13f761faf4b.-76c2</con1:id>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>data($loadResponse/code) = "1"</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:foreach>
+                  <con1:id>_ActionId-3291257757385435203--2922c5c8.13ff1be0442.-7d81</con1:id>
+                  <con2:variable>loadResponse</con2:variable>
+                  <con2:expression>
+                    <con1:xpathText>./message/service</con1:xpathText>
+                  </con2:expression>
+                  <con2:value-variable>service</con2:value-variable>
+                  <con2:index-variable>index</con2:index-variable>
+                  <con2:total-variable>count</con2:total-variable>
+                  <con2:actions>
+                    <con2:insert varName="service">
+                      <con1:id>_ActionId-3291257757385435203--2922c5c8.13ff1be0442.-7d50</con1:id>
+                      <con2:location>
+                        <con1:xpathText>./type</con1:xpathText>
+                      </con2:location>
+                      <con2:where>after</con2:where>
+                      <con2:expr>
+                        <con1:xqueryText>&lt;ignoreError>{ data($loadRequest/plan/service[position() = $index]/ignoreError) }&lt;/ignoreError></con1:xqueryText>
+                      </con2:expr>
+                    </con2:insert>
+                  </con2:actions>
+                </con2:foreach>
+              </con2:actions>
+            </con2:case>
+            <con2:default>
+              <con2:replace contents-only="true" varName="body">
+                <con1:id>_ActionId-3291257757385435203--2922c5c8.13ff1be0442.-7da6</con1:id>
+                <con2:expr>
+                  <con1:xqueryTransform>
+                    <con1:resource ref="RulesEngine/Util/Resources/XQueries/genericResponse"/>
+                    <con1:param name="message">
+                      <con1:path>&lt;message /></con1:path>
+                    </con1:param>
+                    <con1:param name="targetNamespace">
+                      <con1:path>$namespace</con1:path>
+                    </con1:param>
+                    <con1:param name="code">
+                      <con1:path>data($loadResponse/code)</con1:path>
+                    </con1:param>
+                    <con1:param name="description">
+                      <con1:path>data($loadResponse/description)</con1:path>
+                    </con1:param>
+                  </con1:xqueryTransform>
+                </con2:expr>
+              </con2:replace>
+              <con1:reply>
+                <con1:id>_ActionId-3291257757385435203--2922c5c8.13ff1be0442.-7da4</con1:id>
+              </con1:reply>
+            </con2:default>
+          </con2:ifThenElse>
+        </con:actions>
+      </con:stage>
+      <con:stage name="execution">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.claro.com.co/rulesEngine/planExecuter" prefix="plan"/>
+          <con1:varNsDecl namespace="http://www.claro.com.co/rulesEngine/stepExecuter" prefix="step"/>
+          <con1:varNsDecl namespace="http://www.claro.com.co/rulesEngine/services" prefix="ser"/>
+          <con3:variable name="executeResponse" path="$executeResponse" asChild="false">
+            <con3:schema ref="RulesEngine/Framework/Resources/Schemas/PS_STEP_EXECUTER" element="WS_Result"/>
+          </con3:variable>
+          <con3:variable name="loadResponse" path="$loadResponse" asChild="false">
+            <con3:schema ref="RulesEngine/Framework/Resources/Schemas/PS_LOAD_SERVICES" element="WS_Result"/>
+          </con3:variable>
+        </con:context>
+        <con:actions>
+          <con2:foreach>
+            <con1:id>_ActionId-5996326725224727243-60b4a733.13f332dfd26.-79d2</con1:id>
+            <con2:variable>loadResponse</con2:variable>
+            <con2:expression>
+              <con1:xpathText>./message/service</con1:xpathText>
+            </con2:expression>
+            <con2:value-variable>service</con2:value-variable>
+            <con2:index-variable>index</con2:index-variable>
+            <con2:total-variable>count</con2:total-variable>
+            <con2:actions>
+              <con2:wsCallout>
+                <con1:id>_ActionId-5996326725224727243-60b4a733.13f332dfd26.-79ad</con1:id>
+                <con2:service xsi:type="ref:ProxyRef" ref="RulesEngine/Framework/Proxies/stepExecuterLocal_PS" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                <con2:operation>execute</con2:operation>
+                <con2:request>
+                  <con2:body>$executeRequest</con2:body>
+                </con2:request>
+                <con2:response>
+                  <con2:body>executeResponse</con2:body>
+                </con2:response>
+                <con2:requestTransform>
+                  <con2:assign varName="executeRequest">
+                    <con1:id>_ActionId-5996326725224727243-60b4a733.13f332dfd26.-79a1</con1:id>
+                    <con2:expr>
+                      <con1:xqueryText>&lt;step:Input_Parameters xmlns:step="http://www.claro.com.co/rulesEngine/stepExecuter">
+	{
+		$service,
+		$entities
+	}
+&lt;/step:Input_Parameters></con1:xqueryText>
+                    </con2:expr>
+                  </con2:assign>
+                </con2:requestTransform>
+                <con2:responseTransform>
+                  <con2:insert varName="executions">
+                    <con1:id>_ActionId-6579656155472162578--6cb34971.13f761faf4b.-776e</con1:id>
+                    <con2:where>last-child</con2:where>
+                    <con2:expr>
+                      <con1:xqueryText>$executeResponse/message/execution</con1:xqueryText>
+                    </con2:expr>
+                  </con2:insert>
+                </con2:responseTransform>
+              </con2:wsCallout>
+              <con2:ifThenElse>
+                <con1:id>_ActionId-6579656155472162578--6cb34971.13f761faf4b.-7791</con1:id>
+                <con2:case>
+                  <con2:condition>
+                    <con1:xqueryText>data($executeResponse/code) = "1" or $executeResponse/message/entities</con1:xqueryText>
+                  </con2:condition>
+                  <con2:actions>
+                    <con2:replace contents-only="false" varName="entities">
+                      <con1:id>_ActionId-6579656155472162578--6cb34971.13f761faf4b.-7790</con1:id>
+                      <con2:expr>
+                        <con1:xqueryText>$executeResponse/message/entities</con1:xqueryText>
+                      </con2:expr>
+                    </con2:replace>
+                  </con2:actions>
+                </con2:case>
+                <con2:default>
+                  <con2:replace contents-only="true" varName="body">
+                    <con1:id>_ActionId-6579656155472162578--6cb34971.13f761faf4b.-778e</con1:id>
+                    <con2:expr>
+                      <con1:xqueryTransform>
+                        <con1:resource ref="RulesEngine/Util/Resources/XQueries/genericResponse"/>
+                        <con1:param name="message">
+                          <con1:path>&lt;message>{ $executions/execution }&lt;/message></con1:path>
+                        </con1:param>
+                        <con1:param name="targetNamespace">
+                          <con1:path>$namespace</con1:path>
+                        </con1:param>
+                        <con1:param name="code">
+                          <con1:path>data($executeResponse/code)</con1:path>
+                        </con1:param>
+                        <con1:param name="description">
+                          <con1:path>data($executeResponse/description)</con1:path>
+                        </con1:param>
+                      </con1:xqueryTransform>
+                    </con2:expr>
+                  </con2:replace>
+                  <con1:reply>
+                    <con1:id>_ActionId-6579656155472162578--6cb34971.13f761faf4b.-778d</con1:id>
+                  </con1:reply>
+                </con2:default>
+              </con2:ifThenElse>
+            </con2:actions>
+          </con2:foreach>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="PipelinePairNode1_response">
+      <con:stage name="response">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.claro.com.co/rulesEngine/planExecuter" prefix="plan"/>
+        </con:context>
+        <con:actions>
+          <con2:replace varName="body" contents-only="true">
+            <con1:id>_ActionId-6579656155472162578--6cb34971.13f761faf4b.-75fd</con1:id>
+            <con2:expr>
+              <con1:xqueryTransform>
+                <con1:resource ref="RulesEngine/Util/Resources/XQueries/genericResponse"/>
+                <con1:param name="message">
+                  <con1:path>&lt;message>
+{
+	$entities,
+	$executions/execution
+}
+&lt;/message></con1:path>
+                </con1:param>
+                <con1:param name="targetNamespace">
+                  <con1:path>$namespace</con1:path>
+                </con1:param>
+                <con1:param name="code">
+                  <con1:path>"1"</con1:path>
+                </con1:param>
+                <con1:param name="description">
+                  <con1:path>"Successful operation"</con1:path>
+                </con1:param>
+              </con1:xqueryTransform>
+            </con2:expr>
+          </con2:replace>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="error" name="_onErrorHandler-5996326725224727243-60b4a733.13f332dfd26.-79a0">
+      <con:stage name="error">
+        <con:context/>
+        <con:actions>
+          <con2:replace contents-only="true" varName="body">
+            <con1:id>_ActionId-6579656155472162578--6cb34971.13f761faf4b.-75c4</con1:id>
+            <con2:expr>
+              <con1:xqueryTransform>
+                <con1:resource ref="RulesEngine/Util/Resources/XQueries/genericResponse"/>
+                <con1:param name="message">
+                  <con1:path>&lt;message>{ $executions/execution }&lt;/message></con1:path>
+                </con1:param>
+                <con1:param name="targetNamespace">
+                  <con1:path>$namespace</con1:path>
+                </con1:param>
+                <con1:param name="code">
+                  <con1:path>"3"</con1:path>
+                </con1:param>
+                <con1:param name="description">
+                  <con1:path>if ($fault/ctx:details) then
+	data($fault/ctx:details)
+else
+	data($fault/ctx:reason)</con1:path>
+                </con1:param>
+              </con1:xqueryTransform>
+            </con2:expr>
+          </con2:replace>
+          <con1:reply>
+            <con1:id>_ActionId-5996326725224727243-60b4a733.13f332dfd26.-792e</con1:id>
+          </con1:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:flow>
+      <con:pipeline-node name="PipelinePairNode1">
+        <con:request>PipelinePairNode1_request</con:request>
+        <con:response>PipelinePairNode1_response</con:response>
+      </con:pipeline-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

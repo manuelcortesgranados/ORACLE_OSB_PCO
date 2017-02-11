@@ -1,0 +1,15 @@
+<adapter-config name="bd_paquetesRecurrentes" adapter="Database Adapter" wsdlLocation="../WSDLs/paquetesRecurrentes_BD.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/DB/SMSSERV" UIConnectionName="SMSSERV" adapterRef=""/>
+  <endpoint-interaction portType="bd_paquetesRecurrentes_ptt" operation="bd_paquetesRecurrentes">
+    <interaction-spec className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
+      <property name="SchemaName" value="INH_SMO"/>
+      <property name="PackageName" value="PKG_PAQ_RECURRENTES"/>
+      <property name="ProcedureName" value="SOLICITUD_PAQUETE"/>
+      <property name="QueryTimeout" value="1"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+    <output/>
+  </endpoint-interaction>
+
+</adapter-config>

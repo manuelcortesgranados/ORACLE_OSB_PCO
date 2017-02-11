@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" 
+		targetNamespace="http://webapps.online.ericsson.com"
+		xmlns:tns="http://webapps.online.ericsson.com"
+		elementFormDefault="qualified">
+
+   <complexType name="mapResult">
+        <sequence>
+            <element name="resultID" type="int" />
+            <element maxOccurs="unbounded" minOccurs="1" name="item" type="tns:mapItem" />  
+        </sequence>
+    </complexType>
+    
+    <complexType name="mapResponse">
+         <sequence>
+            <element name="responseID" type="int" />
+            <element maxOccurs="unbounded" minOccurs="1" name="result" type="tns:mapResult" />
+        </sequence>
+    </complexType>
+
+     <complexType name="dsmnResponse">
+        <sequence>
+            <element maxOccurs="unbounded" minOccurs="1" name="response" type="tns:mapResponse" />
+        </sequence>
+    </complexType>
+                 
+    <element name="dsmnResponse" type="tns:dsmnResponse" />
+
+    <complexType name="mapItem">
+        <sequence>
+            <element name="key" type="string" />
+            <element name="value" type="string" />  
+        </sequence>
+    </complexType>
+                                
+    <complexType name="mapSubscriber">
+
+        <sequence>
+            <element name="subscriberID" type="int" />
+            <element maxOccurs="unbounded" minOccurs="1" name="item" type="tns:mapItem" />  
+        </sequence>
+    </complexType>
+                                 
+    <complexType name="mapRequest">
+        <sequence>
+            <element name="requestID" type="int" />
+            <element name="operation" type="string" />
+
+            <element name="productName" type="string" />
+            <element maxOccurs="unbounded" minOccurs="1" name="subscriber" type="tns:mapSubscriber" />
+        </sequence>
+    </complexType>
+    
+    <complexType name="dsmnRequest">
+        <sequence>
+            <element maxOccurs="unbounded" minOccurs="1" name="request" type="tns:mapRequest" />
+        </sequence>
+    </complexType>
+
+    
+    <element name="dsmnRequest" type="tns:dsmnRequest" />
+
+    <element name="ServiceFailedException" type="tns:ServiceFailedException" />
+    <complexType name="ServiceFailedException">
+        <sequence>
+            <element name="faultInfo" type="string" />
+            <element name="message" type="string" />
+        </sequence>
+    </complexType>	    
+	
+</schema>

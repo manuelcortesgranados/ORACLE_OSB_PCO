@@ -1,0 +1,19 @@
+<adapter-config name="insertCreditException" adapter="Database Adapter"
+	wsdlLocation="../WSDLs/insertCreditException_BD.wsdl"
+	xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+
+	<connection-factory location="eis/DB/Rules_Engine"
+		UIConnectionName="RULES ENGINE" adapterRef="" />
+	<endpoint-interaction portType="insertCreditException_ptt"
+		operation="insertCreditException">
+		<interaction-spec
+			className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
+			<property name="PackageName" value="PKG_RULESENGINE" />
+			<property name="ProcedureName" value="PRC_INSERT_CREDIT_EXCEPTION" />
+			<property name="QueryTimeout" value="1" />
+			<property name="GetActiveUnitOfWork" value="false" />
+		</interaction-spec>
+		<output />
+	</endpoint-interaction>
+
+</adapter-config>

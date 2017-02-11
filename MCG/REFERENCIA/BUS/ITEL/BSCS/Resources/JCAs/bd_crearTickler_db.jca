@@ -1,0 +1,18 @@
+<adapter-config name="bd_crearTickler"
+	adapter="Database Adapter" wsdlLocation="../WSDLs/crearTickler_BD.wsdl"
+	xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+
+	<connection-factory location="eis/DB/BSCSPROD"   
+		UIConnectionName="PDCICLOP" adapterRef="" />
+	<endpoint-interaction portType="bd_crearTickler_ptt"
+		operation="bd_crearTickler">
+		<interaction-spec
+			className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
+			<property name="SchemaName" value="SYSADM"/>
+			<property name="ProcedureName" value="PROCREARTICKLER1"/>
+			<property name="QueryTimeout" value="1" />
+			<property name="GetActiveUnitOfWork" value="false" />
+		</interaction-spec>
+		<output />
+	</endpoint-interaction>
+</adapter-config>

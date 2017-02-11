@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con2="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+  <ser:coreEntry isProxy="true" isEnabled="true" isAutoPublish="false" isTracingEnabled="false">
+    <ser:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config">
+      <con:wsdl ref="ITEL/Core/Resources/WSDLs/enviarAuditoria_PS"/>
+      <con:port>
+        <con:name>AuditoriaITELSOAP</con:name>
+        <con:namespace>http://www.comcel.com.co/AuditoriaITEL/</con:namespace>
+      </con:port>
+      <con:selector type="SOAP body"/>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+    <ser:ws-policy>
+      <ser:binding-mode>wsdl-policy-attachments</ser:binding-mode>
+    </ser:ws-policy>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>local</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:inbound-properties/>
+    <tran:all-headers>true</tran:all-headers>
+  </ser:endpointConfig>
+  <ser:router>
+    <con:pipeline type="error" name="_onErrorHandler-4228383408135898017-56974e5.1338db8796b.-7dd0">
+      <con:stage name="error">
+        <con:context xmlns:con3="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con5="http://www.bea.com/wli/sb/typesystem/config" xmlns:con4="http://www.bea.com/wli/sb/stages/routing/config"/>
+        <con:actions xmlns:con3="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con5="http://www.bea.com/wli/sb/typesystem/config" xmlns:con4="http://www.bea.com/wli/sb/stages/routing/config">
+          <con3:log>
+            <con1:id>_ActionId-4228383408135898017-56974e5.1338db8796b.-7dcd</con1:id>
+            <con3:logLevel>error</con3:logLevel>
+            <con3:expr>
+              <con1:xqueryText>$fault/ctx:reason</con1:xqueryText>
+            </con3:expr>
+          </con3:log>
+          <con1:reply>
+            <con1:id>_ActionId-4228383408135898017-56974e5.1338db8796b.-7dcc</con1:id>
+          </con1:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="request" name="PipelinePairNode1_request">
+      <con:stage name="validar" errorHandler="_onErrorHandler-5503355093146939009--7fa9a687.1373c5d9727.-64f5">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/ActualizarCantidadConsultasDia/" prefix="act"/>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/ActualizarCantidadConsultasGratisDia/" prefix="act1"/>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/AuditoriaITEL/" prefix="aud"/>
+        </con:context>
+        <con:actions>
+          <con3:validate>
+            <con1:id>_ActionId-5503355093146939009--7fa9a687.1373c5d9727.-64f6</con1:id>
+            <con3:schema ref="ITEL/Core/Resources/Schemas/PS_ITEL_AUDITORIA"/>
+            <con3:schemaElement xmlns:act="http://www.comcel.com.co/ActualizarCantidadConsultasGratisDia/" xmlns:aud="http://www.comcel.com.co/AuditoriaITEL/">aud:Input_Parameters</con3:schemaElement>
+            <con3:varName>body</con3:varName>
+            <con3:location>
+              <con1:xpathText>./aud:Input_Parameters</con1:xpathText>
+            </con3:location>
+          </con3:validate>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="PipelinePairNode1_response"/>
+    <con:pipeline name="_onErrorHandler-5503355093146939009--7fa9a687.1373c5d9727.-64f5" type="error">
+      <con:stage name="error">
+        <con:context xmlns:con3="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con5="http://www.bea.com/wli/sb/typesystem/config" xmlns:con4="http://www.bea.com/wli/sb/stages/routing/config"/>
+        <con:actions xmlns:con3="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con5="http://www.bea.com/wli/sb/typesystem/config" xmlns:con4="http://www.bea.com/wli/sb/stages/routing/config">
+          <con3:log>
+            <con1:id>_ActionId-5503355093146939009--7fa9a687.1373c5d9727.-64ea</con1:id>
+            <con3:logLevel>error</con3:logLevel>
+            <con3:expr>
+              <con1:xqueryText>$fault/ctx:reason</con1:xqueryText>
+            </con3:expr>
+          </con3:log>
+          <con1:reply>
+            <con1:id>_ActionId-5503355093146939009--7fa9a687.1373c5d9727.-64e9</con1:id>
+          </con1:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:flow>
+      <con:pipeline-node name="PipelinePairNode1">
+        <con:request>PipelinePairNode1_request</con:request>
+        <con:response>PipelinePairNode1_response</con:response>
+      </con:pipeline-node>
+      <con:route-node name="RouteToEnviarAuditoriaBS" error-handler="_onErrorHandler-4228383408135898017-56974e5.1338db8796b.-7dd0">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.comcel.com.co/AuditoriaITEL/" prefix="aud"/>
+        </con:context>
+        <con:actions>
+          <con2:route>
+            <con1:id>_ActionId-4228383408135898017-56974e5.1338db8796b.-7df5</con1:id>
+            <con2:service ref="ITEL/Core/Business Services/enviarAuditoria_BS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con2:operation>enviarAuditoria</con2:operation>
+            <con2:outboundTransform/>
+            <con2:responseTransform/>
+          </con2:route>
+        </con:actions>
+      </con:route-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

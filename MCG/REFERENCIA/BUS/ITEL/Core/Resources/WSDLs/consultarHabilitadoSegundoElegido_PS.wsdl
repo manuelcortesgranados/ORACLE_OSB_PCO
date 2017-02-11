@@ -1,0 +1,51 @@
+<wsdl:definitions name="consultarHabilitadoSegundoElegido_PS" targetNamespace="http://www.comcel.com.co/consultarHabilitadoSegundoElegido_PS/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.comcel.com.co/consultarHabilitadoSegundoElegido_PS/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsd1="http://www.comcel.com.co/ConsultarHabilitadoSegundoElegido/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://www.comcel.com.co/consultarHabilitadoSegundoElegido_PS/">
+      <xsd:element name="consultarHabilitadoSegundoElegido">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="in" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="consultarHabilitadoSegundoElegidoResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="out" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+    <xsd:schema>
+    	<xsd:import namespace="http://www.comcel.com.co/ConsultarHabilitadoSegundoElegido/" schemaLocation="../Schemas/PS_ITEL_CONSULTARHABILITADOSEGUNDOELEGIDO.xsd">
+    	</xsd:import></xsd:schema></wsdl:types>
+  <wsdl:message name="consultarHabilitadoSegundoElegidoRequest">
+    <wsdl:part element="xsd1:Input_Parameters" name="Input_Parameters"/>
+  </wsdl:message>
+  <wsdl:message name="consultarHabilitadoSegundoElegidoResponse">
+    <wsdl:part element="xsd1:WS_Result" name="WS_Result"/>
+  </wsdl:message>
+  <wsdl:portType name="consultarHabilitadoSegundoElegido_PS">
+    <wsdl:operation name="consultarHabilitadoSegundoElegido">
+      <wsdl:input message="tns:consultarHabilitadoSegundoElegidoRequest"/>
+      <wsdl:output message="tns:consultarHabilitadoSegundoElegidoResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="consultarHabilitadoSegundoElegido_PSSOAP" type="tns:consultarHabilitadoSegundoElegido_PS">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="consultarHabilitadoSegundoElegido">
+      <soap:operation soapAction="http://www.comcel.com.co/consultarHabilitadoSegundoElegido_PS/consultarHabilitadoSegundoElegido"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="consultarHabilitadoSegundoElegido_PS">
+    <wsdl:port binding="tns:consultarHabilitadoSegundoElegido_PSSOAP" name="consultarHabilitadoSegundoElegido_PSSOAP">
+      <soap:address location="http://www.comcel.com.co/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
